@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1032032349151",
+    "project_id": "tinydefense-1324",
+    "storage_bucket": "tinydefense-1324.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032032349151:android:7e1d20f5d364007c07b26a",
+        "android_client_info": {
+          "package_name": "com.firebase.tinydefense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyABW4j6SAutmvaDXl8WAIM-axXVazKTMQA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      },
+      "admob_app_id": "ca-app-pub-4232513876428278~6815990407"
+    }
+  ],
+  "configuration_version": "1"
+}
