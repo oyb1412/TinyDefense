@@ -27,7 +27,7 @@ public class GameData {
 
     public GameData() 
     {
-        EnemysLevelDatas = new EnemyData(); ;
+        EnemysLevelDatas = new EnemyData();
         SkillsLevelDatas = new SkillData();
         TowersLevelDatas = new TowerData();
         EnhancesLevelDatas = new EnhanceData();
@@ -47,55 +47,20 @@ public class LoginData {
 public class DataManager {
     private float minLoadingTime = 3f;
 
-    public GameData GameData { get; private set; }
+    public GameData GameData { get; set; }
 
-    private EnemyData enemyData;
-    private EnhanceData enhanceData;
-    private SkillData skillData;
-    private TowerData towerData;
     public Action<float> LoadingAction;
 
-    private string persistentDataPath;
-    private string initialDataPath;
-    public Action<string> KeyAction;
-    public string Key { get; private set; }
+    public string Key { get;  set; }
 
-    public void GetKey(object key) {
-        this.Key = (string)key;
-    }
-
-    public void LoadData(UnityAction callBack) {
-        Init(callBack);
-    }
-
-    private IEnumerator CopyInitialDataCoroutine() {
-        if (Application.platform == RuntimePlatform.Android ||
-            Application.platform == RuntimePlatform.WindowsEditor ||
-            Application.platform == RuntimePlatform.WindowsPlayer) {
-
-            if (!File.Exists(persistentDataPath)) {
-
-                UnityWebRequest request = UnityWebRequest.Get(initialDataPath);
-                yield return request.SendWebRequest();
-
-                if (request.result != UnityWebRequest.Result.Success) {
-                    Debug.LogError("Failed to load initial data: " + request.error);
-                } else {
-                    File.WriteAllBytes(persistentDataPath, request.downloadHandler.data);
-                }
-            }
+    public bool CheckPathFile(string path) {
+        if (File.Exists(Path.Combine(Application.persistentDataPath, path))) {
+            return true;
         }
-        yield return null;
+        return false;
     }
 
     public void SaveData() {
-        enemyData = Resources.Load<EnemyData>("Data/Enemydata");
-        enhanceData = Resources.Load<EnhanceData>("Data/EnhanceData");
-        skillData = Resources.Load<SkillData>("Data/SkillData");
-        towerData = Resources.Load<TowerData>("Data/TowerData");
-
-        GameData = new GameData(enemyData, skillData, towerData, enhanceData);
-
         string jsonData = JsonConvert.SerializeObject(GameData, Formatting.Indented, new JsonSerializerSettings {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Converters = new List<JsonConverter> { new Vector3Converter(), new ColorConverter() }
@@ -104,20 +69,14 @@ public class DataManager {
         SaveJson("GameData", jsonData);
     }
 
-    public void Init(UnityAction callBack) {
-        GameData = new GameData();
-        //GameData = LoadJson<GameData>("GameData");
-
-        persistentDataPath = Path.Combine(Application.persistentDataPath, "GameData.json");
-        initialDataPath = Path.Combine(Application.streamingAssetsPath, "InitData.json");
-
-        Managers.Instance.StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
+    public void LoadGameData(UnityAction callBack) {
+        if(GameData == null) {
+            GameData = new GameData();
+            Managers.Instance.StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
+        }
     }
 
     private IEnumerator LoadGameDataAndStartPoolAsync(UnityAction callback) {
-        // 초기 데이터 복사
-        yield return CopyInitialDataCoroutine();
-
         // JSON 파일 비동기로 로드
         Task<GameData> loadJsonTask = LoadJsonAsync<GameData>("GameData");
 

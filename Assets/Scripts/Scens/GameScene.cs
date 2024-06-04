@@ -14,23 +14,13 @@ public class GameScene : BaseScene
         Managers.Pool.Init();
     }
 
-    public void Loading(UnityAction callBack) {
-        StartCoroutine(Co_GetKeyAndLoad(callBack));
-        //StartCoroutine(Co_GetKeyAndSave());
-    }
+    public override void Init() {
+        base.Init();
+        if (Time.timeScale == 0)
+            Time.timeScale = 1f;
 
-    private IEnumerator Co_GetKeyAndSave() {
-        //Managers.FireStore.GetKeyData(Managers.Data.GetKey);
-        yield return new WaitUntil(() => Managers.Data.Key != null);
-        Managers.Data.SaveData();
+        Managers.Data.LoadGameData(CompletedLoading);
     }
-
-    private IEnumerator Co_GetKeyAndLoad(UnityAction callBack) {
-        //Managers.FireStore.GetKeyData(Managers.Data.GetKey);
-        yield return new WaitUntil(() => Managers.Data.Key != null);
-        Managers.Data.LoadData(callBack);
-    }
-
 
     public void CompletedLoading() {
         Managers.Enhance.Init();
@@ -44,13 +34,6 @@ public class GameScene : BaseScene
         Managers.ADMob.Init();
         UI_Fade.Instance.DeActivationFade();
         isLoading = true;
-    }
-
-    public override void Init() {
-        base.Init();
-        if (Time.timeScale == 0)
-            Time.timeScale = 1f;
-        Loading(CompletedLoading);
     }
 
     private void Update() {

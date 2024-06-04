@@ -25,10 +25,6 @@ public class GameManager {
     //현재 게임 속도
     private Define.GameSpeed gameSpeed;
 
-    public void Clear() {
-
-    }
-
     public Define.GameSpeed GameSpeed {
         get { return gameSpeed; }
         set {
@@ -103,7 +99,7 @@ public class GameManager {
         IsPlaying = true;
         //GameLevelTimer = Define.GAMELEVEL_UP_TICK;
         GameLevelTimer = 5;
-        currentGold = Define.GAME_START_GOLD;
+        CurrentGold = Define.GAME_START_GOLD;
         _currentGameLevel = 0;
         currentKillNumber = 0;
         GameSpeed = Define.GameSpeed.Default;

@@ -7,7 +7,7 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
         base.Init();
         tornadoPrefab = Resources.Load<GameObject>(Define.SKILL_TORNADO_PATH);
         Managers.Skill.SetSkillAction += ((type) => {
-            if (type == Define.SkillType.Torando) {
+            if (type == Define.SkillType.Tornado) {
                 seletable = true;
                 button.interactable = true;
             }
@@ -19,7 +19,7 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
         //스턴은 즉시 발동
         //스킬 사용 후 쿨타임 시작
         base.OnSelect();
-        var skill = Managers.Skill.GetSkillValue(Define.SkillType.Torando);
+        var skill = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
         UseSkill(skill.SkillCoolTime);
 
 

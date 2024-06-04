@@ -384,7 +384,7 @@ public static class Define
     public enum SkillType {
         PowerUp,
         Stun,
-        Torando,
+        Tornado,
         Count,
     }
 

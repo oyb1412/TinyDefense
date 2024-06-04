@@ -12,7 +12,7 @@ public class Skill_Tornado : SkillBase {
         movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
 
         StartCoroutine(Co_Move());
-        skillValue = Managers.Skill.GetSkillValue(Define.SkillType.Torando);
+        skillValue = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
 
         Invoke("Ivk_DestroyTornado", skillValue.SkillTime);
     }
