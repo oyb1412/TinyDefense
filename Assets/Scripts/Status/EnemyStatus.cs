@@ -41,6 +41,10 @@ public class EnemyStatus : StatusBase {
 
     private GameObject goldObject;
 
+    public void Clear() {
+        SetHpAction = null;
+    }
+
     /// <summary>
     /// 애너미 초기화 및 재생성시 수치 초기화
     /// </summary>

@@ -10,10 +10,15 @@ using System;
 /// </summary>
 public class BuffManager {
     //버프 리스트
-    public HashSet<IBuff> Buffs { get; private set; } = new HashSet<IBuff>();
+    public HashSet<IBuff> Buffs { get; private set; }
 
     //버프 적용 타입, 적용 유무 액션
     public Action<Define.BuffType, bool> BuffAction;
+
+    public BuffManager() {
+        Buffs = new HashSet<IBuff>();
+        BuffAction = null;
+    }
 
     /// <summary>
     /// 버프 적용 및

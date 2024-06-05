@@ -51,14 +51,13 @@ public class EnemySearchSystem : MonoBehaviour
         }
 
         foreach (EnemyBase enemy in Managers.Enemy.enemyList) {
-
             //거리계산
             if (Vector2.Distance(towerBase.transform.position, enemy.transform.position) < towerBase.TowerStatus.AttackRange / 3) {
                 if (enemyList.Contains(enemy))
                     continue;
 
                 if (enemyList.Count >= Define.ENEMY_SEARCH_MAX_COUNT)
-                    return;
+                    continue;
 
                 AddEnemyAndSort(enemy);
             }
@@ -77,9 +76,11 @@ public class EnemySearchSystem : MonoBehaviour
         }
     }
 
-    public EnemyBase GetRandomEnemy() {
+    public EnemyBase GetRandomEnemy(EnemyBase enemy) {
         if(enemyList.Count > 0) {
-            return enemyList.OrderBy(x => x.EnemyStatus.CurrentHp).FirstOrDefault();
+            if (Vector2.Distance(towerBase.transform.position, enemy.transform.position)
+                 < towerBase.TowerStatus.AttackRange / 3)
+                return enemy;
         }
         return null;
     }
@@ -91,7 +92,8 @@ public class EnemySearchSystem : MonoBehaviour
     private void AddEnemyAndSort(EnemyBase enemy) {
         enemyList.Add(enemy);
 
-        if (Util.IsEnemyNull(TargetEnemy)) {
+        if (Util.IsEnemyNull(TargetEnemy)) 
+        {
             TargetEnemy = enemyList.OrderBy(e => e.EnemyStatus.CurrentHp).FirstOrDefault();
         }
     }
@@ -106,7 +108,8 @@ public class EnemySearchSystem : MonoBehaviour
         if (enemyList.Count == 0)
             TargetEnemy = null;
 
-        if (Util.IsEnemyNull(TargetEnemy)) {
+        if (Util.IsEnemyNull(TargetEnemy) && enemyList.Count != 0) 
+        {
             TargetEnemy = enemyList.OrderBy(e => e.EnemyStatus.CurrentHp).FirstOrDefault();
         }
     }

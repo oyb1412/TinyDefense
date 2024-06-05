@@ -25,8 +25,6 @@ public class UI_EnhanceButton : UI_Button
         ButtonActive(Managers.Game.CurrentGold);
 
         levelText.text = GetLevelText(0);
-        if(Managers.Enhance.EnhanceData != null)
-            costText.text = string.Format(Define.MENT_GOLD,  Managers.Enhance.GetEnhanceValue(bundleType, enhanceType).EnhanceCost);
     }
 
     /// <summary>

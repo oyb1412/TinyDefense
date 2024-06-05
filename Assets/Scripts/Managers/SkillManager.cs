@@ -8,6 +8,12 @@ public class SkillManager {
     //스킬 목록
     public SkillData.Skill[] SkillData;
     public Action<Define.SkillType> SetSkillAction;
+
+    public SkillManager() {
+        SetSkillAction = null;
+    }
+
+
     public void Init() {
         SkillData = new SkillData.Skill[(int)Define.SkillType.Count];
 

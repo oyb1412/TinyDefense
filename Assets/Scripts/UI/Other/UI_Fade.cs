@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class UI_Fade : MonoBehaviour {
     public static UI_Fade Instance;
@@ -15,7 +16,7 @@ public class UI_Fade : MonoBehaviour {
             Destroy(gameObject);
         }
         fadeImage = GetComponentInChildren<Image>();
-        fadeImage.color = Color.black;
+        //fadeImage.color = Color.black;
     }
 
     public void ActivationFade(Define.SceneType type) {
@@ -23,6 +24,14 @@ public class UI_Fade : MonoBehaviour {
     }
 
     public void DeActivationFade() {
-        fadeImage.DOFade(0f, Define.FADE_TIME);
+        fadeImage.DOFade(0f, Define.FADE_TIME).SetUpdate(true);
+    }
+
+    public void ActivationAndDeActivationFade(UnityAction fadeInCallBack) {
+        fadeImage.DOFade(1f, Define.FADE_TIME).SetUpdate(true).OnComplete(() =>
+        {
+            fadeInCallBack?.Invoke();
+            fadeImage.DOFade(0f, Define.FADE_TIME);
+        });
     }
 }

@@ -17,7 +17,7 @@ public class TowerStatus : StatusBase {
         if (Managers.Tower.TowerData == null)
             return;
 
-        TowerData = Managers.Tower.TowerData[(int)TowerType];
+        TowerData = Managers.Tower.TowerData[(int)tower.TowerType];
 
         if (TowerData == null)
             return;

@@ -23,9 +23,6 @@ public class UI_SkillButton : UI_Button
         ButtonActive(Managers.Game.CurrentGold);
 
         descriptionText.text = GetDescriptionText(0);
-
-        if(Managers.Skill.SkillData != null)
-            costText.text = string.Format(Define.MENT_GOLD, Managers.Skill.GetSkillValue(skillType).SkillCost);
     }
 
     /// <summary>

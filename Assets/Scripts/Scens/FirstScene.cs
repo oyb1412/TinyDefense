@@ -4,12 +4,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 public class FirstScene : BaseScene {
+    private UI_LoadingSlider loadingSlider;
     public override void Clear() {
     }
 
     public override void Init() {
         base.Init();
         StartCoroutine(Co_Init());
+        loadingSlider = GameObject.Find("LoadingSlider").GetComponent<UI_LoadingSlider>();
     }
 
     private IEnumerator Co_Init() {
@@ -17,22 +19,29 @@ public class FirstScene : BaseScene {
         //pre패스에 게임 데이터가 있나 체크.
         if (Managers.Data.CheckPathFile("GameData.json")) {
             //pre패스에 게임 데이터가 있으면, 씬 이동
-            UI_Fade.Instance.ActivationFade(Define.SceneType.Main);
+            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
         }
         //pre패스에 게임 데이터가 없으면, 로딩창을 돌리고 파이어베이스에서 데이터 불러오기.
         else {
             Managers.Data.GameData = new GameData();
             yield return StartCoroutine(GetEnemyData(Managers.Data.GameData.EnemysLevelDatas));
+            loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+
             yield return StartCoroutine(GetEnhanceData(Managers.Data.GameData.EnhancesLevelDatas));
-            for(int i = 0; i< (int)Define.SkillType.Count; i++) {
+            loadingSlider.SetLoading(.2f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+
+            for (int i = 0; i< (int)Define.SkillType.Count; i++) {
                 yield return StartCoroutine(GetSkillData(Managers.Data.GameData.SkillsLevelDatas, (Define.SkillType)i));
             }
-            for(int i = 0; i< (int)Define.TowerType.Count; i++) {
+            loadingSlider.SetLoading(.6f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+
+            for (int i = 0; i< (int)Define.TowerType.Count; i++) {
                 yield return StartCoroutine(GetTowerData(Managers.Data.GameData.TowersLevelDatas, (Define.TowerType)i));
             }
+            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+
             //데이터 불러오기 완료 후, 저장
             Managers.Data.SaveData();
-            UI_Fade.Instance.ActivationFade(Define.SceneType.Main);
         }
     }
 
@@ -112,14 +121,14 @@ public class FirstScene : BaseScene {
         yield return new WaitUntil(() => valueTask.IsCompleted);
 
         if (valueTask.Result != null) {
-            data.Enhances.EnhanceValue = Convert.ToInt32(valueTask.Result);
+            data.Enhances.EnhanceValue = Convert.ToSingle(valueTask.Result);
         }
 
         var valueUpTask = Managers.FireStore.LoadDataToFireStore("EnhanceData", "EnhanceData", "EnhanceUpValue");
         yield return new WaitUntil(() => valueUpTask.IsCompleted);
 
         if (valueUpTask.Result != null) {
-            data.Enhances.EnhanceUpValue = Convert.ToInt32(valueUpTask.Result);
+            data.Enhances.EnhanceUpValue = Convert.ToSingle(valueUpTask.Result);
         }
 
     }

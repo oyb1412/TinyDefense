@@ -10,10 +10,14 @@ using System;
 /// </summary>
 public class DebuffManager {
     //디버프 목록
-    public HashSet<IDebuff> Debuffs { get; private set; } = new HashSet<IDebuff>();
+    public HashSet<IDebuff> Debuffs { get; private set; }
     //디버프 적용 타입, 적용 유무 액션
     public Action<Define.DebuffType, bool> DebuffAction;
 
+    public DebuffManager() {
+        DebuffAction = null;
+        Debuffs = new HashSet<IDebuff>();
+    }
     /// <summary>
     /// 디버프 추가 및
     /// 해제 예약

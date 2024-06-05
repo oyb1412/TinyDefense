@@ -6,11 +6,16 @@ using System.Collections.Generic;
 /// </summary>
 public class EnemyManager {
     //생성된 모든 적 리스트
-    public HashSet<EnemyBase> enemyList { get; private set; } = new HashSet<EnemyBase>();
+    public HashSet<EnemyBase> enemyList { get; private set; }
     //맵에 존재하는 적 수가 변경되면 호출
     public Action<int> EnemyNumberAction;
     private int enemyHandle = 1;
     public EnemyData.EnemyStatusData EnemyData { get; private set; }
+
+    public void Clear() {
+        EnemyNumberAction = null;
+        enemyList = new HashSet<EnemyBase>();
+    }
 
     public void Init() {
         EnemyData = new EnemyData.EnemyStatusData();

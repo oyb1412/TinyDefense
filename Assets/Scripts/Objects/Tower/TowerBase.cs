@@ -136,13 +136,13 @@ public abstract class TowerBase : MonoBehaviour {
     /// </summary>
     public virtual void FireProjectile() {
         //공격 대상 적 사망 시 상태 변경
-        if (Util.IsEnemyNull(TargetEnemy)) {
-            TargetEnemy = enemySearchSystem.GetRandomEnemy();
-            if(Util.IsEnemyNull(TargetEnemy)) {
-                StateMachine.ChangeState(Define.TowerState.Idle);
-                return;
-            }
-        }
+        //if (Util.IsEnemyNull(TargetEnemy)) {
+        //    TargetEnemy = enemySearchSystem.GetRandomEnemy();
+        //    if(Util.IsEnemyNull(TargetEnemy)) {
+        //        StateMachine.ChangeState(Define.TowerState.Idle);
+        //        return;
+        //    }
+        //}
 
         AttackData attackData = new AttackData {
             Damage = TowerStatus.AttackDamage

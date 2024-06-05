@@ -7,6 +7,10 @@ using System;
 public class ParentScaleEventHandler : MonoBehaviour {
     public Action<Define.Direction> OnScaleChanged;
 
+    private void Awake() {
+        OnScaleChanged = null;
+    }
+
     /// <summary>
     /// 스케일 변경 및 이벤트 호출
     /// </summary>

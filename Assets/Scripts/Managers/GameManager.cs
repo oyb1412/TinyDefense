@@ -91,14 +91,19 @@ public class GameManager {
         }
     }
 
+    public void Clear() {
+        CurrentGameLevelAction = null;
+        CurrentGoldAction = null;
+        CurrentKillNumberAction = null;
+    }
+
     /// <summary>
     /// 초기화 및 게임 시작
     /// </summary>
     public void Init() {
         Managers.Enemy.EnemyNumberAction += CheckEnemyNumber;
         IsPlaying = true;
-        //GameLevelTimer = Define.GAMELEVEL_UP_TICK;
-        GameLevelTimer = 5;
+        GameLevelTimer = Define.GAMELEVEL_UP_TICK;
         CurrentGold = Define.GAME_START_GOLD;
         _currentGameLevel = 0;
         currentKillNumber = 0;
@@ -129,11 +134,29 @@ public class GameManager {
             return;
 
         if(IsPlaying) {
-            Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Managers.Auth.User.Email,
-                Define.TAG_SCORE, CurrentKillNumber);
-            UI_GameOver.Instance.SetGameOverUI(true);
+            GetRankingData();
+            IsPlaying = false;
         }
-        IsPlaying = false;
+    }
+
+    private async void GetRankingData() {
+        var saveData = await Managers.FireStore.LoadDataToFireStore(Define.TAG_SCORE_DATA, Managers.Auth.User.Email,
+                Define.TAG_SCORE);
+
+        if(saveData != null) {
+            int saveScore = Convert.ToInt32(saveData);
+
+            if(saveScore < currentKillNumber) {
+                Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Define.TAG_SCORE_DATA,
+                Managers.Auth.User.Email, CurrentKillNumber);
+            }
+        }
+        else {
+            Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Define.TAG_SCORE_DATA,
+                Managers.Auth.User.Email, CurrentKillNumber);
+        }
+
+        UI_GameOver.Instance.SetGameOverUI(true);
     }
 
     /// <summary>

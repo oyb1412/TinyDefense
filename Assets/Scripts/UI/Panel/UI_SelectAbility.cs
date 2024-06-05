@@ -11,7 +11,7 @@ public class UI_SelectAbility : MonoBehaviour {
 
     private HashSet<Define.AbilityType> freeAbilityList;
     private void Start() {
-        abilitysPanel.gameObject.SetActive(true);
+        abilitysPanel.SetActive(true);
         abilityButtons = GetComponentsInChildren<UI_AbilityButton>();
         Managers.Game.CurrentGameLevelAction += ((level) => Activation());
         DeActivation();
@@ -25,7 +25,7 @@ public class UI_SelectAbility : MonoBehaviour {
     }
 
     public void DeActivation() {
-        abilitysPanel.gameObject.SetActive(false);
+        abilitysPanel.SetActive(false);
         foreach (UI_AbilityButton button in abilityButtons)
             button.gameObject.SetActive(false);
     }
@@ -106,7 +106,7 @@ public class UI_SelectAbility : MonoBehaviour {
         if (!Managers.Game.CanGetAbility()) 
           return;
 
-        abilitysPanel.gameObject.SetActive(true);
+        abilitysPanel.SetActive(true);
 
         var conAbility = Managers.Ability.AbilityList;
       //스킬들이 모두 다르고, 모두 배우지 않은 스킬이 선택될때까지 반복

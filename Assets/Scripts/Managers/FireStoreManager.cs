@@ -117,6 +117,20 @@ public class FireStoreManager {
         }
     }
 
+    public async Task<Dictionary<string, object>> LoadAllDataFromDocument(string collection, string document) {
+        DocumentReference docRef = db.Collection(collection).Document(document);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists) {
+            Dictionary<string, object> allFields = snapshot.ToDictionary();
+            return allFields;
+        } else {
+            Debug.Log($"도큐멘트 {document}가 없습니다");
+            return null;
+        }
+    }
+
+
     public async Task<EnemyStatusData> LoadEnemyDataAsync(string collection, string document) {
         DocumentReference docRef = db.Collection(collection).Document(document);
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();

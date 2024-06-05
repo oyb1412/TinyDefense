@@ -102,7 +102,7 @@ public static class Define
     public static readonly int MAX_ENEMY_TYPE = 16;
 
     public static readonly int ENEMY_SEARCH_MAX_COUNT = 5;
-    public static readonly int ENEMY_MAX_COUNT = 5;
+    public static readonly int ENEMY_MAX_COUNT = 55;
     public static readonly int SFX_DEFAULT_CHANNELS = 10;
 
     public static readonly float ENEMY_DEFAULT_SCALE = .5f;
@@ -110,7 +110,7 @@ public static class Define
 
     public static readonly float PERMISSION_RANGE = 0.02f;
     public static readonly float PROJECTILE_PERMISSION_RANGE = 0.3f;
-    public static readonly float PROJECTILE_VELOCITY = 15f;
+    public static readonly float PROJECTILE_VELOCITY = 10f;
     public static readonly float PROJECTILE_DESTROY_TIME = 1f;
     public static readonly float GAMELEVEL_UP_TICK = 30f;
     public static readonly float ENEMY_SPAWN_DELAY = 1f;
@@ -147,8 +147,8 @@ public static class Define
     "화염마법사", "얼음마법사", "수녀"};
 
     public static readonly string OBJECT_REWARD_PATH = "Prefabs/Objects/Other/Gold";
-    public static readonly string MENT_CREATE_COST = "타워 설치<color=#FFFF00>-{0}g</color>";
-    public static readonly string MENT_SELL_REWARD = "타워 판매<color=#FFFF00>+{0}g</color>";
+    public static readonly string MENT_CREATE_COST = "타워 설치\n<color=#FFFF00>-{0}g</color>";
+    public static readonly string MENT_SELL_REWARD = "타워 판매\n<color=#FFFF00>+{0}g</color>";
     public static readonly string MENT_TOWER_LEVEL = "레벨 : {0}";
     public static readonly string MENT_TOWER_KILL = "처치 수 : {0}";
     public static readonly string MENT_TOWER_DAMAGE = "공격력 : <color=#FFA500>{0:0.0}</color>";

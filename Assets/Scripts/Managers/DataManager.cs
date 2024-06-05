@@ -45,11 +45,7 @@ public class LoginData {
 }
 
 public class DataManager {
-    private float minLoadingTime = 3f;
-
     public GameData GameData { get; set; }
-
-    public Action<float> LoadingAction;
 
     public string Key { get;  set; }
 
@@ -67,42 +63,6 @@ public class DataManager {
         });
 
         SaveJson("GameData", jsonData);
-    }
-
-    public void LoadGameData(UnityAction callBack) {
-        if(GameData == null) {
-            GameData = new GameData();
-            Managers.Instance.StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
-        }
-    }
-
-    private IEnumerator LoadGameDataAndStartPoolAsync(UnityAction callback) {
-        // JSON 파일 비동기로 로드
-        Task<GameData> loadJsonTask = LoadJsonAsync<GameData>("GameData");
-
-        // 풀링 오브젝트 비동기 생성
-        yield return StartPoolManager.Instance.StartPoolAsync();
-
-        float startTime = Time.time;
-
-        while (!loadJsonTask.IsCompleted) {
-            yield return null;
-        }
-
-        GameData = loadJsonTask.Result;
-
-        float elapsedTime = Time.time - startTime;
-
-        while (elapsedTime < minLoadingTime) {
-            elapsedTime = Time.time - startTime;
-            float progress = Mathf.Clamp01(elapsedTime / minLoadingTime);
-            LoadingAction?.Invoke(progress);
-            yield return null;
-        }
-
-        LoadingAction?.Invoke(1f);
-
-        callback?.Invoke();
     }
 
     public LoginData LoadLoginData() {

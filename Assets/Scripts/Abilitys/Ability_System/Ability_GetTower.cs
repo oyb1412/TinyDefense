@@ -7,6 +7,14 @@ public class Ability_GetTower : IAbility {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.GetTower);
     }
     public void SetAbility() {
-        Managers.Instance.UI_AutoCreateButton.GetOneTower();
+        var scene = Managers.Scene.CurrentScene as GameScene;
+        if(scene.UI_AutoCreateButton.transform.parent.gameObject.activeInHierarchy) {
+            scene.UI_AutoCreateButton.GetOneTower();
+        }
+        else {
+            scene.UI_AutoCreateButton.transform.parent.gameObject.SetActive(true);
+            scene.UI_AutoCreateButton.GetOneTower();
+            scene.UI_AutoCreateButton.transform.parent.gameObject.SetActive(false);
+        }
     }
 }

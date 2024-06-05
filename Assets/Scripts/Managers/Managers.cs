@@ -12,7 +12,6 @@ public class Managers : MonoBehaviour
     }
 
 
-    [HideInInspector]public UI_AutoCreateButton UI_AutoCreateButton;
 
     private FireStoreManager _fireStore = new FireStoreManager();
     private DataManager _data = new DataManager();
@@ -53,13 +52,6 @@ public class Managers : MonoBehaviour
 
     private void Init()
     {
-        if(UI_AutoCreateButton == null) {
-            GameObject go = GameObject.Find(Define.TAG_AUTOCREATE_BUTTON);
-
-            if (go != null) {
-                UI_AutoCreateButton = go.GetComponent<UI_AutoCreateButton>();
-            }
-        }
         if (_instance == null)
         {
             _instance = this;

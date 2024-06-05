@@ -44,6 +44,7 @@ public class EnemyBase : MonoBehaviour {
         EnemyHandle = 0;
         DebuffManager.Debuffs.Clear();
         moveIndex = 0;
+        EnemyStatus.Clear();
     }
 
     protected virtual void Awake() {
