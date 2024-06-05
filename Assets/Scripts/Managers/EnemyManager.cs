@@ -6,24 +6,22 @@ using System.Collections.Generic;
 /// </summary>
 public class EnemyManager {
     //생성된 모든 적 리스트
-    public HashSet<EnemyBase> enemyList { get; private set; }
+    public List<EnemyBase> EnemyList { get; private set; }
     //맵에 존재하는 적 수가 변경되면 호출
     public Action<int> EnemyNumberAction;
-    private int enemyHandle = 1;
     public EnemyData.EnemyStatusData EnemyData { get; private set; }
 
+    /// <summary>
+    /// 적 리스트 초기화
+    /// </summary>
     public void Clear() {
         EnemyNumberAction = null;
-        enemyList = new HashSet<EnemyBase>();
+        EnemyList = new List<EnemyBase>();
     }
 
     public void Init() {
         EnemyData = new EnemyData.EnemyStatusData();
-        EnemyData = Managers.Data.GameData.EnemysLevelDatas.Enemys;
-    }
-
-    public List<EnemyBase> GetEnemyList() {
-        return new List<EnemyBase>(enemyList);
+        EnemyData = Managers.Data.GameData.EnemyDatas.Enemys;
     }
 
     /// <summary>
@@ -32,13 +30,11 @@ public class EnemyManager {
     /// <param name="enemy">추가할 적</param>
     /// 
     public void AddEnemy(EnemyBase enemy) {
-        if (enemyList.Contains(enemy))
+        if (EnemyList.Contains(enemy))
             return;
 
-        enemyList.Add(enemy);
-        enemy.EnemyHandle = enemyHandle;
-        enemyHandle++;
-        EnemyNumberAction?.Invoke(enemyList.Count);
+        EnemyList.Add(enemy);
+        EnemyNumberAction?.Invoke(EnemyList.Count);
     }
 
     /// <summary>
@@ -46,11 +42,10 @@ public class EnemyManager {
     /// </summary>
     /// <param name="enemy">제거할 적</param>
     public void RemoveEnemy(EnemyBase enemy) {
-        if (!enemyList.Contains(enemy))
+        if (!EnemyList.Contains(enemy))
             return;
 
-        enemyList.Remove(enemy);
-        enemy.EnemyHandle = 0;
-        EnemyNumberAction?.Invoke(enemyList.Count);
+        EnemyList.Remove(enemy);
+        EnemyNumberAction?.Invoke(EnemyList.Count);
     }
 }

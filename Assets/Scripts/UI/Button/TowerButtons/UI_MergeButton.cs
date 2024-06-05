@@ -11,6 +11,7 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     public TowerBase TargetTower { get; private set; }
     //모든 자식 TMP및 버튼 오브젝트 관리 컴포넌트
     private TMPandButton tmpAndButton;
+    //타워 업그레이드 시 이펙트
     private GameObject buildEffect;
 
     public override void Init() {
@@ -52,6 +53,11 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
         tmpAndButton.DeActivation();
     }
 
+    /// <summary>
+    /// 타워 자동 업그레이드시 호출
+    /// 모든 타워를 순회하며 업그레이드 가능 여부 판단
+    /// 가능 시 업그레이드
+    /// </summary>
     public void CheckAndMerge() {
         //머지 가능한 타워 유무 판단 후, 버튼 활성화 및 비활성화
         List<TowerBase> towers = new List<TowerBase>(Managers.Tower.TowerList);
@@ -75,6 +81,11 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
         tmpAndButton.DeActivation();
     }
 
+    /// <summary>
+    /// 타워 업그레이드
+    /// </summary>
+    /// <param name="baseTower">업그레이드할 타워</param>
+    /// <param name="materialTower">재료</param>
     public void Select(TowerBase baseTower, TowerBase materialTower) {
         GameObject go = Managers.Resources.Instantiate(buildEffect);
         go.transform.position = baseTower.TowerCell.transform.position;

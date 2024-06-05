@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 /// <summary>
 /// 모든 프로젝타일 관리 클래스
@@ -27,32 +28,37 @@ public abstract class ProjectileBase : MonoBehaviour
         targetEnemy = towerBase.TargetEnemy;
         transform.position = this.towerBase.transform.position;
         explosionEffect = Resources.Load<GameObject>(Define.PROJECTILE_EXPLOSION_PATH[(int)towerBase.TowerType]);
+        StartCoroutine(Co_Velocity());
     }
 
     /// <summary>
-    /// 발사체 자동 삭제 
+    /// 적 추적 코루틴
     /// </summary>
-    private void Update() {
-        destroyTimer += Time.deltaTime;
+    /// <returns></returns>
+    private IEnumerator Co_Velocity() {
+        while(true) {
+            destroyTimer += Time.deltaTime;
 
-        if(destroyTimer > Define.PROJECTILE_DESTROY_TIME) {
-            destroyTimer = 0f;
-            Managers.Resources.Destroy(gameObject);
-        }
-
-        if (!Util.IsEnemyNull(targetEnemy)) {
-            Vector3 direction = targetEnemy.transform.position - transform.position;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-            saveDir = direction.normalized;
-
-            if (Vector2.Distance(transform.position, targetEnemy.transform.position) < Define.PROJECTILE_PERMISSION_RANGE) {
-                Collison(targetEnemy);
-                return;
+            if (destroyTimer > Define.PROJECTILE_DESTROY_TIME) {
+                destroyTimer = 0f;
+                Managers.Resources.Destroy(gameObject);
             }
-        }
 
-        transform.position += saveDir * Define.PROJECTILE_VELOCITY * Time.deltaTime;
+            if (!Util.IsEnemyNull(targetEnemy)) {
+                Vector3 direction = targetEnemy.transform.position - transform.position;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+                saveDir = direction.normalized;
+
+                if (Vector2.Distance(transform.position, targetEnemy.transform.position) < Define.PROJECTILE_PERMISSION_RANGE) {
+                    Collison(targetEnemy);
+                    break;
+                }
+            }
+
+            transform.position += saveDir * Define.PROJECTILE_VELOCITY * Time.deltaTime;
+            yield return null;
+        }
     }
 
     /// <summary>

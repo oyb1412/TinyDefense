@@ -7,10 +7,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.SocialPlatforms.Impl;
-using static EnemyData;
 
+/// <summary>
+/// 파이어스토어 데이터 관리 클래스
+/// </summary>
 public class FireStoreManager {
     private FirebaseFirestore db;
 
@@ -117,6 +117,12 @@ public class FireStoreManager {
         }
     }
 
+    /// <summary>
+    /// 특정 도큐멘트의 필드 모두 받아오기
+    /// </summary>
+    /// <param name="collection">콜렉션 명</param>
+    /// <param name="document">도큐멘트 명</param>
+    /// <returns></returns>
     public async Task<Dictionary<string, object>> LoadAllDataFromDocument(string collection, string document) {
         DocumentReference docRef = db.Collection(collection).Document(document);
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
@@ -126,19 +132,6 @@ public class FireStoreManager {
             return allFields;
         } else {
             Debug.Log($"도큐멘트 {document}가 없습니다");
-            return null;
-        }
-    }
-
-
-    public async Task<EnemyStatusData> LoadEnemyDataAsync(string collection, string document) {
-        DocumentReference docRef = db.Collection(collection).Document(document);
-        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
-        if (snapshot.Exists) {
-            EnemyStatusData enemyData = snapshot.ConvertTo<EnemyStatusData>();
-            return enemyData;
-        } else {
-            Debug.LogError("Document does not exist!");
             return null;
         }
     }

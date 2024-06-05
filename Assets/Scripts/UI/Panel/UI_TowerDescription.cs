@@ -6,17 +6,20 @@ using UnityEngine;
 /// </summary>
 public class UI_TowerDescription : MonoBehaviour 
 {
+    public static UI_TowerDescription Instance;
+
     //오브젝트 판넬
     [SerializeField] private GameObject DescriptionPanel;
-
+    //자동 판넬
     [SerializeField] private UI_AutoPanel autoPanel;
-    public static UI_TowerDescription Instance;
     //타워 생성 버튼
     public UI_CreateButton CreateButton { get; private set; }
     //타워 생성,판매,업그레이드 버튼
     private UI_TowerBuild towerBuild;
     //타워 정보 판넬
     private UI_TowerInformation towerInformation;
+
+
     private void Awake() {
         if (Instance == null) {
             Instance = this;

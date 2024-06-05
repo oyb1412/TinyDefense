@@ -16,11 +16,13 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     public TowerBase TowerObj { get; private set; }
     //타워 생성 가중치
     private int[] weights = new int[(int)Define.TowerType.Count];
-
+    //타워 생성 이펙트
     private GameObject buildEffect;
+    //타워 생성 비용 텍스트
     private TextMeshProUGUI costTMP;
+    //타워 생성시 생성할 골드 오브젝트
     private GameObject goldObject;
-
+    //생성할 타워 프리펩 저장용 변수
     private GameObject[] towerList;
 
     /// <summary>
@@ -34,9 +36,8 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
         for (int i = 0; i < weights.Length; i++) {
             weights[i] = 1;
         }
-
+        
         goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
-
 
         towerList = new GameObject[(int)Define.TowerType.Count];
 
@@ -148,16 +149,25 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
             tmpAndButton.DeActivation();
     }
 
-    public void CallCreate(Cell cell) {
+    /// <summary>
+    /// 타워 자동생성시, 호출
+    /// </summary>
+    /// <param name="cell"></param>
+    public void CellCreate(Cell cell) {
         currentCell = cell;
         Select();
     }
 
+    /// <summary>
+    /// 타워 생성 어빌리티 선택시 호출
+    /// 타워 자동생성 및 랜덤 업그레이드
+    /// </summary>
+    /// <param name="cell"></param>
     public void CreateAndRandomUpgrade(Cell cell) {
         currentCell = cell;
-
-        foreach (var item in Managers.Ability.GetAbilitysOfType<ITowerPreAbility>()) {
-            item.ExecuteSystemAbility(this);
+        foreach (var item in Managers.Ability.TowerAbilityList) {
+            if(item is ITowerPreAbility)
+                item.ExecuteSystemAbility(this);
         }
 
         TowerObj = Managers.Resources.Instantiate(towerList[(int)SummonUnit()]
@@ -188,8 +198,9 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     public override void Select() {
         //타워 생성 전 가중치 조절 스킬의 존재여부 확인
         //존재 시 가중치 조절
-        foreach (var item in Managers.Ability.GetAbilitysOfType<ITowerPreAbility>()) {
-            item.ExecuteSystemAbility(this);
+        foreach (var item in Managers.Ability.TowerAbilityList) {
+            if (item is ITowerPreAbility)
+                item.ExecuteSystemAbility(this);
         }
 
         TowerObj = Managers.Resources.Instantiate(towerList[(int)SummonUnit()]
@@ -197,8 +208,9 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
 
         //타워 생성 후 무료 업그레이드 스킬의 존재여부 확인
         //존재 시 무료 업그레이드
-        foreach (var item in Managers.Ability.GetAbilitysOfType<ITowerPostAbility>()) {
-            item.ExecuteSystemAbility(this);
+        foreach (var item in Managers.Ability.TowerAbilityList) {
+            if (item is ITowerPostAbility)
+                item.ExecuteSystemAbility(this);
         }
 
         GameObject go = Managers.Resources.Instantiate(buildEffect);

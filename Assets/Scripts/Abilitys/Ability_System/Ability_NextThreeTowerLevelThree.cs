@@ -25,15 +25,6 @@ public class Ability_NextThreeTowerLevelThree : ITowerPostAbility {
     }
 
     /// <summary>
-    /// 스킬 목록에서 이 스킬 제거
-    /// </summary>
-    /// <param name="abilityManager">스킬 매니저</param>
-    public void DeleteAbility(AbilityManager abilityManager) {
-        abilityManager.AbilityList.Remove(AbilityValue.Type);
-        UI_AbilitysPanel.Instance.RemoveAbilityIcon(this);
-    }
-
-    /// <summary>
     /// 타워 업그레이드 및
     /// 강화 횟수 종료시 어빌리티 제거
     /// </summary>
@@ -44,10 +35,6 @@ public class Ability_NextThreeTowerLevelThree : ITowerPostAbility {
 
         tower.TowerLevelup();
         NextTowerUpgrade--;
-
-        //if (NextTowerUpgrade <= 0) {
-        //    DeleteAbility(Managers.Ability);
-        //}
     }
 
     /// <summary>

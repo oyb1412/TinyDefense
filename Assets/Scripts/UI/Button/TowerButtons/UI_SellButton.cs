@@ -11,7 +11,9 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
     private TextMeshProUGUI sellRewardTMP;
     //모든 자식 tmp및 버튼 관리 컴포넌트
     private TMPandButton tmpAndButton;
+    //타워 판매 이펙트
     private GameObject buildEffect;
+    //타워 판매시 골드 프리펩
     private GameObject goldObject;
 
     public override void Init() {

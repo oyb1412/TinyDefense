@@ -7,22 +7,32 @@ using UnityEngine;
 public class ChildObjectScaler : MonoBehaviour {
     //원본 스케일
     private Vector3 originalScale;
+    //원본 스케일(x flip)
+    private Vector3 originalFlipScale;
     //스케일 변경이 일어나는 부모 클래스
     private ParentScaleEventHandler eventHandler;
 
     private void Awake() {
         originalScale = transform.localScale;
+        originalFlipScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
     }
+
     void Start() {
         eventHandler = GetComponentInParent<ParentScaleEventHandler>();
         eventHandler.OnScaleChanged += HandleScaleChanged;
     }
 
+    /// <summary>
+    /// 활성화시 부모 객체 이벤트에 연결
+    /// </summary>
     private void OnEnable() {
         if (eventHandler != null)
             eventHandler.OnScaleChanged += HandleScaleChanged;
     }
 
+    /// <summary>
+    /// 비활성화시 이벤트 해제
+    /// </summary>
     private void OnDisable() {
         if (eventHandler != null)
             eventHandler.OnScaleChanged -= HandleScaleChanged;
@@ -37,6 +47,6 @@ public class ChildObjectScaler : MonoBehaviour {
         if(dir == Define.Direction.Right)
             transform.localScale = originalScale;
         else if(dir == Define.Direction.Left)
-            transform.localScale = new Vector3(-originalScale.x, originalScale.y, originalScale.z);
+            transform.localScale = originalFlipScale;
     }
 }

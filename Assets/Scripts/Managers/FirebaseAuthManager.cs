@@ -1,8 +1,6 @@
 using UnityEngine;
 using Firebase.Auth;
 using UnityEngine.Events;
-using Firebase;
-using System.Collections.Generic;
 using System.Threading;
 public class FirebaseAuthManager {
     public FirebaseAuth Auth { get; set; }

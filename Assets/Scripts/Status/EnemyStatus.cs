@@ -11,13 +11,13 @@ public class EnemyStatus : StatusBase {
     private bool isLive;
 
     /// <summary>
-    /// 애너미 이동속도를 디버프에 맞게 적용
+    /// 애너미 이동속도에 디버프 적용
     /// </summary>
     public float MoveSpeed {
         get {
             float finalSpeed = moveSpeed;
 
-            if (enemyBase != null && enemyBase.DebuffManager != null)
+            if (enemyBase != null && enemyBase.DebuffManager != null && enemyBase.DebuffManager.Debuffs.Count > 0)
                 finalSpeed = enemyBase.DebuffManager.CalculateMoveSpeed(finalSpeed);
             
             return finalSpeed;
@@ -38,9 +38,12 @@ public class EnemyStatus : StatusBase {
     public int Reward { get; private set; }
     //체력 변화가 생길시 호출
     public Action<float> SetHpAction;
-
+    //애너미 사망시 호출할 골드 오브젝트
     private GameObject goldObject;
 
+    /// <summary>
+    /// 애너미 사망 시 초기화
+    /// </summary>
     public void Clear() {
         SetHpAction = null;
     }
@@ -55,7 +58,7 @@ public class EnemyStatus : StatusBase {
         if (Managers.Enemy.EnemyData == null)
             return;
 
-        EnemyData = Managers.Data.GameData.EnemysLevelDatas;
+        EnemyData = Managers.Data.GameData.EnemyDatas;
 
         this.enemyBase = enemyBase;
         Level = level;
@@ -77,7 +80,7 @@ public class EnemyStatus : StatusBase {
 
         //애너미에게 적용되는 스킬의 유무를 판단해,
         //존재한다면 스킬 적용
-        foreach(var item in Managers.Ability.GetAbilitysOfType<IEnemyAbility>()) {
+        foreach(var item in Managers.Ability.EnemyAbilityList) {
             item.ExecuteEnemyAbility(enemyBase);
         }
     }

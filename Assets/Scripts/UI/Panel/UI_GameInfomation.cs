@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-
 /// <summary>
 /// 게임 정보 표기 UI
 /// </summary>

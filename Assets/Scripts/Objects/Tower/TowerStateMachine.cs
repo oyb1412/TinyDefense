@@ -10,8 +10,6 @@ public class TowerStateMachine {
         this.towerBase = towerBase;
     }
 
-    
-
     //타워 상태
     private Define.TowerState towerState = Define.TowerState.Idle;
     private TowerBase towerBase;

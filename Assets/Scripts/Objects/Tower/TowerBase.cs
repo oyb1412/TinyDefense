@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
+using UnityEngine.Tilemaps;
 
 /// <summary>
 /// 모든 타워 관리
@@ -24,7 +25,7 @@ public abstract class TowerBase : MonoBehaviour {
     //타워 상태머신
     public TowerStateMachine StateMachine { get;private set; }
     //추가 투사체 딜레이 yield
-    private WaitForSeconds addWfs;
+    private WaitForSeconds addProjectileDelay;
     //타워 레벨 표기 renderer
     private SpriteRenderer runeWard;
     //적 서치 클래스
@@ -38,50 +39,59 @@ public abstract class TowerBase : MonoBehaviour {
     //타워 버프 매니저
     public BuffManager BuffManager { get; private set; }
 
-    protected TowerData towerData;
-
-    public int TowerHandle { get; set; }
+    /// <summary>
+    /// 공격 시 적용 데이터
+    /// </summary>
     public struct AttackData {
         public float Damage;
         public bool IsStun;
         public bool IsCritical;
         public bool IsMiss;
-        public Vector3 targetPos;
     }
 
+    /// <summary>
+    /// 타워 생성시 초기화
+    /// </summary>
     private void OnEnable() {
-        BuffManager = new BuffManager();
-        Debuffs = new List<IDebuff>();
         Init();
-
-        if (animator.enabled == false)
-            animator.enabled = true;
     }
 
+    /// <summary>
+    /// 타워 파괴시 초기화
+    /// </summary>
     private void OnDisable() {
         StopAllCoroutines();
         attackCoroutine = null;
-        TowerHandle = 0;
     }
 
+    /// <summary>
+    /// 타워 첫 생성시 초기화
+    /// </summary>
     private void Awake() {
-        towerData = Managers.Data.GameData.TowersLevelDatas;
         animator = GetComponent<Animator>();
         parentScale = GetComponent<ParentScaleEventHandler>();
         runeWard = GetComponentsInChildren<SpriteRenderer>()[1];
         enemySearchSystem = GetComponentInChildren<EnemySearchSystem>();
         TowerStatus = new TowerStatus();
         StateMachine = new TowerStateMachine(this);
-        addWfs = new WaitForSeconds(Define.ABILITY_PROJECTILE_DEFAULT_DELAY);
+        addProjectileDelay = new WaitForSeconds(Define.ABILITY_PROJECTILE_DEFAULT_DELAY);
     }
 
     /// <summary>
     /// 생성 및 재생성시 초기화
     /// </summary>
     protected virtual void Init() {
+        BuffManager = new BuffManager();
+        Debuffs = new List<IDebuff>();
         TowerLevel = 0;
         TowerStatus.Init(this);
         runeWard.color = Define.COLOR_TOWERLEVEL[TowerLevel];
+
+        if (attackCoroutine == null)
+            attackCoroutine = StartCoroutine(Co_Attack());
+
+        if (animator.enabled == false)
+            animator.enabled = true;
     }
 
     /// <summary>
@@ -89,27 +99,32 @@ public abstract class TowerBase : MonoBehaviour {
     /// </summary>
     /// <param name="debuff"></param>
     public void SetDebuff(IDebuff debuff) {
-        if(Debuffs.Find(x => x.Type == debuff.Type) == null) {
+        bool exists = false;
+
+        foreach (var item in Debuffs) {
+            if (item.Type == debuff.Type) {
+                exists = true;
+                break;
+            }
+        }
+
+        if (!exists) {
             Debuffs.Add(debuff);
         }
     }
 
-
-    /// <summary>
-    /// 공격 대상 애너미 감지시 상태 변경
-    /// </summary>
-    /// <param name="targetEnemy">공격할 대상</param>
-    public void SetTargetEnemy(EnemyBase targetEnemy) {
-        TargetEnemy = targetEnemy;
-        if(attackCoroutine == null)
-            attackCoroutine = StartCoroutine(Co_Attack());
-    }
-
     /// <summary>
     /// 공격 속도에 맞춰 공격
+    /// 공격할 대상이 없다면 한 프레임 휴식
+    /// 적의 위치를 판단해 flip
     /// </summary>
     private IEnumerator Co_Attack() {
         while(true) {
+            TargetEnemy = enemySearchSystem.TargetEnemyCheck(TargetEnemy);
+
+            if (Util.IsEnemyNull(TargetEnemy))
+                TargetEnemy = enemySearchSystem.SearchEnemy();
+
             if (Util.IsEnemyNull(TargetEnemy) || StateMachine.GetState() == Define.TowerState.Movement) {
                 yield return null;
                 continue;
@@ -127,7 +142,11 @@ public abstract class TowerBase : MonoBehaviour {
             parentScale.ChangeScale(dir, transform);
 
             StateMachine.ChangeState(Define.TowerState.Attack);
-            yield return new WaitForSeconds(TowerStatus.AttackDelay);
+
+            float limit = Time.time + TowerStatus.AttackDelay;
+            while (limit > Time.time) {
+                yield return null;
+            }
         }
     }
 
@@ -135,20 +154,11 @@ public abstract class TowerBase : MonoBehaviour {
     /// 공격 애니메이션 이벤트 콜백으로 호출
     /// </summary>
     public virtual void FireProjectile() {
-        //공격 대상 적 사망 시 상태 변경
-        //if (Util.IsEnemyNull(TargetEnemy)) {
-        //    TargetEnemy = enemySearchSystem.GetRandomEnemy();
-        //    if(Util.IsEnemyNull(TargetEnemy)) {
-        //        StateMachine.ChangeState(Define.TowerState.Idle);
-        //        return;
-        //    }
-        //}
-
         AttackData attackData = new AttackData {
             Damage = TowerStatus.AttackDamage
         };
 
-        foreach(var item in Managers.Ability.GetAbilitysOfType<IAttackAbility>()) {
+        foreach(var item in Managers.Ability.AttackAbilityList) {
             item.ExecuteAtteckAbility(this, ref attackData);
         }
 
@@ -177,23 +187,24 @@ public abstract class TowerBase : MonoBehaviour {
     /// <param name="attackData">데이터</param>
     /// <param name="time">예약 시간</param>
     private IEnumerator Co_Fire(AttackData attackData) {
-        yield return addWfs;
+        yield return addProjectileDelay;
         ProjectileBase projectile = Managers.Resources.Instantiate(TowerStatus.Projectile).GetComponent<ProjectileBase>();
         projectile.Init(this, attackData);
     }
 
     /// <summary>
-    /// 애니메이션 변경
+    /// 애니메이션 변경(트리거)
     /// </summary>
     public void SetAnimation(string paremeter) {
         animator.SetTrigger(paremeter);
     }
 
+    /// <summary>
+    /// 애니메이션 변경(불)
+    /// </summary>
     public void SetAnimation(string paremeter, bool trigger) {
         animator.SetBool(paremeter, trigger);
     }
-
-
 
     //타워 선택 해제
     public void DeSelect() {
@@ -206,15 +217,29 @@ public abstract class TowerBase : MonoBehaviour {
         enemySearchSystem.Activation();
     }
 
+    /// <summary>
+    /// 타워 이동
+    /// 타워 담당 셀 변경
+    /// </summary>
     public void ChangeCell(Cell cell) {
         StartCoroutine(Co_Movement(cell, true));
     }
 
+    /// <summary>
+    /// 다른 타워와 서로 위치 변경
+    /// 타워 담당 셀 변경
+    /// </summary>
     public void ChangeTower(TowerBase tower) {
         StartCoroutine(Co_Movement(tower.TowerCell, false));
         tower.StartCoroutine(tower.Co_Movement(TowerCell, false));
     }
 
+    /// <summary>
+    /// 타워 이동 코루틴
+    /// </summary>
+    /// <param name="cell">이동할 셀</param>
+    /// <param name="changeCell">타워 교체가 아닌 셀로의 이동인가?</param>
+    /// <returns></returns>
     public IEnumerator Co_Movement(Cell cell, bool changeCell) {
         Vector3 pos = cell.transform.position + Define.TOWER_CREATE_POSITION;
         StateMachine.ChangeState(Define.TowerState.Movement);
@@ -232,7 +257,6 @@ public abstract class TowerBase : MonoBehaviour {
 
         cell.IsSelected = true;
 
-
         while (true) {
             transform.position = Vector3.MoveTowards(transform.position, pos, Define.TOWER_MOVESPEED * Time.deltaTime);
 
@@ -243,7 +267,6 @@ public abstract class TowerBase : MonoBehaviour {
 
                 transform.position = pos;
                 StateMachine.ChangeState(Define.TowerState.Idle);
-
 
                 break;
             }
@@ -260,14 +283,13 @@ public abstract class TowerBase : MonoBehaviour {
         runeWard.color = Define.COLOR_TOWERLEVEL[TowerLevel];
         TowerStatus.LevelUpStatus();
 
-        var debuff = Debuffs.Find(x => x.Type == Define.DebuffType.Poison);
-
-        if (debuff == null)
-            return;
-
-        Debuffs.Remove(debuff);
+        foreach(var item in Debuffs) {
+            if(item.Type == Define.DebuffType.Poison) {
+                Debuffs.Remove(item);
+                break;
+            }
+        }
     }
-
 
     /// <summary>
     /// 재료로 사용된 타워 제거
@@ -277,11 +299,6 @@ public abstract class TowerBase : MonoBehaviour {
         animator.Play(Define.TAG_Idle);
         TowerCell.SetTower(null);
         Managers.Tower.RemoveTower(this);
-        StartCoroutine(DisableNextFrame(() => Managers.Resources.Destroy(gameObject)));
-    }
-
-    private IEnumerator DisableNextFrame(UnityAction callBack) {
-        yield return null;
-        callBack?.Invoke();
+        Managers.Resources.Destroy(gameObject);
     }
 }

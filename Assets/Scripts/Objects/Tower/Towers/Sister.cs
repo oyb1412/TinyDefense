@@ -19,10 +19,12 @@ public class Sister : TowerBase {
     /// </summary>
     public override void FireProjectile() {
         TowerBuff();
+
         if (Util.IsEnemyNull(TargetEnemy)) {
             StateMachine.ChangeState(Define.TowerState.Idle);
             return;
         }
+
         base.FireProjectile();
     }
 
@@ -37,8 +39,9 @@ public class Sister : TowerBase {
             if (item.TowerCell == null)
                 continue;
 
-            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange / 3
+            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange * 0.3f
                 && item.gameObject.activeInHierarchy) {
+
                 int ran = Random.Range(0, 2);
                 
                 if(ran == 0) {

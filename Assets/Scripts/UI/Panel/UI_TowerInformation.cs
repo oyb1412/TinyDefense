@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,14 +31,11 @@ public class UI_TowerInformation : MonoBehaviour {
     [SerializeField]private Sprite[] towerTypeSprites;
     //현재 선택한 타워
     private TowerBase currentTower;
-
+    //타워 이동 클래스
     private UI_Movement movement;
     private void Awake() {
         movement = GetComponent<UI_Movement>();
         towerIconSprites = Resources.LoadAll<Sprite>(Define.TOWERICON_SPRITE_PATH);
-    }
-
-    private void Start() {
     }
 
     /// <summary>
@@ -50,7 +48,6 @@ public class UI_TowerInformation : MonoBehaviour {
             gameObject.SetActive(false);
             return;
         }
-
 
         gameObject.SetActive(true);
         movement.Activation();
@@ -67,18 +64,8 @@ public class UI_TowerInformation : MonoBehaviour {
         towerRange.text = string.Format(Define.MENT_TOWER_RANGE, status.AttackRange);
         towerLevel.text = string.Format(Define.MENT_TOWER_LEVEL, status.Level);
         towerKill.text = string.Format(Define.MENT_TOWER_KILL, status.TowerKills);
-    }
 
-    private void Update() {
-        if (!currentTower)
-            return;
-
-        towerDamage.text = string.Format(Define.MENT_TOWER_DAMAGE, currentTower.TowerStatus.AttackDamage);
-
-        if (currentTower.TowerStatus.AttackDelay <= 0)
-            towerDelay.text = Define.MENT_MAX_DELAY;
-        else
-            towerDelay.text = string.Format(Define.MENT_TOWER_DELAY, currentTower.TowerStatus.AttackDelay);
+        StartCoroutine(Co_TowerInfomation());
     }
 
     /// <summary>
@@ -86,7 +73,24 @@ public class UI_TowerInformation : MonoBehaviour {
     /// 타워 선택 해제시 호출
     /// </summary>
     public void DeActivation() {
+        StopAllCoroutines();
         currentTower = null;
         movement.DeActivation(() => gameObject.SetActive(false));
+    }
+
+    /// <summary>
+    /// 타워 정보 표기 코루틴
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Co_TowerInfomation() {
+        while(true) {
+            towerDamage.text = string.Format(Define.MENT_TOWER_DAMAGE, currentTower.TowerStatus.AttackDamage);
+
+            if (currentTower.TowerStatus.AttackDelay <= 0)
+                towerDelay.text = Define.MENT_MAX_DELAY;
+            else
+                towerDelay.text = string.Format(Define.MENT_TOWER_DELAY, currentTower.TowerStatus.AttackDelay);
+            yield return null;
+        }
     }
 }

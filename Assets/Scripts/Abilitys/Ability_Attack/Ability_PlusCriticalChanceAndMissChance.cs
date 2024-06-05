@@ -34,11 +34,9 @@ public class Ability_PlusCriticalChanceAndMissChance : IAttackAbility {
         //확률계산으로 70%면 데미지 두배, 30%면 미스(데미지0)
         float ran = Random.Range(0f, 1f);
         if (Define.ABILITY_DEFAULT_CRITICAL_CHANCE > ran) {
-            UnityEngine.Debug.Log($"크리티컬 발동");
             attackData.Damage *= (1 + Define.ABILITY_DEFAULT_CRITICAL_DAMAGE);
             attackData.IsCritical = true;
         } else {
-            UnityEngine.Debug.Log($"미스 발동");
             attackData.Damage = 0;
             attackData.IsMiss = true;
         }

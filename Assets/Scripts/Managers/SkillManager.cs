@@ -13,22 +13,24 @@ public class SkillManager {
         SetSkillAction = null;
     }
 
-
+    /// <summary>
+    /// 스킬 데이터 초기화
+    /// </summary>
     public void Init() {
         SkillData = new SkillData.Skill[(int)Define.SkillType.Count];
 
         for (int i = 0; i < SkillData.Length; i++) {
             SkillData[i] = new SkillData.Skill();   
-            SkillData[i].SkillValue = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillValue;
-            SkillData[i].SkillTime = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillTime;
-            SkillData[i].SkillCost = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillCost;
-            SkillData[i].SkillCostUpValue = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillCostUpValue;
-            SkillData[i].SkillCoolTime = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillCoolTime;
-            SkillData[i].SkillDamage = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillDamage;
+            SkillData[i].SkillValue = Managers.Data.GameData.SkillDatas.Skills[i].SkillValue;
+            SkillData[i].SkillTime = Managers.Data.GameData.SkillDatas.Skills[i].SkillTime;
+            SkillData[i].SkillCost = Managers.Data.GameData.SkillDatas.Skills[i].SkillCost;
+            SkillData[i].SkillCostUpValue = Managers.Data.GameData.SkillDatas.Skills[i].SkillCostUpValue;
+            SkillData[i].SkillCoolTime = Managers.Data.GameData.SkillDatas.Skills[i].SkillCoolTime;
+            SkillData[i].SkillDamage = Managers.Data.GameData.SkillDatas.Skills[i].SkillDamage;
 
-            SkillData[i].SkillValueUpValue = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillValueUpValue;
-            SkillData[i].SkillTimeUpValue = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillTimeUpValue;
-            SkillData[i].SkillCoolTimeDownValue = Managers.Data.GameData.SkillsLevelDatas.Skills[i].SkillCoolTimeDownValue;
+            SkillData[i].SkillValueUpValue = Managers.Data.GameData.SkillDatas.Skills[i].SkillValueUpValue;
+            SkillData[i].SkillTimeUpValue = Managers.Data.GameData.SkillDatas.Skills[i].SkillTimeUpValue;
+            SkillData[i].SkillCoolTimeDownValue = Managers.Data.GameData.SkillDatas.Skills[i].SkillCoolTimeDownValue;
         }
     }
 

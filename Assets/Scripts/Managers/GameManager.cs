@@ -38,6 +38,7 @@ public class GameManager {
             gameSpeed = value;
         }
     }
+
     //게임 진행 여부
     public bool IsPlaying {
         get { return _isPlaying; }
@@ -65,8 +66,6 @@ public class GameManager {
         }
     }
 
-  
-
     /// <summary>
     /// 킬수에 변경이 생기면 자동으로 이벤트 호출
     /// </summary>
@@ -78,8 +77,6 @@ public class GameManager {
         }
     }
 
-
-
     /// <summary>
     /// 보유 골드에 변경이 생기면 자동으로 이벤트 호출
     /// </summary>
@@ -90,7 +87,6 @@ public class GameManager {
             CurrentGoldAction?.Invoke(currentGold);
         }
     }
-
     public void Clear() {
         CurrentGameLevelAction = null;
         CurrentGoldAction = null;
@@ -110,6 +106,9 @@ public class GameManager {
         GameSpeed = Define.GameSpeed.Default;
     }
 
+    /// <summary>
+    /// 어빌리티 획득 가능한 라운드인지 체크
+    /// </summary>
     public bool CanGetAbility() {
         if(_currentGameLevel == 1) {
             IsPlaying = false;
@@ -139,6 +138,10 @@ public class GameManager {
         }
     }
 
+    /// <summary>
+    /// 게임 오버시, 랭킹 데이터를 Load
+    /// 현재 게임의 랭킹 데이터가 더 높을시 Save
+    /// </summary>
     private async void GetRankingData() {
         var saveData = await Managers.FireStore.LoadDataToFireStore(Define.TAG_SCORE_DATA, Managers.Auth.User.Email,
                 Define.TAG_SCORE);

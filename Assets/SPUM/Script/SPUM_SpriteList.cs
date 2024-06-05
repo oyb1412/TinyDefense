@@ -57,11 +57,6 @@ public class SPUM_SpriteList : MonoBehaviour
         }
     }
 
-    public void LoadSpriteSting()
-    {
-
-    }
-
     public void LoadSpriteStingProcess(List<SpriteRenderer> SpList, List<string> StringList)
     {
         for (var i = 0; i < StringList.Count; i++)

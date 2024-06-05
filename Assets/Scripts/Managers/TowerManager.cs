@@ -1,22 +1,23 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 /// <summary>
 /// 모든 타워 관리 매니저
 /// </summary>
 public class TowerManager {
     //생성된 타워 리스트
-    public HashSet<TowerBase> TowerList { get; private set; } = new HashSet<TowerBase>();
-
-    private int towerHandle = 1;
-
+    public HashSet<TowerBase> TowerList { get; private set; } 
     public TowerData.TowerLevelData[] TowerData { get; private set; }
+
+    public void Clear() {
+        TowerList = new HashSet<TowerBase>();
+    }
+
     /// <summary>
-    /// 인핸스 초기화
+    /// 타워 초기화
     /// </summary>
     public void Init() {
         TowerData = new TowerData.TowerLevelData[(int)Define.TowerBundle.Count];
-        TowerData = Managers.Data.GameData.TowersLevelDatas.Towers;
+        TowerData = Managers.Data.GameData.TowerDatas.Towers;
     }
 
     /// <summary>
@@ -28,8 +29,6 @@ public class TowerManager {
         if (TowerList.Contains(go))
             return;
 
-        go.TowerHandle = towerHandle;
-        towerHandle++;
         TowerList.Add(go);
     }
 
@@ -42,7 +41,6 @@ public class TowerManager {
         if (!TowerList.Contains(go))
             return;
 
-        go.TowerHandle = 0;
         TowerList.Remove(go);
     }
 }

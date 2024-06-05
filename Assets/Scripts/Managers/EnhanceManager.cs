@@ -14,10 +14,10 @@ public class EnhanceManager {
 
         for(int i = 0; i< EnhanceData.Length; i++) {
             EnhanceData[i] = new EnhanceData.EnhanceLevelData();
-            EnhanceData[i].EnhanceCost = Managers.Data.GameData.EnhancesLevelDatas.Enhances.EnhanceCost;
-            EnhanceData[i].EnhanceCostUpValue = Managers.Data.GameData.EnhancesLevelDatas.Enhances.EnhanceCostUpValue;
-            EnhanceData[i].EnhanceValue = Managers.Data.GameData.EnhancesLevelDatas.Enhances.EnhanceValue;
-            EnhanceData[i].EnhanceUpValue = Managers.Data.GameData.EnhancesLevelDatas.Enhances.EnhanceUpValue;
+            EnhanceData[i].EnhanceCost = Managers.Data.GameData.EnhanceDatas.Enhances.EnhanceCost;
+            EnhanceData[i].EnhanceCostUpValue = Managers.Data.GameData.EnhanceDatas.Enhances.EnhanceCostUpValue;
+            EnhanceData[i].EnhanceValue = Managers.Data.GameData.EnhanceDatas.Enhances.EnhanceValue;
+            EnhanceData[i].EnhanceUpValue = Managers.Data.GameData.EnhanceDatas.Enhances.EnhanceUpValue;
         }
     }
 

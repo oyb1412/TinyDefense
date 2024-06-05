@@ -8,19 +8,14 @@ public class Cell : MonoBehaviour, ISelect {
     public TowerBase Tower { get;  set; }
     //셀 world ui 캔버스
     private SpriteRenderer spriteRenderer;
+    //셀 선택 표기용 마크
     private SelectArrow selectArrow;
-    public int CellHandle { get; private set; }
-
+    //셀이 선택중인가?
     public bool IsSelected { get; set; }
 
     private void Awake() {
         spriteRenderer = GetComponent<SpriteRenderer>();
         selectArrow = GetComponentInChildren<SelectArrow>();
-    }
-
-    public void Init(int handle, Vector3 pos) {
-        CellHandle = handle;
-        transform.localPosition = pos;
     }
 
     /// <summary>
@@ -29,6 +24,7 @@ public class Cell : MonoBehaviour, ISelect {
     /// </summary>
     public void DeSelect() {
         UI_TowerDescription.Instance.DeActivation();
+
         if (IsUse()) {
             Tower.DeSelect();
             return;
@@ -37,6 +33,9 @@ public class Cell : MonoBehaviour, ISelect {
         spriteRenderer.color = Color.white;
     }
 
+    /// <summary>
+    /// 이 셀로이동 하려고 하면, 셀 색 변경
+    /// </summary>
     public void MovementSelect() {
         if(spriteRenderer.color != Color.green) {
             spriteRenderer.color = Color.green;
@@ -44,6 +43,9 @@ public class Cell : MonoBehaviour, ISelect {
         }
     }
 
+    /// <summary>
+    /// 이 셀로 이동을 취소하면, 셀 색 변경
+    /// </summary>
     public void MovementDeSelect() {
         if (spriteRenderer.color != Color.white) {
             spriteRenderer.color = Color.white;
@@ -82,12 +84,12 @@ public class Cell : MonoBehaviour, ISelect {
     /// <param name="tower"></param>
     public void SetTower(TowerBase tower) {
         DeSelect();
-        this.Tower = tower;
+        Tower = tower;
 
-        if (!this.Tower)
+        if (!Tower)
             return;
 
-        this.Tower.TowerCell = this;
-        this.Tower.transform.position = transform.position + Define.TOWER_CREATE_POSITION;
+        Tower.TowerCell = this;
+        Tower.transform.position = transform.position + Define.TOWER_CREATE_POSITION;
     }
 }

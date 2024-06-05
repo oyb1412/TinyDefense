@@ -2,40 +2,40 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using static System.IO.Directory;
 using UnityEngine;
-using System.Collections;
 using System.Threading.Tasks;
 using System;
 using Newtonsoft.Json.Linq;
-using UnityEngine.Networking;
-using UnityEngine.Events;
 
+/// <summary>
+/// 게임 내 모든 데이터 묶음 클래스
+/// </summary>
 public class GameData {
-    public EnemyData EnemysLevelDatas { get; private set; }
-    public SkillData SkillsLevelDatas { get; private set; }
-    public TowerData TowersLevelDatas { get; private set; }
-    public EnhanceData EnhancesLevelDatas { get; private set; }
-
-    public GameData(EnemyData enemyData, SkillData skillData,
-        TowerData towerData, EnhanceData enhanceData) {
-        EnemysLevelDatas = enemyData;
-        SkillsLevelDatas = skillData;
-        TowersLevelDatas = towerData;
-        EnhancesLevelDatas = enhanceData;
-    }
+    //애너미 데이터
+    public EnemyData EnemyDatas { get; private set; }
+    //스킬 데이터
+    public SkillData SkillDatas { get; private set; }
+    //타워 데이터
+    public TowerData TowerDatas { get; private set; }
+    //인핸스 데이터
+    public EnhanceData EnhanceDatas { get; private set; }
 
     public GameData() 
     {
-        EnemysLevelDatas = new EnemyData();
-        SkillsLevelDatas = new SkillData();
-        TowersLevelDatas = new TowerData();
-        EnhancesLevelDatas = new EnhanceData();
+        EnemyDatas = new EnemyData();
+        SkillDatas = new SkillData();
+        TowerDatas = new TowerData();
+        EnhanceDatas = new EnhanceData();
     }
 }
 
+/// <summary>
+/// 로그인 정보 관리 클래스
+/// </summary>
 public class LoginData {
+    //이메일
     public string Email { get; private set; }
+    //비밀번호
     public string Password { get; private set; }
 
     public LoginData(string email, string password) {
@@ -44,18 +44,19 @@ public class LoginData {
     }
 }
 
+/// <summary>
+/// 각종 데이터 관리 클래스
+/// </summary>
 public class DataManager {
+    //모든 게임 데이터
     public GameData GameData { get; set; }
+    //데이터 암호화를 위한 키
+    public string Key { get; set; }
 
-    public string Key { get;  set; }
-
-    public bool CheckPathFile(string path) {
-        if (File.Exists(Path.Combine(Application.persistentDataPath, path))) {
-            return true;
-        }
-        return false;
-    }
-
+    /// <summary>
+    /// 로컬에 게임 데이터 저장.
+    /// 첫 게임 시작시 호출
+    /// </summary>
     public void SaveData() {
         string jsonData = JsonConvert.SerializeObject(GameData, Formatting.Indented, new JsonSerializerSettings {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
@@ -65,17 +66,33 @@ public class DataManager {
         SaveJson("GameData", jsonData);
     }
 
+    /// <summary>
+    /// 로그인 데이터 로드
+    /// </summary>
+    /// <returns></returns>
     public LoginData LoadLoginData() {
         LoginData logindata = LoadJson<LoginData>(Define.TAG_LOGIN_DATA);
         return logindata;
     }
 
+    /// <summary>
+    /// 로컬에 로그인 데이터 저장
+    /// 첫 로그인시 호출
+    /// </summary>
+    /// <param name="email"></param>
+    /// <param name="password"></param>
     public void SaveLoginData(string email, string password) {
         LoginData logindata = new LoginData(email, password);
         string jsonData = JsonConvert.SerializeObject(logindata);
         SaveJson(Define.TAG_LOGIN_DATA, jsonData);
     }
 
+    /// <summary>
+    /// Json파일 저장
+    /// Application.persistentDataPath에 저장
+    /// </summary>
+    /// <param name="name">파일 이름</param>
+    /// <param name="jsonData">데이터</param>
     public void SaveJson(string name, string jsonData) {
         string towerData = AesEncryption.Encrypt(jsonData, Key);
 
@@ -87,6 +104,13 @@ public class DataManager {
         Debug.Log($"{Path}에 {name}이름의 Json파일 세이브");
     }
 
+    /// <summary>
+    /// JSON파일 로드
+    /// </summary>
+    /// <typeparam name="T">타입</typeparam>
+    /// <param name="name">파일 이름</param>
+    /// Application.persistentDataPath패스에서 로드
+    /// <returns></returns>
     public T LoadJson<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
@@ -101,6 +125,13 @@ public class DataManager {
         return JsonConvert.DeserializeObject<T>(json);
     }
 
+    /// <summary>
+    /// JSON파일 비동기 로드
+    /// </summary>
+    /// <typeparam name="T">타입</typeparam>
+    /// <param name="name">파일 이름</param>
+    /// Application.persistentDataPath패스에서 비동기 로드
+    /// <returns></returns>
     public async Task<T> LoadJsonAsync<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
@@ -114,8 +145,23 @@ public class DataManager {
         Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
         return JsonConvert.DeserializeObject<T>(json);
     }
+
+    /// <summary>
+    /// 특정 패스에 해당 파일이 존재하는지 확인
+    /// </summary>
+    /// <param name="path">확인할 패스</param>
+    /// <returns></returns>
+    public bool CheckPathFile(string path) {
+        if (File.Exists(Path.Combine(Application.persistentDataPath, path))) {
+            return true;
+        }
+        return false;
+    }
 }
 
+/// <summary>
+/// Vector3타입을 직렬화/역직렬화 하기 위한 컨버터
+/// </summary>
 public class Vector3Converter : JsonConverter {
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
         Vector3 vector = (Vector3)value;
@@ -139,8 +185,13 @@ public class Vector3Converter : JsonConverter {
     public override bool CanConvert(System.Type objectType) {
         return objectType == typeof(Vector3);
     }
+
+   
 }
 
+/// <summary>
+/// COLOR타입을 직렬화/역직렬화 하기 위한 컨버터
+/// </summary>
 public class ColorConverter : JsonConverter {
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
         if (value is Color color) {

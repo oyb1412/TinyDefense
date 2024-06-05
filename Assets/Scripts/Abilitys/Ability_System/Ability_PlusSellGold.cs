@@ -20,6 +20,9 @@ public class Ability_PlusSellGold : ITowerPostAbility {
     /// </summary>
     public void SetAbility() {
         var towerList = Managers.Tower.TowerList;
+        if (towerList.Count == 0)
+            return;
+
         foreach (var tower in towerList) {
             tower.TowerStatus.SetReward(Define.ABILITY_PLUS_TOWER_REWARD);
         }

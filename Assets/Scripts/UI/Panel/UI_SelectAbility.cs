@@ -8,8 +8,13 @@ public class UI_SelectAbility : MonoBehaviour {
     private UI_AbilityButton[] abilityButtons;
     //어빌리티 판넬
     [SerializeField]private GameObject abilitysPanel;
-
+    //중첩 선택 가능한 어빌리티 저장용 헤시셋
     private HashSet<Define.AbilityType> freeAbilityList;
+
+    /// <summary>
+    /// 초기화 및 비활성화
+    /// 게임 레벨 액션에 활성화 함수 연동
+    /// </summary>
     private void Start() {
         abilitysPanel.SetActive(true);
         abilityButtons = GetComponentsInChildren<UI_AbilityButton>();
@@ -24,14 +29,21 @@ public class UI_SelectAbility : MonoBehaviour {
         };
     }
 
+    /// <summary>
+    /// 비활성화
+    /// 모든 객체 비활성화
+    /// </summary>
     public void DeActivation() {
         abilitysPanel.SetActive(false);
         foreach (UI_AbilityButton button in abilityButtons)
             button.gameObject.SetActive(false);
     }
 
+    /// <summary>
+    /// 어빌리티 목록 리셋 시 호출
+    /// 어빌리티 목록 리롤
+    /// </summary>
     public void ReActivation() {
-        
         foreach (UI_AbilityButton button in abilityButtons)
             button.gameObject.SetActive(false);
 

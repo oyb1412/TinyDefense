@@ -7,6 +7,7 @@ public class UI_AbilitysPanel : MonoBehaviour {
     public static UI_AbilitysPanel Instance;
     //하위의 각 어빌리티 아이콘
     private UI_AbilityIcon[] abilityIcons;
+    //보유한 어빌리티가 없을 시 표시할 판넬
     [SerializeField] private GameObject emptyPanel;
 
     private void Awake() {
@@ -22,17 +23,6 @@ public class UI_AbilitysPanel : MonoBehaviour {
 
     private void Start() {
         gameObject.SetActive(false);
-    }
-
-    public void RemoveAbilityIcon(IAbility ability) {
-        foreach (var icon in abilityIcons) {
-            if(icon.IconImage.sprite == ability.AbilityValue.Sprite) {
-                icon.IconImage.color = Define.COLOR_NOT;
-                icon.IconImage.sprite = null;
-
-                return;
-            }
-        }
     }
 
     /// <summary>

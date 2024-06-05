@@ -10,9 +10,14 @@ public class UI_AbilityIcon : MonoBehaviour {
     private EventTrigger eventTrigger;
     //오브젝트 어빌리티 정보
     private Define.AbilityValue abilityIcon;
+    //표기할 이미지 컴포넌트
     public Image IconImage {  get; private set; }
     //어빌리티 정보 표기 판넬
     [SerializeField] private UI_DescriptionPanel abilityDescription;
+
+    /// <summary>
+    /// 초기화 및 이벤트 트리거에 함수 연동
+    /// </summary>
     private void Awake() {
         IconImage = GetComponent<Image>();  
         eventTrigger = GetComponent<EventTrigger>();

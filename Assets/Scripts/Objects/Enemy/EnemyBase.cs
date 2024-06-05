@@ -18,35 +18,37 @@ public class EnemyBase : MonoBehaviour {
     //애너미 상태머신
     public EnemyStateMachine StateMachine { get; private set; }
     //데미지 틱 wfs
-    private WaitForSeconds wfs;   
-    //스턴 시간 wfs
-    private WaitForSeconds stunWfs;
+    private WaitForSeconds debuffTick;   
     //이동 index
     private int moveIndex;
     //디버프 코루틴
     private Coroutine debuffCoroutine;
-
     public Coroutine MoveCoroutine { get; private set; }
     //자식오브젝트 스케일 비동기
     private ParentScaleEventHandler parentScale;
     //애너미 디버프 관리
     public DebuffManager DebuffManager { get; private set; }
 
-    public int EnemyHandle { get; set; }
+    /// <summary>
+    /// 애너미 생성시 초기화
+    /// </summary>
     private void OnEnable() {
-        debuffCoroutine = null;
-        parentScale.ChangeScale(Define.Direction.Right, transform);
         Init();
     }
 
+    /// <summary>
+    /// 애너미 비활성화시 초기화
+    /// </summary>
     private void OnDisable() {
         StopAllCoroutines();
-        EnemyHandle = 0;
         DebuffManager.Debuffs.Clear();
         moveIndex = 0;
         EnemyStatus.Clear();
     }
 
+    /// <summary>
+    /// 애너미 첫 생성시 초기화
+    /// </summary>
     protected virtual void Awake() {
         movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
         EnemyStatus = new EnemyStatus();
@@ -54,8 +56,7 @@ public class EnemyBase : MonoBehaviour {
 
         parentScale = GetComponent<ParentScaleEventHandler>();
         animator = GetComponent<Animator>();
-        wfs = new WaitForSeconds(Define.DEBUFF_DAMAGE_DEFAULT_TICK);
-        stunWfs = new WaitForSeconds(Define.ABILITY_STUN_DEFAULT_TIME);
+        debuffTick = new WaitForSeconds(Define.DEBUFF_DAMAGE_DEFAULT_TICK);
         StateMachine = new EnemyStateMachine(this);
     }
 
@@ -67,20 +68,25 @@ public class EnemyBase : MonoBehaviour {
     private IEnumerator Co_DamageDebuff() {
         while(true) {
             if (DebuffManager != null && DebuffManager.Debuffs.Count > 0) {
-                foreach (var item in DebuffManager.Debuffs.Where(d => d.Bundle == Define.DebuffBundle.Damage)) {
-                    if(item.IsActive) {
+                foreach(var item in DebuffManager.Debuffs) {
+                    if(item.Bundle == Define.DebuffBundle.Damage && item.IsActive)
                         EnemyStatus.SetHp(item.DebuffValue * Define.DEBUFF_DAMAGE_DEFAULT_TICK);
-                    }
                 }
             }
-            yield return wfs;
+            yield return debuffTick;
         }
     }
 
+    /// <summary>
+    /// 애니메이션 적용(트리거)
+    /// </summary>
     public void SetAnimation(string paremeter) {
         animator.SetTrigger(paremeter);
     }
 
+    /// <summary>
+    /// 애니메이션 적용(불)
+    /// </summary>
     public void SetAnimation(string paremeterm, bool trigger) {
         animator.SetBool(paremeterm, trigger);
     }
@@ -96,19 +102,21 @@ public class EnemyBase : MonoBehaviour {
     /// 생성 및 재사용 초기화
     /// </summary>
     protected virtual void Init() {
+        debuffCoroutine = null;
+        parentScale.ChangeScale(Define.Direction.Right, transform);
         enemyLevel = Managers.Game.CurrentGameLevel - 1;
         transform.position = Define.DEFAULT_CREATE_POSITION;
         EnemyStatus.Init(this, enemyLevel);
         EnemyStatus.IsLive = true;
-
     }
 
     /// <summary>
     /// 이동 시작
     /// </summary>
     public void StartMove() {
-        if (EnemyStatus.CurrentHp <= 0)
+        if (Util.IsEnemyNull(this)) {
             return;
+        }
 
         if (MoveCoroutine != null) {
             StopCoroutine(MoveCoroutine);
@@ -116,7 +124,6 @@ public class EnemyBase : MonoBehaviour {
         }
 
         MoveCoroutine = StartCoroutine(Co_Move());
-
 
         if (debuffCoroutine == null)
             debuffCoroutine = StartCoroutine(Co_DamageDebuff());

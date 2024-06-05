@@ -11,8 +11,6 @@ public class Managers : MonoBehaviour
         }
     }
 
-
-
     private FireStoreManager _fireStore = new FireStoreManager();
     private DataManager _data = new DataManager();
     private AdmobManager _admob = new AdmobManager();
@@ -48,8 +46,15 @@ public class Managers : MonoBehaviour
     private void Awake()
     {
         Init();
-    }
 
+#if UNITY_EDITOR
+        Application.targetFrameRate = -1; // 에디터에서는 프레임 레이트 제한을 해제
+#elif UNITY_ANDROID
+        Application.targetFrameRate = 60; // 안드로이드 기기에서 프레임 레이트를 60으로 설정
+#else
+        Application.targetFrameRate = -1; // 다른 플랫폼에서는 기본 설정
+#endif
+    }
     private void Init()
     {
         if (_instance == null)

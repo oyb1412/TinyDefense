@@ -31,6 +31,7 @@ public class ProjectileEffectBase : MonoBehaviour {
     public virtual void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
         this.attackData = attackData;
         transform.position = pos;
+
         if(this.attackData.IsCritical)
             spriteRenderer.color = Color.red;
         else if(this.attackData.IsMiss) 

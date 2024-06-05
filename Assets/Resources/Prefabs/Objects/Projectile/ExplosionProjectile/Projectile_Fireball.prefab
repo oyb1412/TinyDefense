@@ -95,7 +95,6 @@ GameObject:
   - component: {fileID: 2871522859627172563}
   - component: {fileID: 4022927793103410350}
   - component: {fileID: -1301503904933314146}
-  - component: {fileID: 8108111497467662703}
   m_Layer: 0
   m_Name: Projectile_Fireball
   m_TagString: Untagged
@@ -143,38 +142,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3756783b8cb0d0a4b83b1ec4a3467444, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!58 &8108111497467662703
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8490360013227896961}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.05

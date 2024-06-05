@@ -17,14 +17,15 @@ public abstract class UI_Button : MonoBehaviour {
         eventTrigger = GetComponent<EventTrigger>();
     }
 
+    /// <summary>
+    /// 이벤트 트리거에 함수 연동
+    /// </summary>
     private void Start() {
         Init();
 
         AddEventTrigger(OnPointerDown, EventTriggerType.PointerDown);
         AddEventTrigger(OnPointerUp, EventTriggerType.PointerUp);
     }
-
-    
 
     /// <summary>
     /// 버튼 선택시 호출
@@ -47,9 +48,6 @@ public abstract class UI_Button : MonoBehaviour {
 
         Select();
     }
-    public abstract void Init();
-
-    public abstract void Select();
 
     /// <summary>
     /// 이벤트 트리거에 이벤트 추가
@@ -62,4 +60,8 @@ public abstract class UI_Button : MonoBehaviour {
         entry.callback.AddListener(action);
         eventTrigger.triggers.Add(entry);
     }
+
+    public abstract void Init();
+
+    public abstract void Select();
 }

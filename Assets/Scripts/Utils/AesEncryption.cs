@@ -3,8 +3,17 @@ using System.IO;
 using System.Security.Cryptography;
 using System.Text;
 
+/// <summary>
+/// 문자열 AES 암호화 클래스
+/// </summary>
 public static class AesEncryption {
 
+    /// <summary>
+    /// 키를 바탕으로 암호화
+    /// </summary>
+    /// <param name="plainText">암호화 대상 문자열</param>
+    /// <param name="key">암호화 키</param>
+    /// <returns></returns>
     public static string Encrypt(string plainText, string key) {
         byte[] iv = new byte[16];
         byte[] array;
@@ -29,6 +38,12 @@ public static class AesEncryption {
         return Convert.ToBase64String(array);
     }
 
+    /// <summary>
+    /// 암호 해독
+    /// </summary>
+    /// <param name="cipherText">해독할 문자열</param>
+    /// <param name="key">암호화 키</param>
+    /// <returns></returns>
     public static string Decrypt(string cipherText, string key) {
         byte[] iv = new byte[16];
         byte[] buffer = Convert.FromBase64String(cipherText);
@@ -48,10 +63,14 @@ public static class AesEncryption {
         }
     }
 
+    /// <summary>
+    /// 키를 바탕으로 암호 생성
+    /// </summary>
+    /// <param name="key">키</param>
+    /// <returns></returns>
     private static byte[] GetAesKey(string key) {
         using (SHA256 sha256 = SHA256.Create()) {
             return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
         }
     }
-
 }

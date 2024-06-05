@@ -18,6 +18,7 @@ public class DebuffManager {
         DebuffAction = null;
         Debuffs = new HashSet<IDebuff>();
     }
+
     /// <summary>
     /// 디버프 추가 및
     /// 해제 예약
@@ -25,10 +26,14 @@ public class DebuffManager {
     /// <param name="debuff">추가할 디버프</param>
     /// <param name="enemy">추가할 적</param>
     public void AddDebuff(IDebuff debuff, EnemyBase enemy) {
+
         if (debuff.Bundle == Define.DebuffBundle.Movement)
         {
-            if (Debuffs.FirstOrDefault(x => x.Type == debuff.Type) != null) {
-                RemoveDebuff(debuff, enemy);
+            foreach(var item in Debuffs) {
+                if(item.Type == debuff.Type) {
+                    RemoveDebuff(debuff, enemy);
+                    break;
+                }
             }
         }
 
@@ -44,7 +49,6 @@ public class DebuffManager {
     /// <param name="debuff">해제할 디버프</param>
     /// <param name="enemy">해제할 적</param>
     public void RemoveDebuff(IDebuff debuff, EnemyBase enemy) {
-        
         debuff.RemoveDebuff(enemy);
         Debuffs.Remove(debuff);
         DebuffAction?.Invoke(debuff.Type, false);
@@ -57,7 +61,10 @@ public class DebuffManager {
     /// <param name="debuff">해제할 디버프</param>
     /// <param name="enemy">해제할 적</param>
     private IEnumerator Co_RemoveDebuff(float time, IDebuff debuff, EnemyBase enemy) {
-        yield return new WaitForSeconds(time);
+        float endTime = Time.time + time;
+        while (Time.time < endTime) {
+            yield return null;
+        }
         RemoveDebuff(debuff, enemy);
     }
 
@@ -68,8 +75,8 @@ public class DebuffManager {
     /// <returns>계산 후 이동속도</returns>
     public float CalculateMoveSpeed(float baseSpeed) {
         float finalSpeed = baseSpeed;
-        foreach (var debuff in Debuffs.Where(d => d.Bundle == Define.DebuffBundle.Movement)) {
-            if(debuff.IsActive)
+        foreach (var debuff in Debuffs) {
+            if (debuff.Bundle == Define.DebuffBundle.Movement && debuff.IsActive)
                 finalSpeed = debuff.ModifyMoveSpeed(finalSpeed);
         }
         return finalSpeed;

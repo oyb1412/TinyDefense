@@ -1,8 +1,10 @@
-using UnityEngine.EventSystems;
-using UnityEngine;
-using DG.Tweening;
-
+/// <summary>
+/// 파워업 스킬 버튼
+/// </summary>
 public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
+    /// <summary>
+    /// 초기화
+    /// </summary>
     public override void Init() {
         base.Init();
         Managers.Skill.SetSkillAction += ((type) => {
@@ -13,10 +15,12 @@ public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
         });
     }
 
+    /// <summary>
+    /// 파워업 스킬 선택
+    /// </summary>
     protected override void OnSelect() {
         base.OnSelect();
 
-        //스킬 사용 후 쿨타임 시작
         var skill = Managers.Skill.GetSkillValue(Define.SkillType.PowerUp);
         UseSkill(skill.SkillCoolTime);
 
@@ -24,6 +28,8 @@ public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
         float skillValue = Managers.Skill.GetSkillValue(Define.SkillType.PowerUp).SkillValue;
         float skilltime = Managers.Skill.GetSkillValue(Define.SkillType.PowerUp).SkillTime;
 
+        //모든 타워 순회
+        //모든 타워에 버프 적용
         foreach (var tower in towers) {
             tower.BuffManager.AddBuff(
                 new AttackDamageBuff(skillValue, skilltime),tower);

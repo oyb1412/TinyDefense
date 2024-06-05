@@ -17,9 +17,9 @@ public class AbilityManager : Attribute {
 
     public void Init() {
         AbilityList = new Dictionary<Define.AbilityType, IAbility>((int)Define.AbilityType.Count);
-        AttackAbilityList = new HashSet<IAttackAbility>();
-        EnemyAbilityList = new HashSet<IEnemyAbility>();
-        TowerAbilityList = new HashSet<ITowerAbility>();
+        AttackAbilityList = new HashSet<IAttackAbility>(Define.ABILITY_ATTACK_COUNT);
+        EnemyAbilityList = new HashSet<IEnemyAbility>(Define.ABILITY_ENEMY_COUNT);
+        TowerAbilityList = new HashSet<ITowerAbility>(Define.ABILITY_TOWER_COUNT);
     }
 
     /// <summary>
@@ -56,19 +56,6 @@ public class AbilityManager : Attribute {
                 if (!TowerAbilityList.Contains(systemAbility))
                     TowerAbilityList.Add(systemAbility);
                 break;
-        }
-    }
-
-    /// <summary>
-    /// 어빌리티 리스트 반환
-    /// </summary>
-    public IEnumerable<T> GetAbilitysOfType<T>() where T : IAbility {
-        var abilitysSnapshot = AbilityList.Values.ToList(); 
-
-        foreach (var ability in abilitysSnapshot) {
-            if (ability is T tAbility) {
-                yield return tAbility;
-            }
         }
     }
 }

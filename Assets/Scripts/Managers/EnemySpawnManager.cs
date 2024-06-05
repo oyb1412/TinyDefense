@@ -6,15 +6,16 @@ using UnityEngine;
 /// </summary>
 public class EnemySpawnManager {
     //생성 딜레이
-    private WaitForSeconds wfs;
+    private WaitForSeconds spawnDelay;
     private GameObject[] enemyList;
+
     /// <summary>
     /// 생성 딜레이 초기화 및
     /// 생성 코루틴 시작
     /// </summary>
     public void SpawnStart() {
         enemyList = new GameObject[Define.MAX_ENEMY_TYPE];
-        wfs = new WaitForSeconds(Define.ENEMY_SPAWN_DELAY);
+        spawnDelay = new WaitForSeconds(Define.ENEMY_SPAWN_DELAY);
 
         for (int i = 0; i < Define.MAX_ENEMY_TYPE; i++) {
             string path = string.Format(Define.ENEMY_PREFAB_PATH, i);
@@ -41,7 +42,7 @@ public class EnemySpawnManager {
             if(spawnCount > Define.ROUND_SPAWN_COUNT)
                 break;
 
-            yield return wfs;
+            yield return spawnDelay;
         }
     }
 }

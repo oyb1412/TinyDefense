@@ -8,21 +8,21 @@ public class Icemage : TowerBase {
     protected override void Init() {
         TowerType = Define.TowerType.Icemage;
         TowerBundle = Define.TowerBundle.Mage;
+        base.Init();
 
         AddDebuff();
-
-        base.Init();
     }
 
     public override void TowerLevelup() {
         base.TowerLevelup();
 
-        var debuff = Debuffs.Find(x => x.Type == Define.DebuffType.Slow);
+        foreach (var item in Debuffs) {
+            if (item.Type == Define.DebuffType.Slow) {
+                Debuffs.Remove(item);
+                break;
+            }
+        }
 
-        if (debuff == null)
-            return;
-
-        Debuffs.Remove(debuff);
         AddDebuff();
     }
 

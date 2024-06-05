@@ -1,8 +1,9 @@
 using Newtonsoft.Json;
-using System.Runtime.InteropServices;
-using Unity.VisualScripting;
 using UnityEngine;
 
+/// <summary>
+/// 모든 상수, 열거, 보조 클래스 관리 클래스
+/// </summary>
 public static class Define 
 {
     #region Const
@@ -11,16 +12,16 @@ public static class Define
 
     public static readonly Vector3 ARROWHEAD_SCALE = new Vector3(.2f, .2f, 1f);
 
-    public static readonly float ABILITY_ENEMY_MOVESPEED_MINUS = .9f;
+    public static readonly float ABILITY_ENEMY_MOVESPEED_MINUS = .8f;
     public static readonly float ABILITY_POISON_DEFAULT_DAMAGE = .2f;
     public static readonly float ABILITY_POISON_DEFAULT_TIME = 2f;
     public static readonly float ABILITY_STUN_DEFAULT_TIME = .5f;
-    public static readonly float ABILITY_STUN_DEFAULT_CHANCE = 0.2f;
+    public static readonly float ABILITY_STUN_DEFAULT_CHANCE = 0.3f;
     public static readonly float ABILITY_PROJECTILE_DEFAULT_CHANCE = 0.2f;
     public static readonly float ABILITY_PROJECTILE_DEFAULT_DELAY = 0.1f;
     public static readonly float ABILITY_MANYENEMY_DAMAGE_UP = 0.01f;
-    public static readonly float ABILITY_DEFAULT_CRITICAL_CHANCE = 0.7f;
-    public static readonly float ABILITY_DEFAULT_CRITICAL_DAMAGE = 0.5f;
+    public static readonly float ABILITY_DEFAULT_CRITICAL_CHANCE = 0.8f;
+    public static readonly float ABILITY_DEFAULT_CRITICAL_DAMAGE = 0.7f;
     public static readonly float ABILITY_DEFAULT_MISS_CHANCE = 0.3f;
     public static readonly float ABILITY_PLUS_TOWER_REWARD = 0.3f;
 
@@ -100,9 +101,15 @@ public static class Define
     public static readonly int GAME_START_GOLD = 90;
 
     public static readonly int MAX_ENEMY_TYPE = 16;
+    public static readonly int MAX_EMAIL_LENGTH = 30;
+    public static readonly int MAX_PASSWORD_LENGTH = 20;
+
+    public static readonly int ABILITY_ATTACK_COUNT = 5;
+    public static readonly int ABILITY_ENEMY_COUNT = 2;
+    public static readonly int ABILITY_TOWER_COUNT = 8;
 
     public static readonly int ENEMY_SEARCH_MAX_COUNT = 5;
-    public static readonly int ENEMY_MAX_COUNT = 55;
+    public static readonly int ENEMY_MAX_COUNT = 50;
     public static readonly int SFX_DEFAULT_CHANNELS = 10;
 
     public static readonly float ENEMY_DEFAULT_SCALE = .5f;
@@ -126,6 +133,7 @@ public static class Define
     public static readonly float PRESS_TIME = 0.3f; 
 
     public static readonly string TAG_DEAD = "Dead";
+    public static readonly string TAG_LOADING_SLIDER = "LoadingSlider";
     public static readonly string TAG_TOWER = "Tower";
     public static readonly string TAG_GROUND = "Ground";
     public static readonly string TAG_RUN = "Run";
@@ -138,6 +146,11 @@ public static class Define
     public static readonly string ENEMY_MOVE_PATH = "EnemyMovePath";
     public static readonly string TAG_LOGIN_DATA = "LoginData";
     public static readonly string TAG_SCORE_DATA = "ScoreData";
+    public static readonly string TAG_ENEMY_DATA = "EnemyData";
+    public static readonly string TAG_SKILL_DATA = "SkillData";
+    public static readonly string TAG_TOWER_DATA = "TowerData";
+    public static readonly string TAG_ENHANCE_DATA = "EnhanceData";
+    public static readonly string TAG_GAME_DATA_JSON = "GameData.json";
     public static readonly string TAG_SCORE = "Score";
     public static readonly string TAG_KEY_DATA = "KeyData";
     public static readonly string TAG_DATA_KEY = "DataKey";
@@ -161,6 +174,11 @@ public static class Define
     public static readonly string SPRITE_BUTTON_DEFAULT_SPEED = "Sprite/Button/Button_DefaultSpeed";
     public static readonly string SPRITE_BUTTON_FASE_SPEED = "Sprite/Button/Button_FastSpeed";
     public static readonly string EFFECT_TOWER_BUILD = "Prefabs/Objects/Effect/Tower/BuildEffect";
+
+    public static readonly string SPRITE_OTHER_ICON = "Sprite/UI/OtherIcon";
+    public static readonly string SPRITE_TOP_ICON = "Sprite/UI/TopIcon{0}";
+
+    public static readonly string RANKING_SCORE = "Score : {0}";
 
     public static readonly string TILE_PATH = "Prefabs/Other/CreateTile";
     public static readonly string ARROWHEAD_PATH = "Objects/Other/ArrowHead";
@@ -334,6 +352,7 @@ public static class Define
     public enum BuffType {
         AttackDamageUp,
         AttackDelayDown,
+        Count,
     }
 
     public enum GameSpeed {
@@ -434,7 +453,6 @@ public static class Define
     }
    
     #endregion
-
     #region Class
     public class EnhanceValue {
         public int Level { get; set; }

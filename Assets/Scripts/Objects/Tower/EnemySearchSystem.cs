@@ -1,119 +1,65 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using DG.Tweening;
-using TMPro;
-using UnityEngine.UIElements;
 
 /// <summary>
 /// 주변 적 감지 클래스
 /// </summary>
 public class EnemySearchSystem : MonoBehaviour
 {
-    //공격 대상
-    public EnemyBase TargetEnemy {
-        get { return targetEnemy; }
-        private set {
-            towerBase.SetTargetEnemy(value);
-
-            targetEnemy = value;
-        }
-    }
-
-    //공격 대상
-    private EnemyBase targetEnemy;
     //부모 타워
     private TowerBase towerBase;
-    //감지된 적 리스트
-    private HashSet<EnemyBase> enemyList = new HashSet<EnemyBase>(Define.ENEMY_SEARCH_MAX_COUNT);
-
     //타워 사거리 스프라이트
     public SpriteRenderer RangeSprite { get; private set; }
+    //타워 선택 마크
     private SelectArrow selectArrow;
-
+    //타워 선택 및 선택해제 트윈
     private Tween rangeTween;
+    //애너미 레이어
+    private LayerMask enemyLayer;
 
     private void Awake() {
         towerBase = GetComponentInParent<TowerBase>();
         RangeSprite = GetComponentInChildren<SpriteRenderer>();
         selectArrow = GetComponentInChildren<SelectArrow>();
         RangeSprite.enabled = false;
+        enemyLayer = LayerMask.GetMask(Define.TAG_ENEMY);
     }
 
-    private void Update() {
-        if (Managers.Enemy.enemyList.Count == 0)
-            return;
+    /// <summary>
+    /// 공격 사거리 내의 적 서치
+    /// </summary>
+    /// <returns></returns>
+    public EnemyBase SearchEnemy() {
+        if (towerBase == null)
+            return null;
 
-        var nullList = enemyList.Where(x => Util.IsEnemyNull(x)).ToList();
+        var hit = Physics2D.CircleCast(towerBase.transform.position, towerBase.TowerStatus.AttackRange * 0.3f, Vector2.zero, enemyLayer);
 
-        foreach (var item in nullList) {
-            enemyList.Remove(item);
-        }
-
-        foreach (EnemyBase enemy in Managers.Enemy.enemyList) {
-            //거리계산
-            if (Vector2.Distance(towerBase.transform.position, enemy.transform.position) < towerBase.TowerStatus.AttackRange / 3) {
-                if (enemyList.Contains(enemy))
-                    continue;
-
-                if (enemyList.Count >= Define.ENEMY_SEARCH_MAX_COUNT)
-                    continue;
-
-                AddEnemyAndSort(enemy);
-            }
-            else {
-                if (enemyList.Count == 0)
-                    continue;
-
-                if (!enemyList.Contains(enemy))
-                    continue;
-
-                if (enemy == TargetEnemy)
-                    TargetEnemy = null;
-
-                RemoveEnemyAndSort(enemy);
-            }
-        }
-    }
-
-    public EnemyBase GetRandomEnemy(EnemyBase enemy) {
-        if(enemyList.Count > 0) {
-            if (Vector2.Distance(towerBase.transform.position, enemy.transform.position)
-                 < towerBase.TowerStatus.AttackRange / 3)
-                return enemy;
+        if(hit.collider != null) {
+            return hit.collider.GetComponent<EnemyBase>();
         }
         return null;
     }
 
     /// <summary>
-    /// 리스트에 적을 추가함과 동시에 체력순 Sort
+    /// 현재 타겟 애너미가 사거리 내에 있는지 체크
     /// </summary>
-    /// <param name="enemy">추가할 적</param>
-    private void AddEnemyAndSort(EnemyBase enemy) {
-        enemyList.Add(enemy);
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public EnemyBase TargetEnemyCheck(EnemyBase target) {
+        if(target == null) 
+            return null;
 
-        if (Util.IsEnemyNull(TargetEnemy)) 
-        {
-            TargetEnemy = enemyList.OrderBy(e => e.EnemyStatus.CurrentHp).FirstOrDefault();
+        if(Vector2.Distance(towerBase.transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * 0.2f) {
+            return null;
         }
+
+        return target;
     }
 
     /// <summary>
-    /// 리스트에서 적을 제거함과 동시에 체력순 Sort
+    /// 타워 선택시 사거리 및 마크 표시
     /// </summary>
-    /// <param name="enemy">제거할 적</param>
-    private void RemoveEnemyAndSort(EnemyBase enemy) {
-        enemyList.Remove(enemy);
-
-        if (enemyList.Count == 0)
-            TargetEnemy = null;
-
-        if (Util.IsEnemyNull(TargetEnemy) && enemyList.Count != 0) 
-        {
-            TargetEnemy = enemyList.OrderBy(e => e.EnemyStatus.CurrentHp).FirstOrDefault();
-        }
-    }
-
     public void Activation() {
         SpritesActivation();
 
@@ -140,6 +86,9 @@ public class EnemySearchSystem : MonoBehaviour
             .OnUpdate(() => RangeSprite.transform.localScale = rangeScale);
     }
 
+    /// <summary>
+    /// 타워 선택 해제시 마크 및 사거리 비활성화
+    /// </summary>
     public void DeActivation() {
         Util.ResetTween(rangeTween);
         rangeTween = DOTween.To(() => RangeSprite.transform.localScale, x => RangeSprite.transform.localScale = x,
@@ -149,6 +98,9 @@ public class EnemySearchSystem : MonoBehaviour
         selectArrow.DeActivation();
     }
 
+    /// <summary>
+    /// 사거리 스프라이트 활성화
+    /// </summary>
     private void SpritesActivation() {
         RangeSprite.enabled = true;
         selectArrow.Activation();

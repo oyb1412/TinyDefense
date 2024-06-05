@@ -1,7 +1,10 @@
-using DG.Tweening;
 using UnityEngine;
 
+/// <summary>
+/// 토네이도 스킬 버튼 클래스
+/// </summary>
 public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
+    //토네이도 객체 프리펩
     private GameObject tornadoPrefab;
     public override void Init() {
         base.Init();
@@ -13,6 +16,10 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
             }
         });
     }
+
+    /// <summary>
+    /// 토네이도 스킬 실행
+    /// </summary>
     protected override void OnSelect() {
         base.OnSelect();
 
@@ -22,7 +29,7 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
         var skill = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
         UseSkill(skill.SkillCoolTime);
 
-
+        //토네이도 생성
         Managers.Resources.Instantiate(tornadoPrefab);
     }
 }

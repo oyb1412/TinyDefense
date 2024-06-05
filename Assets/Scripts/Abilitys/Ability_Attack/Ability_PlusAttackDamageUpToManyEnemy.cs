@@ -31,6 +31,6 @@ public class Ability_PlusAttackDamageUpToManyEnemy : IAttackAbility {
     /// <param name="attackData">공격 데이터</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         //적 숫자에 비례해 공격력 증가
-        attackData.Damage *= (1 + Define.ABILITY_MANYENEMY_DAMAGE_UP * Managers.Enemy.enemyList.Count);
+        attackData.Damage *= (1 + Define.ABILITY_MANYENEMY_DAMAGE_UP * Managers.Enemy.EnemyList.Count);
     }
 }

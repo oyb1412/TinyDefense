@@ -16,7 +16,7 @@ public class BuffManager {
     public Action<Define.BuffType, bool> BuffAction;
 
     public BuffManager() {
-        Buffs = new HashSet<IBuff>();
+        Buffs = new HashSet<IBuff>((int)Define.BuffType.Count);
         BuffAction = null;
     }
 
@@ -27,8 +27,11 @@ public class BuffManager {
     /// <param name="buff">적용할 버프</param>
     /// <param name="tower">적용시킬 타워</param>
     public void AddBuff(IBuff buff, TowerBase tower) {
-        if (Buffs.FirstOrDefault(x => x.Type == buff.Type) != null) {
-            RemoveBuff(buff, tower);
+        foreach (var b in Buffs) {
+            if(b.Type == buff.Type) {
+                RemoveBuff(buff, tower);
+                break;
+            }
         }
 
         Buffs.Add(buff);
@@ -55,7 +58,10 @@ public class BuffManager {
     /// <param name="buff">해제할 버프</param>
     /// <param name="tower">해제할 타워</param>
     private IEnumerator Co_RemoveBuff(float time, IBuff buff, TowerBase tower) {
-        yield return new WaitForSeconds(time);
+        float endTime = Time.time + time;
+        while (Time.time < endTime) {
+            yield return null;
+        }
         RemoveBuff(buff, tower);
     }
 
@@ -66,9 +72,9 @@ public class BuffManager {
     /// <returns>계산 완료된 데미지</returns>
     public float CalculateAttackDamage(float baseDamage) {
         float finalDamage = baseDamage;
-        foreach (var buff in Buffs.Where(d => d.Type == Define.BuffType.AttackDamageUp)) {
-            if(buff.IsActive)
-                finalDamage = buff.ModifyValue(finalDamage);
+        foreach (var b in Buffs) {
+            if(b.Type == Define.BuffType.AttackDamageUp && b.IsActive)
+                finalDamage = b.ModifyValue(finalDamage);
         }
         return finalDamage;
     }
@@ -80,8 +86,8 @@ public class BuffManager {
     /// <returns>계산 완료된 딜레이</returns>
     public float CalculateAttackDelay(float baseDelay) {
         float finalDelay = baseDelay;
-        foreach (var buff in Buffs.Where(d => d.Type == Define.BuffType.AttackDelayDown)) {
-            if (buff.IsActive)
+        foreach (var buff in Buffs) {
+            if (buff.Type == Define.BuffType.AttackDelayDown && buff.IsActive)
                 finalDelay = buff.ModifyValue(finalDelay);
         }
         return finalDelay;

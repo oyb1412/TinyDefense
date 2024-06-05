@@ -6,6 +6,7 @@ public class SelectArrow : MonoBehaviour {
     private SpriteRenderer arrowSprite;
     //화살표 스프라이트 트위닝
     private Tween moveTween;
+    //화살표 기본 위치
     private Vector3 arrowOriginalPosition;
 
     private void Awake() {
@@ -14,6 +15,10 @@ public class SelectArrow : MonoBehaviour {
         arrowSprite.enabled = false;
     }
 
+    /// <summary>
+    /// 화살표 활성화
+    /// 트윈 초기화 및 실행
+    /// </summary>
     public void Activation() {
         arrowSprite.enabled = true;
         Util.ResetTween(moveTween);
@@ -23,6 +28,10 @@ public class SelectArrow : MonoBehaviour {
             .SetLoops(-1, LoopType.Yoyo);
     }
 
+    /// <summary>
+    /// 화살표 비활성화
+    /// 트윈 초기화
+    /// </summary>
     public void DeActivation() {
         Util.ResetTween(moveTween);
         arrowSprite.transform.localPosition = arrowOriginalPosition;

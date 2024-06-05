@@ -4,7 +4,6 @@ using GoogleMobileAds.Api;
 using UnityEngine.Events;
 
 public class AdmobManager {
-
     // These ad units are configured to always serve test ads.
 #if UNITY_ANDROID
     private string _adUnitId = "ca-app-pub-3940256099942544/5224354917";

@@ -14,7 +14,9 @@ public class DebuffAdjustment : MonoBehaviour {
         debuffs = GetComponentsInChildren<SpriteRenderer>();
     }
 
-
+    /// <summary>
+    /// 디버프 활성화시 액션 연동
+    /// </summary>
     private void OnEnable() {
         foreach (SpriteRenderer debuff in debuffs)
             debuff.enabled = false;

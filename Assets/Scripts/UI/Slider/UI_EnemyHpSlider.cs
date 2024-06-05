@@ -14,12 +14,18 @@ public class UI_EnemyHpSlider : MonoBehaviour {
     //부모 애너미 최대 hp
     private float maxHp;
 
+    /// <summary>
+    /// 첫 생성 시 초기화
+    /// </summary>
     private void Awake() {
         enemyBase = GetComponentInParent<EnemyBase>();
         hpSlider = GetComponent<Slider>();
         fillImage = hpSlider.fillRect.GetComponent<Image>();
     }
 
+    /// <summary>
+    /// 재생성 시 초기화
+    /// </summary>
     private void OnEnable() {
         Init();
     }

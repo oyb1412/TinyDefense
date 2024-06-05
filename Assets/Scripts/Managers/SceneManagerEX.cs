@@ -1,8 +1,6 @@
-using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public class SceneManagerEX
 {

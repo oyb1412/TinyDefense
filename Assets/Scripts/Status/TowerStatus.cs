@@ -1,11 +1,9 @@
-using System;
 using UnityEngine;
 
 /// <summary>
 /// 타워 능력치
 /// </summary>
 public class TowerStatus : StatusBase {
-
     /// <summary>
     /// 타워 생성 및 재생성시 초기화
     /// </summary>
@@ -26,13 +24,14 @@ public class TowerStatus : StatusBase {
         TowerType = tower.TowerType;
         TowerBundle = tower.TowerBundle;
         towerBase = tower;
-        TowerName = TowerType.ToString();
         TowerKills = 0;
 
         SellReward = TowerData.SellReward;
         SetStatus();
 
-        Projectile = Resources.Load<GameObject>(Define.PROJECTILE_PATH[(int)TowerType]);
+        if(Projectile == null)
+            Projectile = Resources.Load<GameObject>(Define.PROJECTILE_PATH[(int)TowerType]);
+
         enhance = Managers.Enhance;
     }
 
@@ -104,8 +103,6 @@ public class TowerStatus : StatusBase {
     private float attackDamage;
     //대상 타워
     private TowerBase towerBase;
-    //타워 이름
-    public string TowerName { get; private set; }
     //적 처치 수
     public int TowerKills { get; private set; }
 

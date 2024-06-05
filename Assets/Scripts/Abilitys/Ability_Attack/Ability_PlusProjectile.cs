@@ -32,6 +32,7 @@ public class Ability_PlusProjectile : IAttackAbility {
     /// <param name="attackData">공격 데이터</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         float ran = Random.Range(0f, 1f);
+
         if (Define.ABILITY_PROJECTILE_DEFAULT_CHANCE < ran)
             return;
 
