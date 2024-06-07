@@ -13,7 +13,7 @@ public class Icemage : TowerBase {
         AddDebuff();
     }
 
-    public override void TowerLevelup() {
+    public override void TowerLevelup(int killCount) {
         base.TowerLevelup();
 
         foreach (var item in Debuffs) {

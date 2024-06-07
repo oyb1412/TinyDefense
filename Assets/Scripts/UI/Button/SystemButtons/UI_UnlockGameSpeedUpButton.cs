@@ -1,10 +1,11 @@
+using UnityEngine;
 /// <summary>
 /// 게임 배속 언락 버튼(광고)
 /// </summary>
 public class UI_UnlockGameSpeedUpButton : UI_Button {
-    private UI_GameSpeedUpButton uI_GameSpeedUp;
+    [SerializeField]private UI_GameSpeedUpButton uI_GameSpeedUp;
     public override void Init() {
-        uI_GameSpeedUp = GetComponentInParent<UI_GameSpeedUpButton>();
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

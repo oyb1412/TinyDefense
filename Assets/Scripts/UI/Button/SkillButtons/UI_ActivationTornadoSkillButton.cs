@@ -7,8 +7,11 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
     //토네이도 객체 프리펩
     private GameObject tornadoPrefab;
     public override void Init() {
+        buttonSfxType = Define.SFXType.TornadoSkill;
         base.Init();
-        tornadoPrefab = Resources.Load<GameObject>(Define.SKILL_TORNADO_PATH);
+        if(tornadoPrefab == null ) 
+            tornadoPrefab = Resources.Load<GameObject>(Define.SKILL_TORNADO_PATH);
+
         Managers.Skill.SetSkillAction += ((type) => {
             if (type == Define.SkillType.Tornado) {
                 seletable = true;
@@ -30,6 +33,6 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
         UseSkill(skill.SkillCoolTime);
 
         //토네이도 생성
-        Managers.Resources.Instantiate(tornadoPrefab);
+        Managers.Resources.Activation(tornadoPrefab);
     }
 }

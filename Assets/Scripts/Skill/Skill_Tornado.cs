@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 /// <summary>
 /// 토네이도 스킬 객체 클래스
@@ -8,15 +9,19 @@ using System.Collections.Generic;
 public class Skill_Tornado : MonoBehaviour {
     //이동 경로(부모)
     private Transform movePath;
-    //공격한 적 저장용 해시셋
-    private HashSet<EnemyBase> enteredEnemies = new HashSet<EnemyBase>();
     //스킬 데이터
     private SkillData.Skill skillData;
+    //이동 코루틴
+    private Coroutine moveCoroutine;
     private void Start() {
         transform.position = Define.SKILL_TORNADO_DEFAULT_POSITION;
         movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
 
-        StartCoroutine(Co_Move());
+        if(moveCoroutine != null)
+            StopCoroutine(moveCoroutine);
+
+        moveCoroutine = StartCoroutine(Co_Move());
+
         skillData = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
 
         Invoke("Ivk_DestroyTornado", skillData.SkillTime);
@@ -27,8 +32,20 @@ public class Skill_Tornado : MonoBehaviour {
     /// </summary>
     private void Ivk_DestroyTornado() {
         StopAllCoroutines();
-        Managers.Resources.Destroy(gameObject);
-        enteredEnemies.Clear();
+        Managers.Resources.Release(gameObject);
+    }
+
+    private void OnTriggerEnter2D(Collider2D c) {
+        if (!c.CompareTag(Define.TAG_ENEMY))
+            return;
+
+        EnemyBase enemy = c.GetComponent<EnemyBase>();
+
+        if (Util.IsEnemyNull(enemy))
+            return;
+
+        enemy.DebuffManager.AddDebuff(new SlowDebuff(skillData.SkillValue, skillData.SkillTime), enemy);
+        enemy.EnemyStatus.SetHp(skillData.SkillDamage);
     }
 
     /// <summary>
@@ -37,22 +54,8 @@ public class Skill_Tornado : MonoBehaviour {
     private IEnumerator Co_Move() {
         int moveIndex = movePath.childCount - 1;
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;
-        var enemys = Managers.Enemy.EnemyList;
+        var enemys = Managers.Enemy.EnemyList.ToHashSet();
         while (true) {
-            for(int i = 0; i< enemys.Count; i++) {
-                if (enemys[i] == null)
-                    continue;
-
-                float dir = Vector2.Distance(transform.position, enemys[i].transform.position);
-                if (dir <= Define.SKILL_TORNADO_RANGE && !enteredEnemies.Contains(enemys[i])) {
-                    enteredEnemies.Add(enemys[i]);
-                    enemys[i].DebuffManager.AddDebuff(new SlowDebuff(skillData.SkillValue, skillData.SkillTime), enemys[i]);
-                    enemys[i].EnemyStatus.SetHp(skillData.SkillDamage);
-                } else if (dir > Define.SKILL_TORNADO_RANGE && enteredEnemies.Contains(enemys[i])) {
-                    enteredEnemies.Remove(enemys[i]);
-                }
-            }
-
             transform.position = Vector3.MoveTowards(transform.position, targetPosition,
                 Define.SKILL_TORNADO_MOVESPEED * Time.deltaTime);
 

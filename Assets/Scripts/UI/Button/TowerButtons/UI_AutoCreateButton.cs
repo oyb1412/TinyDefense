@@ -11,6 +11,7 @@ public class UI_AutoCreateButton : UI_Button {
     //타워 생성 버튼
     [SerializeField]private UI_CreateButton createButton;
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectTowerUIButton;
         cells = FindObjectsByType<Cell>(FindObjectsSortMode.None);
     }
 

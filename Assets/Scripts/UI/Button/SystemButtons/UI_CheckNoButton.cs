@@ -13,7 +13,7 @@ public class UI_CheckNoButton : UI_Button {
         this.checkPanel = checkPanel;
     }
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.DeSelectUIButton;
     }
 
     /// <summary>

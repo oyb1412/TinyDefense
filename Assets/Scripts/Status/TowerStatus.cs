@@ -127,9 +127,10 @@ public class TowerStatus : StatusBase {
         SellReward = TowerData.SellReward;
     }
 
-    public void LevelUpStatus() {
+    public void LevelUpStatus(int killCount = 0) {
         Level++;
         SetReward();
+        TowerKills += killCount;
         AttackDamage = attackDamage * (TowerData.AttackDamageUpValue);
         AttackRange = TowerData.AttackRange + (TowerData.AttackRangeUpValue * (Level));
         AttackDelay = TowerData.AttackDelay * (1 - TowerData.AttackDelayDownValue * (Level));

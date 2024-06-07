@@ -25,6 +25,12 @@ public class EnemySearchSystem : MonoBehaviour
         enemyLayer = LayerMask.GetMask(Define.TAG_ENEMY);
     }
 
+    private void Update() {
+        if(RangeSprite.enabled) {
+            RangeSprite.transform.localRotation *= Quaternion.Euler(0, 0, Define.TOWER_RANGE_ROTATE_SPEED * Time.deltaTime);
+        }
+    }
+
     /// <summary>
     /// 공격 사거리 내의 적 서치
     /// </summary>
@@ -33,7 +39,7 @@ public class EnemySearchSystem : MonoBehaviour
         if (towerBase == null)
             return null;
 
-        var hit = Physics2D.CircleCast(towerBase.transform.position, towerBase.TowerStatus.AttackRange * 0.3f, Vector2.zero, enemyLayer);
+        var hit = Physics2D.CircleCast(transform.position, towerBase.TowerStatus.AttackRange * Define.TOWER_RANGE, Vector2.zero, enemyLayer);
 
         if(hit.collider != null) {
             return hit.collider.GetComponent<EnemyBase>();
@@ -50,7 +56,7 @@ public class EnemySearchSystem : MonoBehaviour
         if(target == null) 
             return null;
 
-        if(Vector2.Distance(towerBase.transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * 0.2f) {
+        if(Vector2.Distance(transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * Define.TOWER_RANGE) {
             return null;
         }
 

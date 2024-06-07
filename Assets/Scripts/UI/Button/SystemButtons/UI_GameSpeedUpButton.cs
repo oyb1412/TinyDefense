@@ -12,11 +12,17 @@ public class UI_GameSpeedUpButton : UI_Button {
     //스프라이트 저장용 이미지
     private Image iconImage;
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
         iconImage = GetComponent<Image>();
-        defaultSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_DEFAULT_SPEED);
-        fastSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_FASE_SPEED);
-        //button.interactable = false;
-        //seletable = false;
+
+        if(defaultSpeedSprite == null)
+            defaultSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_DEFAULT_SPEED);
+
+        if(fastSpeedSprite == null)
+            fastSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_FASE_SPEED);
+
+        button.interactable = false;
+        seletable = false;
     }
 
     /// <summary>

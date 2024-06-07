@@ -14,15 +14,16 @@ public class UI_LoadingText : MonoBehaviour {
     //텍스트 컴포넌트
     private Text text;
     //로딩 % 표기 텍스트
-    private TextMeshProUGUI loadingText;
+    [SerializeField]private TextMeshProUGUI loadingText;
+    //텍스트 트위닝
+    private Tween textTween;
 
     /// <summary>
     /// 초기화 및 로딩 중... 텍스트 트위닝 실행
     /// </summary>
     private void Awake() {
         text = GetComponent<Text>();
-        loadingText = GetComponentInChildren<TextMeshProUGUI>();
-        text.DOText(mainText, 1.5f).SetLoops(-1, LoopType.Restart);
+        textTween = text.DOText(mainText, 1.5f).SetLoops(-1, LoopType.Restart);
     }
 
     /// <summary>
@@ -40,7 +41,8 @@ public class UI_LoadingText : MonoBehaviour {
     /// 로딩 완료 텍스트 표기
     /// </summary>
     public void CompleteLoading() {
-        DOTween.KillAll();
+        textTween.Kill();
+        textTween = null;
         text.text = clearText;
     }
 }

@@ -50,6 +50,8 @@ public class LoginData {
 public class DataManager {
     //모든 게임 데이터
     public GameData GameData { get; set; }
+    //모든 게임 데이터(Defind)
+    public TestDefine DefineData { get; set; }
     //데이터 암호화를 위한 키
     public string Key { get; set; }
 
@@ -57,13 +59,13 @@ public class DataManager {
     /// 로컬에 게임 데이터 저장.
     /// 첫 게임 시작시 호출
     /// </summary>
-    public void SaveData() {
-        string jsonData = JsonConvert.SerializeObject(GameData, Formatting.Indented, new JsonSerializerSettings {
+    public void SaveData(object data) {
+        string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings {
             ReferenceLoopHandling = ReferenceLoopHandling.Ignore,
             Converters = new List<JsonConverter> { new Vector3Converter(), new ColorConverter() }
         });
 
-        SaveJson("GameData", jsonData);
+        DecryptionSaveJson(Define.TAG_GAME_DATA, jsonData);
     }
 
     /// <summary>
@@ -71,7 +73,7 @@ public class DataManager {
     /// </summary>
     /// <returns></returns>
     public LoginData LoadLoginData() {
-        LoginData logindata = LoadJson<LoginData>(Define.TAG_LOGIN_DATA);
+        LoginData logindata = DecryptionLoadJson<LoginData>(Define.TAG_LOGIN_DATA);
         return logindata;
     }
 
@@ -84,7 +86,45 @@ public class DataManager {
     public void SaveLoginData(string email, string password) {
         LoginData logindata = new LoginData(email, password);
         string jsonData = JsonConvert.SerializeObject(logindata);
-        SaveJson(Define.TAG_LOGIN_DATA, jsonData);
+        DecryptionSaveJson(Define.TAG_LOGIN_DATA, jsonData);
+    }
+
+    /// <summary>
+    /// Json파일 저장(복호화)
+    /// Application.persistentDataPath에 저장
+    /// </summary>
+    /// <param name="name">파일 이름</param>
+    /// <param name="jsonData">데이터</param>
+    public void DecryptionSaveJson(string name, string jsonData) {
+        string towerData = AesEncryption.Encrypt(jsonData, Key);
+
+        string Path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
+        FileStream stream = new FileStream(Path, FileMode.Create);
+        byte[] data = Encoding.UTF8.GetBytes(towerData);
+        stream.Write(data, 0, data.Length);
+        stream.Close();
+        Debug.Log($"{Path}에 {name}이름의 Json파일 세이브");
+    }
+
+    /// <summary>
+    /// JSON파일 로드(복호화)
+    /// </summary>
+    /// <typeparam name="T">타입</typeparam>
+    /// <param name="name">파일 이름</param>
+    /// Application.persistentDataPath패스에서 로드
+    /// <returns></returns>
+    public T DecryptionLoadJson<T>(string name) {
+        string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
+        if (!File.Exists(path)) {
+            Debug.LogError($"Load 실패. {Application.persistentDataPath}에 {name} 이름 파일이 없습니다.");
+            return default;
+        }
+
+        string jsonData = File.ReadAllText(path);
+        string json = AesEncryption.Decrypt(jsonData, Key);
+
+        Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
+        return JsonConvert.DeserializeObject<T>(json);
     }
 
     /// <summary>
@@ -94,11 +134,9 @@ public class DataManager {
     /// <param name="name">파일 이름</param>
     /// <param name="jsonData">데이터</param>
     public void SaveJson(string name, string jsonData) {
-        string towerData = AesEncryption.Encrypt(jsonData, Key);
-
         string Path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         FileStream stream = new FileStream(Path, FileMode.Create);
-        byte[] data = Encoding.UTF8.GetBytes(towerData);
+        byte[] data = Encoding.UTF8.GetBytes(jsonData);
         stream.Write(data, 0, data.Length);
         stream.Close();
         Debug.Log($"{Path}에 {name}이름의 Json파일 세이브");
@@ -119,20 +157,19 @@ public class DataManager {
         }
 
         string jsonData = File.ReadAllText(path);
-        string json = AesEncryption.Decrypt(jsonData, Key);
 
         Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
-        return JsonConvert.DeserializeObject<T>(json);
+        return JsonConvert.DeserializeObject<T>(jsonData);
     }
 
     /// <summary>
-    /// JSON파일 비동기 로드
+    /// JSON파일 비동기 로드(복호화)
     /// </summary>
     /// <typeparam name="T">타입</typeparam>
     /// <param name="name">파일 이름</param>
     /// Application.persistentDataPath패스에서 비동기 로드
     /// <returns></returns>
-    public async Task<T> LoadJsonAsync<T>(string name) {
+    public async Task<T> DecryptionLoadJsonAsync<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
             Debug.LogError($"Load 실패. {Application.persistentDataPath}에 {name} 이름 파일이 없습니다.");

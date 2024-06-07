@@ -5,7 +5,7 @@ using UnityEngine;
 /// </summary>
 public interface IUI_TowerButton {
     //활성화
-    void Activation(Cell cell, GameObject buildEffect);
+    void Activation(Cell cellt);
     //비활성화
     void DeActivation();
 }

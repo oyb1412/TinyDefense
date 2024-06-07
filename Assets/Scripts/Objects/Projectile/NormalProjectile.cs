@@ -23,7 +23,7 @@ public class NormalProjectile : ProjectileBase {
     /// 투사체 적중시 폭발 이펙트 생성
     /// </summary>
     protected override void CreateExplosion() {
-        NormalProjectileEffect go = Managers.Resources.Instantiate(explosionEffect).GetComponent<NormalProjectileEffect>();
+        NormalProjectileEffect go = Managers.Resources.Activation(explosionEffect).GetComponent<NormalProjectileEffect>();
         go.Init(towerBase, attackData, transform.position);
     }
 }

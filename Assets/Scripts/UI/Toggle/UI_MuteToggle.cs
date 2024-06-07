@@ -4,7 +4,7 @@ using UnityEngine.UI;
 /// <summary>
 /// 모든 뮤트 토글 관리 부모 클래스
 /// </summary>
-public abstract class UI_MuteToggle : MonoBehaviour {
+public class UI_MuteToggle : MonoBehaviour {
     //토글
     private Toggle muteToggle;
 
@@ -20,5 +20,7 @@ public abstract class UI_MuteToggle : MonoBehaviour {
     /// 볼륨 뮤트
     /// </summary>
     /// <param name="trigger"></param>
-    protected abstract void SetToggle(bool trigger);
+    protected virtual void SetToggle(bool trigger) {
+        SoundManager.Instance.PlaySfx(Define.SFXType.SelectUIButton);
+    }
 }

@@ -7,14 +7,15 @@ public class FirstScene : BaseScene {
     private UI_LoadingSlider loadingSlider;
 
     public override void Init() {
+        Managers.ADMob.Init();
         //string path = Path.Combine(Application.persistentDataPath, "GameData.json");
-        //if(File.Exists(path)) {
+        //if (File.Exists(path)) {
         //    Debug.Log($"{path}데이터 삭제 성공");
         //    File.Delete(path);
         //}
         base.Init();
         StartCoroutine(Co_Init());
-        loadingSlider = GameObject.Find(Define.TAG_LOADING_SLIDER).GetComponent<UI_LoadingSlider>();
+        loadingSlider = GameObject.Find("LoadingSlider").GetComponent<UI_LoadingSlider>();
     }
 
     /// <summary>
@@ -25,13 +26,39 @@ public class FirstScene : BaseScene {
     /// <returns></returns>
     private IEnumerator Co_Init() {
         yield return StartCoroutine(Co_FirebaseInit());
+        //디파인 데이터 있나 체크
+        //존재 시 바로 할당
+        Managers.Data.DefineData = new TestDefine();
+
+        if (Managers.Data.CheckPathFile("TestDefine.json")) {
+            Managers.Data.DefineData = Managers.Data.DecryptionLoadJson<TestDefine>("TestDefine");
+        }
+        //디파인 데이터가 없을 시 파이어베이스에서 로드
+        else {
+            var task = Managers.FireStore.LoadDataToFireStore("DefineData", "DefineData", "DefineData");
+            yield return new WaitUntil(() => task.IsCompleted);
+
+            if (task.Result != null) {
+                Managers.Data.DecryptionSaveJson("TestDefine", task.Result.ToString());
+            }
+
+            Managers.Data.DefineData = Managers.Data.DecryptionLoadJson<TestDefine>("TestDefine");
+
+            yield return new WaitUntil(() => Managers.Data.DefineData.COLOR_TOWERLEVEL != null);
+        }
+
+
         //pre패스에 게임 데이터가 있나 체크.
         if (Managers.Data.CheckPathFile(Define.TAG_GAME_DATA_JSON)) {
+            Debug.Log("리소스가 존재하므로 씬 이동");
             //pre패스에 게임 데이터가 있으면, 씬 이동
             loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            StopAllCoroutines();
+            yield break;
         }
         //pre패스에 게임 데이터가 없으면, 로딩창을 돌리고 파이어베이스에서 데이터 불러오기.
         else {
+            Debug.Log("리소스가 존재하지 않으므로 리소스 다운로드");
             Managers.Data.GameData = new GameData();
             yield return StartCoroutine(GetEnemyData(Managers.Data.GameData.EnemyDatas));
             loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
@@ -50,7 +77,9 @@ public class FirstScene : BaseScene {
             loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
             //데이터 불러오기 완료 후, 저장
-            Managers.Data.SaveData();
+            Managers.Data.SaveData(Managers.Data.GameData);
+            StopAllCoroutines();
+            yield break;
         }
     }
 

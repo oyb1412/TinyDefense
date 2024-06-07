@@ -17,7 +17,7 @@ public class UI_CheckYesButton : UI_Button {
         this.action = action;
     }
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

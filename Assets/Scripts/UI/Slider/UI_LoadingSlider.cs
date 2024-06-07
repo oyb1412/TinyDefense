@@ -10,11 +10,10 @@ public class UI_LoadingSlider : MonoBehaviour {
     //로딩 바
     private Slider loadingSlider;
     //로딩 텍스트
-    private UI_LoadingText loadingText;
+    [SerializeField]private UI_LoadingText loadingText;
 
     private void Awake() {
         loadingSlider = GetComponent<Slider>();
-        loadingText = GetComponentInChildren<UI_LoadingText>();
     }
 
     /// <summary>
@@ -38,7 +37,7 @@ public class UI_LoadingSlider : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator Co_Loading(float value, UnityAction callBack) {
         while(loadingSlider.value <= value) {
-            loadingSlider.value += Time.deltaTime;
+            loadingSlider.value += Time.deltaTime * 0.5f;
             loadingText.SetLoadingText(loadingSlider.value);
             if(loadingSlider.value >= 1f ) {
                 loadingSlider.value = 1f;

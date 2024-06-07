@@ -21,10 +21,14 @@ public class UI_RankingContentPanel : MonoBehaviour {
 
     private void Awake() {
         topIcon = new Sprite[3];
-        otherIcon = Resources.Load<Sprite>(Define.SPRITE_OTHER_ICON);
-        for(int i = 0; i < topIcon.Length; i++) {
-            topIcon[i] = Resources.Load<Sprite>(string.Format(Define.SPRITE_TOP_ICON, i));
+        if(otherIcon == null) {
+            otherIcon = Resources.Load<Sprite>(Define.SPRITE_OTHER_ICON);
+
+            for (int i = 0; i < topIcon.Length; i++) {
+                topIcon[i] = Resources.Load<Sprite>(string.Format(Define.SPRITE_TOP_ICON, i));
+            }
         }
+       
     }
 
     /// <summary>

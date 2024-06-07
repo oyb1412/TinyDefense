@@ -3,32 +3,15 @@ using UnityEngine;
 
 public class ResourcesManager 
 {
-    public Object Load<T>(string path) where T : Object
-    {
-        if (typeof(T) == typeof(GameObject))
-        {
-            string name = path;
-            int index = name.LastIndexOf("/");
-            if (index > 0)
-                name = name.Substring(index + 1);
-
-            GameObject go = Managers.Pool.GetOriginal(name);
-            if (go != null)
-                return go as T;
-        }
-        
-        return Resources.Load<T>(path);
-    }
-
     /// <summary>
     /// 다수의 객체의 풀을 미리 생성
     /// </summary>
     public void SetPooling(GameObject go, int count) {
-         Destroy(Managers.Pool.Activation(go, count).gameObject);
+         Release(Managers.Pool.Activation(go, count).gameObject);
     }
 
-    public GameObject Instantiate(string path, Transform parent = null) {
-        GameObject obj = Load<GameObject>($"Prefabs/{path}").GameObject();
+    public GameObject Activation(string path, Transform parent = null) {
+        GameObject obj = Resources.Load<GameObject>($"Prefabs/{path}");
 
         if (obj == null) {
             Debug.Log($"Failed Search Path : {path}");
@@ -43,7 +26,7 @@ public class ResourcesManager
         return go;
     }
 
-    public GameObject Instantiate(GameObject obj, int count = 5, Transform parent = null) {
+    public GameObject Activation(GameObject obj, int count = 5, Transform parent = null) {
         if (obj.GetComponent<Poolable>() != null)
             return Managers.Pool.Activation(obj, count).gameObject;
 
@@ -52,7 +35,7 @@ public class ResourcesManager
         return go;
     }
 
-    public void Destroy(GameObject go)
+    public void Release(GameObject go)
     {
         if (go == null)
         {

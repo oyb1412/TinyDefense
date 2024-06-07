@@ -7,7 +7,7 @@ public class UI_AutoUpgradeButton : UI_Button {
     [SerializeField]private UI_MergeButton mergeButton;
 
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectTowerUIButton;
     }
 
     /// <summary>

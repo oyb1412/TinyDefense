@@ -19,6 +19,8 @@ public class MovementArrow : MonoBehaviour {
     private float pressTimer;
     //이동 경로 드로우 코루틴
     private Coroutine drawCoroutine;
+    //카메라 캐싱
+    private Camera mainCamera;
 
     private void Awake() {
         lineRenderer = GetComponent<LineRenderer>();
@@ -27,13 +29,15 @@ public class MovementArrow : MonoBehaviour {
             Instance = this;
         } else
             Destroy(gameObject);
+
+        mainCamera = Camera.main;
     }
 
     void Start() {
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
 
-        arrowHeadPrefab = Managers.Resources.Instantiate(Define.ARROWHEAD_PATH);
+        arrowHeadPrefab = Managers.Resources.Activation(Define.ARROWHEAD_PATH);
         arrowHeadPrefab.transform.localScale = Vector3.zero;
     }
 
@@ -66,7 +70,7 @@ public class MovementArrow : MonoBehaviour {
             // 마우스 입력 처리
             if (Input.GetMouseButton(0)) {
                 isTouching = true;
-                currentTouchPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                currentTouchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
             } else if (Input.GetMouseButtonUp(0)) {
                 if (currentSelect != null && isPress && !currentSelect.IsSelected) {
                     if (currentSelect.IsUse()) {
@@ -93,7 +97,7 @@ public class MovementArrow : MonoBehaviour {
             if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
             {
                 isTouching = true;
-                currentTouchPosition = Camera.main.ScreenToWorldPoint(touch.position);
+                currentTouchPosition = mainCamera.ScreenToWorldPoint(touch.position);
             }
             else if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
             {

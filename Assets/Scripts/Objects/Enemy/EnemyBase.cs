@@ -28,6 +28,8 @@ public class EnemyBase : MonoBehaviour {
     private ParentScaleEventHandler parentScale;
     //애너미 디버프 관리
     public DebuffManager DebuffManager { get; private set; }
+    //트랜스폼 캐싱
+    private Transform myTransform;
 
     /// <summary>
     /// 애너미 생성시 초기화
@@ -50,6 +52,7 @@ public class EnemyBase : MonoBehaviour {
     /// 애너미 첫 생성시 초기화
     /// </summary>
     protected virtual void Awake() {
+        myTransform = transform;
         movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
         EnemyStatus = new EnemyStatus();
         DebuffManager = new DebuffManager();
@@ -95,17 +98,17 @@ public class EnemyBase : MonoBehaviour {
     /// 애너미 사망 시 애니메이션 발동(콜백으로 호출)
     /// </summary>
     public void EnemyDeadEvent() {
-        Managers.Resources.Destroy(gameObject);
+        Managers.Resources.Release(gameObject);
     }
 
     /// <summary>
     /// 생성 및 재사용 초기화
     /// </summary>
-    protected virtual void Init() {
+    private void Init() {
         debuffCoroutine = null;
-        parentScale.ChangeScale(Define.Direction.Right, transform);
+        parentScale.ChangeScale(Define.Direction.Right, myTransform);
         enemyLevel = Managers.Game.CurrentGameLevel - 1;
-        transform.position = Define.DEFAULT_CREATE_POSITION;
+        myTransform.position = Define.DEFAULT_CREATE_POSITION;
         EnemyStatus.Init(this, enemyLevel);
         EnemyStatus.IsLive = true;
     }
@@ -114,7 +117,28 @@ public class EnemyBase : MonoBehaviour {
     /// 이동 시작
     /// </summary>
     public void StartMove() {
-        if (Util.IsEnemyNull(this)) {
+        //if (Util.IsEnemyNull(this)) {
+        //    Debug.Log($"이미 사망상태이므로 비활성화");
+        //    return;
+        //}
+        if (EnemyStatus.CurrentHp <= 0) {
+            Debug.Log("체력 이슈로 이동 실패");
+            return;
+        }
+        if(!gameObject.activeInHierarchy) {
+            Debug.Log("비활성화 이슈로 이동 실패");
+            return;
+        }
+        if (this == null) {
+            Debug.Log("base 널 이슈로 이동 실패");
+            return;
+        }
+        if (!EnemyStatus.IsLive) {
+            Debug.Log("islive 비활성화 이슈로 이동 실패");
+            return;
+        }
+        if (EnemyStatus == null) {
+            Debug.Log("status 널 이슈로 이동 실패");
             return;
         }
 
@@ -125,8 +149,12 @@ public class EnemyBase : MonoBehaviour {
 
         MoveCoroutine = StartCoroutine(Co_Move());
 
-        if (debuffCoroutine == null)
-            debuffCoroutine = StartCoroutine(Co_DamageDebuff());
+        if (debuffCoroutine != null) {
+            StopCoroutine(debuffCoroutine);
+            debuffCoroutine = null;
+        }
+
+        debuffCoroutine = StartCoroutine(Co_DamageDebuff());
     }
 
     /// <summary>
@@ -135,9 +163,9 @@ public class EnemyBase : MonoBehaviour {
     private IEnumerator Co_Move() {
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;
         while (true) {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, EnemyStatus.MoveSpeed * Time.deltaTime);
+            myTransform.position = Vector3.MoveTowards(myTransform.position, targetPosition, EnemyStatus.MoveSpeed * Time.deltaTime);
 
-            float distance = Vector3.Distance(transform.position, movePath.GetChild(moveIndex).position);
+            float distance = Vector3.Distance(myTransform.position, movePath.GetChild(moveIndex).position);
 
             if (distance <= Define.PERMISSION_RANGE) {
                 moveIndex++;
@@ -149,14 +177,14 @@ public class EnemyBase : MonoBehaviour {
 
                 Define.Direction dir;
 
-                if (transform.position.x < targetPosition.x)
+                if (myTransform.position.x < targetPosition.x)
                     dir = Define.Direction.Right;
-                else if (transform.position.x > targetPosition.x)
+                else if (myTransform.position.x > targetPosition.x)
                     dir = Define.Direction.Left;
                 else
                     dir = Define.Direction.None;
 
-                parentScale.ChangeScale(dir, transform);
+                parentScale.ChangeScale(dir, myTransform);
             }
             yield return null;
         }

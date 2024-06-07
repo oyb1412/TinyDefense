@@ -64,15 +64,18 @@ public class EnemyStatus : StatusBase {
         Level = level;
 
         MoveSpeed = Managers.Enemy.EnemyData.MoveSpeed;
+
         if(level == 0) {
             MaxHp = Managers.Enemy.EnemyData.MaxHp;
         }
         else {
             MaxHp = Managers.Enemy.EnemyData.MaxHp * Mathf.Pow(1 + Managers.Enemy.EnemyData.MaxHpUpVolume, level);
-            Debug.Log($"적 체력 {MaxHp}");
         }
+
         CurrentHp = MaxHp;
+
         SetHpAction?.Invoke(CurrentHp);
+
         Reward = Managers.Enemy.EnemyData.Reward + level / 10;
 
         if (goldObject == null)
@@ -83,6 +86,8 @@ public class EnemyStatus : StatusBase {
         foreach(var item in Managers.Ability.EnemyAbilityList) {
             item.ExecuteEnemyAbility(enemyBase);
         }
+
+        Debug.Log($"적 체력 {MaxHp}");
     }
 
     /// <summary>
@@ -109,19 +114,24 @@ public class EnemyStatus : StatusBase {
     public bool IsLive {
         get { return isLive; }
         set {
-            if(value) {
-                CurrentHp = MaxHp;
+            isLive = value;
+
+            if (isLive) {
+                if(CurrentHp <= 0)
+                    CurrentHp = MaxHp;
+
                 if(enemyBase)
                     enemyBase.StateMachine.ChangeState(Define.EnemyState.Run);
+
             } else {
                 Managers.Game.CurrentKillNumber++;
                 Managers.Game.CurrentGold += Reward;
-                UI_GoldObject go = Managers.Resources.Instantiate(goldObject).GetComponent<UI_GoldObject>();
+                UI_GoldObject go = Managers.Resources.Activation(goldObject).GetComponent<UI_GoldObject>();
                 go.Init(enemyBase.transform.position, Reward, true);
                 enemyBase.StateMachine.ChangeState(Define.EnemyState.Dead);
                 Managers.Enemy.RemoveEnemy(enemyBase);
             }
-            isLive = value;
+
         }
     }
 

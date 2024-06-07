@@ -19,9 +19,10 @@ public class UI_GoldObject : MonoBehaviour {
     /// </summary>
     /// <param name="pos">오브젝트 위치</param>
     public void Init(Vector3 pos, int gold, bool plus) {
+        SoundManager.Instance.PlaySfx(Define.SFXType.GetGold);
         transform.position = pos;
         string ment = plus ? Define.MENT_PLUS_GOLD : Define.MENT_GOLD;
         goldTMP.text = string.Format(ment, gold.ToString());
-        transform.DOMove(transform.position + Vector3.up, 1f).OnComplete(() => Managers.Resources.Destroy(gameObject));
+        transform.DOMove(transform.position + Vector3.up, 1f).OnComplete(() => Managers.Resources.Release(gameObject));
     }
 }

@@ -11,6 +11,7 @@ public abstract class UI_Button : MonoBehaviour {
     private EventTrigger eventTrigger;
     //버튼 활성화 여부
     protected bool seletable = true;
+    protected Define.SFXType buttonSfxType;
 
     protected virtual void Awake() {
         button = GetComponent<Button>();
@@ -46,6 +47,7 @@ public abstract class UI_Button : MonoBehaviour {
         if (!seletable)
             return;
 
+        SoundManager.Instance.PlaySfx(buttonSfxType);
         Select();
     }
 

@@ -10,6 +10,7 @@ public class UI_AbilityButton : UI_Button {
     private UI_SelectAbility selectAbilityUI;
 
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
         selectAbilityUI = GetComponentInParent<UI_SelectAbility>();
         seletable = true;
     }

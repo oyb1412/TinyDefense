@@ -11,28 +11,29 @@ public class SelectManager
     //현재 선택한 오브젝트
     private Cell currentSelect;
     private HashSet<Cell> selects;
-    
+    //카메라 캐싱
+    private Camera mainCamera;
     public void Init() {
         selects = new HashSet<Cell>(Define.CELL_COUNT);
         selects.AddRange(Object.FindObjectsByType<Cell>(FindObjectsSortMode.None));
+        mainCamera = Camera.main;
     }
 
     /// <summary>
     /// 지속적으로 마우스 클릭 체크
     /// </summary>
     public void OnUpdate() {
-#if UNITY_ANDROID
-        if (Input.touchCount > 0) {
+#if UNITY_EDITOR || UNITY_STANDALONE
+        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {
+            Select();
+        }
+#elif UNITY_ANDROID || UNITY_IOS
+    if (Input.touchCount > 0) {
             Touch touch = Input.GetTouch(0);
 
             if (touch.phase == TouchPhase.Began && !EventSystem.current.IsPointerOverGameObject(touch.fingerId)) {
                 Select();
             }
-        }
-#else
-        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
-        {
-            Select();
         }
 #endif
     }
@@ -46,12 +47,12 @@ public class SelectManager
         Vector2 inputPos = Vector2.zero;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
-        inputPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        inputPos = mainCamera.ScreenToWorldPoint(Input.mousePosition);
 #elif UNITY_ANDROID || UNITY_IOS
     
     if (Input.touchCount > 0) {
         Touch touch = Input.GetTouch(0);
-        inputPos = Camera.main.ScreenToWorldPoint(touch.position);
+        inputPos = mainCamera.ScreenToWorldPoint(touch.position);
     }
 #endif
         foreach (var item in selects) {
@@ -78,7 +79,9 @@ public class SelectManager
         currentSelect = SelectCell();
 
         //오브젝트가 선택되면 선택
-        if (currentSelect != null)
+        if (currentSelect != null) {
+            SoundManager.Instance.PlaySfx(Define.SFXType.SelectTowerAndCell);
             currentSelect.Select();
+        }
     }
 }

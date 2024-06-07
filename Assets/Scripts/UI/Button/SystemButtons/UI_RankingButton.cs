@@ -7,7 +7,7 @@ public class UI_RankingButton : UI_Button {
     //·©Å· ÆÇ³Ú
     [SerializeField] private UI_RankingPanel rankingPanel;
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

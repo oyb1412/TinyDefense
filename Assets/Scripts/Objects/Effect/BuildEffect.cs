@@ -8,6 +8,6 @@ public class BuildEffect : MonoBehaviour {
     /// 이벤트에서 콜백으로 호출
     /// </summary>
     public void DestroyEvent() {
-        Managers.Resources.Destroy(gameObject);
+        Managers.Resources.Release(gameObject);
     }
 }

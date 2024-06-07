@@ -50,17 +50,12 @@ public class AdmobManager {
     }
 
     public void ShowRewardedAd(UnityAction callBack) {
-        const string rewardMsg =
-            "Rewarded ad rewarded the user. Type: {0}, amount: {1}.";
-
         _currentTimeScale = Time.timeScale;
 
         if (_rewardedAd != null && _rewardedAd.CanShowAd()) {
             _rewardedAd.Show((Reward reward) => {
                 callBack.Invoke();
                 Time.timeScale = _currentTimeScale;
-                Debug.Log("광고를 모두 시청하였으므로 보상 지급");
-                //Debug.Log(string.Format(rewardMsg, reward.Type, reward.Amount));
                 LoadRewardedAd();
             });
         } else {

@@ -1,4 +1,6 @@
 
+using System.Linq;
+
 /// <summary>
 /// 적에게 적용되는 어빌리티
 /// 적 드랍 골드 영구 증가
@@ -23,12 +25,12 @@ public class Ability_PlusGetGold : IEnemyAbility {
     /// 생성되있는 모든 애너미 리워드 변경
     /// </summary>
     public void SetAbility() {
-        var enemys = Managers.Enemy.EnemyList;
-        for (int i = 0; i < enemys.Count; i++) {
-            if (enemys[i] == null)
+        var enemys = Managers.Enemy.EnemyList.ToHashSet();
+        foreach (var item in enemys) {
+            if (Util.IsEnemyNull(item))
                 continue;
 
-            enemys[i].EnemyStatus.SetReward(this);
+            item.EnemyStatus.SetReward(this);
         }
     }
 

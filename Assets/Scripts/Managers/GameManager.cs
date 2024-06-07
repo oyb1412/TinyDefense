@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System;
 using UnityEngine;
 
@@ -24,6 +25,8 @@ public class GameManager {
     public Action<int> CurrentKillNumberAction;
     //현재 게임 속도
     private Define.GameSpeed gameSpeed;
+    //포탈 애니메이터
+    public Animator PortalAnimator { get; private set; }
 
     public Define.GameSpeed GameSpeed {
         get { return gameSpeed; }
@@ -99,11 +102,14 @@ public class GameManager {
     public void Init() {
         Managers.Enemy.EnemyNumberAction += CheckEnemyNumber;
         IsPlaying = true;
-        GameLevelTimer = Define.GAMELEVEL_UP_TICK;
+        GameLevelTimer = Define.FIRST_GAMELEVEL_UP_TICK;
         CurrentGold = Define.GAME_START_GOLD;
         _currentGameLevel = 0;
         currentKillNumber = 0;
         GameSpeed = Define.GameSpeed.Default;
+
+        if(PortalAnimator == null)
+            PortalAnimator = GameObject.Find(Define.TAG_PORTAL).GetComponent<Animator>();
     }
 
     /// <summary>
@@ -133,6 +139,8 @@ public class GameManager {
             return;
 
         if(IsPlaying) {
+            SoundManager.Instance.SetBgm(false, Define.BGMType.Ingame);
+            SoundManager.Instance.PlaySfx(Define.SFXType.GameOver);
             GetRankingData();
             IsPlaying = false;
         }
@@ -155,10 +163,12 @@ public class GameManager {
             }
         }
         else {
+            string[] name = Managers.Auth.User.Email.Split("@");
             Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Define.TAG_SCORE_DATA,
-                Managers.Auth.User.Email, CurrentKillNumber);
+                name[0], CurrentKillNumber);
         }
 
+        DOTween.KillAll();
         UI_GameOver.Instance.SetGameOverUI(true);
     }
 
@@ -174,6 +184,7 @@ public class GameManager {
 
             if (GameLevelTimer <= 0) {
                 CurrentGameLevel++;
+                PortalAnimator.enabled = true;
                 GameLevelTimer = Define.GAMELEVEL_UP_TICK;
             }
         }

@@ -6,25 +6,19 @@ using UnityEngine.Events;
 /// UI 이동 클래스
 /// </summary>
 public class UI_Movement : MonoBehaviour {
-    private RectTransform rect;
-    //원본 포지션
-    [SerializeField] private Vector3 originalPosition;
-    //이동시킬 포지션
-    [SerializeField] private Vector3 targetPosition;
+    private CanvasGroup canvasGroup;
     //이동 트윈
-    private Tween moveTween;
+    private Tween alphaTween;
     private void Awake() {
-        rect = GetComponent<RectTransform>();
-        originalPosition = rect.anchoredPosition;
-        rect.anchoredPosition = targetPosition;
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
     /// <summary>
     /// 활성화시, 원본 포지션으로 이동
     /// </summary>
     public void Activation() {
-        Util.ResetTween(moveTween);
-        moveTween = rect.DOLocalMove(originalPosition, 0.5f);
+        Util.ResetTween(alphaTween);
+        alphaTween = canvasGroup.DOFade(1f, 0.5f);
     }
 
     /// <summary>
@@ -32,7 +26,7 @@ public class UI_Movement : MonoBehaviour {
     /// </summary>
     /// <param name="action"></param>
     public void DeActivation(UnityAction action) {
-        Util.ResetTween(moveTween);
-        moveTween = rect.DOLocalMove(targetPosition, 0.5f).OnComplete(() => action?.Invoke());
+        Util.ResetTween(alphaTween);
+        alphaTween = canvasGroup.DOFade(0f, 0.5f).OnComplete(() => action?.Invoke());
     }
 }

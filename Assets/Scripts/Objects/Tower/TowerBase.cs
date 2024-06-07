@@ -173,7 +173,7 @@ public abstract class TowerBase : MonoBehaviour {
     /// <param name="time">예약 시간</param>
     public void Fire(AttackData attackData, float time = 0f) {
         if(time == 0f) {
-            ProjectileBase projectile = Managers.Resources.Instantiate(TowerStatus.Projectile).GetComponent<ProjectileBase>();
+            ProjectileBase projectile = Managers.Resources.Activation(TowerStatus.Projectile).GetComponent<ProjectileBase>();
             projectile.Init(this, attackData);
         }
         else {
@@ -188,7 +188,7 @@ public abstract class TowerBase : MonoBehaviour {
     /// <param name="time">예약 시간</param>
     private IEnumerator Co_Fire(AttackData attackData) {
         yield return addProjectileDelay;
-        ProjectileBase projectile = Managers.Resources.Instantiate(TowerStatus.Projectile).GetComponent<ProjectileBase>();
+        ProjectileBase projectile = Managers.Resources.Activation(TowerStatus.Projectile).GetComponent<ProjectileBase>();
         projectile.Init(this, attackData);
     }
 
@@ -278,10 +278,10 @@ public abstract class TowerBase : MonoBehaviour {
     /// 타워 레벨 상승 및 색 변경
     /// 능력치 재조정
     /// </summary>
-    public virtual void TowerLevelup() {
+    public virtual void TowerLevelup(int killCount = 0) {
         TowerLevel++;
         runeWard.color = Define.COLOR_TOWERLEVEL[TowerLevel];
-        TowerStatus.LevelUpStatus();
+        TowerStatus.LevelUpStatus(killCount);
 
         foreach(var item in Debuffs) {
             if(item.Type == Define.DebuffType.Poison) {
@@ -299,6 +299,6 @@ public abstract class TowerBase : MonoBehaviour {
         animator.Play(Define.TAG_Idle);
         TowerCell.SetTower(null);
         Managers.Tower.RemoveTower(this);
-        Managers.Resources.Destroy(gameObject);
+        Managers.Resources.Release(gameObject);
     }
 }

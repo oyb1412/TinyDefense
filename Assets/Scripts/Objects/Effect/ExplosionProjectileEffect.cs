@@ -18,28 +18,32 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
     /// <param name="attackData">발사한 타워의 데이터</param>
     /// <param name="pos">이펙트 생성 위치</param>
     public override void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
+        if (towerBase.TowerType == Define.TowerType.Icemage)
+            SoundManager.Instance.PlaySfx(Define.SFXType.IceExplosion);
+        else
+            SoundManager.Instance.PlaySfx(Define.SFXType.FireExplosion);
+
         this.towerBase = towerBase;
         base.Init(towerBase, attackData, pos);
 
-        var enemy = Managers.Enemy.EnemyList;
-        for(int i = 0; i< enemy.Count; i++) {
-            if (enemy[i] == null)
+        var enemy = Managers.Enemy.EnemyList.ToHashSet();
+        foreach(var item in enemy) {
+            if(Util.IsEnemyNull(item)) 
                 continue;
 
-            float distance = Vector2.Distance(transform.position, enemy[i].transform.position);
+            float distance = Vector2.Distance(transform.position, item.transform.position);
             //폭발 사거리 내의 적을 검출
             if (distance <= Define.TOWER_EXPLOSION_RADIUS) {
                 //적이 아직 공격당하지 않았다면
-                if (!enemyHash.Contains(enemy[i])) {
+                if (item != null && !enemyHash.Contains(item)) {
                     //공격 및 재공격 불가
-                    enemyHash.Add(enemy[i]);
-                    enemy[i].EnemyStatus.SetHp(attackData.Damage, towerBase);
+                    enemyHash.Add(item);
+                    item.EnemyStatus.SetHp(attackData.Damage, towerBase);
                     //디버프 적용
-                    ExplosionAbility(enemy[i]);
+                    ExplosionAbility(item);
                 }
             }
         }
-        
     }
 
     /// <summary>

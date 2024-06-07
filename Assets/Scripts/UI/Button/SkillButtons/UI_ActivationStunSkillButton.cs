@@ -7,6 +7,7 @@ using UnityEngine;
 public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
 
     public override void Init() {
+        buttonSfxType = Define.SFXType.StunSkill;
         base.Init();
         Managers.Skill.SetSkillAction += ((type) => {
             if (type == Define.SkillType.Stun) {
@@ -26,18 +27,17 @@ public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
         var skill = Managers.Skill.GetSkillValue(Define.SkillType.Stun);
         UseSkill(skill.SkillCoolTime);
 
-        var enemys = Managers.Enemy.EnemyList;
-
         //모든 적 순회
         //모든 적에게 디버프 적용 및 데미지
-        for (int i = 0; i< enemys.Count; i++) {
-            if (enemys[i] == null)
+        var enemys = Managers.Enemy.EnemyList.ToHashSet();
+        foreach (var enemy in enemys) {
+            if(Util.IsEnemyNull(enemy)) 
                 continue;
 
-            enemys[i].DebuffManager.AddDebuff(new StunDebuff(skill.SkillTime), enemys[i]);
-            enemys[i].EnemyStatus.SetHp(skill.SkillDamage);
+            enemy.DebuffManager.AddDebuff(new StunDebuff(skill.SkillTime), enemy);
+            enemy.EnemyStatus.SetHp(skill.SkillDamage);
         }
-
+        
         //카메라 쉐이크
         Camera.main.transform.DOShakePosition(3f, .2f).SetEase(Ease.Linear);
     }

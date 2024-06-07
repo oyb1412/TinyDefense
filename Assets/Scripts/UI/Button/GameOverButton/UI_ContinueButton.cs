@@ -3,7 +3,7 @@
 /// </summary>
 public class UI_ContinueButton : UI_Button {
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

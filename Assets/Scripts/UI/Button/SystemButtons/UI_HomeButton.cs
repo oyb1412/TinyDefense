@@ -7,6 +7,7 @@ public class UI_HomeButton : UI_Button {
     //yes,no ¹öÆ° ÆÇ³Ú
     [SerializeField] private UI_CheckPanel checkPanel;
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

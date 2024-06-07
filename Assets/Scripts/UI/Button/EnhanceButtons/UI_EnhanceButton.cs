@@ -21,6 +21,7 @@ public class UI_EnhanceButton : UI_Button
     /// 각 텍스트에 기본값 대입
     /// </summary>
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
         Managers.Game.CurrentGoldAction += ButtonActive;
         ButtonActive(Managers.Game.CurrentGold);
 

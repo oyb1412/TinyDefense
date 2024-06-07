@@ -15,11 +15,14 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     private GameObject buildEffect;
 
     public override void Init() {
-        buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+        buttonSfxType = Define.SFXType.SelectTowerUIButton;
     }
 
     protected override void Awake() {
         base.Awake();
+        if(buildEffect == null) 
+            buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+
         tmpAndButton = GetComponent<TMPandButton>();
     }
 
@@ -73,6 +76,9 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
                 if (towers[i].StateMachine.GetState() == Define.TowerState.Movement)
                     continue;
 
+                if (!towers[i].gameObject.activeInHierarchy || !towers[i].gameObject.activeInHierarchy)
+                    continue;
+
                 Select(towers[i], towers[j]);
             }
         }
@@ -87,16 +93,16 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     /// <param name="baseTower">업그레이드할 타워</param>
     /// <param name="materialTower">재료</param>
     public void Select(TowerBase baseTower, TowerBase materialTower) {
-        GameObject go = Managers.Resources.Instantiate(buildEffect);
+        GameObject go = Managers.Resources.Activation(buildEffect);
         go.transform.position = baseTower.TowerCell.transform.position;
 
-        GameObject go2 = Managers.Resources.Instantiate(buildEffect);
+        GameObject go2 = Managers.Resources.Activation(buildEffect);
         go2.transform.position = materialTower.TowerCell.transform.position;
 
         baseTower.DeSelect();
 
         //현재 타워 레벨업
-        baseTower.TowerLevelup();
+        baseTower.TowerLevelup(materialTower.TowerStatus.TowerKills);
 
         //타겟 타워 파괴 
         materialTower.DestroyTower();
@@ -109,10 +115,10 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     /// 버튼 선택시 타워 머지
     /// </summary>
     public override void Select() {
-        GameObject go = Managers.Resources.Instantiate(buildEffect);
+        GameObject go = Managers.Resources.Activation(buildEffect);
         go.transform.position = tower.TowerCell.transform.position;
 
-        GameObject go2 = Managers.Resources.Instantiate(buildEffect);
+        GameObject go2 = Managers.Resources.Activation(buildEffect);
         go2.transform.position = TargetTower.TowerCell.transform.position;
 
         tower.DeSelect();
@@ -138,15 +144,12 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     /// 버튼 활성화
     /// </summary>
     /// <param name="cell">선택한 셀</param>
-    public void Activation(Cell cell, GameObject buildEffect) {
+    public void Activation(Cell cell) {
         if(!cell.IsUse()) {
             tmpAndButton.DeActivation();
             return;
         }
         tower = cell.Tower;
         CheckMerge();
-
-        if (this.buildEffect == null)
-            this.buildEffect = buildEffect;
     }
 }

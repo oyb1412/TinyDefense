@@ -6,6 +6,7 @@ public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
     /// √ ±‚»≠
     /// </summary>
     public override void Init() {
+        buttonSfxType = Define.SFXType.PowerUpSkill;
         base.Init();
         Managers.Skill.SetSkillAction += ((type) => {
             if(type == Define.SkillType.PowerUp) {

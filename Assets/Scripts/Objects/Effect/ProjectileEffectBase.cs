@@ -10,14 +10,15 @@ public class ProjectileEffectBase : MonoBehaviour {
     private SpriteRenderer spriteRenderer;
 
     private void Awake() {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        if(spriteRenderer == null) 
+            spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     /// <summary>
     /// 이펙트 제거(애니메이션 이벤트 콜백으로 호출)
     /// </summary>
     public virtual void DestroyEvent() {
-        Managers.Resources.Destroy(gameObject);
+        Managers.Resources.Release(gameObject);
     }
 
     /// <summary>

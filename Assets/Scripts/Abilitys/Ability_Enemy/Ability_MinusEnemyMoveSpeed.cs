@@ -1,4 +1,6 @@
 
+using System.Linq;
+
 /// <summary>
 /// 적에게 적용되는 어빌리티
 /// 적 이동속도 영구적 감소
@@ -23,12 +25,12 @@ public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
     /// 스킬 습득 시, 생성된 모든 적에게 스킬 적용
     /// </summary>
     public void SetAbility() {
-        var enemys = Managers.Enemy.EnemyList;
-        for(int i = 0; i< enemys.Count; i++) {
-            if (enemys[i] == null)
+        var enemys = Managers.Enemy.EnemyList.ToHashSet();
+        foreach(var item in enemys) {
+            if(Util.IsEnemyNull(item)) 
                 continue;
 
-            enemys[i].EnemyStatus.SetMoveSpeed(this);
+            item.EnemyStatus.SetMoveSpeed(this);
         }
     }
 

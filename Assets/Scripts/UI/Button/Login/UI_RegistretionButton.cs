@@ -13,7 +13,7 @@ public class UI_RegistretionButton : UI_Button {
     //회원가입 상태 표기 텍스트
     [SerializeField] private TextMeshProUGUI logTMP;
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     //회원가입 시도

@@ -1,4 +1,5 @@
 using System.Collections;
+using System.IO;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
@@ -46,8 +47,10 @@ public class GameScene : BaseScene
     public void LoadGameData(UnityAction callBack) {
         if (Managers.Data.GameData == null) {
             Managers.Data.GameData = new GameData();
+            Debug.Log("리소스 폴더에서 게임 데이터 로드 및 풀링");
             StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
         } else {
+            Debug.Log("이미 게임 데이터가 존재하므로 풀링만 진행");
             StartCoroutine(StartPoolAsync(callBack));
         }
     }
@@ -66,7 +69,6 @@ public class GameScene : BaseScene
         Managers.Select.Init();
         Managers.Spawn.SpawnStart();
         Managers.Game.Init();
-        Managers.ADMob.Init();
         isLoading = true;
     }
 
@@ -76,11 +78,12 @@ public class GameScene : BaseScene
     /// <param name="callback"></param>
     /// <returns></returns>
     private IEnumerator StartPoolAsync(UnityAction callback) {
-        loadingSlider.SetLoading(.9f, callback);
+        loadingSlider.SetLoading(.7f, callback);
         // 풀링 오브젝트 비동기 생성
         yield return StartPoolManager.Instance.StartPoolAsync();
-        var qw = Managers.Data.GameData;
+        Debug.Log("풀링 완료");
         loadingSlider.SetLoading(1f, callback);
+        SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);
     }
 
     /// <summary>
@@ -91,19 +94,44 @@ public class GameScene : BaseScene
     /// <returns></returns>
     private IEnumerator LoadGameDataAndStartPoolAsync(UnityAction callback) {
         // JSON 파일 비동기로 로드
-        Task<GameData> loadJsonTask = Managers.Data.LoadJsonAsync<GameData>("GameData");
+        Task<GameData> loadJsonTask = Managers.Data.DecryptionLoadJsonAsync<GameData>(Define.TAG_GAME_DATA);
         loadingSlider.SetLoading(.6f, callback);
 
         // 풀링 오브젝트 비동기 생성
         yield return StartPoolManager.Instance.StartPoolAsync();
+        Debug.Log("풀링 완료");
 
         loadingSlider.SetLoading(.7f, callback);
 
         while (!loadJsonTask.IsCompleted) {
             yield return null;
         }
+
+
+        if (loadJsonTask.IsFaulted) {
+            Debug.Log($"데이터 로드 실패{loadJsonTask.IsFaulted.ToString()}");
+
+            string path = Path.Combine(Application.persistentDataPath, Define.TAG_GAME_DATA_JSON);
+            if (File.Exists(path)) {
+                Debug.Log($"{path}데이터 삭제 성공");
+                File.Delete(path);
+            }
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); 
+#endif
+            yield break;
+        }
+
+        Debug.Log($"데이터 로드 완료{loadJsonTask.Result.ToString()}");
+
         Managers.Data.GameData = loadJsonTask.Result;
+
+        Debug.Log($"게임 데이터에 데이터 저장. 애너미 체력 {Managers.Data.GameData.EnemyDatas.Enemys.MaxHp}");
+
         loadingSlider.SetLoading(1f, callback);
+        SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);
     }
 
     private void Update() {

@@ -13,6 +13,7 @@ public class UI_TapButton : UI_Button {
     /// √ ±‚»≠
     /// </summary>
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
         tapButtons = transform.parent.GetComponentsInChildren<UI_TapButton>();
         seletable = true;
     }

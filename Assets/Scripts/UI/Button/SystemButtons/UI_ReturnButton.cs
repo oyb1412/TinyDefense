@@ -5,6 +5,7 @@ using UnityEngine;
 public class UI_ReturnButton : UI_Button {
     [SerializeField] private GameObject settingPanel;
     public override void Init() {
+        buttonSfxType = Define.SFXType.DeSelectUIButton;
     }
 
     /// <summary>

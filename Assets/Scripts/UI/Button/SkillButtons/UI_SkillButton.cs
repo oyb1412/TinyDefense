@@ -19,6 +19,7 @@ public class UI_SkillButton : UI_Button
     /// 버튼 활성화 여부 계산
     /// </summary>
     public override void Init() {
+        buttonSfxType = Define.SFXType.SelectUIButton;
         Managers.Game.CurrentGoldAction += ButtonActive;
         ButtonActive(Managers.Game.CurrentGold);
 

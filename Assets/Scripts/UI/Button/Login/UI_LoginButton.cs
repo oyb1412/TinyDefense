@@ -15,7 +15,7 @@ public class UI_LoginButton : UI_Button {
     [SerializeField] private GameObject mainPanel;
 
     public override void Init() {
-        
+        buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>

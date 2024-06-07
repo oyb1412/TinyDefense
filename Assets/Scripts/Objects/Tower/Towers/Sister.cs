@@ -39,7 +39,7 @@ public class Sister : TowerBase {
             if (item.TowerCell == null)
                 continue;
 
-            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange * 0.3f
+            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange * Define.TOWER_RANGE
                 && item.gameObject.activeInHierarchy) {
 
                 int ran = Random.Range(0, 2);

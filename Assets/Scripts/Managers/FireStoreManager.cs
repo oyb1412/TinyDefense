@@ -57,6 +57,7 @@ public class FireStoreManager {
         }
 
         try {
+            Debug.LogError("데이터 저장 시도.");
             DocumentReference docRef = db.Collection(collection).Document(document);
             Dictionary<string, object> userData = new Dictionary<string, object>
             {

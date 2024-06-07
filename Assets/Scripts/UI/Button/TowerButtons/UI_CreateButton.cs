@@ -19,7 +19,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     //타워 생성 이펙트
     private GameObject buildEffect;
     //타워 생성 비용 텍스트
-    private TextMeshProUGUI costTMP;
+    [SerializeField]private TextMeshProUGUI costTMP;
     //타워 생성시 생성할 골드 오브젝트
     private GameObject goldObject;
     //생성할 타워 프리펩 저장용 변수
@@ -31,15 +31,20 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     /// 기본 생성비용 적용
     /// </summary>
     public override void Init() {
-        costTMP = GetComponentInChildren<TextMeshProUGUI>();
+        buttonSfxType = Define.SFXType.SelectTowerUIButton;
         Managers.Game.CurrentGoldAction += CaculationGold;
         for (int i = 0; i < weights.Length; i++) {
             weights[i] = 1;
         }
-        
-        goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
 
-        towerList = new GameObject[(int)Define.TowerType.Count];
+        if(buildEffect == null)
+            buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+
+        if(goldObject == null)
+            goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
+
+        if(towerList == null)
+            towerList = new GameObject[(int)Define.TowerType.Count];
 
         for(int i = 0; i< towerList.Length; i++) {
             towerList[i] = Resources.Load<GameObject>(Define.TOWER_PREFAB_PATH[i]);
@@ -86,7 +91,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     /// 셀 선택시 호출
     /// </summary>
     /// <param name="cell">선택할 셀</param>
-    public void Activation(Cell cell, GameObject buildEffect) {
+    public void Activation(Cell cell) {
         currentCell = cell;
         if (cell.IsUse()) {
             tmpAndButton.DeActivation();
@@ -95,11 +100,6 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
         tmpAndButton.Activation();
         seletable = true;
         CaculationGold(Managers.Game.CurrentGold);
-
-        if (this.buildEffect == null) {
-            this.buildEffect = buildEffect;
-            Managers.Resources.SetPooling(this.buildEffect, Define.BUILDEFFECT_POOL_COUNT);
-        }
     }
 
     /// <summary>
@@ -170,7 +170,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
                 item.ExecuteSystemAbility(this);
         }
 
-        TowerObj = Managers.Resources.Instantiate(towerList[(int)SummonUnit()]
+        TowerObj = Managers.Resources.Activation(towerList[(int)SummonUnit()]
                 ).GetComponent<TowerBase>();
 
         int ranUpgrade = Random.Range(1, 3);
@@ -179,10 +179,10 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
             TowerObj.TowerLevelup();
         }
 
-        GameObject go = Managers.Resources.Instantiate(buildEffect);
+        GameObject go = Managers.Resources.Activation(buildEffect);
         go.transform.position = currentCell.transform.position;
 
-        UI_GoldObject gold = Managers.Resources.Instantiate(goldObject).GetComponent<UI_GoldObject>();
+        UI_GoldObject gold = Managers.Resources.Activation(goldObject).GetComponent<UI_GoldObject>();
         gold.Init(currentCell.transform.position, -CreateCost, false);
 
         currentCell.SetTower(TowerObj);
@@ -203,8 +203,24 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
                 item.ExecuteSystemAbility(this);
         }
 
-        TowerObj = Managers.Resources.Instantiate(towerList[(int)SummonUnit()]
-                ).GetComponent<TowerBase>();
+        //게임 초반 수녀 등장 억제
+        if(Managers.Game.CurrentGameLevel < 2) {
+            var type = SummonUnit();
+            if(type == Define.TowerType.Sister) {
+                var ran = Random.Range(0, (int)Define.TowerType.Sister);
+                TowerObj = Managers.Resources.Activation(towerList[ran]
+                    ).GetComponent<TowerBase>();
+            }
+            else {
+                TowerObj = Managers.Resources.Activation(towerList[(int)type]
+                    ).GetComponent<TowerBase>();
+            }
+        }
+        else {
+            TowerObj = Managers.Resources.Activation(towerList[(int)SummonUnit()]
+                    ).GetComponent<TowerBase>();
+        }
+
 
         //타워 생성 후 무료 업그레이드 스킬의 존재여부 확인
         //존재 시 무료 업그레이드
@@ -213,10 +229,10 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
                 item.ExecuteSystemAbility(this);
         }
 
-        GameObject go = Managers.Resources.Instantiate(buildEffect);
+        GameObject go = Managers.Resources.Activation(buildEffect);
         go.transform.position = currentCell.transform.position;
 
-        UI_GoldObject gold = Managers.Resources.Instantiate(goldObject).GetComponent<UI_GoldObject>();
+        UI_GoldObject gold = Managers.Resources.Activation(goldObject).GetComponent<UI_GoldObject>();
         gold.Init(currentCell.transform.position, -CreateCost, false);
 
         currentCell.SetTower(TowerObj);

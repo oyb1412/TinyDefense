@@ -7,11 +7,7 @@ using UnityEngine;
 public static class Define 
 {
     #region Const
-    public static readonly Color COLOR_ORANGE = new Color(1f, 0.6f, 0.2f, 1f);
-    public static readonly Color COLOR_NOT = new Color(1f, 1f, 1f, 0f);
-
-    public static readonly Vector3 ARROWHEAD_SCALE = new Vector3(.2f, .2f, 1f);
-
+   
     public static readonly float ABILITY_ENEMY_MOVESPEED_MINUS = .8f;
     public static readonly float ABILITY_POISON_DEFAULT_DAMAGE = .2f;
     public static readonly float ABILITY_POISON_DEFAULT_TIME = 2f;
@@ -69,7 +65,7 @@ public static class Define
         "모든 타워의 공격에 스턴 확률을 부여합니다.",
         "모든 타워의 공격에 중독 효과를 부여합니다.",
         "공격시 높은 확률로 크리티컬 공격이 발동하지만, 낮은 확률로 공격이 빗나갑니다.",
-        $"{ABILITY_GETGOLD}골드를 획득합니다.",
+        "200골드를 획득합니다.",
         "0~2레벨 사이의 랜덤한 타워를 얻습니다.",
     };
 
@@ -117,13 +113,18 @@ public static class Define
 
     public static readonly float PERMISSION_RANGE = 0.02f;
     public static readonly float PROJECTILE_PERMISSION_RANGE = 0.3f;
-    public static readonly float PROJECTILE_VELOCITY = 10f;
+    public static readonly float PROJECTILE_VELOCITY = 8f;
     public static readonly float PROJECTILE_DESTROY_TIME = 1f;
+    public static readonly float PROJECTILE_ROTATION_DELAY = 0.1f;
     public static readonly float GAMELEVEL_UP_TICK = 30f;
+    public static readonly float FIRST_GAMELEVEL_UP_TICK = 15f;
     public static readonly float ENEMY_SPAWN_DELAY = 1f;
 
     public static readonly float MOUSE_CLICK_RANGE = 0.33f;
 
+    public static readonly float TOWER_RANGE_ROTATE_SPEED = 60f;
+
+    public static readonly float TOWER_RANGE = 0.25f;
 
 
     public static readonly float BGM_DEFAULT_VOLUME = 0.5f;
@@ -142,6 +143,7 @@ public static class Define
     public static readonly string TAG_MOVEMENT = "Movement";
     public static readonly string TAG_Idle = "Idle";
     public static readonly string TAG_ENEMY = "Enemy";
+    public static readonly string TAG_PORTAL = "Portal";
     public static readonly string TAG_AUTOCREATE_BUTTON = "AutoCreate";
     public static readonly string ENEMY_MOVE_PATH = "EnemyMovePath";
     public static readonly string TAG_LOGIN_DATA = "LoginData";
@@ -151,6 +153,9 @@ public static class Define
     public static readonly string TAG_TOWER_DATA = "TowerData";
     public static readonly string TAG_ENHANCE_DATA = "EnhanceData";
     public static readonly string TAG_GAME_DATA_JSON = "GameData.json";
+    public static readonly string TAG_DEFINE_DATA_JSON = "DefineData.json";
+    public static readonly string TAG_DEFINE_DATA = "DefineData";
+    public static readonly string TAG_GAME_DATA = "GameData";
     public static readonly string TAG_SCORE = "Score";
     public static readonly string TAG_KEY_DATA = "KeyData";
     public static readonly string TAG_DATA_KEY = "DataKey";
@@ -205,8 +210,8 @@ public static class Define
 
     public static readonly string[] MENT_SKILL_DESCRIPTION = {
         "일정 시간\n공격력 및\n공격속도가\n증가합니다.\n(Lv.{0})",
-        "산사태를 일으켜\n모든 적을\n기절시킵니다.\n(Lv.{0})",
-        "맵을 순회하는\n회오리바람을\n일으킵니다.\n(Lv.{0})",
+        "산사태를\n일으켜\n모든 적을\n기절시킵니다.\n(Lv.{0})",
+        "순회하는\n회오리\n바람을\n일으킵니다.\n(Lv.{0})",
     };
 
     public static readonly string[] UPGRADE_NAME = {
@@ -243,16 +248,40 @@ public static class Define
     public static readonly string ENEMY_PREFAB_PATH = "Prefabs/Objects/Enemy/Enemy_{0}";
     public static readonly int ENEMY_MAX_LEVEL = 20;
 
-    public static readonly Vector3 DEFAULT_CREATE_POSITION = new Vector3(-1.75f, .1f, 0f);
-
-
 
     public static readonly int ENHANCE_MAXLEVEL = 50;
-
     public static readonly int SKILL_MAX_LEVEL = 5;
 
     [JsonConverter(typeof(Vector3Converter))]
+    public static readonly Vector3 ARROWHEAD_SCALE = new Vector3(.2f, .2f, 1f);
+
+    [JsonConverter(typeof(Vector3Converter))]
     public static readonly Vector3 SKILL_TORNADO_DEFAULT_POSITION = new Vector3(-1.75f, -3.25f, 0f);
+
+    [JsonConverter(typeof(Vector3Converter))]
+    public static readonly Vector3 DEFAULT_CREATE_POSITION = new Vector3(-1.75f, .1f, 0f);
+
+    [JsonConverter(typeof(Vector3Converter))]
+    public static readonly Vector3 TOWER_CREATE_POSITION = Vector3.down * 0.25f;
+
+    [JsonConverter(typeof(ColorConverter))]
+    public static readonly Color COLOR_ORANGE = new Color(1f, 0.6f, 0.2f, 1f);
+
+    [JsonConverter(typeof(ColorConverter))]
+    public static readonly Color COLOR_NOT = new Color(1f, 1f, 1f, 0f);
+
+    [JsonConverter(typeof(ColorConverter))]
+    public static readonly Color[] COLOR_TOWERLEVEL = {
+        Color.green,
+        Color.blue,
+        Color.magenta,
+        Color.red,
+        Color.yellow,
+        Color.black,
+    };
+
+
+
     public static readonly float SKILL_TORNADO_MOVESPEED = 1.5f;
 
     public static readonly string[] TOWER_PATH = {
@@ -304,35 +333,37 @@ public static class Define
     };
 
 
-    [JsonConverter(typeof(ColorConverter))]
-    public static readonly Color[] COLOR_TOWERLEVEL = {
-        Color.green,
-        Color.blue,
-        Color.magenta,
-        Color.red,
-        Color.yellow,
-        Color.black,
-    };
+
 
     public static readonly int TOWER_MAXLEVEL = 5;
 
     public static readonly string TOWERICON_SPRITE_PATH = "Sprite/Tower/TowerIcons";
 
-
-
     public static readonly string[] BGM_PATH = { 
-
+        "Sound/BGM/StartBGM",
+        "Sound/BGM/IngameBGM",
     };
 
     public static readonly string[] SFX_PATH = {
-
+        "Sound/SFX/GameStartSFX",
+        "Sound/SFX/UISelectSFX",
+        "Sound/SFX/UIDeSelectSFX",
+        "Sound/SFX/UITowerButtonSFX",
+        "Sound/SFX/SelectTowerAndCellSFX",
+        "Sound/SFX/GoldSFX",
+        "Sound/SFX/FireSFX",
+        "Sound/SFX/HitSFX",
+        "Sound/SFX/PowerUpSFX",
+        "Sound/SFX/StunSFX",
+        "Sound/SFX/TornadoSFX",
+        "Sound/SFX/FireHitSFX",
+        "Sound/SFX/IceHitSFX",
+        "Sound/SFX/LoseSFX",
     };
 
-
-
-    public static readonly Vector3 TOWER_CREATE_POSITION = Vector3.down * 0.25f;
     #endregion
     #region Enum
+
     public enum UpgradeType {
         Hammer,
         Key,
@@ -343,10 +374,27 @@ public static class Define
         Count
     }
     public enum BGMType {
+        Main,
+        Ingame,
+        Count,
     }
 
     public enum SFXType {
-
+        GameStartButton,
+        SelectUIButton,
+        DeSelectUIButton,
+        SelectTowerUIButton,
+        SelectTowerAndCell,
+        GetGold,
+        FireProjectile,
+        HitProjectile,
+        PowerUpSkill,
+        StunSkill,
+        TornadoSkill,
+        FireExplosion,
+        IceExplosion,
+        GameOver,
+        Count,
     }
 
     public enum BuffType {
