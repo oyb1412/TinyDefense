@@ -10,7 +10,7 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
         buttonSfxType = Define.SFXType.TornadoSkill;
         base.Init();
         if(tornadoPrefab == null ) 
-            tornadoPrefab = Resources.Load<GameObject>(Define.SKILL_TORNADO_PATH);
+            tornadoPrefab = Resources.Load<GameObject>(Managers.Data.DefineData.SKILL_TORNADO_PATH);
 
         Managers.Skill.SetSkillAction += ((type) => {
             if (type == Define.SkillType.Tornado) {

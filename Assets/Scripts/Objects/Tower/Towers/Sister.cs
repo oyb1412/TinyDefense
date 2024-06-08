@@ -39,7 +39,10 @@ public class Sister : TowerBase {
             if (item.TowerCell == null)
                 continue;
 
-            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange * Define.TOWER_RANGE
+            if (item == this)
+                continue;
+
+            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) <= TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE
                 && item.gameObject.activeInHierarchy) {
 
                 int ran = Random.Range(0, 2);
@@ -54,7 +57,6 @@ public class Sister : TowerBase {
                     float bufftime = Managers.Tower.TowerData[(int)TowerType].BuffTime + Managers.Tower.TowerData[(int)TowerType].BuffTimeUpValue * TowerLevel;
                     item.BuffManager.AddBuff(new AttackDelayBuff(buffValue, bufftime), item);
                 }
-
                 return;
             }
         }

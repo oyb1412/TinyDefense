@@ -24,7 +24,7 @@ public class UI_RegistretionButton : UI_Button {
             return;
         }
         //문자열이 너무 길 시 실패
-        if(emailIF.text.Length > Define.MAX_EMAIL_LENGTH ||  passwordIF.text.Length > Define.MAX_PASSWORD_LENGTH) {
+        if(emailIF.text.Length > Managers.Data.DefineData.MAX_EMAIL_LENGTH ||  passwordIF.text.Length > Managers.Data.DefineData.MAX_PASSWORD_LENGTH) {
             Registretion(false);
             return;
         }
@@ -34,7 +34,7 @@ public class UI_RegistretionButton : UI_Button {
     }
 
     private void Registretion(bool success) {
-        logTMP.text = success ? Define.MENT_SUCCESS_REGISTRETION : Define.MENT_FAIELD_REGISTRETION;
+        logTMP.text = success ? Managers.Data.DefineData.MENT_SUCCESS_REGISTRETION : Managers.Data.DefineData.MENT_FAIELD_REGISTRETION;
         if (!success)
             Camera.main.transform.DOShakePosition(2f, .1f).SetEase(Ease.Linear);
     }

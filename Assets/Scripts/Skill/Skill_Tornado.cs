@@ -13,16 +13,21 @@ public class Skill_Tornado : MonoBehaviour {
     private SkillData.Skill skillData;
     //이동 코루틴
     private Coroutine moveCoroutine;
-    private void Start() {
-        transform.position = Define.SKILL_TORNADO_DEFAULT_POSITION;
-        movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
 
-        if(moveCoroutine != null)
+    private HashSet<EnemyBase> containsEnemy;
+    private void Start() {
+        if(containsEnemy == null)
+            containsEnemy = new HashSet<EnemyBase>(Managers.Data.DefineData.ENEMY_MAX_COUNT);
+
+        transform.position = Managers.Data.DefineData.SKILL_TORNADO_DEFAULT_POSITION;
+        movePath = GameObject.Find(Managers.Data.DefineData.ENEMY_MOVE_PATH).transform;
+        skillData = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
+
+        if (moveCoroutine != null)
             StopCoroutine(moveCoroutine);
 
         moveCoroutine = StartCoroutine(Co_Move());
 
-        skillData = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
 
         Invoke("Ivk_DestroyTornado", skillData.SkillTime);
     }
@@ -32,20 +37,8 @@ public class Skill_Tornado : MonoBehaviour {
     /// </summary>
     private void Ivk_DestroyTornado() {
         StopAllCoroutines();
+        containsEnemy.Clear();
         Managers.Resources.Release(gameObject);
-    }
-
-    private void OnTriggerEnter2D(Collider2D c) {
-        if (!c.CompareTag(Define.TAG_ENEMY))
-            return;
-
-        EnemyBase enemy = c.GetComponent<EnemyBase>();
-
-        if (Util.IsEnemyNull(enemy))
-            return;
-
-        enemy.DebuffManager.AddDebuff(new SlowDebuff(skillData.SkillValue, skillData.SkillTime), enemy);
-        enemy.EnemyStatus.SetHp(skillData.SkillDamage);
     }
 
     /// <summary>
@@ -54,14 +47,13 @@ public class Skill_Tornado : MonoBehaviour {
     private IEnumerator Co_Move() {
         int moveIndex = movePath.childCount - 1;
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;
-        var enemys = Managers.Enemy.EnemyList.ToHashSet();
         while (true) {
             transform.position = Vector3.MoveTowards(transform.position, targetPosition,
-                Define.SKILL_TORNADO_MOVESPEED * Time.deltaTime);
+                Managers.Data.DefineData.SKILL_TORNADO_MOVESPEED * Time.deltaTime);
 
             float distance = Vector3.Distance(transform.position, movePath.GetChild(moveIndex).position);
 
-            if (distance <= Define.PERMISSION_RANGE) {
+            if (distance <= Managers.Data.DefineData.PERMISSION_RANGE) {
                 moveIndex--;
 
                 if (moveIndex < 0)
@@ -69,6 +61,30 @@ public class Skill_Tornado : MonoBehaviour {
 
                 targetPosition = movePath.GetChild(moveIndex).position;
             }
+
+            if(Managers.Enemy.EnemyList.Count > 0) {
+                var enemyList = Managers.Enemy.GetEnemyList();
+                Debug.Log(enemyList.Length);
+                for (int i = enemyList.Length - 1; i >= 0; i--) {
+                    if (Util.IsEnemyNull(enemyList[i]))
+                        continue;
+
+                    if (Vector2.Distance(transform.position, enemyList[i].transform.position) > Managers.Data.DefineData.SKILL_TORNADO_RANGE) {
+                        if (containsEnemy.Contains(enemyList[i]))
+                            containsEnemy.Remove(enemyList[i]);
+
+                        continue;
+                    }
+
+                    if (containsEnemy.Contains(enemyList[i]))
+                        continue;
+
+                    containsEnemy.Add(enemyList[i]);
+                    enemyList[i].DebuffManager.AddDebuff(new SlowDebuff(skillData.SkillValue, skillData.SkillTime), enemyList[i]);
+                    enemyList[i].EnemyStatus.SetHp(skillData.SkillDamage);
+                }
+            }
+            
             yield return null;
         }
     }

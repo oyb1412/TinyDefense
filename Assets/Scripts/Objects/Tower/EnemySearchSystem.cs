@@ -1,5 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
+using System.Collections;
+using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
 /// 주변 적 감지 클래스
@@ -16,18 +18,23 @@ public class EnemySearchSystem : MonoBehaviour
     private Tween rangeTween;
     //애너미 레이어
     private LayerMask enemyLayer;
+    //회전 코루틴
+    private Coroutine rotateCoroutine;
 
     private void Awake() {
         towerBase = GetComponentInParent<TowerBase>();
         RangeSprite = GetComponentInChildren<SpriteRenderer>();
         selectArrow = GetComponentInChildren<SelectArrow>();
         RangeSprite.enabled = false;
-        enemyLayer = LayerMask.GetMask(Define.TAG_ENEMY);
+        enemyLayer = LayerMask.GetMask(Managers.Data.DefineData.TAG_ENEMY);
     }
 
-    private void Update() {
-        if(RangeSprite.enabled) {
-            RangeSprite.transform.localRotation *= Quaternion.Euler(0, 0, Define.TOWER_RANGE_ROTATE_SPEED * Time.deltaTime);
+    private IEnumerator Co_RangeSpriteRotate() {
+        while(true) {
+            if(RangeSprite.enabled)
+                RangeSprite.transform.localRotation *= Quaternion.Euler(0, 0, Managers.Data.DefineData.TOWER_RANGE_ROTATE_SPEED * Time.deltaTime);
+
+            yield return null;
         }
     }
 
@@ -39,10 +46,15 @@ public class EnemySearchSystem : MonoBehaviour
         if (towerBase == null)
             return null;
 
-        var hit = Physics2D.CircleCast(transform.position, towerBase.TowerStatus.AttackRange * Define.TOWER_RANGE, Vector2.zero, enemyLayer);
+        var enemyList = Managers.Enemy.GetEnemyList();
+        for (int i = enemyList.Length - 1; i >= 0; i--) {
+            if (Util.IsEnemyNull(enemyList[i]))
+                continue;
 
-        if(hit.collider != null) {
-            return hit.collider.GetComponent<EnemyBase>();
+            if (Vector2.Distance(transform.position, enemyList[i].transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)
+                continue;
+
+            return enemyList[i];
         }
         return null;
     }
@@ -56,7 +68,7 @@ public class EnemySearchSystem : MonoBehaviour
         if(target == null) 
             return null;
 
-        if(Vector2.Distance(transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * Define.TOWER_RANGE) {
+        if(Vector2.Distance(transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE) {
             return null;
         }
 
@@ -90,6 +102,11 @@ public class EnemySearchSystem : MonoBehaviour
         Util.ResetTween(rangeTween);
         rangeTween = DOTween.To(() => rangeScale, x => rangeScale = x, new Vector3(scaleX, scaleY, 1), .5f)
             .OnUpdate(() => RangeSprite.transform.localScale = rangeScale);
+
+        if(rotateCoroutine != null)
+            StopCoroutine(rotateCoroutine);
+
+        rotateCoroutine = StartCoroutine(Co_RangeSpriteRotate());
     }
 
     /// <summary>
@@ -102,6 +119,11 @@ public class EnemySearchSystem : MonoBehaviour
             .OnComplete(() => RangeSprite.enabled = false);
 
         selectArrow.DeActivation();
+
+        if (rotateCoroutine != null) {
+            StopCoroutine(rotateCoroutine);
+            rotateCoroutine = null;
+        }
     }
 
     /// <summary>

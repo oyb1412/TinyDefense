@@ -14,7 +14,7 @@ public class Ability_PlusMageTowerPercentage : ITowerPreAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusMageTowerPercentage() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusMageTowerPercentage);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusMageTowerPercentage, Managers.Data.DefineData);
     }
 
     /// <summary>

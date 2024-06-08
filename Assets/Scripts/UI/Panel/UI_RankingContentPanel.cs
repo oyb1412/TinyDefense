@@ -22,10 +22,10 @@ public class UI_RankingContentPanel : MonoBehaviour {
     private void Awake() {
         topIcon = new Sprite[3];
         if(otherIcon == null) {
-            otherIcon = Resources.Load<Sprite>(Define.SPRITE_OTHER_ICON);
+            otherIcon = Resources.Load<Sprite>(Managers.Data.DefineData.SPRITE_OTHER_ICON);
 
             for (int i = 0; i < topIcon.Length; i++) {
-                topIcon[i] = Resources.Load<Sprite>(string.Format(Define.SPRITE_TOP_ICON, i));
+                topIcon[i] = Resources.Load<Sprite>(string.Format(Managers.Data.DefineData.SPRITE_TOP_ICON, i));
             }
         }
        
@@ -54,7 +54,7 @@ public class UI_RankingContentPanel : MonoBehaviour {
 
         nameTMP.text = name;
         rankingTMP.text = ranking.ToString();
-        scoreTMP.text = string.Format(Define.RANKING_SCORE, score);
+        scoreTMP.text = string.Format(Managers.Data.DefineData.RANKING_SCORE, score);
 
         if (ranking < 3) {
             rankingIcon.sprite = topIcon[ranking];

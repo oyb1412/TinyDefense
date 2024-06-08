@@ -16,10 +16,10 @@ public class UI_GameSpeedUpButton : UI_Button {
         iconImage = GetComponent<Image>();
 
         if(defaultSpeedSprite == null)
-            defaultSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_DEFAULT_SPEED);
+            defaultSpeedSprite = Resources.Load<Sprite>(Managers.Data.DefineData.SPRITE_BUTTON_DEFAULT_SPEED);
 
         if(fastSpeedSprite == null)
-            fastSpeedSprite = Resources.Load<Sprite>(Define.SPRITE_BUTTON_FASE_SPEED);
+            fastSpeedSprite = Resources.Load<Sprite>(Managers.Data.DefineData.SPRITE_BUTTON_FASE_SPEED);
 
         button.interactable = false;
         seletable = false;

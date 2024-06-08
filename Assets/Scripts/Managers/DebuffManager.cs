@@ -16,7 +16,9 @@ public class DebuffManager {
 
     public DebuffManager() {
         DebuffAction = null;
-        Debuffs = new HashSet<IDebuff>();
+
+        if(Debuffs == null)
+            Debuffs = new HashSet<IDebuff>();
     }
 
     /// <summary>
@@ -31,7 +33,7 @@ public class DebuffManager {
         {
             foreach(var item in Debuffs) {
                 if(item.Type == debuff.Type) {
-                    RemoveDebuff(debuff, enemy);
+                    RemoveDebuff(item, enemy);
                     break;
                 }
             }
@@ -39,7 +41,7 @@ public class DebuffManager {
 
         Debuffs.Add(debuff);
         debuff.ApplyDebuff(enemy);
-        Managers.Instance.StartCoroutine(Co_RemoveDebuff(debuff.DebuffTime, debuff, enemy));
+        enemy.StartCoroutine(Co_RemoveDebuff(debuff.DebuffTime, debuff, enemy));
         DebuffAction?.Invoke(debuff.Type, true);
     }
 

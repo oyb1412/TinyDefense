@@ -69,7 +69,7 @@ public class UI_EnemyHpSlider : MonoBehaviour {
             return;
         }
         if (hpSlider.value < 0.6f) {
-            fillImage.color = Define.COLOR_ORANGE;
+            fillImage.color = Managers.Data.DefineData.COLOR_ORANGE;
             return;
         }
 

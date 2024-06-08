@@ -35,7 +35,7 @@ public class UI_TowerInformation : MonoBehaviour {
     private UI_Movement movement;
     private void Awake() {
         movement = GetComponent<UI_Movement>();
-        towerIconSprites = Resources.LoadAll<Sprite>(Define.TOWERICON_SPRITE_PATH);
+        towerIconSprites = Resources.LoadAll<Sprite>(Managers.Data.DefineData.TOWERICON_SPRITE_PATH);
     }
 
     /// <summary>
@@ -55,15 +55,15 @@ public class UI_TowerInformation : MonoBehaviour {
         currentTower = cell.Tower;
 
         TowerStatus status = currentTower.TowerStatus;
-        towerName.text = Define.TOWER_NAME[(int)status.TowerType];
+        towerName.text = Managers.Data.DefineData.TOWER_NAME[(int)status.TowerType];
 
         towerIcon.sprite = towerIconSprites[(int)status.TowerType];
         towerType.sprite = towerTypeSprites[(int)status.TowerBundle];
-        towerDescription.text = Define.TOWER_DESCRIPTION[(int)status.TowerType];
+        towerDescription.text = Managers.Data.DefineData.TOWER_DESCRIPTION[(int)status.TowerType];
         
-        towerRange.text = string.Format(Define.MENT_TOWER_RANGE, status.AttackRange);
-        towerLevel.text = string.Format(Define.MENT_TOWER_LEVEL, status.Level);
-        towerKill.text = string.Format(Define.MENT_TOWER_KILL, status.TowerKills);
+        towerRange.text = string.Format(Managers.Data.DefineData.MENT_TOWER_RANGE, status.AttackRange);
+        towerLevel.text = string.Format(Managers.Data.DefineData.MENT_TOWER_LEVEL, status.Level);
+        towerKill.text = string.Format(Managers.Data.DefineData.MENT_TOWER_KILL, status.TowerKills);
 
         StartCoroutine(Co_TowerInfomation());
     }
@@ -84,12 +84,12 @@ public class UI_TowerInformation : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator Co_TowerInfomation() {
         while(true) {
-            towerDamage.text = string.Format(Define.MENT_TOWER_DAMAGE, currentTower.TowerStatus.AttackDamage);
+            towerDamage.text = string.Format(Managers.Data.DefineData.MENT_TOWER_DAMAGE, currentTower.TowerStatus.AttackDamage);
 
             if (currentTower.TowerStatus.AttackDelay <= 0)
-                towerDelay.text = Define.MENT_MAX_DELAY;
+                towerDelay.text = Managers.Data.DefineData.MENT_MAX_DELAY;
             else
-                towerDelay.text = string.Format(Define.MENT_TOWER_DELAY, currentTower.TowerStatus.AttackDelay);
+                towerDelay.text = string.Format(Managers.Data.DefineData.MENT_TOWER_DELAY, currentTower.TowerStatus.AttackDelay);
             yield return null;
         }
     }

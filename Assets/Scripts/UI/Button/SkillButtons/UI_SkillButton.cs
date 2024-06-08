@@ -56,7 +56,7 @@ public class UI_SkillButton : UI_Button
     /// </summary>
     /// <param name="level">·¹º§</param>
     private string GetDescriptionText(int level) {
-        return string.Format(Define.MENT_SKILL_DESCRIPTION[(int)skillType], level);
+        return string.Format(Managers.Data.DefineData.MENT_SKILL_DESCRIPTION[(int)skillType], level);
     }
 
     /// <summary>
@@ -67,7 +67,7 @@ public class UI_SkillButton : UI_Button
         Managers.Game.CurrentGold -= skill.SkillCost;
         Managers.Skill.SetSkillValue(skillType);
         descriptionText.text = GetDescriptionText(skill.Level);
-        costText.text = string.Format(Define.MENT_GOLD, skill.SkillCost);
+        costText.text = string.Format(Managers.Data.DefineData.MENT_GOLD, skill.SkillCost);
 
         ButtonActive(Managers.Game.CurrentGold);
     }

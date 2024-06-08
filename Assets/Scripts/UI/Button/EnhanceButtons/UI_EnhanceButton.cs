@@ -58,7 +58,7 @@ public class UI_EnhanceButton : UI_Button
     /// </summary>
     /// <param name="level">·¹º§</param>
     private string GetLevelText(int level) {
-        return string.Format(Define.MENT_TOWER_ENHANCE_LEVEL[(int)enhanceType], level);
+        return string.Format(Managers.Data.DefineData.MENT_TOWER_ENHANCE_LEVEL[(int)enhanceType], level);
     }
 
     /// <summary>
@@ -72,7 +72,7 @@ public class UI_EnhanceButton : UI_Button
         Managers.Enhance.SetEnhanceValue(bundleType, enhanceType);
 
         levelText.text = GetLevelText(enhance.Level);
-        costText.text = string.Format(Define.MENT_GOLD, enhance.EnhanceCost);
+        costText.text = string.Format(Managers.Data.DefineData.MENT_GOLD, enhance.EnhanceCost);
 
         ButtonActive(Managers.Game.CurrentGold);
     }

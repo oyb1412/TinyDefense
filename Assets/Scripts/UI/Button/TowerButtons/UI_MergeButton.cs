@@ -21,7 +21,7 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     protected override void Awake() {
         base.Awake();
         if(buildEffect == null) 
-            buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+            buildEffect = Resources.Load<GameObject>(Managers.Data.DefineData.EFFECT_TOWER_BUILD);
 
         tmpAndButton = GetComponent<TMPandButton>();
     }

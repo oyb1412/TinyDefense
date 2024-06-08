@@ -90,6 +90,6 @@ public class Cell : MonoBehaviour, ISelect {
             return;
 
         Tower.TowerCell = this;
-        Tower.transform.position = transform.position + Define.TOWER_CREATE_POSITION;
+        Tower.transform.position = transform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
     }
 }

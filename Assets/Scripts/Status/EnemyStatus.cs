@@ -19,7 +19,10 @@ public class EnemyStatus : StatusBase {
 
             if (enemyBase != null && enemyBase.DebuffManager != null && enemyBase.DebuffManager.Debuffs.Count > 0)
                 finalSpeed = enemyBase.DebuffManager.CalculateMoveSpeed(finalSpeed);
-            
+
+            if (finalSpeed <= 0)
+                return 0f;
+
             return finalSpeed;
         }
         set {
@@ -65,21 +68,16 @@ public class EnemyStatus : StatusBase {
 
         MoveSpeed = Managers.Enemy.EnemyData.MoveSpeed;
 
-        if(level == 0) {
-            MaxHp = Managers.Enemy.EnemyData.MaxHp;
-        }
-        else {
-            MaxHp = Managers.Enemy.EnemyData.MaxHp * Mathf.Pow(1 + Managers.Enemy.EnemyData.MaxHpUpVolume, level);
-        }
+        MaxHp = Managers.Enemy.CurrentLevelEnemyHp;
 
         CurrentHp = MaxHp;
 
         SetHpAction?.Invoke(CurrentHp);
 
-        Reward = Managers.Enemy.EnemyData.Reward + level / 10;
+        Reward = Managers.Enemy.EnemyData.Reward + level / 5;
 
         if (goldObject == null)
-            goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
+            goldObject = Resources.Load<GameObject>(Managers.Data.DefineData.OBJECT_REWARD_PATH);
 
         //애너미에게 적용되는 스킬의 유무를 판단해,
         //존재한다면 스킬 적용

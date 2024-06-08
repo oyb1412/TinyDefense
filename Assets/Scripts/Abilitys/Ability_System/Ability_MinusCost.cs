@@ -14,7 +14,7 @@ public class Ability_MinusCost : ITowerInitAbility {
     /// </summary>
     public Ability_MinusCost()
     {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.MinusCost);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.MinusCost, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -22,7 +22,7 @@ public class Ability_MinusCost : ITowerInitAbility {
     /// </summary>
     public void SetAbility() {
         UI_TowerDescription.Instance.CreateButton.SetCreateCost(
-            Define.MINUS_TOWER_CREATE_COST);
+            Managers.Data.DefineData.MINUS_TOWER_CREATE_COST);
     }
 
     /// <summary>

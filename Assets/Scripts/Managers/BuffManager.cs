@@ -16,7 +16,9 @@ public class BuffManager {
     public Action<Define.BuffType, bool> BuffAction;
 
     public BuffManager() {
-        Buffs = new HashSet<IBuff>((int)Define.BuffType.Count);
+        if(Buffs == null) 
+            Buffs = new HashSet<IBuff>((int)Define.BuffType.Count);
+
         BuffAction = null;
     }
 
@@ -29,14 +31,14 @@ public class BuffManager {
     public void AddBuff(IBuff buff, TowerBase tower) {
         foreach (var b in Buffs) {
             if(b.Type == buff.Type) {
-                RemoveBuff(buff, tower);
+                RemoveBuff(b, tower);
                 break;
             }
         }
 
         Buffs.Add(buff);
         buff.ApplyBuff(tower);
-        Managers.Instance.StartCoroutine(Co_RemoveBuff(buff.BuffTime, buff, tower));
+        tower.StartCoroutine(Co_RemoveBuff(buff.BuffTime, buff, tower));
         BuffAction?.Invoke(buff.Type, true);
     }
 

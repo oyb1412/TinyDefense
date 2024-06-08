@@ -16,9 +16,9 @@ public class GameScene : BaseScene
     protected override void Awake() {
         base.Awake();
         if (UI_AutoCreateButton == null) {
-            UI_AutoCreateButton = GameObject.Find(Define.TAG_AUTOCREATE_BUTTON).GetComponent<UI_AutoCreateButton>();
+            UI_AutoCreateButton = GameObject.Find(Managers.Data.DefineData.TAG_AUTOCREATE_BUTTON).GetComponent<UI_AutoCreateButton>();
         }
-        loadingSlider = GameObject.Find(Define.TAG_LOADING_SLIDER).GetComponent<UI_LoadingSlider>();
+        loadingSlider = GameObject.Find(Managers.Data.DefineData.TAG_LOADING_SLIDER).GetComponent<UI_LoadingSlider>();
         Managers.Pool.Init();
         Managers.Game.Clear();
         Managers.Enemy.Clear();
@@ -94,7 +94,7 @@ public class GameScene : BaseScene
     /// <returns></returns>
     private IEnumerator LoadGameDataAndStartPoolAsync(UnityAction callback) {
         // JSON 파일 비동기로 로드
-        Task<GameData> loadJsonTask = Managers.Data.DecryptionLoadJsonAsync<GameData>(Define.TAG_GAME_DATA);
+        Task<GameData> loadJsonTask = Managers.Data.DecryptionLoadJsonAsync<GameData>(Managers.Data.DefineData.TAG_GAME_DATA);
         loadingSlider.SetLoading(.6f, callback);
 
         // 풀링 오브젝트 비동기 생성
@@ -111,7 +111,7 @@ public class GameScene : BaseScene
         if (loadJsonTask.IsFaulted) {
             Debug.Log($"데이터 로드 실패{loadJsonTask.IsFaulted.ToString()}");
 
-            string path = Path.Combine(Application.persistentDataPath, Define.TAG_GAME_DATA_JSON);
+            string path = Path.Combine(Application.persistentDataPath, Managers.Data.DefineData.TAG_GAME_DATA_JSON);
             if (File.Exists(path)) {
                 Debug.Log($"{path}데이터 삭제 성공");
                 File.Delete(path);

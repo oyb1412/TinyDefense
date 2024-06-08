@@ -25,7 +25,7 @@ public class UI_AbilityIcon : MonoBehaviour {
         AddEventTrigger(OnPointerDown, EventTriggerType.PointerDown);
         AddEventTrigger(OnPointerUp, EventTriggerType.PointerUp);
 
-        IconImage.color = Define.COLOR_NOT;
+        IconImage.color = Managers.Data.DefineData.COLOR_NOT;
         IconImage.sprite = null;
     }
 

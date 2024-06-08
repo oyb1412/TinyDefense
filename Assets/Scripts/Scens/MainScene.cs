@@ -1,7 +1,11 @@
+using UnityEngine;
+
 public class MainScene : BaseScene {
  
     public override void Init() {
-        var qw = Managers.Data.DefineData;
+        if(Time.timeScale == 0f)
+            Time.timeScale = 1f;
+
         SoundManager.Instance.SetBgm(true, Define.BGMType.Main);
         base.Init();
         UI_Fade.Instance.DeActivationFade();

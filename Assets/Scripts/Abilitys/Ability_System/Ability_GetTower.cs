@@ -4,7 +4,7 @@ using UnityEngine;
 public class Ability_GetTower : IAbility {
     public Define.AbilityValue AbilityValue { get; private set; }
     public Ability_GetTower() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.GetTower);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.GetTower, Managers.Data.DefineData);
     }
     public void SetAbility() {
         var scene = Managers.Scene.CurrentScene as GameScene;

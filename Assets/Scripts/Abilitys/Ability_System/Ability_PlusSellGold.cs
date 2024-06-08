@@ -12,7 +12,7 @@ public class Ability_PlusSellGold : ITowerPostAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusSellGold() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusSellGold);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusSellGold, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -24,7 +24,7 @@ public class Ability_PlusSellGold : ITowerPostAbility {
             return;
 
         foreach (var tower in towerList) {
-            tower.TowerStatus.SetReward(Define.ABILITY_PLUS_TOWER_REWARD);
+            tower.TowerStatus.SetReward(Managers.Data.DefineData.ABILITY_PLUS_TOWER_REWARD);
         }
     }
 
@@ -34,7 +34,7 @@ public class Ability_PlusSellGold : ITowerPostAbility {
     /// <param name="button"></param>
     public void ExecuteSystemAbility(UI_Button button) {
         if(button is UI_CreateButton createButton) {
-            createButton.TowerObj.GetComponent<TowerBase>().TowerStatus.SetReward(Define.ABILITY_PLUS_TOWER_REWARD);
+            createButton.TowerObj.GetComponent<TowerBase>().TowerStatus.SetReward(Managers.Data.DefineData.ABILITY_PLUS_TOWER_REWARD);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 /// <summary>
 /// 모든 스킬 관리 매니저
@@ -44,11 +45,11 @@ public class SkillManager {
         if(SkillData[(int)skill].Level == 1)
             SetSkillAction?.Invoke(skill);
 
-        SkillData[(int)skill].SkillValue += SkillData[(int)skill].Level * SkillData[(int)skill].SkillValueUpValue;
-        SkillData[(int)skill].SkillTime += SkillData[(int)skill].Level * SkillData[(int)skill].SkillTimeUpValue;
-        SkillData[(int)skill].SkillCoolTime -= SkillData[(int)skill].Level * SkillData[(int)skill].SkillCoolTimeDownValue;
-        SkillData[(int)skill].SkillDamage = 2 * SkillData[(int)skill].SkillDamage;
-        SkillData[(int)skill].SkillCost = (SkillData[(int)skill].Level + 1) * SkillData[(int)skill].SkillCostUpValue;
+        SkillData[(int)skill].SkillValue += SkillData[(int)skill].SkillValueUpValue;
+        SkillData[(int)skill].SkillTime += SkillData[(int)skill].SkillTimeUpValue;
+        SkillData[(int)skill].SkillCoolTime -= SkillData[(int)skill].SkillCoolTimeDownValue;
+        SkillData[(int)skill].SkillDamage += SkillData[(int)skill].SkillDamage;
+        SkillData[(int)skill].SkillCost = SkillData[(int)skill].Level * SkillData[(int)skill].SkillCostUpValue;
     }
 
     /// <summary>

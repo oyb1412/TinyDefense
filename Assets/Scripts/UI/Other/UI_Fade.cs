@@ -28,14 +28,14 @@ public class UI_Fade : MonoBehaviour {
     /// </summary>
     /// <param name="type">¿Ãµø«“ æ¿</param>
     public void ActivationFade(Define.SceneType type) {
-        fadeImage.DOFade(1f, Define.FADE_TIME).SetUpdate(true).OnComplete(() => SceneManager.LoadScene(type.ToString()));
+        fadeImage.DOFade(1f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true).OnComplete(() => SceneManager.LoadScene(type.ToString()));
     }
 
     /// <summary>
     /// ∆‰¿ÃµÂ æ∆øÙ
     /// </summary>
     public void DeActivationFade() {
-        fadeImage.DOFade(0f, Define.FADE_TIME).SetUpdate(true);
+        fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true);
     }
 
     /// <summary>
@@ -44,10 +44,10 @@ public class UI_Fade : MonoBehaviour {
     /// </summary>
     /// <param name="fadeInCallBack"></param>
     public void ActivationAndDeActivationFade(UnityAction fadeInCallBack) {
-        fadeImage.DOFade(1f, Define.FADE_TIME).SetUpdate(true).OnComplete(() =>
+        fadeImage.DOFade(1f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true).OnComplete(() =>
         {
             fadeInCallBack?.Invoke();
-            fadeImage.DOFade(0f, Define.FADE_TIME);
+            fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME);
         });
     }
 }

@@ -37,7 +37,7 @@ public class MovementArrow : MonoBehaviour {
         lineRenderer.positionCount = 2;
         lineRenderer.enabled = false;
 
-        arrowHeadPrefab = Managers.Resources.Activation(Define.ARROWHEAD_PATH);
+        arrowHeadPrefab = Managers.Resources.Activation(Managers.Data.DefineData.ARROWHEAD_PATH);
         arrowHeadPrefab.transform.localScale = Vector3.zero;
     }
 
@@ -127,7 +127,7 @@ public class MovementArrow : MonoBehaviour {
 
             if (isTouching) {
                 pressTimer += Time.deltaTime;
-                if (pressTimer > Define.PRESS_TIME)
+                if (pressTimer > Managers.Data.DefineData.PRESS_TIME)
                     isPress = true;
                 else
                     isPress = false;
@@ -136,7 +136,7 @@ public class MovementArrow : MonoBehaviour {
                 if (isPress) {
                     lineRenderer.SetPosition(0, startPos);
                     lineRenderer.enabled = true;
-                    arrowHeadPrefab.transform.localScale = Define.ARROWHEAD_SCALE;
+                    arrowHeadPrefab.transform.localScale = Managers.Data.DefineData.ARROWHEAD_SCALE;
 
                     lineRenderer.SetPosition(1, currentTouchPosition);
 

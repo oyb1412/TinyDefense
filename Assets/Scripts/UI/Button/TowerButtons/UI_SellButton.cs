@@ -24,10 +24,10 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
         base.Awake();
         tmpAndButton = GetComponent<TMPandButton>();
         if(buildEffect == null) 
-            buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+            buildEffect = Resources.Load<GameObject>(Managers.Data.DefineData.EFFECT_TOWER_BUILD);
 
         if(goldObject == null)
-            goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
+            goldObject = Resources.Load<GameObject>(Managers.Data.DefineData.OBJECT_REWARD_PATH);
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
     /// <param name="cell">º±≈√«— ºø</param>
     public void Activation(Cell cell) {
         if (!cell.IsUse()) {
-            sellRewardTMP.text = string.Format(Define.MENT_SELL_REWARD, 0);
+            sellRewardTMP.text = string.Format(Managers.Data.DefineData.MENT_SELL_REWARD, 0);
             tmpAndButton.DeActivation();
             return;
         }
@@ -71,7 +71,7 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
 
         Tower = cell.Tower;
 
-        sellRewardTMP.text = string.Format(Define.MENT_SELL_REWARD, Tower.TowerStatus.SellReward);
+        sellRewardTMP.text = string.Format(Managers.Data.DefineData.MENT_SELL_REWARD, Tower.TowerStatus.SellReward);
 
        
     }

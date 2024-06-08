@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
@@ -10,7 +11,6 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
     protected TowerBase towerBase;
     //단타공격을 위한 헤시셋
     private HashSet<EnemyBase> enemyHash = new HashSet<EnemyBase>();
-
     /// <summary>
     /// 이펙트 생성 시 초기화 및 공격
     /// </summary>
@@ -26,23 +26,26 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
         this.towerBase = towerBase;
         base.Init(towerBase, attackData, pos);
 
-        var enemy = Managers.Enemy.EnemyList.ToHashSet();
-        foreach(var item in enemy) {
-            if(Util.IsEnemyNull(item)) 
+        var enemyList = Managers.Enemy.GetEnemyList();
+        for (int i = enemyList.Length - 1; i >= 0; i--) {
+            if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
-            float distance = Vector2.Distance(transform.position, item.transform.position);
+            float distance = Vector2.Distance(transform.position, enemyList[i].transform.position);
+
             //폭발 사거리 내의 적을 검출
-            if (distance <= Define.TOWER_EXPLOSION_RADIUS) {
-                //적이 아직 공격당하지 않았다면
-                if (item != null && !enemyHash.Contains(item)) {
-                    //공격 및 재공격 불가
-                    enemyHash.Add(item);
-                    item.EnemyStatus.SetHp(attackData.Damage, towerBase);
-                    //디버프 적용
-                    ExplosionAbility(item);
-                }
-            }
+            if (distance > Managers.Data.DefineData.TOWER_EXPLOSION_RADIUS)
+                continue;
+
+            //적이 아직 공격당하지 않았다면
+            if (enemyHash.Contains(enemyList[i]))
+                continue;
+
+            //공격 및 재공격 불가
+            enemyHash.Add(enemyList[i]);
+            enemyList[i].EnemyStatus.SetHp(attackData.Damage, towerBase);
+            //디버프 적용
+            ExplosionAbility(enemyList[i]);
         }
     }
 

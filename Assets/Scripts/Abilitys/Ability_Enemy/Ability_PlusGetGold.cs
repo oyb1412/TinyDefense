@@ -17,20 +17,20 @@ public class Ability_PlusGetGold : IEnemyAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusGetGold() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusGetGold);
-        PlusGold = Define.ABILITY_PLUS_ENEMY_REWARD;
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusGetGold, Managers.Data.DefineData);
+        PlusGold = Managers.Data.DefineData.ABILITY_PLUS_ENEMY_REWARD;
     }
 
     /// <summary>
     /// 생성되있는 모든 애너미 리워드 변경
     /// </summary>
     public void SetAbility() {
-        var enemys = Managers.Enemy.EnemyList.ToHashSet();
-        foreach (var item in enemys) {
-            if (Util.IsEnemyNull(item))
+        var enemyList = Managers.Enemy.GetEnemyList();
+        for (int i = enemyList.Length - 1; i >= 0; i--) {
+            if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
-            item.EnemyStatus.SetReward(this);
+            enemyList[i].EnemyStatus.SetReward(this);
         }
     }
 

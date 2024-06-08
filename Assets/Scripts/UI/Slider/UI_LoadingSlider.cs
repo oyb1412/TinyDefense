@@ -37,7 +37,7 @@ public class UI_LoadingSlider : MonoBehaviour {
     /// <returns></returns>
     private IEnumerator Co_Loading(float value, UnityAction callBack) {
         while(loadingSlider.value <= value) {
-            loadingSlider.value += Time.deltaTime * 0.5f;
+            loadingSlider.value += Time.deltaTime * 0.3f;
             loadingText.SetLoadingText(loadingSlider.value);
             if(loadingSlider.value >= 1f ) {
                 loadingSlider.value = 1f;

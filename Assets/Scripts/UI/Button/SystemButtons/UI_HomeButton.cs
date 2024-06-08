@@ -15,7 +15,7 @@ public class UI_HomeButton : UI_Button {
     /// yes, no 버튼 판넬 활성화
     /// </summary>
     public override void Select() {
-        checkPanel.Activation(Define.MENT_BUTTON_HOME, GoHome);
+        checkPanel.Activation(Managers.Data.DefineData.MENT_BUTTON_HOME, GoHome);
     }
 
     /// <summary>

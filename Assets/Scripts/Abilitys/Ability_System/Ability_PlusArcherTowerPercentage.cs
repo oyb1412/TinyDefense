@@ -14,7 +14,7 @@ public class Ability_PlusArcherTowerPercentage : ITowerPreAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusArcherTowerPercentage() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusArcherTowerPercentage);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusArcherTowerPercentage, Managers.Data.DefineData);
     }
 
     /// <summary>

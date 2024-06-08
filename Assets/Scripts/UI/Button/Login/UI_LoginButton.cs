@@ -28,7 +28,7 @@ public class UI_LoginButton : UI_Button {
             return;
         }
         //문자열이 너무 길 시 로그인 실패
-        if (emailIF.text.Length > Define.MAX_EMAIL_LENGTH || passwordIF.text.Length > Define.MAX_PASSWORD_LENGTH) {
+        if (emailIF.text.Length > Managers.Data.DefineData.MAX_EMAIL_LENGTH || passwordIF.text.Length > Managers.Data.DefineData.MAX_PASSWORD_LENGTH) {
             Login(false);
             return;
         }
@@ -40,7 +40,7 @@ public class UI_LoginButton : UI_Button {
     /// </summary>
     /// <param name="success">성공?</param>
     private void Login(bool success) {
-        logTMP.text = success ? Define.MENT_SUCCESS_LOGIN : Define.MENT_FAIELD_LOGIN;
+        logTMP.text = success ? Managers.Data.DefineData.MENT_SUCCESS_LOGIN : Managers.Data.DefineData.MENT_FAIELD_LOGIN;
         if (success) {
             Managers.Data.SaveLoginData(emailIF.text, passwordIF.text);
             transform.parent.DOScale(0f, 0.5f).OnComplete(() => LoginComplete());

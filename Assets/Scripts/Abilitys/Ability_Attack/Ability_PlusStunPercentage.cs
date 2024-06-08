@@ -14,7 +14,7 @@ public class Ability_PlusStunPercentage : IAttackAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusStunPercentage() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusStunPercentage);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusStunPercentage, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -32,7 +32,7 @@ public class Ability_PlusStunPercentage : IAttackAbility {
     /// <param name="attackData">공격 데이터</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         float ran = Random.Range(0f, 1f);
-        if (Define.ABILITY_STUN_DEFAULT_CHANCE < ran)
+        if (Managers.Data.DefineData.ABILITY_STUN_DEFAULT_CHANCE < ran)
             return;
 
         attackData.IsStun = true;

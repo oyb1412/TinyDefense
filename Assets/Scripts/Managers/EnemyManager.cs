@@ -1,27 +1,44 @@
 using System;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using UnityEngine;
 
 /// <summary>
 /// 모든 적 관리 매니저
 /// </summary>
 public class EnemyManager {
     //생성된 모든 적 리스트
-    public HashSet<EnemyBase> EnemyList { get; private set; }
+    public List<EnemyBase> EnemyList { get; private set; }
     //맵에 존재하는 적 수가 변경되면 호출
     public Action<int> EnemyNumberAction;
     public EnemyData.EnemyStatusData EnemyData { get; private set; }
 
+    public float CurrentLevelEnemyHp { get; private set; }
     /// <summary>
     /// 적 리스트 초기화
     /// </summary>
     public void Clear() {
         EnemyNumberAction = null;
-        EnemyList = new HashSet<EnemyBase>();
+        EnemyList = new List<EnemyBase>(Managers.Data.DefineData.ENEMY_MAX_COUNT);
     }
 
     public void Init() {
         EnemyData = new EnemyData.EnemyStatusData();
         EnemyData = Managers.Data.GameData.EnemyDatas.Enemys;
+
+        Managers.Game.CurrentGameLevelAction += SetCurrentLevelEnemyHp;
+    }
+
+    public EnemyBase[] GetEnemyList() {
+        return EnemyList.ToArray();
+    }
+
+    private void SetCurrentLevelEnemyHp(int level) {
+        if (level == 0) {
+            CurrentLevelEnemyHp = Managers.Enemy.EnemyData.MaxHp;
+        } else {
+            CurrentLevelEnemyHp = Managers.Enemy.EnemyData.MaxHp * Mathf.Pow(1 + Managers.Enemy.EnemyData.MaxHpUpVolume, level);
+        }
     }
 
     /// <summary>

@@ -1,6 +1,7 @@
 using DG.Tweening;
 using Unity.VisualScripting;
 using UnityEngine;
+using static TowerBase;
 /// <summary>
 /// 스턴 스킬 클래스
 /// </summary>
@@ -29,13 +30,13 @@ public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
 
         //모든 적 순회
         //모든 적에게 디버프 적용 및 데미지
-        var enemys = Managers.Enemy.EnemyList.ToHashSet();
-        foreach (var enemy in enemys) {
-            if(Util.IsEnemyNull(enemy)) 
+        var enemyList = Managers.Enemy.GetEnemyList();
+        for (int i = enemyList.Length - 1; i >= 0; i--) {
+            if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
-            enemy.DebuffManager.AddDebuff(new StunDebuff(skill.SkillTime), enemy);
-            enemy.EnemyStatus.SetHp(skill.SkillDamage);
+            enemyList[i].DebuffManager.AddDebuff(new StunDebuff(skill.SkillTime), enemyList[i]);
+            enemyList[i].EnemyStatus.SetHp(skill.SkillDamage);
         }
         
         //카메라 쉐이크

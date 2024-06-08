@@ -10,6 +10,9 @@ public class LoginScene : BaseScene {
     /// </summary>
     public override void Init() {
         base.Init();
+        if (!SoundManager.Instance.GetBGMPlaying())
+            SoundManager.Instance.SetBgm(true, Define.BGMType.Main);
+
         if(Time.timeScale == 0) {
             Time.timeScale = 1f;
         }

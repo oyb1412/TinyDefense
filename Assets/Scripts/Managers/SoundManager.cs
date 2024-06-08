@@ -41,13 +41,13 @@ public class SoundManager : MonoBehaviour {
         bgmPlayer = bgmObject.AddComponent<AudioSource>();  //오디오 소스 추가
         bgmPlayer.playOnAwake = false;  //즉시 재생 해제
         bgmPlayer.loop = true;  //loop 설정
-        bgmPlayer.volume = Define.BGM_DEFAULT_VOLUME;  //기본 볼륨 설정
+        bgmPlayer.volume = Managers.Data.DefineData.BGM_DEFAULT_VOLUME;  //기본 볼륨 설정
         bgmPlayer.dopplerLevel = 0f;
         bgmPlayer.reverbZoneMix = 0f;
         bgmClips = new Dictionary<Define.BGMType, AudioClip>();
 
         for(int i = 0; i< (int)Define.BGMType.Count; i++) {
-            string path = Define.BGM_PATH[i];
+            string path = Managers.Data.DefineData.BGM_PATH[i];
             AudioClip clip = Resources.Load<AudioClip>(path);
             bgmClips[(Define.BGMType)i] = clip;
         }
@@ -61,12 +61,12 @@ public class SoundManager : MonoBehaviour {
     private void InitSfx() {
         GameObject sfxObject = new GameObject("SfxPlayer");  //sfx player 생성
         sfxObject.transform.parent = transform; //부모를 manager로 지정
-        sfxPlayers = new AudioSource[Define.SFX_DEFAULT_CHANNELS];  //채널 수 만큼 player 생성
+        sfxPlayers = new AudioSource[Managers.Data.DefineData.SFX_DEFAULT_CHANNELS];  //채널 수 만큼 player 생성
 
         for (int i = 0; i < sfxPlayers.Length; i++) {
             sfxPlayers[i] = sfxObject.AddComponent<AudioSource>();  //각 player에 오디오 소스 추가
             sfxPlayers[i].playOnAwake = false;  //즉시 재생 해제
-            sfxPlayers[i].volume = Define.SFX_DEFAULT_VOLUME;  //기본 볼륨 설정
+            sfxPlayers[i].volume = Managers.Data.DefineData.SFX_DEFAULT_VOLUME;  //기본 볼륨 설정
             sfxPlayers[i].dopplerLevel = 0f;
             sfxPlayers[i].reverbZoneMix = 0f;
         }
@@ -74,10 +74,14 @@ public class SoundManager : MonoBehaviour {
         sfxClips = new Dictionary<Define.SFXType, AudioClip>();
 
         for(int i = 0; i< (int)Define.SFXType.Count; i++) {
-            string path = Define.SFX_PATH[i];
+            string path = Managers.Data.DefineData.SFX_PATH[i];
             AudioClip clip = Resources.Load<AudioClip>(path);
             sfxClips[(Define.SFXType)i] = clip;
         }
+    }
+
+    public bool GetBGMPlaying() {
+        return bgmPlayer.isPlaying;
     }
 
     public void SetBGMMute(bool trigger) => bgmPlayer.mute = trigger;
@@ -85,6 +89,14 @@ public class SoundManager : MonoBehaviour {
     public void SetSFXMute(bool trigger) {
         for (int i = 0; i < sfxPlayers.Length; i++)
             sfxPlayers[i].mute = trigger;
+    }
+
+    public float GetBgmVolume() {
+        return bgmPlayer.volume;
+    }
+
+    public float GetSFXVolume() {
+        return sfxPlayers[0].volume;
     }
 
     /// <summary>
@@ -130,7 +142,15 @@ public class SoundManager : MonoBehaviour {
 
                 sfxPlayers[i].clip = clip;  //사용가능한 플레이어를 서치하면, 클립 설정 후 플레이
                 sfxPlayers[i].Play();
-                break;
+                return;
+            }
+
+            if (sfx == Define.SFXType.PowerUpSkill || sfx == Define.SFXType.StunSkill || sfx == Define.SFXType.TornadoSkill
+            || sfx == Define.SFXType.GameOver) {
+                int ran = Random.Range(0, sfxPlayers.Length);
+                sfxPlayers[ran].clip = clip;
+                sfxPlayers[ran].Play();
+                return;
             }
         }
     }

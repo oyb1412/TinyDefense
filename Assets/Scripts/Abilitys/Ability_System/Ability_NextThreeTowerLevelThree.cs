@@ -14,7 +14,7 @@ public class Ability_NextThreeTowerLevelThree : ITowerPostAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_NextThreeTowerLevelThree() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.NextThreeTowerLevelThree);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.NextThreeTowerLevelThree, Managers.Data.DefineData);
     }
 
     /// <summary>

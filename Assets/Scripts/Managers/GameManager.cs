@@ -102,14 +102,14 @@ public class GameManager {
     public void Init() {
         Managers.Enemy.EnemyNumberAction += CheckEnemyNumber;
         IsPlaying = true;
-        GameLevelTimer = Define.FIRST_GAMELEVEL_UP_TICK;
-        CurrentGold = Define.GAME_START_GOLD;
+        GameLevelTimer = Managers.Data.DefineData.FIRST_GAMELEVEL_UP_TICK;
+        CurrentGold = Managers.Data.DefineData.GAME_START_GOLD;
         _currentGameLevel = 0;
         currentKillNumber = 0;
         GameSpeed = Define.GameSpeed.Default;
 
         if(PortalAnimator == null)
-            PortalAnimator = GameObject.Find(Define.TAG_PORTAL).GetComponent<Animator>();
+            PortalAnimator = GameObject.Find(Managers.Data.DefineData.TAG_PORTAL).GetComponent<Animator>();
     }
 
     /// <summary>
@@ -121,7 +121,7 @@ public class GameManager {
             return true;
         }
 
-        if (_currentGameLevel % Define.ABILITY_REWARD_ROUND == 0
+        if (_currentGameLevel % Managers.Data.DefineData.ABILITY_REWARD_ROUND == 0
                 &&IsPlaying) {
             IsPlaying = false;
             return true;
@@ -135,7 +135,7 @@ public class GameManager {
     /// </summary>
     /// <param name="count">적의 수</param>
     private void CheckEnemyNumber(int count) {
-        if (Define.ENEMY_MAX_COUNT > count)
+        if (Managers.Data.DefineData.ENEMY_MAX_COUNT > count)
             return;
 
         if(IsPlaying) {
@@ -151,20 +151,20 @@ public class GameManager {
     /// 현재 게임의 랭킹 데이터가 더 높을시 Save
     /// </summary>
     private async void GetRankingData() {
-        var saveData = await Managers.FireStore.LoadDataToFireStore(Define.TAG_SCORE_DATA, Managers.Auth.User.Email,
-                Define.TAG_SCORE);
+        var saveData = await Managers.FireStore.LoadDataToFireStore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Auth.User.Email,
+                Managers.Data.DefineData.TAG_SCORE);
 
         if(saveData != null) {
             int saveScore = Convert.ToInt32(saveData);
 
             if(saveScore < currentKillNumber) {
-                Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Define.TAG_SCORE_DATA,
+                Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
                 Managers.Auth.User.Email, CurrentKillNumber);
             }
         }
         else {
             string[] name = Managers.Auth.User.Email.Split("@");
-            Managers.FireStore.SaveDataToFirestore(Define.TAG_SCORE_DATA, Define.TAG_SCORE_DATA,
+            Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
                 name[0], CurrentKillNumber);
         }
 
@@ -185,7 +185,7 @@ public class GameManager {
             if (GameLevelTimer <= 0) {
                 CurrentGameLevel++;
                 PortalAnimator.enabled = true;
-                GameLevelTimer = Define.GAMELEVEL_UP_TICK;
+                GameLevelTimer = Managers.Data.DefineData.GAMELEVEL_UP_TICK;
             }
         }
     }

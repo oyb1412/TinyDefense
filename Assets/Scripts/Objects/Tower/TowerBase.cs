@@ -74,7 +74,7 @@ public abstract class TowerBase : MonoBehaviour {
         enemySearchSystem = GetComponentInChildren<EnemySearchSystem>();
         TowerStatus = new TowerStatus();
         StateMachine = new TowerStateMachine(this);
-        addProjectileDelay = new WaitForSeconds(Define.ABILITY_PROJECTILE_DEFAULT_DELAY);
+        addProjectileDelay = new WaitForSeconds(Managers.Data.DefineData.ABILITY_PROJECTILE_DEFAULT_DELAY);
     }
 
     /// <summary>
@@ -85,13 +85,18 @@ public abstract class TowerBase : MonoBehaviour {
         Debuffs = new List<IDebuff>();
         TowerLevel = 0;
         TowerStatus.Init(this);
-        runeWard.color = Define.COLOR_TOWERLEVEL[TowerLevel];
+        runeWard.color = Managers.Data.DefineData.COLOR_TOWERLEVEL[TowerLevel];
+
+        if (!Util.IsEnemyNull(TargetEnemy))
+            TargetEnemy = null;
 
         if (attackCoroutine == null)
             attackCoroutine = StartCoroutine(Co_Attack());
 
         if (animator.enabled == false)
             animator.enabled = true;
+
+
     }
 
     /// <summary>
@@ -241,7 +246,7 @@ public abstract class TowerBase : MonoBehaviour {
     /// <param name="changeCell">타워 교체가 아닌 셀로의 이동인가?</param>
     /// <returns></returns>
     public IEnumerator Co_Movement(Cell cell, bool changeCell) {
-        Vector3 pos = cell.transform.position + Define.TOWER_CREATE_POSITION;
+        Vector3 pos = cell.transform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
         StateMachine.ChangeState(Define.TowerState.Movement);
         if (pos.x < transform.position.x)
             parentScale.ChangeScale(Define.Direction.Left, transform);
@@ -258,9 +263,9 @@ public abstract class TowerBase : MonoBehaviour {
         cell.IsSelected = true;
 
         while (true) {
-            transform.position = Vector3.MoveTowards(transform.position, pos, Define.TOWER_MOVESPEED * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, pos, Managers.Data.DefineData.TOWER_MOVESPEED * Time.deltaTime);
 
-            if (Vector2.Distance(transform.position, pos) < Define.PERMISSION_RANGE) {
+            if (Vector2.Distance(transform.position, pos) < Managers.Data.DefineData.PERMISSION_RANGE) {
                 cell.IsSelected = false;
                 TowerCell = cell;
                 TowerCell.Tower = this;
@@ -280,7 +285,7 @@ public abstract class TowerBase : MonoBehaviour {
     /// </summary>
     public virtual void TowerLevelup(int killCount = 0) {
         TowerLevel++;
-        runeWard.color = Define.COLOR_TOWERLEVEL[TowerLevel];
+        runeWard.color = Managers.Data.DefineData.COLOR_TOWERLEVEL[TowerLevel];
         TowerStatus.LevelUpStatus(killCount);
 
         foreach(var item in Debuffs) {
@@ -296,7 +301,7 @@ public abstract class TowerBase : MonoBehaviour {
     /// </summary>
     public void DestroyTower() {
         StateMachine.ChangeState(Define.TowerState.Idle);
-        animator.Play(Define.TAG_Idle);
+        animator.Play(Managers.Data.DefineData.TAG_Idle);
         TowerCell.SetTower(null);
         Managers.Tower.RemoveTower(this);
         Managers.Resources.Release(gameObject);

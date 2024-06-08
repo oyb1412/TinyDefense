@@ -44,6 +44,20 @@ public class FirebaseAuthManager {
         });
     }
 
+    /// <summary>
+    /// 로그아웃
+    /// </summary>
+    public void Logout() {
+        try {
+            Auth.SignOut();
+            User = null;
+            Debug.Log("로그아웃 완료");
+        } catch (System.Exception ex) {
+            Debug.LogError("로그아웃 중 오류 발생: " + ex.Message);
+        }
+    }
+
+
     private void RunOnMainThread(System.Action action) {
         if (action == null) return;
         if (Thread.CurrentThread.ManagedThreadId == 1) {

@@ -14,7 +14,7 @@ public class SelectManager
     //Ä«¸Þ¶ó Ä³½Ì
     private Camera mainCamera;
     public void Init() {
-        selects = new HashSet<Cell>(Define.CELL_COUNT);
+        selects = new HashSet<Cell>(Managers.Data.DefineData.CELL_COUNT);
         selects.AddRange(Object.FindObjectsByType<Cell>(FindObjectsSortMode.None));
         mainCamera = Camera.main;
     }
@@ -56,7 +56,7 @@ public class SelectManager
     }
 #endif
         foreach (var item in selects) {
-            if (Vector2.Distance(inputPos, item.transform.position) < Define.MOUSE_CLICK_RANGE) {
+            if (Vector2.Distance(inputPos, item.transform.position) < Managers.Data.DefineData.MOUSE_CLICK_RANGE) {
                 return item;
             }
         }

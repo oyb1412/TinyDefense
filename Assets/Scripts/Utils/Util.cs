@@ -21,9 +21,9 @@ public static class Util
     /// <param name="right">오른쪽을 보고있는가?</param>
     public static void ChangeFlip(Transform trans, Define.Direction dir) {
         if (dir == Define.Direction.Right)
-            trans.localScale = new Vector2(-Define.ENEMY_DEFAULT_SCALE, Define.ENEMY_DEFAULT_SCALE);
+            trans.localScale = new Vector2(-Managers.Data.DefineData.ENEMY_DEFAULT_SCALE, Managers.Data.DefineData.ENEMY_DEFAULT_SCALE);
         else if(dir == Define.Direction.Left)
-            trans.localScale = new Vector2(Define.ENEMY_DEFAULT_SCALE, Define.ENEMY_DEFAULT_SCALE);
+            trans.localScale = new Vector2(Managers.Data.DefineData.ENEMY_DEFAULT_SCALE, Managers.Data.DefineData.ENEMY_DEFAULT_SCALE);
     }
 
     /// <summary>

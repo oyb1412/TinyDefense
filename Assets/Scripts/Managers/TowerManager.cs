@@ -9,7 +9,7 @@ public class TowerManager {
     public TowerData.TowerLevelData[] TowerData { get; private set; }
 
     public void Clear() {
-        TowerList = new HashSet<TowerBase>();
+        TowerList = new HashSet<TowerBase>(30);
     }
 
     /// <summary>

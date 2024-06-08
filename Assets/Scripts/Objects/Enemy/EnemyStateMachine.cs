@@ -24,16 +24,16 @@ public class EnemyStateMachine {
         enemyState = state;
         switch(enemyState) {
             case Define.EnemyState.Run:
-                enemyBase.SetAnimation(Define.TAG_STUN, false);
+                enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, false);
                 enemyBase.StartMove();
                 break;
             case Define.EnemyState.Dead:
-                enemyBase.SetAnimation(Define.TAG_STUN, false);
+                enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, false);
                 enemyBase.StopAllCoroutines();
-                enemyBase.SetAnimation(Define.TAG_DEAD);
+                enemyBase.SetAnimation(Managers.Data.DefineData.TAG_DEAD);
                 break;
             case Define.EnemyState.Stun:
-                enemyBase.SetAnimation(Define.TAG_STUN, true);
+                enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, true);
                 enemyBase.StopCoroutine(enemyBase.MoveCoroutine);
                 break;
         }

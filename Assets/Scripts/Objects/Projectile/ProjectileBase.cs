@@ -33,7 +33,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
     private void Start() {
         if (explosionEffect == null)
-            explosionEffect = Resources.Load<GameObject>(Define.PROJECTILE_EXPLOSION_PATH[(int)towerBase.TowerType]);
+            explosionEffect = Resources.Load<GameObject>(Managers.Data.DefineData.PROJECTILE_EXPLOSION_PATH[(int)towerBase.TowerType]);
     }
 
     /// <summary>
@@ -54,7 +54,13 @@ public abstract class ProjectileBase : MonoBehaviour
         myTransform.position = this.towerBase.transform.position;
         destroyTimer = 0f;
 
-        if(velocityCoroutine != null)
+        Vector3 targetPosition = targetTransform.position;
+        Vector3 direction = targetPosition - myTransform.position;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
+        if (velocityCoroutine != null)
             StopCoroutine(velocityCoroutine);
 
         velocityCoroutine = StartCoroutine(Co_Velocity());
@@ -65,12 +71,11 @@ public abstract class ProjectileBase : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_Velocity() {
-        float rotationUpdateTimer = 0f;
 
         while (true) {
             destroyTimer += Time.deltaTime;
 
-            if (destroyTimer > Define.PROJECTILE_DESTROY_TIME) {
+            if (destroyTimer > Managers.Data.DefineData.PROJECTILE_DESTROY_TIME) {
                 destroyTimer = 0f;
                 Managers.Resources.Release(gameObject);
                 yield break;
@@ -80,21 +85,15 @@ public abstract class ProjectileBase : MonoBehaviour
                 Vector3 targetPosition = targetTransform.position;
                 Vector3 direction = targetPosition - myTransform.position;
 
-                if (rotationUpdateTimer <= 0f) {
-                    float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                    myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
-                    saveDir = direction.normalized;
-                    rotationUpdateTimer = Define.PROJECTILE_ROTATION_DELAY;
-                }
+                saveDir = direction.normalized;
 
-                if (Vector2.Distance(myTransform.position, targetPosition) < Define.PROJECTILE_PERMISSION_RANGE) {
+                if (Vector2.Distance(myTransform.position, targetPosition) < Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE) {
                     Collison(targetEnemy);
                     yield break;
                 }
             }
 
-            myTransform.position += saveDir * Define.PROJECTILE_VELOCITY * Time.deltaTime;
-            rotationUpdateTimer -= Time.deltaTime;
+            myTransform.position += saveDir * Managers.Data.DefineData.PROJECTILE_VELOCITY * Time.deltaTime;
             yield return null;
         }
     }
@@ -114,7 +113,7 @@ public abstract class ProjectileBase : MonoBehaviour
 
         //스턴 적용
         if(attackData.IsStun) {
-            enemy.DebuffManager.AddDebuff(new StunDebuff(Define.ABILITY_STUN_DEFAULT_TIME), enemy);
+            enemy.DebuffManager.AddDebuff(new StunDebuff(Managers.Data.DefineData.ABILITY_STUN_DEFAULT_TIME), enemy);
         }
     }
 

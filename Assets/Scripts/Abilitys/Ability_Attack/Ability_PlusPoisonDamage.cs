@@ -13,7 +13,7 @@ public class Ability_PlusPoisonDamage : IAttackAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusPoisonDamage() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusPoisonDamage);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusPoisonDamage, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -21,8 +21,8 @@ public class Ability_PlusPoisonDamage : IAttackAbility {
     /// </summary>
     public void SetAbility() {
         foreach(var item in Managers.Tower.TowerList) {
-            item.SetDebuff(new PoisonDebuff(Define.ABILITY_POISON_DEFAULT_DAMAGE * item.TowerStatus.AttackDamage,
-            Define.ABILITY_POISON_DEFAULT_TIME));
+            item.SetDebuff(new PoisonDebuff(Managers.Data.DefineData.ABILITY_POISON_DEFAULT_DAMAGE * item.TowerStatus.AttackDamage,
+            Managers.Data.DefineData.ABILITY_POISON_DEFAULT_TIME));
         }
     }
 
@@ -33,7 +33,7 @@ public class Ability_PlusPoisonDamage : IAttackAbility {
     /// <param name="towerBase">공격한 타워</param>
     /// <param name="attackData">공격 데이터</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
-        towerBase.SetDebuff(new PoisonDebuff(Define.ABILITY_POISON_DEFAULT_DAMAGE * towerBase.TowerStatus.AttackDamage,
-            Define.ABILITY_POISON_DEFAULT_TIME));
+        towerBase.SetDebuff(new PoisonDebuff(Managers.Data.DefineData.ABILITY_POISON_DEFAULT_DAMAGE * towerBase.TowerStatus.AttackDamage,
+            Managers.Data.DefineData.ABILITY_POISON_DEFAULT_TIME));
     }
 }

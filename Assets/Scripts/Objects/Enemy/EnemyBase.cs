@@ -53,13 +53,13 @@ public class EnemyBase : MonoBehaviour {
     /// </summary>
     protected virtual void Awake() {
         myTransform = transform;
-        movePath = GameObject.Find(Define.ENEMY_MOVE_PATH).transform;
+        movePath = GameObject.Find(Managers.Data.DefineData.ENEMY_MOVE_PATH).transform;
         EnemyStatus = new EnemyStatus();
         DebuffManager = new DebuffManager();
 
         parentScale = GetComponent<ParentScaleEventHandler>();
         animator = GetComponent<Animator>();
-        debuffTick = new WaitForSeconds(Define.DEBUFF_DAMAGE_DEFAULT_TICK);
+        debuffTick = new WaitForSeconds(Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK);
         StateMachine = new EnemyStateMachine(this);
     }
 
@@ -73,7 +73,7 @@ public class EnemyBase : MonoBehaviour {
             if (DebuffManager != null && DebuffManager.Debuffs.Count > 0) {
                 foreach(var item in DebuffManager.Debuffs) {
                     if(item.Bundle == Define.DebuffBundle.Damage && item.IsActive)
-                        EnemyStatus.SetHp(item.DebuffValue * Define.DEBUFF_DAMAGE_DEFAULT_TICK);
+                        EnemyStatus.SetHp(item.DebuffValue * Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK);
                 }
             }
             yield return debuffTick;
@@ -108,7 +108,7 @@ public class EnemyBase : MonoBehaviour {
         debuffCoroutine = null;
         parentScale.ChangeScale(Define.Direction.Right, myTransform);
         enemyLevel = Managers.Game.CurrentGameLevel - 1;
-        myTransform.position = Define.DEFAULT_CREATE_POSITION;
+        myTransform.position = Managers.Data.DefineData.DEFAULT_CREATE_POSITION;
         EnemyStatus.Init(this, enemyLevel);
         EnemyStatus.IsLive = true;
     }
@@ -117,30 +117,8 @@ public class EnemyBase : MonoBehaviour {
     /// 이동 시작
     /// </summary>
     public void StartMove() {
-        //if (Util.IsEnemyNull(this)) {
-        //    Debug.Log($"이미 사망상태이므로 비활성화");
-        //    return;
-        //}
-        if (EnemyStatus.CurrentHp <= 0) {
-            Debug.Log("체력 이슈로 이동 실패");
+        if (Util.IsEnemyNull(this))
             return;
-        }
-        if(!gameObject.activeInHierarchy) {
-            Debug.Log("비활성화 이슈로 이동 실패");
-            return;
-        }
-        if (this == null) {
-            Debug.Log("base 널 이슈로 이동 실패");
-            return;
-        }
-        if (!EnemyStatus.IsLive) {
-            Debug.Log("islive 비활성화 이슈로 이동 실패");
-            return;
-        }
-        if (EnemyStatus == null) {
-            Debug.Log("status 널 이슈로 이동 실패");
-            return;
-        }
 
         if (MoveCoroutine != null) {
             StopCoroutine(MoveCoroutine);
@@ -167,7 +145,7 @@ public class EnemyBase : MonoBehaviour {
 
             float distance = Vector3.Distance(myTransform.position, movePath.GetChild(moveIndex).position);
 
-            if (distance <= Define.PERMISSION_RANGE) {
+            if (distance <= Managers.Data.DefineData.PERMISSION_RANGE) {
                 moveIndex++;
 
                 if (moveIndex >= movePath.childCount)

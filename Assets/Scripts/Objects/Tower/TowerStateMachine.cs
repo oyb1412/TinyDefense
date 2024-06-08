@@ -26,13 +26,13 @@ public class TowerStateMachine {
 
         switch (towerState) {
             case Define.TowerState.Idle:
-                towerBase.SetAnimation(Define.TAG_MOVEMENT, false);
+                towerBase.SetAnimation(Managers.Data.DefineData.TAG_MOVEMENT, false);
                 break;
             case Define.TowerState.Movement:
-                towerBase.SetAnimation(Define.TAG_MOVEMENT, true);
+                towerBase.SetAnimation(Managers.Data.DefineData.TAG_MOVEMENT, true);
                 break;
             case Define.TowerState.Attack:
-                towerBase.SetAnimation(Define.TAG_ATTACK);
+                towerBase.SetAnimation(Managers.Data.DefineData.TAG_ATTACK);
                 break;
         }
     }

@@ -21,7 +21,7 @@ public class UI_GoldObject : MonoBehaviour {
     public void Init(Vector3 pos, int gold, bool plus) {
         SoundManager.Instance.PlaySfx(Define.SFXType.GetGold);
         transform.position = pos;
-        string ment = plus ? Define.MENT_PLUS_GOLD : Define.MENT_GOLD;
+        string ment = plus ? Managers.Data.DefineData.MENT_PLUS_GOLD : Managers.Data.DefineData.MENT_GOLD;
         goldTMP.text = string.Format(ment, gold.ToString());
         transform.DOMove(transform.position + Vector3.up, 1f).OnComplete(() => Managers.Resources.Release(gameObject));
     }

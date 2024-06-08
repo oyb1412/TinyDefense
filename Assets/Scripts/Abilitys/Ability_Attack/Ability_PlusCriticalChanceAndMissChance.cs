@@ -14,7 +14,7 @@ public class Ability_PlusCriticalChanceAndMissChance : IAttackAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusCriticalChanceAndMissChance() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusCriticalChanceAndMissChance);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusCriticalChanceAndMissChance, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -33,8 +33,8 @@ public class Ability_PlusCriticalChanceAndMissChance : IAttackAbility {
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         //확률계산으로 70%면 데미지 두배, 30%면 미스(데미지0)
         float ran = Random.Range(0f, 1f);
-        if (Define.ABILITY_DEFAULT_CRITICAL_CHANCE > ran) {
-            attackData.Damage *= (1 + Define.ABILITY_DEFAULT_CRITICAL_DAMAGE);
+        if (Managers.Data.DefineData.ABILITY_DEFAULT_CRITICAL_CHANCE > ran) {
+            attackData.Damage *= (1 + Managers.Data.DefineData.ABILITY_DEFAULT_CRITICAL_DAMAGE);
             attackData.IsCritical = true;
         } else {
             attackData.Damage = 0;

@@ -14,7 +14,7 @@ public class Ability_PlusProjectile : IAttackAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusProjectile() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusProjectile);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusProjectile, Managers.Data.DefineData);
     }
 
     /// <summary>
@@ -33,10 +33,10 @@ public class Ability_PlusProjectile : IAttackAbility {
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         float ran = Random.Range(0f, 1f);
 
-        if (Define.ABILITY_PROJECTILE_DEFAULT_CHANCE < ran)
+        if (Managers.Data.DefineData.ABILITY_PROJECTILE_DEFAULT_CHANCE < ran)
             return;
 
-        towerBase.Fire(attackData, Define.ABILITY_PROJECTILE_DEFAULT_DELAY);
+        towerBase.Fire(attackData, Managers.Data.DefineData.ABILITY_PROJECTILE_DEFAULT_DELAY);
     }
 
 }

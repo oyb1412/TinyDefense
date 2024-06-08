@@ -9,15 +9,13 @@ public class UI_VolumeScrollbar : MonoBehaviour {
     //스크롤 바
     protected Scrollbar scrollBar;
     //볼륨 표시 텍스트
-    protected TextMeshProUGUI valueTMP;
+    [SerializeField]protected TextMeshProUGUI valueTMP;
 
     /// <summary>
     /// 초기화 및 볼륨 조절 콜백 등록
     /// </summary>
-    private void Awake() {
+    protected virtual void Awake() {
         scrollBar = GetComponent<Scrollbar>();
-        valueTMP = GetComponentInChildren<TextMeshProUGUI>();
-
         scrollBar.onValueChanged.AddListener(SetScrollBar);
     }
 

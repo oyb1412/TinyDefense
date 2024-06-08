@@ -30,7 +30,7 @@ public class TowerStatus : StatusBase {
         SetStatus();
 
         if(Projectile == null)
-            Projectile = Resources.Load<GameObject>(Define.PROJECTILE_PATH[(int)TowerType]);
+            Projectile = Resources.Load<GameObject>(Managers.Data.DefineData.PROJECTILE_PATH[(int)TowerType]);
 
         enhance = Managers.Enhance;
     }
@@ -63,6 +63,7 @@ public class TowerStatus : StatusBase {
     public float AttackDelay {
         get {
             float finalSpeed = attackDelay;
+
             if (enhance != null && enhance.GetEnhanceValue(TowerBundle, Define.EnhanceType.AttackDelay).Level > 0) {
                 finalSpeed *= (1 - enhance.GetEnhanceValue(TowerBundle, Define.EnhanceType.AttackDelay).EnhanceValue * 0.5f);
             }
@@ -111,7 +112,7 @@ public class TowerStatus : StatusBase {
     /// </summary>
     /// <param name="value"></param>
     public void SetReward(float value = 0) {
-        SellReward = TowerData.SellRewardUpValue * (Level + 1);
+        SellReward = TowerData.SellRewardUpValue * (Level + 2);
         SellReward = Mathf.RoundToInt(SellReward * (1 + value));
     }
 

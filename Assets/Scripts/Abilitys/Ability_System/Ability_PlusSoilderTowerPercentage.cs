@@ -14,7 +14,7 @@ public class Ability_PlusSoilderTowerPercentage : ITowerPreAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_PlusSoilderTowerPercentage() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusSoilderTowerPercentage);
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusSoilderTowerPercentage, Managers.Data.DefineData);
     }
 
     /// <summary>

@@ -38,16 +38,16 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
         }
 
         if(buildEffect == null)
-            buildEffect = Resources.Load<GameObject>(Define.EFFECT_TOWER_BUILD);
+            buildEffect = Resources.Load<GameObject>(Managers.Data.DefineData.EFFECT_TOWER_BUILD);
 
         if(goldObject == null)
-            goldObject = Resources.Load<GameObject>(Define.OBJECT_REWARD_PATH);
+            goldObject = Resources.Load<GameObject>(Managers.Data.DefineData.OBJECT_REWARD_PATH);
 
         if(towerList == null)
             towerList = new GameObject[(int)Define.TowerType.Count];
 
         for(int i = 0; i< towerList.Length; i++) {
-            towerList[i] = Resources.Load<GameObject>(Define.TOWER_PREFAB_PATH[i]);
+            towerList[i] = Resources.Load<GameObject>(Managers.Data.DefineData.TOWER_PREFAB_PATH[i]);
         }
 
         SetCreateCost();
@@ -82,8 +82,8 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     /// </summary>
     /// <param name="value"></param>
     public void SetCreateCost(int value = 0) {
-        CreateCost = Define.TOWER_CREATE_COST - value;
-        costTMP.text = string.Format(Define.MENT_CREATE_COST, CreateCost);
+        CreateCost = Managers.Data.DefineData.TOWER_CREATE_COST - value;
+        costTMP.text = string.Format(Managers.Data.DefineData.MENT_CREATE_COST, CreateCost);
     }
 
     /// <summary>
@@ -158,6 +158,24 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
         Select();
     }
 
+    private void CreateTower() {
+        //게임 초반 수녀 등장 억제
+        if (Managers.Game.CurrentGameLevel < 3) {
+            var type = SummonUnit();
+            if (type == Define.TowerType.Sister) {
+                var ran = Random.Range(0, (int)Define.TowerType.Sister);
+                TowerObj = Managers.Resources.Activation(towerList[ran]
+                    ).GetComponent<TowerBase>();
+            } else {
+                TowerObj = Managers.Resources.Activation(towerList[(int)type]
+                    ).GetComponent<TowerBase>();
+            }
+        } else {
+            TowerObj = Managers.Resources.Activation(towerList[(int)SummonUnit()]
+                    ).GetComponent<TowerBase>();
+        }
+    }
+
     /// <summary>
     /// 타워 생성 어빌리티 선택시 호출
     /// 타워 자동생성 및 랜덤 업그레이드
@@ -170,8 +188,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
                 item.ExecuteSystemAbility(this);
         }
 
-        TowerObj = Managers.Resources.Activation(towerList[(int)SummonUnit()]
-                ).GetComponent<TowerBase>();
+        CreateTower();
 
         int ranUpgrade = Random.Range(1, 3);
 
@@ -203,24 +220,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
                 item.ExecuteSystemAbility(this);
         }
 
-        //게임 초반 수녀 등장 억제
-        if(Managers.Game.CurrentGameLevel < 2) {
-            var type = SummonUnit();
-            if(type == Define.TowerType.Sister) {
-                var ran = Random.Range(0, (int)Define.TowerType.Sister);
-                TowerObj = Managers.Resources.Activation(towerList[ran]
-                    ).GetComponent<TowerBase>();
-            }
-            else {
-                TowerObj = Managers.Resources.Activation(towerList[(int)type]
-                    ).GetComponent<TowerBase>();
-            }
-        }
-        else {
-            TowerObj = Managers.Resources.Activation(towerList[(int)SummonUnit()]
-                    ).GetComponent<TowerBase>();
-        }
-
+        CreateTower();
 
         //타워 생성 후 무료 업그레이드 스킬의 존재여부 확인
         //존재 시 무료 업그레이드

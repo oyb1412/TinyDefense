@@ -1,6 +1,3 @@
-
-using System.Linq;
-
 /// <summary>
 /// 적에게 적용되는 어빌리티
 /// 적 이동속도 영구적 감소
@@ -17,20 +14,20 @@ public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
     /// 타입, 이름, 설명, 아이콘 스프라이트
     /// </summary>
     public Ability_MinusEnemyMoveSpeed() {
-        AbilityValue = new Define.AbilityValue(Define.AbilityType.MinusEnemyMoveSpeed);
-        MoveSpeedValue = Define.ABILITY_ENEMY_MOVESPEED_MINUS;
+        AbilityValue = new Define.AbilityValue(Define.AbilityType.MinusEnemyMoveSpeed, Managers.Data.DefineData);
+        MoveSpeedValue = Managers.Data.DefineData.ABILITY_ENEMY_MOVESPEED_MINUS;
     }
 
     /// <summary>
     /// 스킬 습득 시, 생성된 모든 적에게 스킬 적용
     /// </summary>
     public void SetAbility() {
-        var enemys = Managers.Enemy.EnemyList.ToHashSet();
-        foreach(var item in enemys) {
-            if(Util.IsEnemyNull(item)) 
+        var enemyList = Managers.Enemy.GetEnemyList();
+        for (int i = enemyList.Length - 1; i >= 0; i--) {
+            if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
-            item.EnemyStatus.SetMoveSpeed(this);
+            enemyList[i].EnemyStatus.SetMoveSpeed(this);
         }
     }
 

@@ -51,7 +51,7 @@ public class DataManager {
     //모든 게임 데이터
     public GameData GameData { get; set; }
     //모든 게임 데이터(Defind)
-    public TestDefine DefineData { get; set; }
+    public Define DefineData { get; set; }
     //데이터 암호화를 위한 키
     public string Key { get; set; }
 
@@ -65,7 +65,7 @@ public class DataManager {
             Converters = new List<JsonConverter> { new Vector3Converter(), new ColorConverter() }
         });
 
-        DecryptionSaveJson(Define.TAG_GAME_DATA, jsonData);
+        DecryptionSaveJson(Managers.Data.DefineData.TAG_GAME_DATA, jsonData);
     }
 
     /// <summary>
@@ -73,7 +73,7 @@ public class DataManager {
     /// </summary>
     /// <returns></returns>
     public LoginData LoadLoginData() {
-        LoginData logindata = DecryptionLoadJson<LoginData>(Define.TAG_LOGIN_DATA);
+        LoginData logindata = DecryptionLoadJson<LoginData>(Managers.Data.DefineData.TAG_LOGIN_DATA);
         return logindata;
     }
 
@@ -86,7 +86,24 @@ public class DataManager {
     public void SaveLoginData(string email, string password) {
         LoginData logindata = new LoginData(email, password);
         string jsonData = JsonConvert.SerializeObject(logindata);
-        DecryptionSaveJson(Define.TAG_LOGIN_DATA, jsonData);
+        DecryptionSaveJson(Managers.Data.DefineData.TAG_LOGIN_DATA, jsonData);
+    }
+
+    
+
+    /// <summary>
+    /// 특정 데이터 삭제
+    /// </summary>
+    /// <param name="name"></param>
+    public bool DeleteData(string name) {
+        string path = Path.Combine(Application.persistentDataPath, name);
+        if(!File.Exists(path)) {
+            Debug.Log("삭제하려는 데이터가 존재하지 않습니다");
+            return false;
+        }
+
+        File.Delete(path);
+        return true;
     }
 
     /// <summary>

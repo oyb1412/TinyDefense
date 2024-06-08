@@ -17,9 +17,9 @@ public class AbilityManager : Attribute {
 
     public void Init() {
         AbilityList = new Dictionary<Define.AbilityType, IAbility>((int)Define.AbilityType.Count);
-        AttackAbilityList = new HashSet<IAttackAbility>(Define.ABILITY_ATTACK_COUNT);
-        EnemyAbilityList = new HashSet<IEnemyAbility>(Define.ABILITY_ENEMY_COUNT);
-        TowerAbilityList = new HashSet<ITowerAbility>(Define.ABILITY_TOWER_COUNT);
+        AttackAbilityList = new HashSet<IAttackAbility>(Managers.Data.DefineData.ABILITY_ATTACK_COUNT);
+        EnemyAbilityList = new HashSet<IEnemyAbility>(Managers.Data.DefineData.ABILITY_ENEMY_COUNT);
+        TowerAbilityList = new HashSet<ITowerAbility>(Managers.Data.DefineData.ABILITY_TOWER_COUNT);
     }
 
     /// <summary>
