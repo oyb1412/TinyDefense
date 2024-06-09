@@ -571,195 +571,229 @@
 
 **🤓Result!**
 
- AI의 행동을 제어하는 머신을 컴포넌트 패턴으로 취급하여 가시성 및 유지보수 용이성 확보
+ 게임 내 모든 데이터를 클라우드 서버에서 관리해, 유지보수성 및 보안성 상승
 
 
-### ・Unity의 충돌 감지 시스템을 이용하지 않고 AI의 시야내 적 감지 시스템
+### ・AES복호화를 이용한 데이터 복호화
 
 **🤔WHY?**
 
-  Collider을 사용한 유니티의 충돌 감지 시스템을 이용해 AI의 적 감지 시스템을 구현했지만, 비교적으로 높은 비용을 지니고 있는 충돌 감지 시스템에 의해 퍼포먼스가 하락하는 문제가 발생하였고, 조금 더 최적화를 하기 위해 사용했습니다.
+  클라우드 서버에서 내려받은 데이터를 그대로 로컬에 저장하면 보안 상 위험성이 존재하기 때문에, 모든 데이터를 복호화해 저장/로드
 
 **🤔HOW?**
 
  관련 코드
 
-- EnemyController
+- AesEncryption
     
     ```csharp
-    private UnitBase SearchUnit() {
-            var units = Managers.GameManager.UnitsList; // 모든 유닛의 정보를 저장.
-            foreach(var unit in units) {
-                    if (unit.IsDead()) continue; // 유닛이 사망한 상태면, 다음 유닛을 검색.
-                Vector3 dir = (unit.transform.position - transform.position).normalized;
-                float product = Vector3.Dot(transform.forward, dir); //방향벡터와 대상을 가르키는 벡터를 내적
-                float angle = Mathf.Cos(_viewRange * 0.5f * Mathf.Deg2Rad); // 시야각의 코사인 값 도출
-                if(product >= angle) { // 코사인 값이 내적 값보다 적다면, 즉 적이 이 유닛의 시야각 내에 있다면
-                    int mask = (1 << (int)LayerType.Unit) | (1 << (int)LayerType.Obstacle) | (1 << (int)LayerType.Wall);
-                    Debug.DrawRay(FirePoint.position, dir * float.MaxValue, Color.red);
-                    bool hit = Physics.Raycast(FirePoint.position, dir, out var target, float.MaxValue, mask);
-    
-                    if (!hit)
-                        continue;
-    
-    								//시야 내에 적이 존재해도, 다른 물체에 가로막힌 상태라면 발견하지 못함
-                    if (target.collider.gameObject.layer == (int)LayerType.Obstacle ||
-                        target.collider.gameObject.layer == (int)LayerType.Wall)
-                        continue;
-    
-                    if (target.collider.gameObject.layer == (int)LayerType.Unit) {
-                        return unit;
+    using System;
+    using System.IO;
+    using System.Security.Cryptography;
+    using System.Text;
+
+    /// <summary>
+    /// 문자열 AES 암호화 클래스
+    /// </summary>
+    public static class AesEncryption {
+
+    /// <summary>
+    /// 키를 바탕으로 암호화
+    /// </summary>
+    /// <param name="plainText">암호화 대상 문자열</param>
+    /// <param name="key">암호화 키</param>
+    /// <returns></returns>
+    public static string Encrypt(string plainText, string key) {
+        byte[] iv = new byte[16];
+        byte[] array;
+
+        using (Aes aes = Aes.Create()) {
+            aes.Key = GetAesKey(key);
+            aes.IV = iv;
+
+            ICryptoTransform encryptor = aes.CreateEncryptor(aes.Key, aes.IV);
+
+            using (MemoryStream memoryStream = new MemoryStream()) {
+                using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, encryptor, CryptoStreamMode.Write)) {
+                    using (StreamWriter streamWriter = new StreamWriter((Stream)cryptoStream)) {
+                        streamWriter.Write(plainText);
+                    }
+
+                    array = memoryStream.ToArray();
+                }
+            }
+        }
+
+        return Convert.ToBase64String(array);
+    }
+
+    /// <summary>
+    /// 암호 해독
+    /// </summary>
+    /// <param name="cipherText">해독할 문자열</param>
+    /// <param name="key">암호화 키</param>
+    /// <returns></returns>
+    public static string Decrypt(string cipherText, string key) {
+        byte[] iv = new byte[16];
+        byte[] buffer = Convert.FromBase64String(cipherText);
+
+        using (Aes aes = Aes.Create()) {
+            aes.Key = GetAesKey(key);
+            aes.IV = iv;
+            ICryptoTransform decryptor = aes.CreateDecryptor(aes.Key, aes.IV);
+
+            using (MemoryStream memoryStream = new MemoryStream(buffer)) {
+                using (CryptoStream cryptoStream = new CryptoStream((Stream)memoryStream, decryptor, CryptoStreamMode.Read)) {
+                    using (StreamReader streamReader = new StreamReader((Stream)cryptoStream)) {
+                        return streamReader.ReadToEnd();
                     }
                 }
             }
-            return null;
         }
+    }
+
+    /// <summary>
+    /// 키를 바탕으로 암호 생성
+    /// </summary>
+    /// <param name="key">키</param>
+    /// <returns></returns>
+    private static byte[] GetAesKey(string key) {
+        using (SHA256 sha256 = SHA256.Create()) {
+            return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
+        }
+    }
+}
+
     ```
     
 
 **🤓Result!**
 
-  유니티의 충돌 감지 시스템이 아닌, 내적을 이용한 데이터의 계산으로 AI의 시야내 적 감지 시스템을 구현해, 보다 높은 퍼포먼스를 유지할 수 있게 되었습니다.
+  데이터를 복호화해 안전하게 보호하고, 복호화 키 또한 클라우드 서버에서 보관해 더욱 더 강력한 보안성 확립
   
 
-### ・옵저버 패턴을 이용한 UI 시스템
+### ・옵저버 패턴을 이용한 이벤트 위주 로직
 
 **🤔WHY?**
 
- 데이터의 변경이 없음에도 주기적으로 UI에 데이터를 동기화해, 필요 없는 작업이 지속적으로 반복되어 결과적으로 퍼포먼스가 하락되었기 때문에, 최적화를 위해 사용했습니다.
+ 데이터의 변경이 없음에도 주기적으로 데이터를 동기화해, 필요 없는 작업이 지속적으로 반복되어 결과적으로 퍼포먼스가 하락되었기 때문에, 최적화를 위해 사용했습니다.
 
 **🤔HOW?**
 
  관련 코드
 
-- PlayerController
+- GameManager
     
     ```csharp
-    public class PlayerController : UnitBase, ITakeDamage
+    public class GameManager  
     {
-    	#region Event // 특정 상황에 호출되어야 하는 이벤트들을 정의
-        public Action ShotEvent;
-        public Action<float> CrossValueEvent;
-        public Action<int, int, int> HpEvent;
-        public Action<int, int, int> BulletEvent;
-        public Action<Player.WeaponController> ChangeEvent;
-        public Action<Transform, Transform> HurtEvent;
-        public Action DeadEvent;
-        public Action<int> KillEvent;
-        public Action RespawnEvent;
-        public Action<bool> HurtShotEvent;
-        public Action<bool> ShowScoreboardEvent;
-        public Action ShowMenuEvent;
-        public Action ShowSettingEvent;
-        public Action<bool> CollideItemEvent;
-        public Action<bool> SetAimEvent;
-        public Action<int> ChangeCrosshairEvent;
-        public Action<DirType, string, bool, bool> ShowKillAndDeadTextEvent;
-        #endregion
-        
-        public override void ChangeWeapon(WeaponType type) {
-            
-            base.ChangeWeapon(type);
-            CrossValueEvent.Invoke(CurrentWeapon.CrossValue); // 특정 행동에 맞춰 이벤트 발동
-            ChangeEvent.Invoke(CurrentWeapon); // 특정 행동에 맞춰 이벤트 발동
-        }
+         //게임레벨 변경 액션
+         public Action<int> CurrentGameLevelAction;
      }
     ```
     
-- UI_Base
+- EnemySpawnManager
     
     ```csharp
-    public class UI_Base : MonoBehaviour {
-        protected PlayerController _player; //자식 클래스에서 사용할 수 있는 플레이어 변수 선언
-        public void SetPlayer(PlayerController playerController) {
-            _player = playerController; //플레이어를 생성함과 동시에 플레이어 변수에 할당
-        }
-        private void Start() {
-            Init();
-        }
-        protected virtual void Init() { }
+    public class EnemySpawnManager  {
+        /// <summary>
+        /// 생성 딜레이 초기화 및
+        /// 생성 코루틴 시작
+        /// </summary>
+        public void SpawnStart() {
+          //게임 레벨이 변경 될 때마다 자동으로 적 스폰 코루틴을 실행
+          Managers.Game.CurrentGameLevelAction += ((level) => Managers.Instance.StartCoroutine(Co_Spawn()));
+       }
     }
     ```
     
-- UI_
-    
-    ```csharp
-    public class UI_Crosshair : UI_Base
-    {
-    		protected override void Init() {
-            base.Init();
-            //부모 오브젝트에서 할당한 플레이어 변수에 이벤트 구독
-            _player.CrossValueEvent -= SetCross; // 모든 UI 컴포넌트에서 이벤트 구독
-            _player.CrossValueEvent += SetCross;
-        }
-     }
-    ```
-    
 
 **🤓Result!**
 
-게임이 시작될 때, 플레이어의 이벤트에 UI기능을 구독시켜, 반복적인 UI의 Update가 아닌 데이터의 변경이 발생했을 때만 UI를 Update시켜, 퍼포먼스가 상승했습니다.
+Update함수의 사용을 최소화하고, 특정 이벤트의 발동을 감지하여 액션을 실행하는 이벤트 위주의 로직을 구현
 
 
-### ・컴포넌트 패턴과 전략 패턴을 이용한 무기 관리 시스템
+### ・Google API를 이용한 광고 시스템
 
 **🤔WHY?**
 
-무기의 종류가 많아지고 각 무기를 각각 구현해 중복된 코드를 작성하는 일이 잦아지고, 무기의 종류가 늘어나거나 줄어들 때 마다 직접적으로 플레이어 쪽 코드의 수정이 필요하게 되어 유지보수가  굉장히 힘든 문제를 해결하기 위해 사용했습니다.
+과금요소가 없는 게임이기 때문에, 수익성을 위해 추가했습니다.
 
 **🤔HOW?**
 
  관련 코드
 
-- UnitBase
-    
-    ```csharp
-    public abstract class UnitBase : MonoBehaviour
-    {
-        protected IWeapon _currentWeapon; // 무기 선언
-        
-        public virtual void Reload() {
-            if (_currentWeapon.TryReload(this)) // 무기의 종류와 상관없이, 추상화된 행동만을 호출한다.
-                ChangeState(UnitState.Reload);
-        }
-        
-         public virtual void ChangeWeapon(WeaponType type) { // 무기의 변경 
-         DropWeapon();
-         _weaponList[(int)type].myObject.SetActive(true);
-         _currentWeapon = _weaponList[(int)type]; 
-         _currentWeapon.Activation(_firePoint, this);
-         ChangeState(UnitState.Get);
-         foreach (var item in _weaponList) {
-             if (_currentWeapon != item)
-                 item.myObject.SetActive(false);
-         }
-         CollideItem = null;
-         Model.ChangeWeapon(type);
-     }
-    ```
-    
-- IWeapon
+- AdmobManager
     
     ```csharp
     using UnityEngine;
-    
-    public interface IWeapon
-    {
-        GameObject myObject { get; }
-        void Activation(Transform firePoint = null, UnitBase unit = null);
-        void Shot(); // 각 무기들의 공통된 기능들을 추상화
-        void Reload();
-        bool TryReload(UnitBase unit);
-        bool TryShot(UnitBase unit);
+    using GoogleMobileAds.Api;
+    using UnityEngine.Events;
+
+    public class AdmobManager {
+    private string _adUnitId;
+    private float _currentTimeScale;
+    private RewardedAd _rewardedAd;
+
+    /// <summary>
+    /// Loads the rewarded ad.
+    /// </summary>
+    private void LoadRewardedAd() {
+        // Clean up the old ad before loading a new one.
+        if (_rewardedAd != null) {
+            _rewardedAd.Destroy();
+            _rewardedAd = null;
+        }
+        DebugWrapper.Log("Loading the rewarded ad.");
+
+        // create our request used to load the ad.
+        var adRequest = new AdRequest();
+
+        // send the request to load the ad.
+        RewardedAd.Load(_adUnitId, adRequest,
+            (RewardedAd ad, LoadAdError error) => {
+                // if error is not null, the load request failed.
+                if (error != null || ad == null) {
+                    Debug.LogError("Rewarded ad failed to load an ad " +
+                                   "with error : " + error);
+                    return;
+                }
+
+                DebugWrapper.Log("Rewarded ad loaded with response : "
+                          + ad.GetResponseInfo());
+
+                _rewardedAd = ad;
+            });
     }
-    
+
+    public void ShowRewardedAd(UnityAction callBack) {
+        _currentTimeScale = Time.timeScale;
+
+        if (_rewardedAd != null && _rewardedAd.CanShowAd()) {
+            _rewardedAd.Show((Reward reward) => {
+                callBack.Invoke();
+                Time.timeScale = _currentTimeScale;
+                LoadRewardedAd();
+            });
+        } else {
+            LoadRewardedAd();
+        }
+    }
+
+    public void Init(string id) {
+        _adUnitId = id;
+        MobileAds.Initialize((InitializationStatus initStatus) => {
+            LoadRewardedAd();
+        });
+    }
+}
     ```
     
 
+
 **🤓Result!**
 
-무기의 공통된 기능들을 추상화해, 플레이어는 추상화된 무기의 기능을 호출하는 것 만으로 실질적인 무기의 기능을 사용할 수 있게 되어, 무기의 기능에 변화가 생겨도 플레이어 쪽 코드의 수정이 불필요하게 되어 유지보수가 보다 쉬워졌습니다.
-
+게임의 각종 기능 추가에 광고 시청을 강제해, 수익성을 확보했습니다.
 
 ### ・애니메이터와 파라미터를 이용한 유닛 애니메이션 시스템
 
@@ -769,25 +803,24 @@ Play() 등 단순한 애니메이션 호출 메서드로 원할 때 애니메이
 
 **🤔HOW?**
 
- 관련 이미지 및 코드
+ 관련 코드
 
-- Unit Animator
-    
-    ![animator.png](https://prod-files-secure.s3.us-west-2.amazonaws.com/7becc665-a2c0-47ed-8a12-3582bd47e71e/3608a2ee-31e7-4256-8bee-0debc728392e/animator.png)
-    
-- EnemyController
+- TowerBase
     
     ```csharp
-        //각각 bool, trigger 전환을 관리
-        private void SetAnimationBool(string parameter, bool trigger) {
-            Model.Animator.SetBool(parameter, trigger);
-            BaseWeapon.Animator.SetBool(parameter, trigger);
-        }
-    
-        private void SetAnimationTrigger(string parameter) {
-            Model.Animator.SetTrigger(parameter);
-            BaseWeapon.Animator.SetTrigger(parameter);
-        }
+    /// <summary>
+    /// 애니메이션 변경(트리거)
+    /// </summary>
+    public void SetAnimation(string paremeter) {
+        animator.SetTrigger(paremeter);
+    }
+
+    /// <summary>
+    /// 애니메이션 변경(불)
+    /// </summary>
+    public void SetAnimation(string paremeter, bool trigger) {
+        animator.SetBool(paremeter, trigger);
+    }
     ```
     
 
@@ -801,6 +834,7 @@ Play() 등 단순한 애니메이션 호출 메서드로 원할 때 애니메이
 **🤔WHY?**
 
 씬 전환시 아무 연출없이 즉각적으로 화면이 전환되어 화면이 갈아끼워지는듯한 느낌을 받는다는 피드백을 받아, 보다 극적인 연출을 위해 사용하였습니다.
+또한 트위닝을 적극적으로 사용해, 페이드 전환 후 자연스러운 콜백함수 실행이 가능했습니다.
 
 **🤔HOW?**
 
@@ -812,259 +846,154 @@ Play() 등 단순한 애니메이션 호출 메서드로 원할 때 애니메이
     using UnityEngine;
     using UnityEngine.UI;
     using DG.Tweening;
-    using static Define;
-    
-    public class UI_Fade : MonoBehaviour {
-        public static UI_Fade Instance; //어디에서든 호출할 수 있게 싱글턴 객체로 관리
-        private Image _fadeImage;
-    
-        private void Awake() {
-            if(Instance == null) {
-                Instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else if( Instance != this) {
-                Destroy(gameObject);
-            }
-            _fadeImage = GetComponentInChildren<Image>();
-            _fadeImage.color = Color.black;
-    
+    using UnityEngine.SceneManagement;
+    using UnityEngine.Events;
+
+/// <summary>
+/// 모든 페이드 관리 클래스
+/// </summary>
+public class UI_Fade : MonoBehaviour {
+    public static UI_Fade Instance;
+    //페이드 이미지
+    private Image fadeImage;
+    private void Awake() {
+        if(Instance == null) {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
         }
-    
-    		//Scene이 시작될 떄, false매개변수로 호출된다.
-        public Tween SetFade(bool trigger) { 
-            if (trigger) {
-                return _fadeImage.DOFade(1f, FADE_TIME);
-            } else
-                return _fadeImage.DOFade(0, FADE_TIME);
+        else {
+            Destroy(gameObject);
         }
+        fadeImage = GetComponentInChildren<Image>();
     }
-    ```
-    
-- SceneManagerEX
-    
-    ```csharp
-    public class SceneManagerEX
-    {
-        
-        public void LoadScene(SceneType type) {
-            var tween = _fade.SetFade(true);
-            if (type == SceneType.Exit) {
-                tween.OnComplete(QuitGame);
-            } else {
-            //시작씬으로 돌아가는 경우, 모든 정보를 초기화 후 씬 이동
-            //tweening의 콜백을 이용해, 페이드 완료 후 씬 이동
-                if(type == SceneType.Startup) {
-                    tween.OnComplete(() => ClearLoadScene(type));
-                } else {
-                    tween.OnComplete(() => DoNextScene(type));
-                }
-            }
-        }
-    
-        private void ClearLoadScene(SceneType type) {
-            Managers.Instance.Ingameclear();
-            DoNextScene(type);
-        }
-    
-    		// 모든 씬이 시작될 때 호출
-        public void SetScene() {
-            _fade.SetFade(false);
-        }
-    
-        private void QuitGame() {
-            Util.QuitGame();
-        }
-    
-        private void DoNextScene(Define.SceneType type) {
-            SceneManager.LoadScene(type.ToString());
-            CurrentScene = type;
-        }
-    
+
+    /// <summary>
+    /// 페이드 인
+    /// 페이드 종료 시 씬 이동
+    /// </summary>
+    /// <param name="type">이동할 씬</param>
+    public void ActivationFade(Define.SceneType type) {
+        fadeImage.DOFade(1f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true).OnComplete(() => SceneManager.LoadScene(type.ToString()));
     }
+
+    /// <summary>
+    /// 페이드 아웃
+    /// </summary>
+    public void DeActivationFade() {
+        fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true);
+    }
+
+    /// <summary>
+    /// 페이드 인
+    /// 페이드 종료 시 콜백함수 호출
+    /// </summary>
+    /// <param name="fadeInCallBack"></param>
+    public void ActivationAndDeActivationFade(UnityAction fadeInCallBack) {
+        fadeImage.DOFade(1f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true).OnComplete(() =>
+        {
+            fadeInCallBack?.Invoke();
+            fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME);
+        });
+    }
+}
     ```
-    
+
 
 **🤓Result!**
 
   씬 전환 시 즉각적인 전환이 아닌, 화면이 가려지고 씬이 전환되고 화면이 밝아지고 게임이 시작되는 등 페이드 연출을 추가해, 사용자가 어색한 느낌을 받지 않도록 하였습니다.
   
 
-### ・BGM, Personal SFX, 3D SFX 사운드 시스템
+### ・물리엔진을 사용하지 않고 모든 로직 구현
 
 **🤔WHY?**
 
-모든 사운드가 리스너와의 거리에 관계없이 어디에서든 동일하게 들려, 사운드에서 오는 게임의 정보를 획득하는것이 불가능함과 동시다발적으로 무분별하게 들리는 사운드로 게임에 몰입할 수 없는 문제가 발생했기에 이를 타개하고자 사용했습니다.
+모바일 기기에서의 성능 최적화를 위해, 콜라이더, 리지드바디 등 유니티의 물리엔진을 사용하지 않고 모든 기능을 구현했습니다.
+또한 유니티 프로젝트 세팅의 물리 설정을 비활성화해 상당한 성능 최적화에 성공했습니다.
 
 **🤔HOW?**
 
  관련 코드
 
-- BgmController
+- EnemySearchSystem
+    
+    ```csharp
+    /// <summary>
+    /// 공격 사거리 내의 적 서치
+    /// </summary>
+    /// <returns></returns>
+    public EnemyBase SearchEnemy() {
+    if (towerBase == null)
+        return null;
+
+    var enemyList = Managers.Enemy.GetEnemyArray();
+    for (int i = enemyList.Length - 1; i >= 0; i--) {
+        if (Util.IsEnemyNull(enemyList[i]))
+            continue;
+
+        if (Vector2.Distance(transform.position, enemyList[i].transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)
+            continue;
+
+        return enemyList[i];
+    }
+    return null;
+}
+    ```
+    
+- Skill_Tornado
     
     ```csharp
     using UnityEngine;
-    using static Define;
-    public class BgmController : MonoBehaviour
-    {
-        public static BgmController instance; //어디서든 호출할 수 있게 싱글턴 객체로 관리
-        [SerializeField] private AudioClip[] _clips; // 출력할 오디오 클립들
-        private AudioSource _sources; 
-        private void Awake() {
-            if(instance == null) {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }else {
-                Managers.Resources.Destroy(gameObject);
+    using System.Collections;
+    using System.Collections.Generic;
+
+    /// <summary>
+    /// 토네이도 스킬 객체 클래스
+    /// </summary>
+    public class Skill_Tornado : MonoBehaviour {
+    /// <summary>
+    /// 주변 적을 공격
+    /// </summary>
+    /// <returns></returns>
+    private IEnumerator Co_Attack() {
+        while (true) {
+            if (Managers.Enemy.EnemyList.Count > 0) {
+                var enemyList = Managers.Enemy.GetEnemyArray();
+                DebugWrapper.Log(enemyList.Length);
+                for (int i = enemyList.Length - 1; i >= 0; i--) {
+                    if (Util.IsEnemyNull(enemyList[i]))
+                        continue;
+
+                    if (Vector2.Distance(transform.position, enemyList[i].transform.position) > Managers.Data.DefineData.SKILL_TORNADO_RANGE) {
+                        if (containsEnemy.Contains(enemyList[i]))
+                            containsEnemy.Remove(enemyList[i]);
+
+                        continue;
+                    }
+
+                    if (containsEnemy.Contains(enemyList[i]))
+                        continue;
+
+                    containsEnemy.Add(enemyList[i]);
+                    enemyList[i].DebuffManager.AddDebuff(new SlowDebuff(skillData.SkillValue, skillData.SkillTime), enemyList[i]);
+                    enemyList[i].EnemyStatus.SetHp(skillData.SkillDamage);
+                }
             }
-            BgmInit();
-        }
-    
-        public void ChangeVolume(float volume) {
-            _sources.volume = volume;
-        }
-    
-        private void BgmInit() { // 오디오 소스를 BGM환경에 맞게 설정
-            _sources = new AudioSource();
-            _sources = gameObject.AddComponent<AudioSource>();
-            _sources.clip = _clips[(int)Bgm.Startup];
-            _sources.loop = true;
-            _sources.playOnAwake = false;
-            _sources.volume = DEFAULT_VOLUME;
-            _sources.spatialBlend = 0.0f;
-        }
-    
-        public void SetBgm(Define.Bgm type, bool trigger) { // BGM출력 or 정지
-            _sources.Stop();
-    
-            if (trigger) {
-                _sources.clip = _clips[(int)type];
-                _sources.Play();
-            }
+
+            yield return attackDelay;
         }
     }
+
+}
     ```
     
-- PersonalSfxController
-    
-    ```csharp
-    using UnityEngine;
-    using static Define;
-    
-    public class PersonalSfxController : MonoBehaviour
-    {
-        public static PersonalSfxController instance; //어디서든 호출할 수 있게 싱글턴 객체로 관리
-        private AudioSource[] _audioSource; // 동시에 여러 클립을 재생할 수 있게 다수의 오디오소스 이용
-        [SerializeField] private AudioClip[] _audioClips; // 출력할 오디오 클립들
-        private const int SFX_CHANNELS = 5; // 동시에 재생 가능한 사운드의 제한 수
-        private void Awake() {
-            if(instance == null) {
-                instance = this;
-                DontDestroyOnLoad(gameObject);
-            }
-            else {
-                Destroy(gameObject);
-            }
-            ShareSfxInit();
-        }
-    
-        public void ChangeVolume(float volume) {
-            foreach(var t in _audioSource) {
-                t.volume = volume * DEFAULT_VOLUME;
-            }
-        }
-    
-        protected void ShareSfxInit() { // 오디오 소스를 거리에 관계받지 않는 2D모드로 설정
-            GameObject sfxObject = new GameObject(NAME_SFXPLAYER); 
-            sfxObject.transform.parent = transform;
-            sfxObject.transform.position = transform.position;
-            _audioSource = new AudioSource[SFX_CHANNELS]; 
-    
-            for (int i = 0; i < _audioSource.Length; i++) {
-                _audioSource[i] = sfxObject.AddComponent<AudioSource>();  
-                _audioSource[i].playOnAwake = false;  
-                _audioSource[i].volume = DEFAULT_VOLUME;  
-                _audioSource[i].spatialBlend = SOUND_2DMODE;
-                _audioSource[i].loop = false;
-            }
-        }
-        public void SetShareSfx(ShareSfx type) { // 사운드 출력
-            for (int i = 0; i < _audioSource.Length; i++) {
-                if (_audioSource[i].isPlaying)  
-                    continue;
-    
-                _audioSource[i].clip = _audioClips[(int)type];  
-                _audioSource[i].Play();
-                break;
-            }
-        }
-    }
-    ```
-    
-- UnitSfxController
-    
-    ```csharp
-    using UnityEngine;
-    using static Define;
-    
-    //3D사운드를 재생할 모든 오브젝트에 컴포넌트로 추가
-    public class UnitSfxController : MonoBehaviour
-    {
-        private const int SFX_CHANNELS = 10; // 동시에 출력 가능한 사운드의 제한 수
-        [SerializeField]private AudioClip[] sfxClips; // 출력할 오디오 클립들
-        private AudioSource[] sfxPlayers; // 동시에 여러 클립을 재생할 수 있게 다수의 오디오소스 이용
-    
-        private void Awake() {
-            InitSfx();
-        }
-    
-        public void ChangeVolume(float volume) {
-            foreach(var t in sfxPlayers) {
-                t.volume = volume;
-            }
-        }
-    
-        void InitSfx() { // 오디오 소스를 3D 환경에 맞게 설정
-            GameObject sfxObject = new GameObject(NAME_SFXPLAYER);  
-            sfxObject.transform.parent = transform; 
-            sfxObject.transform.position = transform.position;
-            sfxPlayers = new AudioSource[SFX_CHANNELS];
-    
-            for (int i = 0; i < sfxPlayers.Length; i++) {
-                sfxPlayers[i] = sfxObject.AddComponent<AudioSource>(); 
-                sfxPlayers[i].playOnAwake = false; 
-                sfxPlayers[i].volume = DEFAULT_VOLUME;  
-                sfxPlayers[i].spatialBlend = SOUND_3DMODE;
-                sfxPlayers[i].rolloffMode = AudioRolloffMode.Logarithmic;
-                sfxPlayers[i].minDistance = SOUND_UNIT_3D_MINDISTANCE;
-                sfxPlayers[i].maxDistance = SOUND_UNIT_3D_MAXDISTANCE;
-            }
-        }
-    
-        public void PlaySfx(UnitSfx sfx) { // 오디오 재생
-            for (int i = 0; i < sfxPlayers.Length; i++) {
-                if (sfxPlayers[i].isPlaying)  
-                    continue;
-    
-                sfxPlayers[i].clip = sfxClips[(int)sfx];  
-                sfxPlayers[i].Play();
-                break;
-            }
-        }
-    }
-    ```
-    
-
-**🤓Result!**
-
-BGM 및 리스너와의 거리에 관계없이 동일하게 출력되는 PersonalSfx, 소리를 내는 객체와 리스너와의 거리에 비례해 소리의 볼륨 등 설정이 변화하는 3D SFX 및 반복적으로 출력되는 BGM을 개별적으로 관리해 플레이어에게 자연스러운 사운드 경험 제공할 수 있었습니다.
-
 
 ### ・풀링 오브젝트 시스템
 
 **🤔WHY?**
 
 각종 오브젝트를 필요할 때 마다 생성, 필요가 없어지면 제거해 짧은 시간 내에 다량의 객체를 생성하고 제거하는 상황이 반복되 퍼포먼스가 크게 하락하였기에 사용했습니다.
+게임 시작 시 런타임시 동적으로 생성되는 객체들을 수십 ~ 수백체씩 생성 해 두고 풀링으로 사용해, 런타임 시 객체를 생성하는 일을 방지했습니다.
 
 **🤔HOW?**
 
@@ -1073,147 +1002,166 @@ BGM 및 리스너와의 거리에 관계없이 동일하게 출력되는 Persona
 - PoolManager
     
     ```csharp
+    using System.Collections;
     using System.Collections.Generic;
     using Unity.VisualScripting;
     using UnityEngine;
-    
+
     public class PoolManager
     {
-        class Pool // 풀링 객체의 종류당 하나씩 생성되는 클래스
+    //풀링 객체 종류만큼 생성되는 클래스
+    class Pool
+    {
+        //풀링 객체
+        public GameObject Original { get; private set; }
+        //풀링 객체들을 모아둘 부모 객체
+        public Transform Root { get; private set; }
+        //풀링 객체들을 보관해둘 스택
+        //스택이던 큐던 크게 상관없다.
+        private Stack<Poolable> _poolStack = new Stack<Poolable>();
+
+        //어떤 객체가 처음으로 생성되면, 그 객체의 풀 클래스를 생성
+        public void Init(GameObject original, int count = 5)
         {
-            public GameObject Original { get; private set; } // 풀링 객체의 종류
-            public Transform Root { get; private set; } // 풀링 객체들의 부모 오브젝트
-            private Stack<Poolable> _poolStack = new Stack<Poolable>(); //풀링 객체를 관리할 스택
-    
-    				
-            public void Init(GameObject original, int count = 5)
+            //객체를 저장
+            Original = original;
+            //객체들을 모아둘 부모 객체를 생성 & 이름 지정
+            Root = new GameObject().transform;
+            Root.name = original.name + "_root";
+
+            //자신이 지정한 카운트 수 만큼 객체를 생성
+            //객체 생성 후, 객체들을 스택에 저장
+            for (int i = 0; i < count; i++)
             {
-                Original = original;
-                Root = new GameObject().transform;
-                Root.name = original.name + "_root";
-    
-                for (int i = 0; i < count; i++)
-                {
-                    Release(Create());
-                }
-            }
-    
-            
-    
-            private Poolable Create()
-            {
-                GameObject go = Object.Instantiate(Original);
-                go.name = Original.name;
-                return go.GetOrAddComponent<Poolable>();
-            }
-    
-            public void Release(Poolable poolable)
-            {
-                if (poolable == null)
-                    return;
-    
-                poolable.transform.parent = Root;
-                poolable.gameObject.SetActive(false);
-                _poolStack.Push(poolable);
-            }
-    
-            public Poolable Activation()
-            {
-                Poolable poolable;
-    
-                if (_poolStack.Count > 0)
-                    poolable = _poolStack.Pop();
-                else
-                    poolable = Create();
-                
-                poolable.gameObject.SetActive(true);
-    
-                poolable.transform.parent = Managers.Scene.CurrentSceneManager.transform;
-    
-                poolable.transform.parent = Root;
-    
-                return poolable;
-            }
-    
-        }
-        
-        private Transform _root;
-        private Dictionary<string, Pool> _pools = new Dictionary<string, Pool>();
-    
-        public void Init()
-        {
-            if (_root == null)
-            {
-                _root = new GameObject("@Pool_root").transform;
-                Object.DontDestroyOnLoad(_root.GameObject());
+                Release(Create());
             }
         }
-    
+
+        //객체 생성
+        private Poolable Create()
+        {
+            GameObject go = Object.Instantiate(Original);
+            go.name = Original.name;
+            return go.GetOrAddComponent<Poolable>();
+        }
+
+        //객체 부모생성 및 스택에 저장
         public void Release(Poolable poolable)
         {
-            string name = poolable.gameObject.name;
-    
-            if (_pools.ContainsKey(name) == false)
-            {
-                Object.Destroy(poolable.gameObject);
+            if (poolable == null)
                 return;
-            }
+
+            poolable.transform.parent = Root;
+            poolable.gameObject.SetActive(false);
+            _poolStack.Push(poolable);
+        }
+
+        //풀에 담겨있는 객체를 재사용하기위해 스택에서 추출
+        public Poolable Activation()
+        {
+            Poolable poolable;
+
+            if (_poolStack.Count > 0)
+                poolable = _poolStack.Pop();
+            else
+                poolable = Create();
             
-            _pools[name].Release(poolable);
+            poolable.gameObject.SetActive(true);
+
+            poolable.transform.parent = Managers.Scene.CurrentScene.transform;
+
+            poolable.transform.parent = Root;
+
+            return poolable;
         }
+    }
     
-        public void Clear() {
-            foreach(Transform t in _root) {
-                Managers.Resources.Destroy(t.gameObject);
-            }
-            _root = null;
-            _pools.Clear();
-        }
-    
-        public Poolable Activation(GameObject original)
+    private Transform _root;
+    private Dictionary<string, Pool> _pools;
+
+    public void Init()
+    {
+        _root = new GameObject("@Pool_root").transform;
+        _pools = new Dictionary<string, Pool>();
+    }
+
+    /// <summary>
+    /// 사용이 끝난 풀링 객체를 비활성화 및 다시 스택에 저장 
+    /// </summary>
+    /// <param name="poolable"></param>
+    public void Release(Poolable poolable)
+    {
+        string name = poolable.gameObject.name;
+
+        if (_pools.ContainsKey(name) == false)
         {
-            if(_pools.ContainsKey(original.name) == false)
-                CreatePool(original);
-    
-            return _pools[original.name].Activation();
+            Object.Destroy(poolable.gameObject);
+            return;
         }
-    
-        private void CreatePool(GameObject original, int count = 5)
-        {
-            Pool pool = new Pool();
-            pool.Init(original,count);
-            pool.Root.parent = _root;
-            
-            _pools.Add(original.name, pool);
-        }
-    
-        public GameObject GetOriginal(string name)
-        {
-            if (_pools.ContainsKey(name) == false)
-                return null;
-    
-            return _pools[name].Original;
-        }
+        
+        _pools[name].Release(poolable);
+    }
+
+    /// <summary>
+    /// 풀링 객체를 사용하기 위해 스택에서 추출
+    /// </summary>
+    /// <param name="original"></param>
+    /// <param name="count"></param>
+    /// <returns></returns>
+    public Poolable Activation(GameObject original, int count = 5)
+    {
+        if(_pools.ContainsKey(original.name) == false)
+            CreatePool(original, count);
+
+        return _pools[original.name].Activation();
+    }
+
+    /// <summary>
+    /// 풀링 객체가 처음으로 생성되었을때, 그 객체의 풀 클래스를 생성
+    /// </summary>
+    /// <param name="original"></param>
+    /// <param name="count"></param>
+    private void CreatePool(GameObject original, int count = 5)
+    {
+        Pool pool = new Pool();
+        pool.Init(original,count);
+        pool.Root.parent = _root;
+        
+        _pools.Add(original.name, pool);
+    }
+
+    public GameObject GetOriginal(string name)
+    {
+        if (_pools.ContainsKey(name) == false)
+            return null;
+
+        return _pools[name].Original;
+    }
+}
+
     }
     ```
     
 
 **🤓Result!**
 
-  시스템에 큰 부하를 주는 객체의 직접적인 생성 및 파괴를 최대한 피하고 풀링 시스템을 이용, 이미 생성된 객체를 재사용하는 과정을 통해 객체의 생성에 들어가는 비용을 줄여 퍼포먼스가 크게 상승했습니다.
+  시스템에 큰 부하를 주는 객체의 직접적인 생성 및 파괴를 최대한 피하고 풀링 시스템을 이용, 이미 생성된 객체를 재사용하는 과정을 통해 게임 도중 객체를 생성하지 않아 퍼포먼스가 크게 상승했습니다.
   
 
 ## 📈보완점
 
 **-문제점**
 
-런타임시 평균 60프레임 가량의 낮은 퍼포먼스로 게임 플레이동안 큰 이질감을 지속적으로 느꼈습니다.
+성능상 pc에 비해 부족한 안드로이드 기기에서 객체가 과도하게 많은 경우 프레임 드랍이 발생했습니다.
 
 **-문제의 원인**
 
-모든 오브젝트의 라이팅 및 그림자 계산이 런타임에 지속적으로 이루어져 지속적으로 CPU에 과한 연산을 발생시키고 있었습니다.
+간단한 구현을 위한 과한 물리엔진 사용
+텍스쳐 및 사운드의 압축이 제대로 되어있지 않았음
+안드로이드를 위한 프로젝트 세팅 미흡
 
 **-해결방안**
 
-게임 내 요소의 대부분을 차지하는 정적 오브젝트들을 베이킹해 라이팅 및 그림자 계산을 사전에 완료 및 정적 오브젝트들을 static오브젝트로 설정해 드로우 콜을 감소시켰고, 오클루전 컬링에 필요한 계산도 사전에 완료해, 평균 100프레임 이상의 높은 퍼포먼스를 회복해 최적화에 성공했습니다.
+물리엔진을 전혀 사용하지 않고 모든 기능을 구현함으로써 가장 큰 성능 향상
+텍스쳐 및 사운드의 압축, 프로젝트 세팅 완료 (https://blog.naver.com/oyb1234136)에 모든 최적화 방식을 기록했습니다.
 
