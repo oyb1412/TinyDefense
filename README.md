@@ -8,6 +8,7 @@
 
 게임에 필요한 모든 데이터를 로컬에 저장하면 보안 및 유지보수성에서 뒤떨어진다 판단했고, 모든 데이터를 클라우드 서버에 저장 후 게임 시작 시 
 리소스를 로컬 폴더에 저장하도록 했습니다.
+게임 시작시 모든 데이터를 로드하며, 데이터 로드는 모두 비동기로 진행되고 대략적인 로딩 상태를 UI로 표시합니다.
 
 **🤔HOW?**
 
@@ -425,31 +426,148 @@
     }
 }
     ```
-    
-- EnemyController
-    
+- FirebaseStoreManager
     ```csharp
-    public class EnemyController : UnitBase, ITakeDamage {
-        private EnemyStateMachine _stateMachine; //FSM을 컴포넌트 패턴으로 취급
-        
-        private void Start() {
-            _stateMachine = new EnemyStateMachine(this); //AI가 생성되면, FSM 가동
+    using Firebase;
+    using Firebase.Analytics;
+    using Firebase.Auth;
+    using Firebase.Extensions;
+    using Firebase.Firestore;
+    using System;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
+    using UnityEngine;
+
+    /// <summary>
+    /// 파이어스토어 데이터 관리 클래스
+    /// </summary>
+    public class FireStoreManager {
+    private FirebaseFirestore db;
+
+    /// <summary>
+    /// 파이어스토어, 파이어베이스 어스, 파이어베이스 아날리틱스 초기화
+    /// </summary>
+    public void Init() {
+        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
+            if (task.IsFaulted) {
+                Debug.LogError("Failed to check and fix dependencies: " + task.Exception);
+                return;
+            }
+
+            var dependencyStatus = task.Result;
+            if (dependencyStatus == Firebase.DependencyStatus.Available) {
+                FirebaseApp app = FirebaseApp.DefaultInstance;
+                DebugWrapper.Log("Firebase Initialized");
+                db = FirebaseFirestore.DefaultInstance;
+                FirebaseAnalytics.SetAnalyticsCollectionEnabled(false);
+                Managers.Auth.Auth = FirebaseAuth.DefaultInstance;
+            } else {
+                Debug.LogError($"Could not resolve all Firebase dependencies: {dependencyStatus}");
+                return;
+            }
+        });
+    }
+
+    /// <summary>
+    /// 파이어베이스에 정보 저장
+    /// </summary>
+    /// <param name="collection">저장할 콜렉션 명</param>
+    /// <param name="document">저장할 도큐멘트 명</param>
+    /// <param name="field">저장할 필드 명</param>
+    /// <param name="data">저장할 데이터</param>
+    public void SaveDataToFirestore(string collection, string document, string field, object data) {
+        if (string.IsNullOrEmpty(collection) || string.IsNullOrEmpty(document) || string.IsNullOrEmpty(field)) {
+            Debug.LogError("콜렉션, 도큐멘트 또는 필드 이름이 유효하지 않습니다.");
+            return;
         }
-        
-        public void EnemyStart() {
-            Invoke("StartMove", Managers.GameManager.WaitTime); //FSM에 의해 호출
+
+        if (data == null) {
+            Debug.LogError("저장할 데이터가 null입니다.");
+            return;
         }
-    
-        private void StartMove() {  //Invoke에 의해 호출
-            _agent.enabled = true;
-            _stateMachine.ChangeState(EnemyState.Patrol); 
+
+        try {
+            Debug.LogError("데이터 저장 시도.");
+            DocumentReference docRef = db.Collection(collection).Document(document);
+            Dictionary<string, object> userData = new Dictionary<string, object>
+            {
+            { field, data }
+        };
+
+            docRef.GetSnapshotAsync().ContinueWithOnMainThread(task => {
+                if (task.IsCompleted && !task.IsFaulted) {
+                    DocumentSnapshot snapshot = task.Result;
+                    if (snapshot.Exists) {
+                        docRef.UpdateAsync(userData).ContinueWithOnMainThread(updateTask => {
+                            if (updateTask.IsCompleted && !updateTask.IsFaulted) {
+                                DebugWrapper.Log($"{field}에 {data.ToString()} 업데이트 완료");
+                            } else {
+                                Debug.LogError($"{field}에 {data.ToString()} 업데이트 실패: " + updateTask.Exception?.Message);
+                            }
+                        });
+                    } else {
+                        docRef.SetAsync(userData).ContinueWithOnMainThread(setTask => {
+                            if (setTask.IsCompleted && !setTask.IsFaulted) {
+                                DebugWrapper.Log($"{field}에 {data.ToString()} 저장 완료");
+                            } else {
+                                Debug.LogError($"{field}에 {data.ToString()} 저장 실패: " + setTask.Exception?.Message);
+                            }
+                        });
+                    }
+                } else {
+                    Debug.LogError($"문서 확인 실패: " + task.Exception?.Message);
+                }
+            });
+        } catch (Exception e) {
+            Debug.LogError($"Firestore 처리 중 예외 발생: {e.Message}");
         }
-        
-        private void Update() {
-            _stateMachine.Update();  //현재 AI의 상태에 알맞는 행동 호출
+    }
+
+
+    /// <summary>
+    /// 파이어베이스에서 정보 받아오기
+    /// </summary>
+    /// <param name="collection">정보를 받아올 콜렉션 명</param>
+    /// <param name="document">정보를 받아올 도큐멘트 명</param>
+    /// <param name="field">정보를 받아올 필드 명</param>
+    /// <param name="callBack">정보를 저장할 콜백 함수</param>
+    public async Task<object> LoadDataToFireStore(string collection, string document, string field) {
+        DocumentReference docRef = db.Collection(collection).Document(document);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists) {
+            if (snapshot.TryGetValue(field, out object value)) {
+                return value;
+            } else {
+                DebugWrapper.Log($"데이터 키{field}가 없습니다");
+                return null;
+            }
+        } else {
+            DebugWrapper.Log($"도큐멘트 {document}가 없습니다");
+            return null;
         }
+    }
+
+    /// <summary>
+    /// 특정 도큐멘트의 필드 모두 받아오기
+    /// </summary>
+    /// <param name="collection">콜렉션 명</param>
+    /// <param name="document">도큐멘트 명</param>
+    /// <returns></returns>
+    public async Task<Dictionary<string, object>> LoadAllDataFromDocument(string collection, string document) {
+        DocumentReference docRef = db.Collection(collection).Document(document);
+        DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
+
+        if (snapshot.Exists) {
+            Dictionary<string, object> allFields = snapshot.ToDictionary();
+            return allFields;
+        } else {
+            DebugWrapper.Log($"도큐멘트 {document}가 없습니다");
+            return null;
+        }
+    }
+}
     ```
-    
 
 **🤓Result!**
 
