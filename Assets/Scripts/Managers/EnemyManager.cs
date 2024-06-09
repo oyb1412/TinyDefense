@@ -29,7 +29,7 @@ public class EnemyManager {
         Managers.Game.CurrentGameLevelAction += SetCurrentLevelEnemyHp;
     }
 
-    public EnemyBase[] GetEnemyList() {
+    public EnemyBase[] GetEnemyArray() {
         return EnemyList.ToArray();
     }
 

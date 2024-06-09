@@ -29,7 +29,7 @@ public class SoundManager : MonoBehaviour {
 
     private void Update() {
         if (bgmPlayer == null)
-            Debug.Log("bgmplayer null");
+            DebugWrapper.Log("bgmplayer null");
     }
 
     /// <summary>

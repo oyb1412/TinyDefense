@@ -22,7 +22,7 @@ public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
     /// 스킬 습득 시, 생성된 모든 적에게 스킬 적용
     /// </summary>
     public void SetAbility() {
-        var enemyList = Managers.Enemy.GetEnemyList();
+        var enemyList = Managers.Enemy.GetEnemyArray();
         for (int i = enemyList.Length - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;

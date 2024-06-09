@@ -1,13 +1,11 @@
 using System;
 using System.Collections;
-using System.IO;
 using UnityEngine;
 public class FirstScene : BaseScene {
     //로딩 표기 슬라이더
     private UI_LoadingSlider loadingSlider;
 
     public override void Init() {
-        
         base.Init();
         StartCoroutine(Co_Init());
         loadingSlider = GameObject.Find("LoadingSlider").GetComponent<UI_LoadingSlider>();
@@ -41,16 +39,15 @@ public class FirstScene : BaseScene {
             if (task.Result != null) {
                 Managers.Data.DecryptionSaveJson("Define", task.Result.ToString());
             }
-
+            //상수 데이터 로드
             Managers.Data.DefineData = Managers.Data.DecryptionLoadJson<Define>("Define");
 
             yield return new WaitUntil(() => Managers.Data.DefineData.COLOR_TOWERLEVEL != null);
         }
 
-
         //pre패스에 게임 데이터가 있나 체크.
         if (Managers.Data.CheckPathFile(Managers.Data.DefineData.TAG_GAME_DATA_JSON)) {
-            Debug.Log("리소스가 존재하므로 씬 이동");
+            DebugWrapper.Log("리소스가 존재하므로 씬 이동");
             //pre패스에 게임 데이터가 있으면, 씬 이동
             loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
             StopAllCoroutines();
@@ -58,19 +55,22 @@ public class FirstScene : BaseScene {
         }
         //pre패스에 게임 데이터가 없으면, 로딩창을 돌리고 파이어베이스에서 데이터 불러오기.
         else {
-            Debug.Log("리소스가 존재하지 않으므로 리소스 다운로드");
+            DebugWrapper.Log("리소스가 존재하지 않으므로 리소스 다운로드");
             Managers.Data.GameData = new GameData();
+            //애너미 데이터 로드
             yield return StartCoroutine(GetEnemyData(Managers.Data.GameData.EnemyDatas));
             loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
-
+            //인핸스 데이터 로드
             yield return StartCoroutine(GetEnhanceData(Managers.Data.GameData.EnhanceDatas));
             loadingSlider.SetLoading(.2f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
+            //모든 스킬 데이터 로드
             for (int i = 0; i< (int)Define.SkillType.Count; i++) {
                 yield return StartCoroutine(GetSkillData(Managers.Data.GameData.SkillDatas, (Define.SkillType)i));
             }
             loadingSlider.SetLoading(.6f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
+            //모든 타워 데이터 로드
             for (int i = 0; i< (int)Define.TowerType.Count; i++) {
                 yield return StartCoroutine(GetTowerData(Managers.Data.GameData.TowerDatas, (Define.TowerType)i));
             }
@@ -83,11 +83,15 @@ public class FirstScene : BaseScene {
         }
     }
 
+    /// <summary>
+    /// 구글 애드몹 ID 로드
+    /// </summary>
+    /// <returns></returns>
     private IEnumerator Co_GetAdmobID() {
         var idTask = Managers.FireStore.LoadDataToFireStore("AdmobIDData", "AdmobIDData","ID");
         yield return new WaitUntil(() => idTask.IsCompleted);
         if(idTask.IsFaulted) {
-            Debug.Log("애드몹 초기화 실패");
+            DebugWrapper.Log("애드몹 초기화 실패");
             yield break;
         }
 

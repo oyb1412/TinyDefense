@@ -164,7 +164,7 @@ public class SPUM_Exporter : MonoBehaviour
 		int numX = ((int)_fullSize.x) / ((int)_imageSize.x);
 		int numY = ((int)_fullSize.y) / ((int)_imageSize.y);
 		int allSpriteNum = numX * numY;
-		// Debug.Log(allSpriteNum);
+		// DebugWrapper.Log(allSpriteNum);
 
 		
 		List<Texture2D> resultImages = new List<Texture2D>();
@@ -240,7 +240,7 @@ public class SPUM_Exporter : MonoBehaviour
 			}
 
 			string filename = string.Format("{0}/SPUM/ScreenShots/{2}_{1}.png", Application.dataPath,i,tName);
-			Debug.Log(filename);
+			DebugWrapper.Log(filename);
 			System.IO.File.WriteAllBytes(filename, bytes);
 			
 		}
@@ -325,7 +325,7 @@ public class SPUM_Exporter : MonoBehaviour
 	 {
 		 _camera.targetTexture = null;
 		 _textSaveList.Clear();
-		 Debug.Log(string.Format("{0} Numbers Images Exported!!!", ImageNumber));
+		 DebugWrapper.Log(string.Format("{0} Numbers Images Exported!!!", ImageNumber));
 	 }
 
 	 public static Texture2D FillColorAlpha(Texture2D tex2D, Color32? fillColor = null)

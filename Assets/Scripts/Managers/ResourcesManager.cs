@@ -14,7 +14,7 @@ public class ResourcesManager
         GameObject obj = Resources.Load<GameObject>($"Prefabs/{path}");
 
         if (obj == null) {
-            Debug.Log($"Failed Search Path : {path}");
+            DebugWrapper.Log($"Failed Search Path : {path}");
             return null;
         }
 
@@ -39,7 +39,7 @@ public class ResourcesManager
     {
         if (go == null)
         {
-            Debug.Log($"Failed Search GameObject : {go.name}");
+            DebugWrapper.Log($"Failed Search GameObject : {go.name}");
             return;
         }
 

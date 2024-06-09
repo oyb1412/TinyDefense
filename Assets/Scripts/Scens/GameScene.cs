@@ -47,10 +47,10 @@ public class GameScene : BaseScene
     public void LoadGameData(UnityAction callBack) {
         if (Managers.Data.GameData == null) {
             Managers.Data.GameData = new GameData();
-            Debug.Log("리소스 폴더에서 게임 데이터 로드 및 풀링");
+            DebugWrapper.Log("리소스 폴더에서 게임 데이터 로드 및 풀링");
             StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
         } else {
-            Debug.Log("이미 게임 데이터가 존재하므로 풀링만 진행");
+            DebugWrapper.Log("이미 게임 데이터가 존재하므로 풀링만 진행");
             StartCoroutine(StartPoolAsync(callBack));
         }
     }
@@ -81,7 +81,7 @@ public class GameScene : BaseScene
         loadingSlider.SetLoading(.7f, callback);
         // 풀링 오브젝트 비동기 생성
         yield return StartPoolManager.Instance.StartPoolAsync();
-        Debug.Log("풀링 완료");
+        DebugWrapper.Log("풀링 완료");
         loadingSlider.SetLoading(1f, callback);
         SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);
     }
@@ -99,7 +99,7 @@ public class GameScene : BaseScene
 
         // 풀링 오브젝트 비동기 생성
         yield return StartPoolManager.Instance.StartPoolAsync();
-        Debug.Log("풀링 완료");
+        DebugWrapper.Log("풀링 완료");
 
         loadingSlider.SetLoading(.7f, callback);
 
@@ -109,11 +109,11 @@ public class GameScene : BaseScene
 
 
         if (loadJsonTask.IsFaulted) {
-            Debug.Log($"데이터 로드 실패{loadJsonTask.IsFaulted.ToString()}");
+            DebugWrapper.Log($"데이터 로드 실패{loadJsonTask.IsFaulted.ToString()}");
 
             string path = Path.Combine(Application.persistentDataPath, Managers.Data.DefineData.TAG_GAME_DATA_JSON);
             if (File.Exists(path)) {
-                Debug.Log($"{path}데이터 삭제 성공");
+                DebugWrapper.Log($"{path}데이터 삭제 성공");
                 File.Delete(path);
             }
 #if UNITY_EDITOR
@@ -124,11 +124,11 @@ public class GameScene : BaseScene
             yield break;
         }
 
-        Debug.Log($"데이터 로드 완료{loadJsonTask.Result.ToString()}");
+        DebugWrapper.Log($"데이터 로드 완료{loadJsonTask.Result.ToString()}");
 
         Managers.Data.GameData = loadJsonTask.Result;
 
-        Debug.Log($"게임 데이터에 데이터 저장. 애너미 체력 {Managers.Data.GameData.EnemyDatas.Enemys.MaxHp}");
+        DebugWrapper.Log($"게임 데이터에 데이터 저장. 애너미 체력 {Managers.Data.GameData.EnemyDatas.Enemys.MaxHp}");
 
         loadingSlider.SetLoading(1f, callback);
         SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);

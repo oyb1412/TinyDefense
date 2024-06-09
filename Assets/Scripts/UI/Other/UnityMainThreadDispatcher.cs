@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 /// <summary>
@@ -14,7 +15,6 @@ public class UnityMainThreadDispatcher : MonoBehaviour {
     private void Awake() {
         if(Instance == null) {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else {
             Destroy(gameObject);
@@ -39,6 +39,19 @@ public class UnityMainThreadDispatcher : MonoBehaviour {
     public void Enqueue(System.Action action) {
         lock (_executionQueue) {
             _executionQueue.Enqueue(action);
+        }
+    }
+
+    /// <summary>
+    /// 메인쓰레드 작업을 저장
+    /// </summary>
+    /// <param name="action"></param>
+    public void RunOnMainThread(System.Action action) {
+        if (action == null) return;
+        if (Thread.CurrentThread.ManagedThreadId == 1) {
+            action();
+        } else {
+            Enqueue(action);
         }
     }
 }

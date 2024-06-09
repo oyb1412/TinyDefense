@@ -1,7 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
-using static UnityEngine.GraphicsBuffer;
 
 /// <summary>
 /// 주변 적 감지 클래스
@@ -46,7 +45,7 @@ public class EnemySearchSystem : MonoBehaviour
         if (towerBase == null)
             return null;
 
-        var enemyList = Managers.Enemy.GetEnemyList();
+        var enemyList = Managers.Enemy.GetEnemyArray();
         for (int i = enemyList.Length - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;

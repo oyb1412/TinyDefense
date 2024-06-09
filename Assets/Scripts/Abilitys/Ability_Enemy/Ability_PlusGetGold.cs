@@ -25,7 +25,7 @@ public class Ability_PlusGetGold : IEnemyAbility {
     /// 생성되있는 모든 애너미 리워드 변경
     /// </summary>
     public void SetAbility() {
-        var enemyList = Managers.Enemy.GetEnemyList();
+        var enemyList = Managers.Enemy.GetEnemyArray();
         for (int i = enemyList.Length - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;

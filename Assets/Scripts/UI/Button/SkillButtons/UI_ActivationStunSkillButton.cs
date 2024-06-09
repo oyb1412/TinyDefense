@@ -30,7 +30,7 @@ public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
 
         //모든 적 순회
         //모든 적에게 디버프 적용 및 데미지
-        var enemyList = Managers.Enemy.GetEnemyList();
+        var enemyList = Managers.Enemy.GetEnemyArray();
         for (int i = enemyList.Length - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;

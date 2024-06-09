@@ -29,7 +29,7 @@ public class FindComponentsInPrefab : EditorWindow {
         if (instance != null) {
             SPUM_SpriteList[] components = instance.GetComponentsInChildren<SPUM_SpriteList>(true);
             foreach (SPUM_SpriteList component in components) {
-                Debug.Log($"Removing Component: {component.GetType()} in GameObject: {component.gameObject.name}");
+                DebugWrapper.Log($"Removing Component: {component.GetType()} in GameObject: {component.gameObject.name}");
                 DestroyImmediate(component, true);
             }
 

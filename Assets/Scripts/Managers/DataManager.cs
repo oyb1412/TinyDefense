@@ -98,7 +98,7 @@ public class DataManager {
     public bool DeleteData(string name) {
         string path = Path.Combine(Application.persistentDataPath, name);
         if(!File.Exists(path)) {
-            Debug.Log("삭제하려는 데이터가 존재하지 않습니다");
+            DebugWrapper.Log("삭제하려는 데이터가 존재하지 않습니다");
             return false;
         }
 
@@ -120,7 +120,7 @@ public class DataManager {
         byte[] data = Encoding.UTF8.GetBytes(towerData);
         stream.Write(data, 0, data.Length);
         stream.Close();
-        Debug.Log($"{Path}에 {name}이름의 Json파일 세이브");
+        DebugWrapper.Log($"{Path}에 {name}이름의 Json파일 세이브");
     }
 
     /// <summary>
@@ -140,7 +140,7 @@ public class DataManager {
         string jsonData = File.ReadAllText(path);
         string json = AesEncryption.Decrypt(jsonData, Key);
 
-        Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
+        DebugWrapper.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
         return JsonConvert.DeserializeObject<T>(json);
     }
 
@@ -156,7 +156,7 @@ public class DataManager {
         byte[] data = Encoding.UTF8.GetBytes(jsonData);
         stream.Write(data, 0, data.Length);
         stream.Close();
-        Debug.Log($"{Path}에 {name}이름의 Json파일 세이브");
+        DebugWrapper.Log($"{Path}에 {name}이름의 Json파일 세이브");
     }
 
     /// <summary>
@@ -175,7 +175,7 @@ public class DataManager {
 
         string jsonData = File.ReadAllText(path);
 
-        Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
+        DebugWrapper.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
         return JsonConvert.DeserializeObject<T>(jsonData);
     }
 
@@ -196,7 +196,7 @@ public class DataManager {
         string jsonData = await Task.Run(() => File.ReadAllText(path));
         string json = AesEncryption.Decrypt(jsonData, Key);
 
-        Debug.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
+        DebugWrapper.Log($"{Application.persistentDataPath}에서 {name} 이름의 Json 파일 로드");
         return JsonConvert.DeserializeObject<T>(json);
     }
 

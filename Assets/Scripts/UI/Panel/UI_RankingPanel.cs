@@ -27,7 +27,10 @@ public class UI_RankingPanel : MonoBehaviour {
         gameObject.SetActive(true);
 
         StartCoroutine(Co_LoadRankingData());
+
+
     }
+
 
     /// <summary>
     /// 파이어베이스에서 모든 랭킹 정보 로드
@@ -47,7 +50,7 @@ public class UI_RankingPanel : MonoBehaviour {
         if (rankingData == null || rankingData.Count == 0) {
             StopAllCoroutines();
             gameObject.SetActive(false);
-            Debug.Log("랭킹 목록이 존재하지 않습니다.");
+            DebugWrapper.Log("랭킹 목록이 존재하지 않습니다.");
         } 
         else {
             Dictionary<string, int> score = new Dictionary<string, int>();
@@ -59,7 +62,7 @@ public class UI_RankingPanel : MonoBehaviour {
 
             score = score.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
-            Debug.Log("랭킹 정렬 완료.");
+            DebugWrapper.Log("랭킹 정렬 완료.");
 
             List<string> nameData = new List<string>(score.Keys);
             List<int> scoreData = new List<int>(score.Values);

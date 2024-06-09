@@ -63,7 +63,7 @@ public class SPUM_Manager : MonoBehaviour
 
     public IEnumerator StartProcess()
     {
-        Debug.Log("Data Load processing..");
+        DebugWrapper.Log("Data Load processing..");
         yield return StartCoroutine(SoonsoonData.Instance.LoadData());
         
 
@@ -1966,7 +1966,7 @@ public class SPUM_Manager : MonoBehaviour
     {
         if(Directory.Exists(unitPath))
         {
-            Debug.Log("Now sync version data..");
+            DebugWrapper.Log("Now sync version data..");
             DirectoryInfo dirInfo = new DirectoryInfo(unitPath);
             FileInfo[] fileInf = dirInfo.GetFiles("*.prefab");
             foreach (FileInfo fileInfo in fileInf)
@@ -2031,7 +2031,7 @@ public class SPUM_Manager : MonoBehaviour
             }
         }
 
-        Debug.Log("Now sync data process done...");
+        DebugWrapper.Log("Now sync data process done...");
         SetInit();
     }
 
@@ -2052,12 +2052,12 @@ public class SPUM_Manager : MonoBehaviour
                 GameObject prefab = AssetDatabase.LoadAssetAtPath(path, typeof(GameObject)) as GameObject;
                 //데이터 싱크 부분
                 SPUM_Prefabs tST = prefab.GetComponent<SPUM_Prefabs>();
-                // Debug.Log(tST._version);
-                // Debug.Log(_version);
-                // Debug.Log(tST._spriteOBj._bodyString.Length);
+                // DebugWrapper.Log(tST._version);
+                // DebugWrapper.Log(_version);
+                // DebugWrapper.Log(tST._spriteOBj._bodyString.Length);
                 if(tST._version == 0 || tST._version < _version)
                 {
-                    Debug.Log("Old Version data found.. Now sync version data..");
+                    DebugWrapper.Log("Old Version data found.. Now sync version data..");
                     //이 경우는 데이터를 싱크해줘야한다.
                     SPUM_SpriteList tObjST = tST._spriteOBj;
                     if(tObjST._spHorseSPList !=null)
@@ -2549,7 +2549,7 @@ public class SPUM_Manager : MonoBehaviour
             //버젼이 존재하지 않거나 없으면 Resync 실행
             tObjST.ResyncData();
             tPrefabST._version = _version;
-            Debug.Log(unitPath+_prefabUnitList[index].name+".prefab");
+            DebugWrapper.Log(unitPath+_prefabUnitList[index].name+".prefab");
             // GameObject tObj = PrefabUtility.SaveAsPrefabAsset(_unitObjSet.gameObject,unitPath+_prefabUnitList[index].name+".prefab");
             
         }
@@ -2667,7 +2667,7 @@ public class SPUM_Manager : MonoBehaviour
             break;
 
             case 1:
-            Debug.Log("Please Check Error Message");
+            DebugWrapper.Log("Please Check Error Message");
             break;
         }
     }
@@ -2685,26 +2685,26 @@ public class SPUM_Manager : MonoBehaviour
         //기본 폴더 제작
         if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
         {
-            Debug.Log("Found Resources Folder Success!!");
+            DebugWrapper.Log("Found Resources Folder Success!!");
             if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Items"))
             {
-                Debug.Log("Found SPUM_Sprite Folder, will delete it");
+                DebugWrapper.Log("Found SPUM_Sprite Folder, will delete it");
                 FileUtil.DeleteFileOrDirectory("Assets/Resources/SPUM/SPUM_Sprites/Items");
             }
         }
         else
         {
-            Debug.Log("Project doesn't have Resources Folder Yet, Will make Resource Project Automatically");
+            DebugWrapper.Log("Project doesn't have Resources Folder Yet, Will make Resource Project Automatically");
             Directory.CreateDirectory("Assets/Resources/SPUM/SPUM_Sprites/");
         }
 
         //패키지 데이터 제작
         if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Packages"))
         {
-            Debug.Log("Found Package Folder Success!!");
+            DebugWrapper.Log("Found Package Folder Success!!");
             if(Directory.Exists("Assets/Resources/SPUM/SPUM_Sprites/Packages"))
             {
-                Debug.Log("Found SPUM_Sprite Folder, will delete it");
+                DebugWrapper.Log("Found SPUM_Sprite Folder, will delete it");
                 FileUtil.DeleteFileOrDirectory("Assets/Resources/SPUM/SPUM_Sprites/Packages");
             }
         }
@@ -2713,7 +2713,7 @@ public class SPUM_Manager : MonoBehaviour
 
         if(AssetDatabase.CopyAsset("Assets/SPUM/SPUM_Sprites/Items","Assets/Resources/SPUM/SPUM_Sprites/Items"))
         {
-            Debug.Log("Install SPUM Sprtie Data Success in Resources Folder");
+            DebugWrapper.Log("Install SPUM Sprtie Data Success in Resources Folder");
 
             if(!Directory.Exists("Assets/Resources/SPUM/SPUM_UNITS"))
             {
@@ -2722,16 +2722,16 @@ public class SPUM_Manager : MonoBehaviour
         }
         else
         {
-            Debug.Log("Copy Failed");
+            DebugWrapper.Log("Copy Failed");
         }
 
         if(AssetDatabase.CopyAsset("Assets/SPUM/SPUM_Sprites/Packages","Assets/Resources/SPUM/SPUM_Sprites/Packages"))
         {
-            Debug.Log("Install SPUM Sprtie Packages Data Success in Resources Folder");
+            DebugWrapper.Log("Install SPUM Sprtie Packages Data Success in Resources Folder");
         }
         else
         {
-            Debug.Log("Copy Failed");
+            DebugWrapper.Log("Copy Failed");
         }
     }
 
@@ -2751,8 +2751,8 @@ public class SPUM_Manager : MonoBehaviour
             }
         }
 
-        // for(var i = 0 ; i < tSP.Count;i++) Debug.Log(tSP[i]);
-        // Debug.Log(tSP.Count);
+        // for(var i = 0 ; i < tSP.Count;i++) DebugWrapper.Log(tSP[i]);
+        // DebugWrapper.Log(tSP.Count);
         _unitObjSet._spriteOBj._bodyList[0].sprite = tSP[5];
         _unitObjSet._spriteOBj._bodyList[1].sprite = tSP[2];
         _unitObjSet._spriteOBj._bodyList[2].sprite = tSP[0];
@@ -2816,7 +2816,7 @@ public class SPUM_Manager : MonoBehaviour
     {
         if(File.Exists("Assets/SPUM/Script/SPUM_TexutreList.cs"))
         {
-            Debug.Log("Filex Exits, will delete it");
+            DebugWrapper.Log("Filex Exits, will delete it");
             FileUtil.DeleteFileOrDirectory("Assets/SPUM/Script/SPUM_TexutreList.cs");
         }
     }

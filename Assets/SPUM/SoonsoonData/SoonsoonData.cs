@@ -51,8 +51,8 @@ public class SoonsoonData
         }
         catch (System.Exception e)
         {
-            Debug.Log("Failed to save the data");
-            Debug.Log(e);
+            DebugWrapper.Log("Failed to save the data");
+            DebugWrapper.Log(e);
         }
         finally
         {
@@ -77,19 +77,19 @@ public class SoonsoonData
         }
         catch( System.Exception e)
         {
-            Debug.Log(" Failed to load Data...");
-            Debug.Log(e.ToString());
+            DebugWrapper.Log(" Failed to load Data...");
+            DebugWrapper.Log(e.ToString());
         }
 
         yield return new WaitForSecondsRealtime(0.1f);
     }
     public void LoadProcess()
     {
-        Debug.Log("Trying Loading data ...");
+        DebugWrapper.Log("Trying Loading data ...");
 
         if(!PlayerPrefs.HasKey("SoonsoonSave2"))
         {
-            Debug.Log("You don't use save data yet.");
+            DebugWrapper.Log("You don't use save data yet.");
         }
         else
         {
@@ -103,7 +103,7 @@ public class SoonsoonData
                     var b = new BinaryFormatter();
                     var m = new MemoryStream(Convert.FromBase64String(_tmpStr));
                     _soonData2 = (SoonData) b.Deserialize(m);
-                    Debug.Log("Load Successful!!");
+                    DebugWrapper.Log("Load Successful!!");
                 }
             }
         }

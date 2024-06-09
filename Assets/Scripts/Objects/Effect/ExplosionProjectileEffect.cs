@@ -26,7 +26,7 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
         this.towerBase = towerBase;
         base.Init(towerBase, attackData, pos);
 
-        var enemyList = Managers.Enemy.GetEnemyList();
+        var enemyList = Managers.Enemy.GetEnemyArray();
         for (int i = enemyList.Length - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;

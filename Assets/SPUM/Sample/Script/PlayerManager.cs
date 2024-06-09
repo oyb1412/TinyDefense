@@ -196,7 +196,7 @@ public class PlayerManager : MonoBehaviour
         DestroyImmediate(imageSave);
 
         Screen.SetResolution((int)_nowSize.x, (int)_nowSize.y, false);
-        Debug.Log("Screenshot Saved : " + filename);
+        DebugWrapper.Log("Screenshot Saved : " + filename);
         _bg.SetActive(true);
     }
 

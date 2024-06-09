@@ -1,5 +1,4 @@
 using UnityEngine;
-using GoogleMobileAds;
 using GoogleMobileAds.Api;
 using UnityEngine.Events;
 
@@ -17,8 +16,7 @@ public class AdmobManager {
             _rewardedAd.Destroy();
             _rewardedAd = null;
         }
-
-        Debug.Log("Loading the rewarded ad.");
+        DebugWrapper.Log("Loading the rewarded ad.");
 
         // create our request used to load the ad.
         var adRequest = new AdRequest();
@@ -33,7 +31,7 @@ public class AdmobManager {
                     return;
                 }
 
-                Debug.Log("Rewarded ad loaded with response : "
+                DebugWrapper.Log("Rewarded ad loaded with response : "
                           + ad.GetResponseInfo());
 
                 _rewardedAd = ad;

@@ -190,7 +190,7 @@ public class SPUM_ExporterEditor : Editor
         {
             if(!SPB.useTimer)
             {
-                Debug.Log("Starting Export Sprite Sheets...");
+                DebugWrapper.Log("Starting Export Sprite Sheets...");
                 SPB.StartExport();
                 SPB.animNum = 0;
                 SPB.animationClips = SPB._anim.runtimeAnimatorController.animationClips;
@@ -203,7 +203,7 @@ public class SPUM_ExporterEditor : Editor
         {
             if (GUILayout.Button("Remove Object",GUILayout.Height(50))) 
             {
-                Debug.Log("Removed Prefab Object!!");
+                DebugWrapper.Log("Removed Prefab Object!!");
                 SPB._unitPrefab = null;
                 SPB._imageName = "";
             }
@@ -285,7 +285,7 @@ public class SPUM_ExporterEditor : Editor
             tAnimTimer = tAnimSave.length;
             tAnimTimerFactor = 1f / (SPB._frameRate*1f);
             SPB._frameNumber = (int)(tAnimTimer / tAnimTimerFactor);
-            Debug.Log("[[Generating : "+ tAnimSave.name + " || Time Length : " + tAnimSave.length + " sec " + "|| Frame Numbers : "+ SPB._frameNumber+"]]");
+            DebugWrapper.Log("[[Generating : "+ tAnimSave.name + " || Time Length : " + tAnimSave.length + " sec " + "|| Frame Numbers : "+ SPB._frameNumber+"]]");
             SPB.frameNowNumber = 0;
             tValue = 0;
             SPB.timer = 0;

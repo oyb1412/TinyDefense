@@ -27,7 +27,7 @@ public class FireStoreManager {
             var dependencyStatus = task.Result;
             if (dependencyStatus == Firebase.DependencyStatus.Available) {
                 FirebaseApp app = FirebaseApp.DefaultInstance;
-                Debug.Log("Firebase Initialized");
+                DebugWrapper.Log("Firebase Initialized");
                 db = FirebaseFirestore.DefaultInstance;
                 FirebaseAnalytics.SetAnalyticsCollectionEnabled(false);
                 Managers.Auth.Auth = FirebaseAuth.DefaultInstance;
@@ -70,7 +70,7 @@ public class FireStoreManager {
                     if (snapshot.Exists) {
                         docRef.UpdateAsync(userData).ContinueWithOnMainThread(updateTask => {
                             if (updateTask.IsCompleted && !updateTask.IsFaulted) {
-                                Debug.Log($"{field}에 {data.ToString()} 업데이트 완료");
+                                DebugWrapper.Log($"{field}에 {data.ToString()} 업데이트 완료");
                             } else {
                                 Debug.LogError($"{field}에 {data.ToString()} 업데이트 실패: " + updateTask.Exception?.Message);
                             }
@@ -78,7 +78,7 @@ public class FireStoreManager {
                     } else {
                         docRef.SetAsync(userData).ContinueWithOnMainThread(setTask => {
                             if (setTask.IsCompleted && !setTask.IsFaulted) {
-                                Debug.Log($"{field}에 {data.ToString()} 저장 완료");
+                                DebugWrapper.Log($"{field}에 {data.ToString()} 저장 완료");
                             } else {
                                 Debug.LogError($"{field}에 {data.ToString()} 저장 실패: " + setTask.Exception?.Message);
                             }
@@ -109,11 +109,11 @@ public class FireStoreManager {
             if (snapshot.TryGetValue(field, out object value)) {
                 return value;
             } else {
-                Debug.Log($"데이터 키{field}가 없습니다");
+                DebugWrapper.Log($"데이터 키{field}가 없습니다");
                 return null;
             }
         } else {
-            Debug.Log($"도큐멘트 {document}가 없습니다");
+            DebugWrapper.Log($"도큐멘트 {document}가 없습니다");
             return null;
         }
     }
@@ -132,7 +132,7 @@ public class FireStoreManager {
             Dictionary<string, object> allFields = snapshot.ToDictionary();
             return allFields;
         } else {
-            Debug.Log($"도큐멘트 {document}가 없습니다");
+            DebugWrapper.Log($"도큐멘트 {document}가 없습니다");
             return null;
         }
     }

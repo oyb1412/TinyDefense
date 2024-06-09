@@ -47,7 +47,7 @@ public class SelectUsedTextures : EditorWindow {
         // 텍스처 파일들을 선택 상태로 만들기
         Selection.objects = textures.ToArray();
 
-        Debug.Log(textures.Count + " textures selected.");
+        DebugWrapper.Log(textures.Count + " textures selected.");
     }
 }
 

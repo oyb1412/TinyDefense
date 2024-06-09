@@ -85,7 +85,7 @@ public class EnemyStatus : StatusBase {
             item.ExecuteEnemyAbility(enemyBase);
         }
 
-        Debug.Log($"적 체력 {MaxHp}");
+        DebugWrapper.Log($"적 체력 {MaxHp}");
     }
 
     /// <summary>
