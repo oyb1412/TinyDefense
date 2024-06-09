@@ -16,10 +16,11 @@
 - FirstScene
     
     ```csharp
+    
     using System;
-using System.Collections;
-using UnityEngine;
-public class FirstScene : BaseScene {
+    using System.Collections;
+    using UnityEngine;
+    public class FirstScene : BaseScene {
     //로딩 표기 슬라이더
     private UI_LoadingSlider loadingSlider;
 
