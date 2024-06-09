@@ -424,7 +424,6 @@
             data.Towers[(int)type].BuffValueUpValue = Convert.ToSingle(buffValueUpTask.Result);
         }
     }
-}
     ```
 - FirebaseStoreManager
     ```csharp
@@ -566,7 +565,6 @@
             return null;
         }
     }
-}
     ```
 
 **🤓Result!**
@@ -662,8 +660,6 @@
             return sha256.ComputeHash(Encoding.UTF8.GetBytes(key));
         }
     }
-}
-
     ```
     
 
@@ -786,7 +782,6 @@ Update함수의 사용을 최소화하고, 특정 이벤트의 발동을 감지�
             LoadRewardedAd();
         });
     }
-}
     ```
     
 
@@ -849,10 +844,10 @@ Play() 등 단순한 애니메이션 호출 메서드로 원할 때 애니메이
     using UnityEngine.SceneManagement;
     using UnityEngine.Events;
 
-/// <summary>
-/// 모든 페이드 관리 클래스
-/// </summary>
-public class UI_Fade : MonoBehaviour {
+   /// <summary>
+   /// 모든 페이드 관리 클래스
+   /// </summary>
+   public class UI_Fade : MonoBehaviour {
     public static UI_Fade Instance;
     //페이드 이미지
     private Image fadeImage;
@@ -895,7 +890,6 @@ public class UI_Fade : MonoBehaviour {
             fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME);
         });
     }
-}
     ```
 
 
@@ -937,7 +931,6 @@ public class UI_Fade : MonoBehaviour {
         return enemyList[i];
     }
     return null;
-}
     ```
     
 - Skill_Tornado
@@ -983,8 +976,6 @@ public class UI_Fade : MonoBehaviour {
             yield return attackDelay;
         }
     }
-
-}
     ```
     
 
@@ -1136,9 +1127,6 @@ public class UI_Fade : MonoBehaviour {
             return null;
 
         return _pools[name].Original;
-    }
-}
-
     }
     ```
     
