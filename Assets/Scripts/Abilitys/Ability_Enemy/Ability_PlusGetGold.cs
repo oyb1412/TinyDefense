@@ -2,19 +2,19 @@
 using System.Linq;
 
 /// <summary>
-/// Àû¿¡°Ô Àû¿ëµÇ´Â ¾îºô¸®Æ¼
-/// Àû µå¶ø °ñµå ¿µ±¸ Áõ°¡
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
+/// ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 [Ability(Define.AbilityType.PlusGetGold)]
 public class Ability_PlusGetGold : IEnemyAbility {
-    //Áõ°¡½ÃÅ³ °ñµå·®
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³ ï¿½ï¿½å·®
     public float PlusGold { get; private set; }
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+    /// Å¸ï¿½ï¿½, ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     /// </summary>
     public Ability_PlusGetGold() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusGetGold, Managers.Data.DefineData);
@@ -22,11 +22,11 @@ public class Ability_PlusGetGold : IEnemyAbility {
     }
 
     /// <summary>
-    /// »ý¼ºµÇÀÖ´Â ¸ðµç ¾Ö³Ê¹Ì ¸®¿öµå º¯°æ
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö³Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void SetAbility() {
-        var enemyList = Managers.Enemy.GetEnemyArray();
-        for (int i = enemyList.Length - 1; i >= 0; i--) {
+        var enemyList = Managers.Enemy.EnemyList;
+        for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
@@ -35,10 +35,10 @@ public class Ability_PlusGetGold : IEnemyAbility {
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ý¼º ½Ã, ½ºÅ³À» ½ÀµæÇÑ »óÅÂ¸é
-    /// »ý¼ºµÈ ¾Ö³Ê¹Ì¿¡°Ô ½ºÅ³ Àû¿ë
+    /// ï¿½Ö³Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³Ê¹Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="enemyBase">½ºÅ³À» Àû¿ëÇÒ ¾Ö³Ê¹Ì</param>
+    /// <param name="enemyBase">ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³Ê¹ï¿½</param>
     public void ExecuteEnemyAbility(EnemyBase enemyBase) {
         enemyBase.EnemyStatus.SetReward(this);
     }

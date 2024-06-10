@@ -1,19 +1,19 @@
-/// <summary>
-/// ¸ðµç ¹öÇÁ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// <summary> 
+/// ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½
 /// </summary>
 public interface IBuff {
-    //¹öÇÁ ¹ë·ù
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     float BuffValue { get; }
-    //¹öÇÁ Áö¼Ó½Ã°£
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ó½Ã°ï¿½
     float BuffTime { get; }
-    //¹öÇÁ Å¸ÀÔ
+    //ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
     Define.BuffType Type { get; }
-    //¹öÇÁ Àû¿ë
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void ApplyBuff(TowerBase tower);
-    //¹öÇÁ Á¦°Å
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     void RemoveBuff(TowerBase tower);
-    //¹öÇÁ ¹ë·ù °è»ê
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     float ModifyValue(float baseValue); 
-    //¹öÇÁ Àû¿ë À¯¹«
-    bool IsActive { get; }
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    bool IsActive { get; } 
 }

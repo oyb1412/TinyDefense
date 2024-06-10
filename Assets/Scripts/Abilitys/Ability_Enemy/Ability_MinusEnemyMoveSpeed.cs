@@ -1,17 +1,17 @@
 /// <summary>
-/// Àû¿¡°Ô Àû¿ëµÇ´Â ¾îºô¸®Æ¼
-/// Àû ÀÌµ¿¼Óµµ ¿µ±¸Àû °¨¼Ò
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼
+/// ï¿½ï¿½ ï¿½Ìµï¿½ï¿½Óµï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 [Ability(Define.AbilityType.MinusEnemyMoveSpeed)]
 public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
-    //°¨¼Ò½ÃÅ³ ÀÌµ¿¼Óµµ %
+    //ï¿½ï¿½ï¿½Ò½ï¿½Å³ ï¿½Ìµï¿½ï¿½Óµï¿½ %
     public float MoveSpeedValue { get; private set; }
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ ï¿½ï¿½ï¿½ï¿½
     public Define.AbilityValue AbilityValue{get;private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
+    /// Å¸ï¿½ï¿½, ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     /// </summary>
     public Ability_MinusEnemyMoveSpeed() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.MinusEnemyMoveSpeed, Managers.Data.DefineData);
@@ -19,11 +19,11 @@ public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
     }
 
     /// <summary>
-    /// ½ºÅ³ ½Àµæ ½Ã, »ý¼ºµÈ ¸ðµç Àû¿¡°Ô ½ºÅ³ Àû¿ë
+    /// ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void SetAbility() {
-        var enemyList = Managers.Enemy.GetEnemyArray();
-        for (int i = enemyList.Length - 1; i >= 0; i--) {
+        var enemyList = Managers.Enemy.EnemyList;
+        for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
@@ -32,10 +32,10 @@ public class Ability_MinusEnemyMoveSpeed : IEnemyAbility {
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ý¼º ½Ã, ½ºÅ³À» ½ÀµæÇÑ »óÅÂ¸é
-    /// »ý¼ºµÈ ¾Ö³Ê¹Ì¿¡°Ô ½ºÅ³ Àû¿ë
+    /// ï¿½Ö³Ê¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½, ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Â¸ï¿½
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³Ê¹Ì¿ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="enemyBase">½ºÅ³À» Àû¿ëÇÒ ¾Ö³Ê¹Ì</param>
+    /// <param name="enemyBase">ï¿½ï¿½Å³ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö³Ê¹ï¿½</param>
     public void ExecuteEnemyAbility(EnemyBase enemyBase) {
         enemyBase.EnemyStatus.SetMoveSpeed(this);
     }

@@ -62,13 +62,13 @@ public class FirstScene : BaseScene {
             loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
             //인핸스 데이터 로드
             yield return StartCoroutine(GetEnhanceData(Managers.Data.GameData.EnhanceDatas));
-            loadingSlider.SetLoading(.2f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(.5f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
             //모든 스킬 데이터 로드
             for (int i = 0; i< (int)Define.SkillType.Count; i++) {
                 yield return StartCoroutine(GetSkillData(Managers.Data.GameData.SkillDatas, (Define.SkillType)i));
             }
-            loadingSlider.SetLoading(.6f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(.8f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
             //모든 타워 데이터 로드
             for (int i = 0; i< (int)Define.TowerType.Count; i++) {

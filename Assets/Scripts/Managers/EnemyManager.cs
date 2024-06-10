@@ -4,18 +4,18 @@ using Unity.Mathematics;
 using UnityEngine;
 
 /// <summary>
-/// ¸ðµç Àû °ü¸® ¸Å´ÏÀú
+/// ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½
 /// </summary>
 public class EnemyManager {
-    //»ý¼ºµÈ ¸ðµç Àû ¸®½ºÆ®
+    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     public List<EnemyBase> EnemyList { get; private set; }
-    //¸Ê¿¡ Á¸ÀçÇÏ´Â Àû ¼ö°¡ º¯°æµÇ¸é È£Ãâ
+    //ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½ È£ï¿½ï¿½
     public Action<int> EnemyNumberAction;
     public EnemyData.EnemyStatusData EnemyData { get; private set; }
 
     public float CurrentLevelEnemyHp { get; private set; }
     /// <summary>
-    /// Àû ¸®½ºÆ® ÃÊ±âÈ­
+    /// ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½Ê±ï¿½È­
     /// </summary>
     public void Clear() {
         EnemyNumberAction = null;
@@ -29,9 +29,6 @@ public class EnemyManager {
         Managers.Game.CurrentGameLevelAction += SetCurrentLevelEnemyHp;
     }
 
-    public EnemyBase[] GetEnemyArray() {
-        return EnemyList.ToArray();
-    }
 
     private void SetCurrentLevelEnemyHp(int level) {
         if (level == 0) {
@@ -42,9 +39,9 @@ public class EnemyManager {
     }
 
     /// <summary>
-    /// ¸®½ºÆ®¿¡ Àû Ãß°¡ ¹× ÀÌº¥Æ® È£Ãâ
+    /// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½
     /// </summary>
-    /// <param name="enemy">Ãß°¡ÇÒ Àû</param>
+    /// <param name="enemy">ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½</param>
     /// 
     public void AddEnemy(EnemyBase enemy) {
         if (EnemyList.Contains(enemy))
@@ -55,14 +52,12 @@ public class EnemyManager {
     }
 
     /// <summary>
-    /// ¸®½ºÆ®¿¡¼­ Àû Á¦°Å ¹× ÀÌº¥Æ® È£Ãâ
+    /// ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½
     /// </summary>
-    /// <param name="enemy">Á¦°ÅÇÒ Àû</param>
+    /// <param name="enemy">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½</param>
     public void RemoveEnemy(EnemyBase enemy) {
-        if (!EnemyList.Contains(enemy))
-            return;
 
-        EnemyList.Remove(enemy);
-        EnemyNumberAction?.Invoke(EnemyList.Count);
+        if (EnemyList.Remove(enemy))
+            EnemyNumberAction?.Invoke(EnemyList.Count);
     }
 }

@@ -48,8 +48,9 @@ public class SkillManager {
         SkillData[(int)skill].SkillValue += SkillData[(int)skill].SkillValueUpValue;
         SkillData[(int)skill].SkillTime += SkillData[(int)skill].SkillTimeUpValue;
         SkillData[(int)skill].SkillCoolTime -= SkillData[(int)skill].SkillCoolTimeDownValue;
-        SkillData[(int)skill].SkillDamage += SkillData[(int)skill].SkillDamage;
         SkillData[(int)skill].SkillCost = SkillData[(int)skill].Level * SkillData[(int)skill].SkillCostUpValue;
+        SkillData[(int)skill].SkillDamage += SkillData[(int)skill].SkillDamage;
+
     }
 
     /// <summary>

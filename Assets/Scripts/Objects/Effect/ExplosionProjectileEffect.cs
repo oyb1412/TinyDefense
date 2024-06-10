@@ -1,22 +1,20 @@
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 /// <summary>
-/// ±¤¿ª°ø°Ý ÀÌÆåÆ® °ü¸®
+/// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class ExplosionProjectileEffect : ProjectileEffectBase {
-    //¹ß»çÇÑ Å¸¿ö
+    //ï¿½ß»ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½
     protected TowerBase towerBase;
-    //´ÜÅ¸°ø°ÝÀ» À§ÇÑ Çì½Ã¼Â
+    //ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼ï¿½
     private HashSet<EnemyBase> enemyHash = new HashSet<EnemyBase>();
     /// <summary>
-    /// ÀÌÆåÆ® »ý¼º ½Ã ÃÊ±âÈ­ ¹× °ø°Ý
+    /// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="towerBase">¹ß»çÇÑ Å¸¿ö</param>
-    /// <param name="attackData">¹ß»çÇÑ Å¸¿öÀÇ µ¥ÀÌÅÍ</param>
-    /// <param name="pos">ÀÌÆåÆ® »ý¼º À§Ä¡</param>
+    /// <param name="towerBase">ï¿½ß»ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½</param>
+    /// <param name="attackData">ï¿½ß»ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
+    /// <param name="pos">ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡</param>
     public override void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
         if (towerBase.TowerType == Define.TowerType.Icemage)
             SoundManager.Instance.PlaySfx(Define.SFXType.IceExplosion);
@@ -26,31 +24,33 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
         this.towerBase = towerBase;
         base.Init(towerBase, attackData, pos);
 
-        var enemyList = Managers.Enemy.GetEnemyArray();
-        for (int i = enemyList.Length - 1; i >= 0; i--) {
+        var enemyList = Managers.Enemy.EnemyList;
+
+        for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
             float distance = Vector2.Distance(transform.position, enemyList[i].transform.position);
 
-            //Æø¹ß »ç°Å¸® ³»ÀÇ ÀûÀ» °ËÃâ
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             if (distance > Managers.Data.DefineData.TOWER_EXPLOSION_RADIUS)
                 continue;
 
-            //ÀûÀÌ ¾ÆÁ÷ °ø°Ý´çÇÏÁö ¾Ê¾Ò´Ù¸é
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý´ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê¾Ò´Ù¸ï¿½
             if (enemyHash.Contains(enemyList[i]))
                 continue;
 
-            //°ø°Ý ¹× Àç°ø°Ý ºÒ°¡
+            //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
             enemyHash.Add(enemyList[i]);
-            enemyList[i].EnemyStatus.SetHp(attackData.Damage, towerBase);
-            //µð¹öÇÁ Àû¿ë
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+
             ExplosionAbility(enemyList[i]);
+            enemyList[i].EnemyStatus.SetHp(attackData.Damage, towerBase);
         }
     }
 
     /// <summary>
-    /// ÀÌÆåÆ® Á¦°Å(ÄÝ¹éÀ¸·Î È£Ãâ)
+    /// ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½(ï¿½Ý¹ï¿½ï¿½ï¿½ï¿½ï¿½ È£ï¿½ï¿½)
     /// </summary>
     public override void DestroyEvent() {
         enemyHash.Clear();
@@ -58,9 +58,9 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
     }
 
     /// <summary>
-    /// Àû°ú Ãæµ¹ ½Ã, º¸À¯ÁßÀÎ µð¹öÇÁ Àû¿ë
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½æµ¹ ï¿½ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
-    /// <param name="enemy">µð¹öÇÁ¸¦ Àû¿ë½ÃÅ³ Àû</param>
+    /// <param name="enemy">ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Å³ ï¿½ï¿½</param>
     private void ExplosionAbility(EnemyBase enemy) {
         foreach (var item in towerBase.Debuffs) {
             enemy.DebuffManager.AddDebuff(item, enemy);

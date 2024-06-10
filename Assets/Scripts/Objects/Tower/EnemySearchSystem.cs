@@ -3,21 +3,21 @@ using DG.Tweening;
 using System.Collections;
 
 /// <summary>
-/// ÁÖº¯ Àû °¨Áö Å¬·¡½º
+/// ï¿½Öºï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class EnemySearchSystem : MonoBehaviour
 {
-    //ºÎ¸ð Å¸¿ö
+    //ï¿½Î¸ï¿½ Å¸ï¿½ï¿½
     private TowerBase towerBase;
-    //Å¸¿ö »ç°Å¸® ½ºÇÁ¶óÀÌÆ®
+    //Å¸ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public SpriteRenderer RangeSprite { get; private set; }
-    //Å¸¿ö ¼±ÅÃ ¸¶Å©
+    //Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å©
     private SelectArrow selectArrow;
-    //Å¸¿ö ¼±ÅÃ ¹× ¼±ÅÃÇØÁ¦ Æ®À©
+    //Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½
     private Tween rangeTween;
-    //¾Ö³Ê¹Ì ·¹ÀÌ¾î
+    //ï¿½Ö³Ê¹ï¿½ ï¿½ï¿½ï¿½Ì¾ï¿½
     private LayerMask enemyLayer;
-    //È¸Àü ÄÚ·çÆ¾
+    //È¸ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾
     private Coroutine rotateCoroutine;
 
     private void Awake() {
@@ -38,15 +38,16 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// °ø°Ý »ç°Å¸® ³»ÀÇ Àû ¼­Ä¡
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Ä¡
     /// </summary>
     /// <returns></returns>
     public EnemyBase SearchEnemy() {
         if (towerBase == null)
             return null;
 
-        var enemyList = Managers.Enemy.GetEnemyArray();
-        for (int i = enemyList.Length - 1; i >= 0; i--) {
+        var enemyList = Managers.Enemy.EnemyList;
+
+        for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
@@ -59,7 +60,7 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ÇöÀç Å¸°Ù ¾Ö³Ê¹Ì°¡ »ç°Å¸® ³»¿¡ ÀÖ´ÂÁö Ã¼Å©
+    /// ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½ï¿½ ï¿½Ö³Ê¹Ì°ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
     /// </summary>
     /// <param name="target"></param>
     /// <returns></returns>
@@ -75,23 +76,23 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¸¿ö ¼±ÅÃ½Ã »ç°Å¸® ¹× ¸¶Å© Ç¥½Ã
+    /// Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ã½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ ï¿½ï¿½Å© Ç¥ï¿½ï¿½
     /// </summary>
     public void Activation() {
         SpritesActivation();
 
-        // ½ºÇÁ¶óÀÌÆ®ÀÇ Pixels Per Unit °ª °¡Á®¿À±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Pixels Per Unit ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         float pixelsPerUnit = RangeSprite.sprite.pixelsPerUnit;
 
-        // ½ºÇÁ¶óÀÌÆ®ÀÇ ½ÇÁ¦ Å©±â (ÇÈ¼¿ ´ÜÀ§) ±¸ÇÏ±â
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ (ï¿½È¼ï¿½ ï¿½ï¿½ï¿½ï¿½) ï¿½ï¿½ï¿½Ï±ï¿½
         float spriteWidth = RangeSprite.sprite.rect.width;
         float spriteHeight = RangeSprite.sprite.rect.height;
 
-        // ½ºÇÁ¶óÀÌÆ®ÀÇ Å©±â¿Í ÄÝ¶óÀÌ´õÀÇ ¹ÝÁö¸§¿¡ ¸Â°Ô localScale Á¶Á¤
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ Å©ï¿½ï¿½ï¿½ ï¿½Ý¶ï¿½ï¿½Ì´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â°ï¿½ localScale ï¿½ï¿½ï¿½ï¿½
         float spriteUnitWidth = spriteWidth / pixelsPerUnit;
         float spriteUnitHeight = spriteHeight / pixelsPerUnit;
 
-        // ½ºÇÁ¶óÀÌÆ®ÀÇ À¯´Ö Å©±â ºñÀ²
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         float scaleX = (towerBase.TowerStatus.AttackRange) / spriteUnitWidth;
         float scaleY = (towerBase.TowerStatus.AttackRange) / spriteUnitHeight;
 
@@ -109,7 +110,7 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// Å¸¿ö ¼±ÅÃ ÇØÁ¦½Ã ¸¶Å© ¹× »ç°Å¸® ºñÈ°¼ºÈ­
+    /// Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å© ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½È°ï¿½ï¿½È­
     /// </summary>
     public void DeActivation() {
         Util.ResetTween(rangeTween);
@@ -126,7 +127,7 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// »ç°Å¸® ½ºÇÁ¶óÀÌÆ® È°¼ºÈ­
+    /// ï¿½ï¿½Å¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® È°ï¿½ï¿½È­
     /// </summary>
     private void SpritesActivation() {
         RangeSprite.enabled = true;

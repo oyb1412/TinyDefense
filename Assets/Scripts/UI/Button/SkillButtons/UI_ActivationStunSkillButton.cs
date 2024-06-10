@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using static TowerBase;
 /// <summary>
-/// ½ºÅÏ ½ºÅ³ Å¬·¡½º
+/// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ Å¬ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
 
@@ -19,27 +19,29 @@ public class UI_ActivationStunSkillButton : UI_ActivationSkillButton {
     }
 
     /// <summary>
-    /// ½ºÅÏ ½ºÅ³ ¼±ÅÃ
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     protected override void OnSelect() {
-        //½ºÅÏÀº Áï½Ã ¹ßµ¿
-        //½ºÅ³ »ç¿ë ÈÄ ÄðÅ¸ÀÓ ½ÃÀÛ
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ßµï¿½
+        //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         base.OnSelect();
         var skill = Managers.Skill.GetSkillValue(Define.SkillType.Stun);
         UseSkill(skill.SkillCoolTime);
 
-        //¸ðµç Àû ¼øÈ¸
-        //¸ðµç Àû¿¡°Ô µð¹öÇÁ Àû¿ë ¹× µ¥¹ÌÁö
-        var enemyList = Managers.Enemy.GetEnemyArray();
-        for (int i = enemyList.Length - 1; i >= 0; i--) {
+        //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¸
+        //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        var enemyList = Managers.Enemy.EnemyList;
+        for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
 
             enemyList[i].DebuffManager.AddDebuff(new StunDebuff(skill.SkillTime), enemyList[i]);
-            enemyList[i].EnemyStatus.SetHp(skill.SkillDamage);
+            float enemyMaxHp = enemyList[i].EnemyStatus.MaxHp;
+            float skillDamage = Mathf.Min(enemyList[i].EnemyStatus.CurrentHp * skill.SkillDamage, enemyMaxHp * 0.5f);
+            enemyList[i].EnemyStatus.SetHp(skillDamage);
         }
         
-        //Ä«¸Þ¶ó ½¦ÀÌÅ©
+        //Ä«ï¿½Þ¶ï¿½ ï¿½ï¿½ï¿½ï¿½Å©
         Camera.main.transform.DOShakePosition(3f, .2f).SetEase(Ease.Linear);
     }
 }

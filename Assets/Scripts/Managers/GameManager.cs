@@ -3,29 +3,29 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// °ÔÀÓ ¸Å´ÏÀú
-/// ½Ã½ºÅÛÀû µ¥ÀÌÅÍ °ü¸®
+/// ï¿½ï¿½ï¿½ï¿½ ï¿½Å´ï¿½ï¿½ï¿½
+/// ï¿½Ã½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 /// </summary>
 public class GameManager {
-    //°ÔÀÓ ÁøÇà ¿©ºÎ
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private bool _isPlaying;
-    //°ÔÀÓ ·¹º§Áõ°¡ °è»êÀ» À§ÇÑ Å¸ÀÌ¸Ó
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¸ï¿½Ì¸ï¿½
     public float GameLevelTimer { get; private set; }
-    //ÇöÀç º¸À¯ °ñµå
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     private int currentGold;
-    //ÇöÀç °ÔÀÓ ·¹º§
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int _currentGameLevel;
-    //ÃÑ Å³ ¼ö
+    //ï¿½ï¿½ Å³ ï¿½ï¿½
     private int currentKillNumber;
-    //°ñµå º¯°æ ¾×¼Ç
+    //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½
     public Action<int> CurrentGoldAction;
-    //°ÔÀÓ·¹º§ º¯°æ ¾×¼Ç
+    //ï¿½ï¿½ï¿½Ó·ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½
     public Action<int> CurrentGameLevelAction;
-    //Å³ ¼ö º¯°æ ¾×¼Ç
+    //Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×¼ï¿½
     public Action<int> CurrentKillNumberAction;
-    //ÇöÀç °ÔÀÓ ¼Óµµ
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Óµï¿½
     private Define.GameSpeed gameSpeed;
-    //Æ÷Å» ¾Ö´Ï¸ÞÀÌÅÍ
+    //ï¿½ï¿½Å» ï¿½Ö´Ï¸ï¿½ï¿½ï¿½ï¿½ï¿½
     public Animator PortalAnimator { get; private set; }
 
     public Define.GameSpeed GameSpeed {
@@ -42,7 +42,7 @@ public class GameManager {
         }
     }
 
-    //°ÔÀÓ ÁøÇà ¿©ºÎ
+    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public bool IsPlaying {
         get { return _isPlaying; }
         set {
@@ -59,7 +59,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// °ÔÀÓ ·¹º§¿¡ º¯°æÀÌ »ý±â¸é ÀÚµ¿À¸·Î ÀÌº¥Æ® È£Ãâ
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½
     /// </summary>
     public int CurrentGameLevel {
         get { return _currentGameLevel; }
@@ -70,7 +70,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// Å³¼ö¿¡ º¯°æÀÌ »ý±â¸é ÀÚµ¿À¸·Î ÀÌº¥Æ® È£Ãâ
+    /// Å³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½
     /// </summary>
     public int CurrentKillNumber {
         get { return currentKillNumber; }
@@ -81,7 +81,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// º¸À¯ °ñµå¿¡ º¯°æÀÌ »ý±â¸é ÀÚµ¿À¸·Î ÀÌº¥Æ® È£Ãâ
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½å¿¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Úµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìºï¿½Æ® È£ï¿½ï¿½
     /// </summary>
     public int CurrentGold {
         get { return currentGold; }
@@ -97,7 +97,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× °ÔÀÓ ½ÃÀÛ
+    /// ï¿½Ê±ï¿½È­ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void Init() {
         Managers.Enemy.EnemyNumberAction += CheckEnemyNumber;
@@ -113,7 +113,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ È¹µæ °¡´ÉÇÑ ¶ó¿îµåÀÎÁö Ã¼Å©
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½Æ¼ È¹ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¼Å©
     /// </summary>
     public bool CanGetAbility() {
         if(_currentGameLevel == 1) {
@@ -131,9 +131,9 @@ public class GameManager {
 
 
     /// <summary>
-    /// ¸Ê¿¡ Á¸ÀçÇÏ´Â Àû ¼ö Ã¼Å©
+    /// ï¿½Ê¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½ ï¿½ï¿½ ï¿½ï¿½ Ã¼Å©
     /// </summary>
-    /// <param name="count">ÀûÀÇ ¼ö</param>
+    /// <param name="count">ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½</param>
     private void CheckEnemyNumber(int count) {
         if (Managers.Data.DefineData.ENEMY_MAX_COUNT > count)
             return;
@@ -147,8 +147,8 @@ public class GameManager {
     }
 
     /// <summary>
-    /// °ÔÀÓ ¿À¹ö½Ã, ·©Å· µ¥ÀÌÅÍ¸¦ Load
-    /// ÇöÀç °ÔÀÓÀÇ ·©Å· µ¥ÀÌÅÍ°¡ ´õ ³ôÀ»½Ã Save
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ï¿½Í¸ï¿½ Load
+    /// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Save
     /// </summary>
     private async void GetRankingData() {
         var saveData = await Managers.FireStore.LoadDataToFireStore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Auth.User.Email,
@@ -173,7 +173,7 @@ public class GameManager {
     }
 
     /// <summary>
-    /// Å¸ÀÌ¸Ó¸¦ ±âÁØÀ¸·Î °ÔÀÓ ·¹º§ Á¶Á¤
+    /// Å¸ï¿½Ì¸Ó¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     /// </summary>
     public void OnUpdate() {
         if (!IsPlaying)
