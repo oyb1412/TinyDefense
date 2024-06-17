@@ -37,7 +37,10 @@ public class Cell : MonoBehaviour, ISelect {
     /// 이 셀로이동 하려고 하면, 셀 색 변경
     /// </summary>
     public void MovementSelect() {
-        if(spriteRenderer.color != Color.green) {
+        if (IsSelected)
+            return;
+
+        if (spriteRenderer.color != Color.green) {
             spriteRenderer.color = Color.green;
             selectArrow.Activation();
         }
