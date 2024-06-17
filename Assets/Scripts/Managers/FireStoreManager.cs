@@ -9,13 +9,13 @@ using System.Threading.Tasks;
 using UnityEngine;
 
 /// <summary>
-/// ÆÄÀÌ¾î½ºÅä¾î µ¥ÀÌÅÍ °ü¸® Å¬·¡½º
+/// íŒŒì´ì–´ìŠ¤í† ì–´ ë°ì´í„° ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class FireStoreManager {
     private FirebaseFirestore db;
 
     /// <summary>
-    /// ÆÄÀÌ¾î½ºÅä¾î, ÆÄÀÌ¾îº£ÀÌ½º ¾î½º, ÆÄÀÌ¾îº£ÀÌ½º ¾Æ³¯¸®Æ½½º ÃÊ±âÈ­
+    /// íŒŒì´ì–´ìŠ¤í† ì–´, íŒŒì´ì–´ë² ì´ìŠ¤ ì–´ìŠ¤, íŒŒì´ì–´ë² ì´ìŠ¤ ì•„ë‚ ë¦¬í‹±ìŠ¤ ì´ˆê¸°í™”
     /// </summary>
     public void Init() {
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task => {
@@ -39,25 +39,25 @@ public class FireStoreManager {
     }
 
     /// <summary>
-    /// ÆÄÀÌ¾îº£ÀÌ½º¿¡ Á¤º¸ ÀúÀå
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì— ì •ë³´ ì €ì¥
     /// </summary>
-    /// <param name="collection">ÀúÀåÇÒ Äİ·º¼Ç ¸í</param>
-    /// <param name="document">ÀúÀåÇÒ µµÅ¥¸àÆ® ¸í</param>
-    /// <param name="field">ÀúÀåÇÒ ÇÊµå ¸í</param>
-    /// <param name="data">ÀúÀåÇÒ µ¥ÀÌÅÍ</param>
+    /// <param name="collection">ì €ì¥í•  ì½œë ‰ì…˜ ëª…</param>
+    /// <param name="document">ì €ì¥í•  ë„íë©˜íŠ¸ ëª…</param>
+    /// <param name="field">ì €ì¥í•  í•„ë“œ ëª…</param>
+    /// <param name="data">ì €ì¥í•  ë°ì´í„°</param>
     public void SaveDataToFirestore(string collection, string document, string field, object data) {
         if (string.IsNullOrEmpty(collection) || string.IsNullOrEmpty(document) || string.IsNullOrEmpty(field)) {
-            Debug.LogError("Äİ·º¼Ç, µµÅ¥¸àÆ® ¶Ç´Â ÇÊµå ÀÌ¸§ÀÌ À¯È¿ÇÏÁö ¾Ê½À´Ï´Ù.");
+            Debug.LogError("ì½œë ‰ì…˜, ë„íë©˜íŠ¸ ë˜ëŠ” í•„ë“œ ì´ë¦„ì´ ìœ íš¨í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
             return;
         }
 
         if (data == null) {
-            Debug.LogError("ÀúÀåÇÒ µ¥ÀÌÅÍ°¡ nullÀÔ´Ï´Ù.");
+            Debug.LogError("ì €ì¥í•  ë°ì´í„°ê°€ nullì…ë‹ˆë‹¤.");
             return;
         }
 
         try {
-            Debug.LogError("µ¥ÀÌÅÍ ÀúÀå ½Ãµµ.");
+            Debug.LogError("ë°ì´í„° ì €ì¥ ì‹œë„.");
             DocumentReference docRef = db.Collection(collection).Document(document);
             Dictionary<string, object> userData = new Dictionary<string, object>
             {
@@ -70,37 +70,94 @@ public class FireStoreManager {
                     if (snapshot.Exists) {
                         docRef.UpdateAsync(userData).ContinueWithOnMainThread(updateTask => {
                             if (updateTask.IsCompleted && !updateTask.IsFaulted) {
-                                DebugWrapper.Log($"{field}¿¡ {data.ToString()} ¾÷µ¥ÀÌÆ® ¿Ï·á");
+                                DebugWrapper.Log($"{field}ì— {data.ToString()} ì—…ë°ì´íŠ¸ ì™„ë£Œ");
                             } else {
-                                Debug.LogError($"{field}¿¡ {data.ToString()} ¾÷µ¥ÀÌÆ® ½ÇÆĞ: " + updateTask.Exception?.Message);
+                                Debug.LogError($"{field}ì— {data.ToString()} ì—…ë°ì´íŠ¸ ì‹¤íŒ¨: " + updateTask.Exception?.Message);
                             }
                         });
                     } else {
                         docRef.SetAsync(userData).ContinueWithOnMainThread(setTask => {
                             if (setTask.IsCompleted && !setTask.IsFaulted) {
-                                DebugWrapper.Log($"{field}¿¡ {data.ToString()} ÀúÀå ¿Ï·á");
+                                DebugWrapper.Log($"{field}ì— {data.ToString()} ì €ì¥ ì™„ë£Œ");
                             } else {
-                                Debug.LogError($"{field}¿¡ {data.ToString()} ÀúÀå ½ÇÆĞ: " + setTask.Exception?.Message);
+                                Debug.LogError($"{field}ì— {data.ToString()} ì €ì¥ ì‹¤íŒ¨: " + setTask.Exception?.Message);
                             }
                         });
                     }
                 } else {
-                    Debug.LogError($"¹®¼­ È®ÀÎ ½ÇÆĞ: " + task.Exception?.Message);
+                    Debug.LogError($"ë¬¸ì„œ í™•ì¸ ì‹¤íŒ¨: " + task.Exception?.Message);
                 }
             });
         } catch (Exception e) {
-            Debug.LogError($"Firestore Ã³¸® Áß ¿¹¿Ü ¹ß»ı: {e.Message}");
+            Debug.LogError($"Firestore ì²˜ë¦¬ ì¤‘ ì˜ˆì™¸ ë°œìƒ: {e.Message}");
+        }
+    }
+
+    /// <summary>
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì— ì •ë³´ ì €ì¥
+    /// </summary>
+    /// <param name="collection">ì €ì¥í•  ì½œë ‰ì…˜ ëª…</param>
+    /// <param name="document">ì €ì¥í•  ë„íë©˜íŠ¸ ëª…</param>
+    /// <param name="data">ì €ì¥í•  ë°ì´í„° ê°ì²´</param>
+    public void SaveDataToFirestoreDocument(string collection, string document, object data) {
+        if (string.IsNullOrEmpty(collection) || string.IsNullOrEmpty(document)) {
+            Debug.LogError("ì½œë ‰ì…˜ ë˜ëŠ” ë„íë©˜íŠ¸ ì´ë¦„ì´ ìœ íš¨í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+            return;
+        }
+
+        if (data == null) {
+            Debug.LogError("ì €ì¥í•  ë°ì´í„°ê°€ nullì…ë‹ˆë‹¤.");
+            return;
+        }
+
+        try {
+            Debug.Log("ë°ì´í„° ì €ì¥ ì‹œë„.");
+            DocumentReference docRef = db.Collection(collection).Document(document);
+
+            Dictionary<string, object> userData = new Dictionary<string, object>();
+
+            // ë°ì´í„° ê°ì²´ì˜ ì†ì„±ì„ ë”•ì…”ë„ˆë¦¬ë¡œ ë³€í™˜
+            foreach (var property in data.GetType().GetProperties()) {
+                userData[property.Name] = property.GetValue(data);
+            }
+
+            docRef.GetSnapshotAsync().ContinueWithOnMainThread(task => {
+                if (task.IsCompleted && !task.IsFaulted) {
+                    DocumentSnapshot snapshot = task.Result;
+                    if (snapshot.Exists) {
+                        docRef.UpdateAsync(userData).ContinueWithOnMainThread(updateTask => {
+                            if (updateTask.IsCompleted && !updateTask.IsFaulted) {
+                                Debug.Log($"{document} ë„íë¨¼íŠ¸ ì—…ë°ì´íŠ¸ ì™„ë£Œ");
+                            } else {
+                                Debug.LogError($"{document} ë„íë¨¼íŠ¸ ì—…ë°ì´íŠ¸ ì‹¤íŒ¨: " + updateTask.Exception?.Message);
+                            }
+                        });
+                    } else {
+                        docRef.SetAsync(userData).ContinueWithOnMainThread(setTask => {
+                            if (setTask.IsCompleted && !setTask.IsFaulted) {
+                                Debug.Log($"{document} ë„íë¨¼íŠ¸ ì €ì¥ ì™„ë£Œ");
+                            } else {
+                                Debug.LogError($"{document} ë„íë¨¼íŠ¸ ì €ì¥ ì‹¤íŒ¨: " + setTask.Exception?.Message);
+                            }
+                        });
+                    }
+                } else {
+                    Debug.LogError($"ë¬¸ì„œ í™•ì¸ ì‹¤íŒ¨: " + task.Exception?.Message);
+                }
+            });
+        } catch (Exception e) {
+            Debug.LogError($"Firestore ì²˜ë¦¬ ì¤‘ ì˜ˆì™¸ ë°œìƒ: {e.Message}");
         }
     }
 
 
     /// <summary>
-    /// ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ Á¤º¸ ¹Ş¾Æ¿À±â
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ì •ë³´ ë°›ì•„ì˜¤ê¸°
     /// </summary>
-    /// <param name="collection">Á¤º¸¸¦ ¹Ş¾Æ¿Ã Äİ·º¼Ç ¸í</param>
-    /// <param name="document">Á¤º¸¸¦ ¹Ş¾Æ¿Ã µµÅ¥¸àÆ® ¸í</param>
-    /// <param name="field">Á¤º¸¸¦ ¹Ş¾Æ¿Ã ÇÊµå ¸í</param>
-    /// <param name="callBack">Á¤º¸¸¦ ÀúÀåÇÒ Äİ¹é ÇÔ¼ö</param>
+    /// <param name="collection">ì •ë³´ë¥¼ ë°›ì•„ì˜¬ ì½œë ‰ì…˜ ëª…</param>
+    /// <param name="document">ì •ë³´ë¥¼ ë°›ì•„ì˜¬ ë„íë©˜íŠ¸ ëª…</param>
+    /// <param name="field">ì •ë³´ë¥¼ ë°›ì•„ì˜¬ í•„ë“œ ëª…</param>
+    /// <param name="callBack">ì •ë³´ë¥¼ ì €ì¥í•  ì½œë°± í•¨ìˆ˜</param>
     public async Task<object> LoadDataToFireStore(string collection, string document, string field) {
         DocumentReference docRef = db.Collection(collection).Document(document);
         DocumentSnapshot snapshot = await docRef.GetSnapshotAsync();
@@ -109,20 +166,20 @@ public class FireStoreManager {
             if (snapshot.TryGetValue(field, out object value)) {
                 return value;
             } else {
-                DebugWrapper.Log($"µ¥ÀÌÅÍ Å°{field}°¡ ¾ø½À´Ï´Ù");
+                DebugWrapper.Log($"ë°ì´í„° í‚¤{field}ê°€ ì—†ìŠµë‹ˆë‹¤");
                 return null;
             }
         } else {
-            DebugWrapper.Log($"µµÅ¥¸àÆ® {document}°¡ ¾ø½À´Ï´Ù");
+            DebugWrapper.Log($"ë„íë©˜íŠ¸ {document}ê°€ ì—†ìŠµë‹ˆë‹¤");
             return null;
         }
     }
 
     /// <summary>
-    /// Æ¯Á¤ µµÅ¥¸àÆ®ÀÇ ÇÊµå ¸ğµÎ ¹Ş¾Æ¿À±â
+    /// íŠ¹ì • ë„íë©˜íŠ¸ì˜ í•„ë“œ ëª¨ë‘ ë°›ì•„ì˜¤ê¸°
     /// </summary>
-    /// <param name="collection">Äİ·º¼Ç ¸í</param>
-    /// <param name="document">µµÅ¥¸àÆ® ¸í</param>
+    /// <param name="collection">ì½œë ‰ì…˜ ëª…</param>
+    /// <param name="document">ë„íë©˜íŠ¸ ëª…</param>
     /// <returns></returns>
     public async Task<Dictionary<string, object>> LoadAllDataFromDocument(string collection, string document) {
         DocumentReference docRef = db.Collection(collection).Document(document);
@@ -132,7 +189,7 @@ public class FireStoreManager {
             Dictionary<string, object> allFields = snapshot.ToDictionary();
             return allFields;
         } else {
-            DebugWrapper.Log($"µµÅ¥¸àÆ® {document}°¡ ¾ø½À´Ï´Ù");
+            DebugWrapper.Log($"ë„íë©˜íŠ¸ {document}ê°€ ì—†ìŠµë‹ˆë‹¤");
             return null;
         }
     }

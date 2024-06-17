@@ -2,36 +2,37 @@ using System;
 using System.Collections;
 using UnityEngine;
 public class FirstScene : BaseScene {
-    //·Îµù Ç¥±â ½½¶óÀÌ´õ
+    //ë¡œë”© í‘œê¸° ìŠ¬ë¼ì´ë”
     private UI_LoadingSlider loadingSlider;
 
     public override void Init() {
+  
         base.Init();
         StartCoroutine(Co_Init());
         loadingSlider = GameObject.Find("LoadingSlider").GetComponent<UI_LoadingSlider>();
     }
 
     /// <summary>
-    /// ½ÃÀÛ µ¥ÀÌÅÍ ·Îµå
-    /// °¢ µ¥ÀÌÅÍ ¿Ï·á ½Ã ·Îµù¹Ù Áõ°¡
-    /// µ¥ÀÌÅÍ ·Îµå ¿Ï·á½Ã ·ÎÄÃ¿¡ ÀúÀå
+    /// ì‹œì‘ ë°ì´í„° ë¡œë“œ
+    /// ê° ë°ì´í„° ì™„ë£Œ ì‹œ ë¡œë”©ë°” ì¦ê°€
+    /// ë°ì´í„° ë¡œë“œ ì™„ë£Œì‹œ ë¡œì»¬ì— ì €ì¥
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_Init() {
-        //ÆÄÀÌ¾îº£ÀÌ½º ÃÊ±âÈ­
+        //íŒŒì´ì–´ë² ì´ìŠ¤ ì´ˆê¸°í™”
         yield return StartCoroutine(Co_FirebaseInit());
 
-        //¾Öµå¸÷ ID ·Îµå
+        //ì• ë“œëª¹ ID ë¡œë“œ
         yield return StartCoroutine(Co_GetAdmobID());
 
-        //µğÆÄÀÎ µ¥ÀÌÅÍ ÀÖ³ª Ã¼Å©
-        //Á¸Àç ½Ã ¹Ù·Î ÇÒ´ç
+        //ë””íŒŒì¸ ë°ì´í„° ìˆë‚˜ ì²´í¬
+        //ì¡´ì¬ ì‹œ ë°”ë¡œ í• ë‹¹
         Managers.Data.DefineData = new Define();
 
         if (Managers.Data.CheckPathFile("Define.json")) {
             Managers.Data.DefineData = Managers.Data.DecryptionLoadJson<Define>("Define");
         }
-        //µğÆÄÀÎ µ¥ÀÌÅÍ°¡ ¾øÀ» ½Ã ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ ·Îµå
+        //ë””íŒŒì¸ ë°ì´í„°ê°€ ì—†ì„ ì‹œ íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ë¡œë“œ
         else {
             var task = Managers.FireStore.LoadDataToFireStore("DefineData", "DefineData", "DefineData");
             yield return new WaitUntil(() => task.IsCompleted);
@@ -39,44 +40,44 @@ public class FirstScene : BaseScene {
             if (task.Result != null) {
                 Managers.Data.DecryptionSaveJson("Define", task.Result.ToString());
             }
-            //»ó¼ö µ¥ÀÌÅÍ ·Îµå
+            //ìƒìˆ˜ ë°ì´í„° ë¡œë“œ
             Managers.Data.DefineData = Managers.Data.DecryptionLoadJson<Define>("Define");
 
             yield return new WaitUntil(() => Managers.Data.DefineData.COLOR_TOWERLEVEL != null);
         }
 
-        //preÆĞ½º¿¡ °ÔÀÓ µ¥ÀÌÅÍ°¡ ÀÖ³ª Ã¼Å©.
+        //preíŒ¨ìŠ¤ì— ê²Œì„ ë°ì´í„°ê°€ ìˆë‚˜ ì²´í¬.
         if (Managers.Data.CheckPathFile(Managers.Data.DefineData.TAG_GAME_DATA_JSON)) {
-            DebugWrapper.Log("¸®¼Ò½º°¡ Á¸ÀçÇÏ¹Ç·Î ¾À ÀÌµ¿");
-            //preÆĞ½º¿¡ °ÔÀÓ µ¥ÀÌÅÍ°¡ ÀÖÀ¸¸é, ¾À ÀÌµ¿
+            DebugWrapper.Log("ë¦¬ì†ŒìŠ¤ê°€ ì¡´ì¬í•˜ë¯€ë¡œ ì”¬ ì´ë™");
+            //preíŒ¨ìŠ¤ì— ê²Œì„ ë°ì´í„°ê°€ ìˆìœ¼ë©´, ì”¬ ì´ë™
             loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
             StopAllCoroutines();
             yield break;
         }
-        //preÆĞ½º¿¡ °ÔÀÓ µ¥ÀÌÅÍ°¡ ¾øÀ¸¸é, ·ÎµùÃ¢À» µ¹¸®°í ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ µ¥ÀÌÅÍ ºÒ·¯¿À±â.
+        //preíŒ¨ìŠ¤ì— ê²Œì„ ë°ì´í„°ê°€ ì—†ìœ¼ë©´, ë¡œë”©ì°½ì„ ëŒë¦¬ê³  íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸°.
         else {
-            DebugWrapper.Log("¸®¼Ò½º°¡ Á¸ÀçÇÏÁö ¾ÊÀ¸¹Ç·Î ¸®¼Ò½º ´Ù¿î·Îµå");
+            DebugWrapper.Log("ë¦¬ì†ŒìŠ¤ê°€ ì¡´ì¬í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ ë¦¬ì†ŒìŠ¤ ë‹¤ìš´ë¡œë“œ");
             Managers.Data.GameData = new GameData();
-            //¾Ö³Ê¹Ì µ¥ÀÌÅÍ ·Îµå
+            //ì• ë„ˆë¯¸ ë°ì´í„° ë¡œë“œ
             yield return StartCoroutine(GetEnemyData(Managers.Data.GameData.EnemyDatas));
             loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
-            //ÀÎÇÚ½º µ¥ÀÌÅÍ ·Îµå
+            //ì¸í•¸ìŠ¤ ë°ì´í„° ë¡œë“œ
             yield return StartCoroutine(GetEnhanceData(Managers.Data.GameData.EnhanceDatas));
             loadingSlider.SetLoading(.5f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
-            //¸ğµç ½ºÅ³ µ¥ÀÌÅÍ ·Îµå
+            //ëª¨ë“  ìŠ¤í‚¬ ë°ì´í„° ë¡œë“œ
             for (int i = 0; i< (int)Define.SkillType.Count; i++) {
                 yield return StartCoroutine(GetSkillData(Managers.Data.GameData.SkillDatas, (Define.SkillType)i));
             }
             loadingSlider.SetLoading(.8f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
-            //¸ğµç Å¸¿ö µ¥ÀÌÅÍ ·Îµå
+            //ëª¨ë“  íƒ€ì›Œ ë°ì´í„° ë¡œë“œ
             for (int i = 0; i< (int)Define.TowerType.Count; i++) {
                 yield return StartCoroutine(GetTowerData(Managers.Data.GameData.TowerDatas, (Define.TowerType)i));
             }
             loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
 
-            //µ¥ÀÌÅÍ ºÒ·¯¿À±â ¿Ï·á ÈÄ, ÀúÀå
+            //ë°ì´í„° ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œ í›„, ì €ì¥
             Managers.Data.SaveData(Managers.Data.GameData);
             StopAllCoroutines();
             yield break;
@@ -84,14 +85,14 @@ public class FirstScene : BaseScene {
     }
 
     /// <summary>
-    /// ±¸±Û ¾Öµå¸÷ ID ·Îµå
+    /// êµ¬ê¸€ ì• ë“œëª¹ ID ë¡œë“œ
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_GetAdmobID() {
         var idTask = Managers.FireStore.LoadDataToFireStore("AdmobIDData", "AdmobIDData","ID");
         yield return new WaitUntil(() => idTask.IsCompleted);
         if(idTask.IsFaulted) {
-            DebugWrapper.Log("¾Öµå¸÷ ÃÊ±âÈ­ ½ÇÆĞ");
+            DebugWrapper.Log("ì• ë“œëª¹ ì´ˆê¸°í™” ì‹¤íŒ¨");
             yield break;
         }
 
@@ -103,8 +104,8 @@ public class FirstScene : BaseScene {
     }
 
     /// <summary>
-    /// ÆÄÀÌ¾îº£ÀÌ½º ÃÊ±âÈ­
-    /// ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ ¾ÏÈ£ Å° ·Îµå
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ ì´ˆê¸°í™”
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ì•”í˜¸ í‚¤ ë¡œë“œ
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_FirebaseInit() {
@@ -115,7 +116,7 @@ public class FirstScene : BaseScene {
     }
 
     /// <summary>
-    /// ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ ¾ÏÈ£ Å° ·Îµå
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ì•”í˜¸ í‚¤ ë¡œë“œ
     /// </summary>
     private async void GetDataKey() {
         Managers.Data.Key = (string)await Managers.FireStore.LoadDataToFireStore("KeyData", "TqFvLDUVjjYWMfHDdMrX", "DataKey");

@@ -3,19 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 
 /// <summary>
-/// ¸ğµç ¾îºô¸®Æ¼ °ü¸® ¸Å´ÏÀú
+/// ëª¨ë“  ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ ë§¤ë‹ˆì €
 /// </summary>
 public class AbilityManager : Attribute {
-    //º¸À¯ÁßÀÎ ¾îºô¸®Æ¼ ¸®½ºÆ®
+    //ë³´ìœ ì¤‘ì¸ ì–´ë¹Œë¦¬í‹° ë¦¬ìŠ¤íŠ¸
     public Dictionary<Define.AbilityType, IAbility> AbilityList { get; private set; }
-    //º¸À¯ÁßÀÎ °ø°İ ¾îºô¸®Æ¼ ¸®½ºÆ®
+    //ë³´ìœ ì¤‘ì¸ ê³µê²© ì–´ë¹Œë¦¬í‹° ë¦¬ìŠ¤íŠ¸
     public HashSet<IAttackAbility> AttackAbilityList { get; private set; }
-    //º¸À¯ÁßÀÎ Àû Àû¿ë ¾îºô¸®Æ¼ ¸®½ºÆ®
+    //ë³´ìœ ì¤‘ì¸ ì  ì ìš© ì–´ë¹Œë¦¬í‹° ë¦¬ìŠ¤íŠ¸
     public HashSet<IEnemyAbility> EnemyAbilityList { get; private set; }
-    //º¸À¯ÁßÀÎ Å¸¿ö Àû¿ë ¾îºô¸®Æ¼ ¸®½ºÆ®
+    //ë³´ìœ ì¤‘ì¸ íƒ€ì›Œ ì ìš© ì–´ë¹Œë¦¬í‹° ë¦¬ìŠ¤íŠ¸
     public HashSet<ITowerAbility> TowerAbilityList { get; private set; }
 
+    private HashSet<Define.AbilityType> freeAbilityList;
+
     public void Init() {
+        freeAbilityList = new HashSet<Define.AbilityType>() { Define.AbilityType.GetGold, 
+        Define.AbilityType.GetTower, Define.AbilityType.NextThreeTowerLevelThree};
+
         AbilityList = new Dictionary<Define.AbilityType, IAbility>((int)Define.AbilityType.Count);
         AttackAbilityList = new HashSet<IAttackAbility>(Managers.Data.DefineData.ABILITY_ATTACK_COUNT);
         EnemyAbilityList = new HashSet<IEnemyAbility>(Managers.Data.DefineData.ABILITY_ENEMY_COUNT);
@@ -23,12 +28,13 @@ public class AbilityManager : Attribute {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Ãß°¡(¹öÆ°À¸·Î ½ÇÇà)
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€(ë²„íŠ¼ìœ¼ë¡œ ì‹¤í–‰)
     /// </summary>
     public void AddAbility(IAbility ability) {
         Managers.Game.IsPlaying = true;
 
-        if (AbilityList.ContainsKey(ability.AbilityValue.Type))
+        if (AbilityList.ContainsKey(ability.AbilityValue.Type) &&
+            !freeAbilityList.Contains(ability.AbilityValue.Type))
             return;
 
         AbilityList.Add(ability.AbilityValue.Type, ability);
@@ -38,9 +44,9 @@ public class AbilityManager : Attribute {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Àû¿ë
+    /// ì–´ë¹Œë¦¬í‹° ì ìš©
     /// </summary>
-    /// <param name="ability">Àû¿ëÇÒ ½ºÅ³</param>
+    /// <param name="ability">ì ìš©í•  ìŠ¤í‚¬</param>
     private void ApplyAbility(IAbility ability) {
         ability.SetAbility();
         switch (ability) {

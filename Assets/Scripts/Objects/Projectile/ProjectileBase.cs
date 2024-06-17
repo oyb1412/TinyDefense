@@ -3,27 +3,25 @@ using System.Collections;
 using UnityEngine.UIElements;
 
 /// <summary>
-/// ¸ğµç ÇÁ·ÎÁ§Å¸ÀÏ °ü¸® Å¬·¡½º
+/// ëª¨ë“  í”„ë¡œì íƒ€ì¼ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public abstract class ProjectileBase : MonoBehaviour
 {
-    //ÀÌ ¹ß»çÃ¼¸¦ »ı¼ºÇÑ Å¸¿ö
+    //ì´ ë°œì‚¬ì²´ë¥¼ ìƒì„±í•œ íƒ€ì›Œ
     protected TowerBase towerBase;
-    //¹ß»çÃ¼ ÀÚµ¿ »èÁ¦ Å¸ÀÌ¸Ó
-    private float destroyTimer;
-    //È¸Àü ¹æÇâ
+    //íšŒì „ ë°©í–¥
     private Vector3 saveDir;
-    //Ãæµ¹ ÀÌÆåÆ® ÆĞ½º
+    //ì¶©ëŒ ì´í™íŠ¸ íŒ¨ìŠ¤
     protected GameObject explosionEffect;
-    //ÇöÀç Ç¥Àû
+    //í˜„ì¬ í‘œì 
     private EnemyBase targetEnemy;
-    //Åõ»çÃ¼ Á¤º¸
+    //íˆ¬ì‚¬ì²´ ì •ë³´
     protected TowerBase.AttackData attackData;
-    //Æ®·£½ºÆû Ä³½Ì
+    //íŠ¸ëœìŠ¤í¼ ìºì‹±
     private Transform myTransform;
-    //Àû Æ®·£½ºÆû Ä³½Ì
+    //ì  íŠ¸ëœìŠ¤í¼ ìºì‹±
     private Transform targetTransform;
-    //ÀÌµ¿ ÄÚ·çÆ¾
+    //ì´ë™ ì½”ë£¨í‹´
     private Coroutine velocityCoroutine;
 
     private void Awake() {
@@ -37,7 +35,7 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     /// <summary>
-    /// ¹ß»çÃ¼ »ı¼º ¹× ÃÊ±âÈ­
+    /// ë°œì‚¬ì²´ ìƒì„± ë° ì´ˆê¸°í™”
     /// </summary>
     public void Init(TowerBase towerBase, TowerBase.AttackData attackData) {
         SoundManager.Instance.PlaySfx(Define.SFXType.FireProjectile);
@@ -52,7 +50,6 @@ public abstract class ProjectileBase : MonoBehaviour
 
         targetTransform = targetEnemy.transform;
         myTransform.position = this.towerBase.transform.position;
-        destroyTimer = 0f;
 
         Vector3 targetPosition = targetTransform.position;
         Vector3 direction = targetPosition - myTransform.position;
@@ -64,23 +61,20 @@ public abstract class ProjectileBase : MonoBehaviour
             StopCoroutine(velocityCoroutine);
 
         velocityCoroutine = StartCoroutine(Co_Velocity());
+
+        Invoke("Ivk_Destroy", Managers.Data.DefineData.PROJECTILE_DESTROY_TIME);
+    }
+
+    private void Ivk_Destroy() {
+        Managers.Resources.Release(gameObject);
     }
 
     /// <summary>
-    /// Àû ÃßÀû ÄÚ·çÆ¾
+    /// ì  ì¶”ì  ì½”ë£¨í‹´
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_Velocity() {
-
         while (true) {
-            destroyTimer += Time.deltaTime;
-
-            if (destroyTimer > Managers.Data.DefineData.PROJECTILE_DESTROY_TIME) {
-                destroyTimer = 0f;
-                Managers.Resources.Release(gameObject);
-                yield break;
-            }
-
             if (!Util.IsEnemyNull(targetEnemy)) {
                 Vector3 targetPosition = targetTransform.position;
                 Vector3 direction = targetPosition - myTransform.position;
@@ -99,26 +93,26 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     /// <summary>
-    /// Åõ»çÃ¼ Ãæµ¹ ½Ã
-    /// ÀÏ¹İ Åõ»çÃ¼´Â µ¥¹ÌÁö + ¼Ò¸ê
-    /// Æø¹ß Åõ»çÃ¼´Â ¼Ò¸ê
+    /// íˆ¬ì‚¬ì²´ ì¶©ëŒ ì‹œ
+    /// ì¼ë°˜ íˆ¬ì‚¬ì²´ëŠ” ë°ë¯¸ì§€ + ì†Œë©¸
+    /// í­ë°œ íˆ¬ì‚¬ì²´ëŠ” ì†Œë©¸
     /// </summary>
     protected virtual void Collison(EnemyBase enemy) {
         CreateExplosion();
         Managers.Resources.Release(gameObject);
 
-        //ÀûÀÌ »ç¸Á »óÅÂ¸é
+        //ì ì´ ì‚¬ë§ ìƒíƒœë©´
         if (Util.IsEnemyNull(enemy))
             return;
 
-        //½ºÅÏ Àû¿ë
+        //ìŠ¤í„´ ì ìš©
         if(attackData.IsStun) {
             enemy.DebuffManager.AddDebuff(new StunDebuff(Managers.Data.DefineData.ABILITY_STUN_DEFAULT_TIME), enemy);
         }
     }
 
     /// <summary>
-    /// Æø¹ß ÀÌÆåÆ® »ı¼º
+    /// í­ë°œ ì´í™íŠ¸ ìƒì„±
     /// </summary>
     protected abstract void CreateExplosion();
 }

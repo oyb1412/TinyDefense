@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 /// <summary>
-/// ¸ğµç ½ºÅ³ °ü¸® ¸Å´ÏÀú
+/// ëª¨ë“  ìŠ¤í‚¬ ê´€ë¦¬ ë§¤ë‹ˆì €
 /// </summary>
 public class SkillManager {
-    //½ºÅ³ ¸ñ·Ï
+    //ìŠ¤í‚¬ ëª©ë¡
     public SkillData.Skill[] SkillData;
     public Action<Define.SkillType> SetSkillAction;
 
@@ -15,7 +15,7 @@ public class SkillManager {
     }
 
     /// <summary>
-    /// ½ºÅ³ µ¥ÀÌÅÍ ÃÊ±âÈ­
+    /// ìŠ¤í‚¬ ë°ì´í„° ì´ˆê¸°í™”
     /// </summary>
     public void Init() {
         SkillData = new SkillData.Skill[(int)Define.SkillType.Count];
@@ -36,9 +36,9 @@ public class SkillManager {
     }
 
     /// <summary>
-    /// ½ºÅ³ ·¹º§¾÷ ¹× µ¥ÀÌÅÍ Àç¹èÁ¤
+    /// ìŠ¤í‚¬ ë ˆë²¨ì—… ë° ë°ì´í„° ì¬ë°°ì •
     /// </summary>
-    /// <param name="skill">·¹º§¾÷ÇÒ ½ºÅ³ Å¸ÀÔ</param>
+    /// <param name="skill">ë ˆë²¨ì—…í•  ìŠ¤í‚¬ íƒ€ì…</param>
     public void SetSkillValue(Define.SkillType skill) {
         SkillData[(int)skill].Level++;
 
@@ -49,14 +49,12 @@ public class SkillManager {
         SkillData[(int)skill].SkillTime += SkillData[(int)skill].SkillTimeUpValue;
         SkillData[(int)skill].SkillCoolTime -= SkillData[(int)skill].SkillCoolTimeDownValue;
         SkillData[(int)skill].SkillCost = SkillData[(int)skill].Level * SkillData[(int)skill].SkillCostUpValue;
-        SkillData[(int)skill].SkillDamage += SkillData[(int)skill].SkillDamage;
-
     }
 
     /// <summary>
-    /// ½ºÅ³ ¹İÈ¯
+    /// ìŠ¤í‚¬ ë°˜í™˜
     /// </summary>
-    /// <param name="skill">¹İÈ¯ÇÒ ½ºÅ³ Å¸ÀÔ</param>
+    /// <param name="skill">ë°˜í™˜í•  ìŠ¤í‚¬ íƒ€ì…</param>
     public SkillData.Skill GetSkillValue(Define.SkillType skill) {
         return SkillData[(int)skill];
     }
