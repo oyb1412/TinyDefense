@@ -1,7 +1,7 @@
 /// <summary>
-/// Àû¿¡°Ô Àû¿ëµÇ´Â ¾îºô¸®Æ¼ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// ì ì—ê²Œ ì ìš©ë˜ëŠ” ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ ì¸í„°í˜ì´ìŠ¤
 /// </summary>
 public interface IEnemyAbility : IAbility {
-    //Áö¼ÓÀûÀÎ ¾îºô¸®Æ¼ Àû¿ë
+    //ì§€ì†ì ì¸ ì–´ë¹Œë¦¬í‹° ì ìš©
     void ExecuteEnemyAbility(EnemyBase enemyBase);
 }

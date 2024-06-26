@@ -1,35 +1,35 @@
 /// <summary>
-/// ¸ğµç ¹öÇÁ °ü¸® Å¬·¡½º
+/// ëª¨ë“  ë²„í”„ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public abstract class Buff : IBuff {
-    //¹öÇÁ ¹ë·ù
+    //ë²„í”„ ë°¸ë¥˜
     public float BuffValue { get; protected set; }
-    //¹öÇÁ Áö¼Ó½Ã°£
+    //ë²„í”„ ì§€ì†ì‹œê°„
     public float BuffTime { get; protected set; }
-    //¹öÇÁ Å¸ÀÔ
+    //ë²„í”„ íƒ€ì…
     public Define.BuffType Type { get; protected set; }
-    //¹öÇÁ È°¼ºÈ­ ¿©ºÎ
+    //ë²„í”„ í™œì„±í™” ì—¬ë¶€
     public bool IsActive { get; private set; }
 
     /// <summary>
-    /// ¹öÇÁ Àû¿ë
+    /// ë²„í”„ ì ìš©
     /// </summary>
     public void ApplyBuff(TowerBase tower) {
         IsActive = true;
     }
 
     /// <summary>
-    /// ¹öÇÁ ÇØÁ¦
+    /// ë²„í”„ í•´ì œ
     /// </summary>
     public void RemoveBuff(TowerBase tower) {
         IsActive = false;
     }
 
     /// <summary>
-    /// ¹öÇÁ°¡ Àû¿ëµÈ ¹ë·ù °è»ê ¹× ¹İÈ¯
+    /// ë²„í”„ê°€ ì ìš©ëœ ë°¸ë¥˜ ê³„ì‚° ë° ë°˜í™˜
     /// </summary>
-    /// <param name="baseValue">¿øº» ¹ë·ù</param>
-    /// <returns>°è»êµÈ ¹ë·ù</returns>
+    /// <param name="baseValue">ì›ë³¸ ë°¸ë¥˜</param>
+    /// <returns>ê³„ì‚°ëœ ë°¸ë¥˜</returns>
     public float ModifyValue(float baseValue) {
         if (Type == Define.BuffType.AttackDamageUp)
             return baseValue * (BuffValue + 1f);

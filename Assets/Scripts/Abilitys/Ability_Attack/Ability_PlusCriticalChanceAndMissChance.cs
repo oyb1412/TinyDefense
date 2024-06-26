@@ -1,37 +1,37 @@
 using UnityEngine;
 
 /// <summary>
-/// °ø°İ ¾îºô¸®Æ¼ °ü¸® Å¬·¡½º
-/// ³ôÀº È®·ü·Î Ä¡¸íÅ¸ ¹ß»ı, ³·Àº È®·ü·Î ºø³ª°¨
+/// ê³µê²© ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ í´ë˜ìŠ¤
+/// ë†’ì€ í™•ë¥ ë¡œ ì¹˜ëª…íƒ€ ë°œìƒ, ë‚®ì€ í™•ë¥ ë¡œ ë¹—ë‚˜ê°
 /// </summary>
 [Ability(Define.AbilityType.PlusCriticalChanceAndMissChance)]
 public class Ability_PlusCriticalChanceAndMissChance : IAttackAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_PlusCriticalChanceAndMissChance() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusCriticalChanceAndMissChance, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Ãß°¡ ½Ã Áï½Ã È¿°ú Àû¿ëÀÌ ÇÊ¿äÇÑ °æ¿ì »ç¿ë
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€ ì‹œ ì¦‰ì‹œ íš¨ê³¼ ì ìš©ì´ í•„ìš”í•œ ê²½ìš° ì‚¬ìš©
     /// </summary>
     public void SetAbility() {
         
     }
 
     /// <summary>
-    /// °ø°İ ½Ã ÇöÀç ¾îºô¸®Æ¼¸¦ º¸À¯ ½Ã,
-    /// ÇöÀç ¾îºô¸®Æ¼ Àû¿ë
+    /// ê³µê²© ì‹œ í˜„ì¬ ì–´ë¹Œë¦¬í‹°ë¥¼ ë³´ìœ  ì‹œ,
+    /// í˜„ì¬ ì–´ë¹Œë¦¬í‹° ì ìš©
     /// </summary>
-    /// <param name="towerBase">°ø°İÇÑ Å¸¿ö</param>
-    /// <param name="attackData">°ø°İ µ¥ÀÌÅÍ</param>
+    /// <param name="towerBase">ê³µê²©í•œ íƒ€ì›Œ</param>
+    /// <param name="attackData">ê³µê²© ë°ì´í„°</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
-        //È®·ü°è»êÀ¸·Î 70%¸é µ¥¹ÌÁö µÎ¹è, 30%¸é ¹Ì½º(µ¥¹ÌÁö0)
+        //í™•ë¥ ê³„ì‚°ìœ¼ë¡œ 70%ë©´ ë°ë¯¸ì§€ ë‘ë°°, 30%ë©´ ë¯¸ìŠ¤(ë°ë¯¸ì§€0)
         float ran = Random.Range(0f, 1f);
         if (Managers.Data.DefineData.ABILITY_DEFAULT_CRITICAL_CHANCE > ran) {
             attackData.Damage *= (1 + Managers.Data.DefineData.ABILITY_DEFAULT_CRITICAL_DAMAGE);

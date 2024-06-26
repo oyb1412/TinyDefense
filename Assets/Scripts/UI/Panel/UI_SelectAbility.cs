@@ -1,19 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 /// <summary>
-/// ¾îºô¸®Æ¼ ¼±ÅÃ ÆÇ³Ú
+/// ì–´ë¹Œë¦¬í‹° ì„ íƒ íŒë„¬
 /// </summary>
 public class UI_SelectAbility : MonoBehaviour {
-    //¾îºô¸®Æ¼ ¸ñ·Ï
+    //ì–´ë¹Œë¦¬í‹° ëª©ë¡
     private UI_AbilityButton[] abilityButtons;
-    //¾îºô¸®Æ¼ ÆÇ³Ú
+    //ì–´ë¹Œë¦¬í‹° íŒë„¬
     [SerializeField]private GameObject abilitysPanel;
-    //ÁßÃ¸ ¼±ÅÃ °¡´ÉÇÑ ¾îºô¸®Æ¼ ÀúÀå¿ë Çì½Ã¼Â
+    //ì¤‘ì²© ì„ íƒ ê°€ëŠ¥í•œ ì–´ë¹Œë¦¬í‹° ì €ì¥ìš© í—¤ì‹œì…‹
     private HashSet<Define.AbilityType> freeAbilityList;
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× ºñÈ°¼ºÈ­
-    /// °ÔÀÓ ·¹º§ ¾×¼Ç¿¡ È°¼ºÈ­ ÇÔ¼ö ¿¬µ¿
+    /// ì´ˆê¸°í™” ë° ë¹„í™œì„±í™”
+    /// ê²Œì„ ë ˆë²¨ ì•¡ì…˜ì— í™œì„±í™” í•¨ìˆ˜ ì—°ë™
     /// </summary>
     private void Start() {
         abilitysPanel.SetActive(true);
@@ -30,8 +30,8 @@ public class UI_SelectAbility : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­
-    /// ¸ğµç °´Ã¼ ºñÈ°¼ºÈ­
+    /// ë¹„í™œì„±í™”
+    /// ëª¨ë“  ê°ì²´ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         abilitysPanel.SetActive(false);
@@ -40,8 +40,8 @@ public class UI_SelectAbility : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¸ñ·Ï ¸®¼Â ½Ã È£Ãâ
-    /// ¾îºô¸®Æ¼ ¸ñ·Ï ¸®·Ñ
+    /// ì–´ë¹Œë¦¬í‹° ëª©ë¡ ë¦¬ì…‹ ì‹œ í˜¸ì¶œ
+    /// ì–´ë¹Œë¦¬í‹° ëª©ë¡ ë¦¬ë¡¤
     /// </summary>
     public void ReActivation() {
         foreach (UI_AbilityButton button in abilityButtons)
@@ -49,7 +49,7 @@ public class UI_SelectAbility : MonoBehaviour {
 
         var conAbility = Managers.Ability.AbilityList;
         int limit = 0;
-        //½ºÅ³µéÀÌ ¸ğµÎ ´Ù¸£°í, ¸ğµÎ ¹è¿ìÁö ¾ÊÀº ½ºÅ³ÀÌ ¼±ÅÃµÉ¶§±îÁö ¹İº¹
+        //ìŠ¤í‚¬ë“¤ì´ ëª¨ë‘ ë‹¤ë¥´ê³ , ëª¨ë‘ ë°°ìš°ì§€ ì•Šì€ ìŠ¤í‚¬ì´ ì„ íƒë ë•Œê¹Œì§€ ë°˜ë³µ
         while (true) {
             limit++;
             if(limit > 60) {
@@ -112,9 +112,9 @@ public class UI_SelectAbility : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¼±ÅÃ È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
+    /// ì–´ë¹Œë¦¬í‹° ì„ íƒ í™œì„±í™” ë° ë¹„í™œì„±í™”
     /// </summary>
-    /// <param name="trigger">È°¼ºÈ­ ¿©ºÎ</param>
+    /// <param name="trigger">í™œì„±í™” ì—¬ë¶€</param>
     public void Activation() {
         if (!Managers.Game.CanGetAbility()) 
           return;
@@ -123,7 +123,7 @@ public class UI_SelectAbility : MonoBehaviour {
 
         var conAbility = Managers.Ability.AbilityList;
         int limit = 0;
-        //½ºÅ³µéÀÌ ¸ğµÎ ´Ù¸£°í, ¸ğµÎ ¹è¿ìÁö ¾ÊÀº ½ºÅ³ÀÌ ¼±ÅÃµÉ¶§±îÁö ¹İº¹
+        //ìŠ¤í‚¬ë“¤ì´ ëª¨ë‘ ë‹¤ë¥´ê³ , ëª¨ë‘ ë°°ìš°ì§€ ì•Šì€ ìŠ¤í‚¬ì´ ì„ íƒë ë•Œê¹Œì§€ ë°˜ë³µ
         while (true) {
             limit++;
             if (limit > 60) {

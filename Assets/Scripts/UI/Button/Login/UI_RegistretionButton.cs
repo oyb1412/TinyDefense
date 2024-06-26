@@ -3,33 +3,33 @@ using UnityEngine;
 using DG.Tweening;
 
 /// <summary>
-/// È¸¿ø°¡ÀÔ ¹öÆ°
+/// íšŒì›ê°€ì… ë²„íŠ¼
 /// </summary>
 public class UI_RegistretionButton : UI_Button {
-    //ÀÌ¸ŞÀÏ ÀÎÇ²ÇÊµå
+    //ì´ë©”ì¼ ì¸í’‹í•„ë“œ
     [SerializeField] private TMP_InputField emailIF;
-    //ºñ¹Ğ¹øÈ£ ÀÎÇ²ÇÊµå
+    //ë¹„ë°€ë²ˆí˜¸ ì¸í’‹í•„ë“œ
     [SerializeField] private TMP_InputField passwordIF;
-    //È¸¿ø°¡ÀÔ »óÅÂ Ç¥±â ÅØ½ºÆ®
+    //íšŒì›ê°€ì… ìƒíƒœ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI logTMP;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
-    //È¸¿ø°¡ÀÔ ½Ãµµ
+    //íšŒì›ê°€ì… ì‹œë„
     public override void Select() {
-        //¹ÌÀÔ·Â½Ã È¸¿ø°¡ÀÔ ½ÇÆĞ
+        //ë¯¸ì…ë ¥ì‹œ íšŒì›ê°€ì… ì‹¤íŒ¨
         if(emailIF.text.Length == 0 || passwordIF.text.Length == 0) {
             Registretion(false);
             return;
         }
-        //¹®ÀÚ¿­ÀÌ ³Ê¹« ±æ ½Ã ½ÇÆĞ
+        //ë¬¸ìì—´ì´ ë„ˆë¬´ ê¸¸ ì‹œ ì‹¤íŒ¨
         if(emailIF.text.Length > Managers.Data.DefineData.MAX_EMAIL_LENGTH ||  passwordIF.text.Length > Managers.Data.DefineData.MAX_PASSWORD_LENGTH) {
             Registretion(false);
             return;
         }
 
-        //ÆÄÀÌ¾îº£ÀÌ½º auth¿¡ È¸¿ø°¡ÀÔ Àü¼Û
+        //íŒŒì´ì–´ë² ì´ìŠ¤ authì— íšŒì›ê°€ì… ì „ì†¡
         Managers.Auth.Registretion(emailIF.text, passwordIF.text, Registretion);
     }
 

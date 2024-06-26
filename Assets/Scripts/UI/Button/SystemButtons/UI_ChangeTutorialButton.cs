@@ -21,7 +21,7 @@ public class UI_ChangeTutorialButton : UI_Button {
         }
 
         tutorialPanels[currentPanelNumber].gameObject.SetActive(false);
-        DebugWrapper.Log($"{currentPanelNumber}¹ø ÆÇ³Ú ÇØÁ¦");
+        DebugWrapper.Log($"{currentPanelNumber}ë²ˆ íŒë„¬ í•´ì œ");
         currentPanelNumber += direction;
 
         if(currentPanelNumber < 0) {
@@ -32,6 +32,6 @@ public class UI_ChangeTutorialButton : UI_Button {
         }
 
         tutorialPanels[currentPanelNumber].gameObject.SetActive(true);
-        DebugWrapper.Log($"{currentPanelNumber}¹ø ÆÇ³Ú È°¼ºÈ­");
+        DebugWrapper.Log($"{currentPanelNumber}ë²ˆ íŒë„¬ í™œì„±í™”");
     }
 }

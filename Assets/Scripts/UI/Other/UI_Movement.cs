@@ -3,18 +3,18 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// UI ÀÌµ¿ Å¬·¡½º
+/// UI ì´ë™ í´ë˜ìŠ¤
 /// </summary>
 public class UI_Movement : MonoBehaviour {
     private CanvasGroup canvasGroup;
-    //ÀÌµ¿ Æ®À©
+    //ì´ë™ íŠ¸ìœˆ
     private Tween alphaTween;
     private void Awake() {
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
     /// <summary>
-    /// È°¼ºÈ­½Ã, ¿øº» Æ÷Áö¼ÇÀ¸·Î ÀÌµ¿
+    /// í™œì„±í™”ì‹œ, ì›ë³¸ í¬ì§€ì…˜ìœ¼ë¡œ ì´ë™
     /// </summary>
     public void Activation() {
         Util.ResetTween(alphaTween);
@@ -22,7 +22,7 @@ public class UI_Movement : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­½Ã, ÀÌµ¿½ÃÅ³ Æ÷Áö¼ÇÀ¸·Î ÀÌµ¿ ¹× Äİ¹éÇÔ¼ö È£Ãâ
+    /// ë¹„í™œì„±í™”ì‹œ, ì´ë™ì‹œí‚¬ í¬ì§€ì…˜ìœ¼ë¡œ ì´ë™ ë° ì½œë°±í•¨ìˆ˜ í˜¸ì¶œ
     /// </summary>
     /// <param name="action"></param>
     public void DeActivation(UnityAction action) {

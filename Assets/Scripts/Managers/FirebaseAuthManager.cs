@@ -9,19 +9,19 @@ public class FirebaseAuthManager {
     public void Registretion(string email, string password, UnityAction<bool> action) {
         Auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task => {
             if (task.IsCanceled) {
-                DebugWrapper.Log("È¸¿ø°¡ÀÔ Ãë¼Ò");
+                DebugWrapper.Log("íšŒì›ê°€ì… ì·¨ì†Œ");
                 UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(false));
                 return;
             }
             if (task.IsFaulted) {
-                DebugWrapper.Log("È¸¿ø°¡ÀÔ ½ÇÆĞ");
+                DebugWrapper.Log("íšŒì›ê°€ì… ì‹¤íŒ¨");
                 UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(false));
                 return;
             }
 
             User = task.Result.User;
             UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(true));
-            DebugWrapper.Log("È¸¿ø°¡ÀÔ ¿Ï·á");
+            DebugWrapper.Log("íšŒì›ê°€ì… ì™„ë£Œ");
         });
     }
 
@@ -29,31 +29,31 @@ public class FirebaseAuthManager {
         Auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWith(task => {
             if (task.IsCanceled) {
                 UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(false));
-                DebugWrapper.Log("·Î±×ÀÎ Ãë¼Ò");
+                DebugWrapper.Log("ë¡œê·¸ì¸ ì·¨ì†Œ");
                 return;
             }
             if (task.IsFaulted) {
-                DebugWrapper.Log("·Î±×ÀÎ ½ÇÆĞ");
+                DebugWrapper.Log("ë¡œê·¸ì¸ ì‹¤íŒ¨");
                 UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(false));
                 return;
             }
 
             User = task.Result.User;
-            DebugWrapper.Log("·Î±×ÀÎ ¿Ï·á");
+            DebugWrapper.Log("ë¡œê·¸ì¸ ì™„ë£Œ");
             UnityMainThreadDispatcher.Instance.RunOnMainThread(() => action?.Invoke(true));
         });
     }
 
     /// <summary>
-    /// ·Î±×¾Æ¿ô
+    /// ë¡œê·¸ì•„ì›ƒ
     /// </summary>
     public void Logout() {
         try {
             Auth.SignOut();
             User = null;
-            DebugWrapper.Log("·Î±×¾Æ¿ô ¿Ï·á");
+            DebugWrapper.Log("ë¡œê·¸ì•„ì›ƒ ì™„ë£Œ");
         } catch (System.Exception ex) {
-            Debug.LogError("·Î±×¾Æ¿ô Áß ¿À·ù ¹ß»ı: " + ex.Message);
+            Debug.LogError("ë¡œê·¸ì•„ì›ƒ ì¤‘ ì˜¤ë¥˜ ë°œìƒ: " + ex.Message);
         }
     }
 

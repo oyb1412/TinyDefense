@@ -3,7 +3,7 @@ using DG.Tweening;
 using TMPro;
 
 /// <summary>
-/// Àû »ç¸Á½Ã È£ÃâµÇ´Â °ñµå ¿ÀºêÁ§Æ® Å¬·¡½º
+/// ì  ì‚¬ë§ì‹œ í˜¸ì¶œë˜ëŠ” ê³¨ë“œ ì˜¤ë¸Œì íŠ¸ í´ë˜ìŠ¤
 /// </summary>
 public class UI_GoldObject : MonoBehaviour {
     private TextMeshProUGUI goldTMP;
@@ -15,9 +15,9 @@ public class UI_GoldObject : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× ÀÌµ¿, »èÁ¦ Äİ¹é ¿¹¾à
+    /// ì´ˆê¸°í™” ë° ì´ë™, ì‚­ì œ ì½œë°± ì˜ˆì•½
     /// </summary>
-    /// <param name="pos">¿ÀºêÁ§Æ® À§Ä¡</param>
+    /// <param name="pos">ì˜¤ë¸Œì íŠ¸ ìœ„ì¹˜</param>
     public void Init(Vector3 pos, int gold, bool plus) {
         SoundManager.Instance.PlaySfx(Define.SFXType.GetGold);
         transform.position = pos;

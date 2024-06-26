@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö ÀÚµ¿ ¾÷±×·¹ÀÌµå ¹öÆ°
+/// íƒ€ì›Œ ìë™ ì—…ê·¸ë ˆì´ë“œ ë²„íŠ¼
 /// </summary>
 public class UI_AutoUpgradeButton : UI_Button {
     [SerializeField]private UI_MergeButton mergeButton;
@@ -11,8 +11,8 @@ public class UI_AutoUpgradeButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã, ¸ğµç Å¸¿ö ¾÷±×·¹ÀÌµå °¡´É ¿©ºÎ ÆÇ´Ü
-    /// °¡´É ½Ã ¾÷±×·¹ÀÌµå
+    /// ë²„íŠ¼ ì„ íƒì‹œ, ëª¨ë“  íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
+    /// ê°€ëŠ¥ ì‹œ ì—…ê·¸ë ˆì´ë“œ
     /// </summary>
     public override void Select() {
         mergeButton.CheckAndMerge();

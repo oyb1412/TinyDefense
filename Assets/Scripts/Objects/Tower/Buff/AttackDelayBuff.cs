@@ -1,12 +1,12 @@
 /// <summary>
-/// °ø°İ µô·¹ÀÌ °¨¼Ò ¹öÇÁ
+/// ê³µê²© ë”œë ˆì´ ê°ì†Œ ë²„í”„
 /// </summary>
 public class AttackDelayBuff : Buff {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="buffValue">¹öÇÁ ¹ë·ù</param>
-    /// <param name="buffTime">¹öÇÁ Áö¼Ó½Ã°£</param>
+    /// <param name="buffValue">ë²„í”„ ë°¸ë¥˜</param>
+    /// <param name="buffTime">ë²„í”„ ì§€ì†ì‹œê°„</param>
     public AttackDelayBuff(float buffValue, float buffTime) {
         BuffValue = buffValue;
         BuffTime = buffTime;

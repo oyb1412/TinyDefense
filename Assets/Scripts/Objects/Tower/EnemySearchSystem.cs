@@ -2,22 +2,16 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 
-/// <summary>
-/// �ֺ� �� ���� Ŭ����
-/// </summary>
 public class EnemySearchSystem : MonoBehaviour
 {
-    //�θ� Ÿ��
+    
     private TowerBase towerBase;
-    //Ÿ�� ��Ÿ� ��������Ʈ
     public SpriteRenderer RangeSprite { get; private set; }
-    //Ÿ�� ���� ��ũ
+   
     private SelectArrow selectArrow;
-    //Ÿ�� ���� �� �������� Ʈ��
+    
     private Tween rangeTween;
-    //�ֳʹ� ���̾�
-    private LayerMask enemyLayer;
-    //ȸ�� �ڷ�ƾ
+       
     private Coroutine rotateCoroutine;
 
     private void Awake() {
@@ -25,7 +19,6 @@ public class EnemySearchSystem : MonoBehaviour
         RangeSprite = GetComponentInChildren<SpriteRenderer>();
         selectArrow = GetComponentInChildren<SelectArrow>();
         RangeSprite.enabled = false;
-        enemyLayer = LayerMask.GetMask(Managers.Data.DefineData.TAG_ENEMY);
     }
 
     private IEnumerator Co_RangeSpriteRotate() {
@@ -38,15 +31,17 @@ public class EnemySearchSystem : MonoBehaviour
     }
 
     /// <summary>
-    /// ���� ��Ÿ� ���� �� ��ġ
+    /// 타겟 적이 존재하지 않을 때, 주변 적 서치 시도
     /// </summary>
-    /// <returns></returns>
+    /// <returns>서치 결과</returns>
     public EnemyBase SearchEnemy() {
         if (towerBase == null)
             return null;
 
+        //필드에 존재하는 적 리스트를 받아온다.
         var enemyList = Managers.Enemy.EnemyList;
 
+        //적 리스트를 순회하며, 공격 사거리 내의 적을 서치
         for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
@@ -54,45 +49,48 @@ public class EnemySearchSystem : MonoBehaviour
             if (Vector2.Distance(transform.position, enemyList[i].transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)
                 continue;
 
+            //성공시 서치한 적 리턴
             return enemyList[i];
         }
+
+        //실패시 null 리턴
         return null;
     }
 
     /// <summary>
-    /// ���� Ÿ�� �ֳʹ̰� ��Ÿ� ���� �ִ��� üũ
+    /// 내가 타겟팅한 적이 공격 사거리 내에 있나 체크
     /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
+    /// <param name="target">타겟팅한 적</param>
+    /// <returns>타겟팅한 적</returns>
     public EnemyBase TargetEnemyCheck(EnemyBase target) {
         if(target == null) 
             return null;
 
+        //적이 공격 범위를 벗어났으면, null 리턴
         if(Vector2.Distance(transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE) {
             return null;
         }
 
+        //아니라면 그대로 리턴
         return target;
     }
 
-    /// <summary>
-    /// Ÿ�� ���ý� ��Ÿ� �� ��ũ ǥ��
-    /// </summary>
+    
     public void Activation() {
         SpritesActivation();
 
-        // ��������Ʈ�� Pixels Per Unit �� ��������
+      
         float pixelsPerUnit = RangeSprite.sprite.pixelsPerUnit;
 
-        // ��������Ʈ�� ���� ũ�� (�ȼ� ����) ���ϱ�
+        
         float spriteWidth = RangeSprite.sprite.rect.width;
         float spriteHeight = RangeSprite.sprite.rect.height;
 
-        // ��������Ʈ�� ũ��� �ݶ��̴��� �������� �°� localScale ����
+       
         float spriteUnitWidth = spriteWidth / pixelsPerUnit;
         float spriteUnitHeight = spriteHeight / pixelsPerUnit;
 
-        // ��������Ʈ�� ���� ũ�� ����
+        
         float scaleX = (towerBase.TowerStatus.AttackRange) / spriteUnitWidth;
         float scaleY = (towerBase.TowerStatus.AttackRange) / spriteUnitHeight;
 
@@ -109,9 +107,7 @@ public class EnemySearchSystem : MonoBehaviour
         rotateCoroutine = StartCoroutine(Co_RangeSpriteRotate());
     }
 
-    /// <summary>
-    /// Ÿ�� ���� ������ ��ũ �� ��Ÿ� ��Ȱ��ȭ
-    /// </summary>
+  
     public void DeActivation() {
         Util.ResetTween(rangeTween);
         rangeTween = DOTween.To(() => RangeSprite.transform.localScale, x => RangeSprite.transform.localScale = x,
@@ -126,9 +122,7 @@ public class EnemySearchSystem : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// ��Ÿ� ��������Ʈ Ȱ��ȭ
-    /// </summary>
+   
     private void SpritesActivation() {
         RangeSprite.enabled = true;
         selectArrow.Activation();

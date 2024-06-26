@@ -2,14 +2,14 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// ÀÚ½Ä ¿ÀºêÁ§Æ® ½ºÄÉÀÏ º¸Á¸ Å¬·¡½º
+/// ìì‹ ì˜¤ë¸Œì íŠ¸ ìŠ¤ì¼€ì¼ ë³´ì¡´ í´ë˜ìŠ¤
 /// </summary>
 public class ChildObjectScaler : MonoBehaviour {
-    //¿øº» ½ºÄÉÀÏ
+    //ì›ë³¸ ìŠ¤ì¼€ì¼
     private Vector3 originalScale;
-    //¿øº» ½ºÄÉÀÏ(x flip)
+    //ì›ë³¸ ìŠ¤ì¼€ì¼(x flip)
     private Vector3 originalFlipScale;
-    //½ºÄÉÀÏ º¯°æÀÌ ÀÏ¾î³ª´Â ºÎ¸ğ Å¬·¡½º
+    //ìŠ¤ì¼€ì¼ ë³€ê²½ì´ ì¼ì–´ë‚˜ëŠ” ë¶€ëª¨ í´ë˜ìŠ¤
     private ParentScaleEventHandler eventHandler;
 
     private void Awake() {
@@ -23,7 +23,7 @@ public class ChildObjectScaler : MonoBehaviour {
     }
 
     /// <summary>
-    /// È°¼ºÈ­½Ã ºÎ¸ğ °´Ã¼ ÀÌº¥Æ®¿¡ ¿¬°á
+    /// í™œì„±í™”ì‹œ ë¶€ëª¨ ê°ì²´ ì´ë²¤íŠ¸ì— ì—°ê²°
     /// </summary>
     private void OnEnable() {
         if (eventHandler != null)
@@ -31,7 +31,7 @@ public class ChildObjectScaler : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­½Ã ÀÌº¥Æ® ÇØÁ¦
+    /// ë¹„í™œì„±í™”ì‹œ ì´ë²¤íŠ¸ í•´ì œ
     /// </summary>
     private void OnDisable() {
         if (eventHandler != null)
@@ -41,7 +41,7 @@ public class ChildObjectScaler : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ®ÀÇ ½ºÄÉÀÏÀ» ¿øº» ½ºÄÉÀÏ·Î º¯È¯
+    /// ì˜¤ë¸Œì íŠ¸ì˜ ìŠ¤ì¼€ì¼ì„ ì›ë³¸ ìŠ¤ì¼€ì¼ë¡œ ë³€í™˜
     /// </summary>
     private void HandleScaleChanged(Define.Direction dir) {
         if(dir == Define.Direction.Right)

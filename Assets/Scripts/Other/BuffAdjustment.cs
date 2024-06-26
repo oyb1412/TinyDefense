@@ -1,12 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// ¹öÇÁ ¾ÆÀÌÄÜ ¾Ö´Ï¸ŞÀÌ¼Ç Ç¥±â ¹× °ü¸® Å¬·¡½º
+/// ë²„í”„ ì•„ì´ì½˜ ì• ë‹ˆë©”ì´ì…˜ í‘œê¸° ë° ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class BuffAdjustment : MonoBehaviour {
-    //¹öÇÁ Àû¿ë Å¸¿ö
+    //ë²„í”„ ì ìš© íƒ€ì›Œ
     private TowerBase towerBase;
-    //¹öÇÁ Ç¥±â ¾Ö´Ï¸ŞÀÌÅÍ
+    //ë²„í”„ í‘œê¸° ì• ë‹ˆë©”ì´í„°
     private SpriteRenderer[] buffs;
 
     private void Awake() {
@@ -23,10 +23,10 @@ public class BuffAdjustment : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¹öÇÁ È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
+    /// ë²„í”„ í™œì„±í™” ë° ë¹„í™œì„±í™”
     /// </summary>
-    /// <param name="buffType">¹öÇÁ Å¸ÀÔ</param>
-    /// <param name="trigger">È°¼ºÈ­ À¯¹«</param>
+    /// <param name="buffType">ë²„í”„ íƒ€ì…</param>
+    /// <param name="trigger">í™œì„±í™” ìœ ë¬´</param>
     public void SetBuff(Define.BuffType buffType, bool trigger) {
         buffs[(int)buffType].enabled = trigger;
     }

@@ -3,14 +3,14 @@ using UnityEngine;
 using DG.Tweening;
 
 /// <summary>
-/// ·Î±×ÀÎ ¹öÆ° Å¬·¡½º
+/// ë¡œê·¸ì¸ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_LoginButton : UI_Button {
-    //ÀÌ¸ŞÀÏ ÀÎÇ²ÇÊµå
+    //ì´ë©”ì¼ ì¸í’‹í•„ë“œ
     [SerializeField] private TMP_InputField emailIF;
-    //ºñ¹Ğ¹øÈ£ ÀÎÇ²ÇÊµå
+    //ë¹„ë°€ë²ˆí˜¸ ì¸í’‹í•„ë“œ
     [SerializeField] private TMP_InputField passwordIF;
-    //·Î±×ÀÎ / °¡ÀÔ »óÅÂ¸¦ Ç¥±âÇÒ ÅØ½ºÆ®
+    //ë¡œê·¸ì¸ / ê°€ì… ìƒíƒœë¥¼ í‘œê¸°í•  í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI logTMP;
     [SerializeField] private GameObject mainPanel;
 
@@ -19,15 +19,15 @@ public class UI_LoginButton : UI_Button {
     }
 
     /// <summary>
-    /// ·Î±×ÀÎ ¹öÆ° ¼±ÅÃ½Ã
+    /// ë¡œê·¸ì¸ ë²„íŠ¼ ì„ íƒì‹œ
     /// </summary>
     public override void Select() {
-        //¹ÌÀÔ·Â½Ã ·Î±×ÀÎ ½ÇÆĞ
+        //ë¯¸ì…ë ¥ì‹œ ë¡œê·¸ì¸ ì‹¤íŒ¨
         if (emailIF.text.Length == 0 || passwordIF.text.Length == 0) {
             Login(false);
             return;
         }
-        //¹®ÀÚ¿­ÀÌ ³Ê¹« ±æ ½Ã ·Î±×ÀÎ ½ÇÆĞ
+        //ë¬¸ìì—´ì´ ë„ˆë¬´ ê¸¸ ì‹œ ë¡œê·¸ì¸ ì‹¤íŒ¨
         if (emailIF.text.Length > Managers.Data.DefineData.MAX_EMAIL_LENGTH || passwordIF.text.Length > Managers.Data.DefineData.MAX_PASSWORD_LENGTH) {
             Login(false);
             return;
@@ -36,9 +36,9 @@ public class UI_LoginButton : UI_Button {
     }
 
     /// <summary>
-    /// ·Î±×ÀÎ ¼º°ø & ½ÇÆĞ
+    /// ë¡œê·¸ì¸ ì„±ê³µ & ì‹¤íŒ¨
     /// </summary>
-    /// <param name="success">¼º°ø?</param>
+    /// <param name="success">ì„±ê³µ?</param>
     private void Login(bool success) {
         logTMP.text = success ? Managers.Data.DefineData.MENT_SUCCESS_LOGIN : Managers.Data.DefineData.MENT_FAIELD_LOGIN;
         if (success) {
@@ -50,8 +50,8 @@ public class UI_LoginButton : UI_Button {
     }
 
     /// <summary>
-    /// ·Î±×ÀÎ ¼º°ø ½Ã UI Å©±â Á¶Àı·Î 
-    /// ¸ŞÀÎ ÆÇ³Ú È°¼ºÈ­
+    /// ë¡œê·¸ì¸ ì„±ê³µ ì‹œ UI í¬ê¸° ì¡°ì ˆë¡œ 
+    /// ë©”ì¸ íŒë„¬ í™œì„±í™”
     /// </summary>
     private void LoginComplete() {
         transform.parent.gameObject.SetActive(false);

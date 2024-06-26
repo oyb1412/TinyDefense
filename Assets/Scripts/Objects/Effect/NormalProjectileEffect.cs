@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// ±¤¿ª°ø°İÀÌ ¾ø´Â ÀÏ¹İÀûÀÎ Åõ»çÃ¼ Ãæµ¹ ÀÌÆåÆ®
+/// ê´‘ì—­ê³µê²©ì´ ì—†ëŠ” ì¼ë°˜ì ì¸ íˆ¬ì‚¬ì²´ ì¶©ëŒ ì´í™íŠ¸
 /// </summary>
 public class NormalProjectileEffect : ProjectileEffectBase {
 
     /// <summary>
-    /// ÀÌÆåÆ® »ı¼º ½Ã ÃÊ±âÈ­
+    /// ì´í™íŠ¸ ìƒì„± ì‹œ ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="towerBase">¹ß»çÇÑ Å¸¿ö</param>
-    /// <param name="attackData">°ø°İ µ¥ÀÌÅÍ</param>
-    /// <param name="pos">ÀÌÆåÆ® »ı¼º À§Ä¡</param>
+    /// <param name="towerBase">ë°œì‚¬í•œ íƒ€ì›Œ</param>
+    /// <param name="attackData">ê³µê²© ë°ì´í„°</param>
+    /// <param name="pos">ì´í™íŠ¸ ìƒì„± ìœ„ì¹˜</param>
     public override void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
         SoundManager.Instance.PlaySfx(Define.SFXType.HitProjectile);
         base.Init(towerBase, attackData, pos);

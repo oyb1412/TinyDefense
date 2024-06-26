@@ -1,9 +1,9 @@
 /// <summary>
-/// ÆÄ¿ö¾÷ ½ºÅ³ ¹öÆ°
+/// íŒŒì›Œì—… ìŠ¤í‚¬ ë²„íŠ¼
 /// </summary>
 public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
     public override void Init() {
         buttonSfxType = Define.SFXType.PowerUpSkill;
@@ -17,7 +17,7 @@ public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
     }
 
     /// <summary>
-    /// ÆÄ¿ö¾÷ ½ºÅ³ ¼±ÅÃ
+    /// íŒŒì›Œì—… ìŠ¤í‚¬ ì„ íƒ
     /// </summary>
     protected override void OnSelect() {
         base.OnSelect();
@@ -29,8 +29,8 @@ public class UI_ActivationPowerUpSkillButton : UI_ActivationSkillButton {
         float skillValue = Managers.Skill.GetSkillValue(Define.SkillType.PowerUp).SkillValue;
         float skilltime = Managers.Skill.GetSkillValue(Define.SkillType.PowerUp).SkillTime;
 
-        //¸ğµç Å¸¿ö ¼øÈ¸
-        //¸ğµç Å¸¿ö¿¡ ¹öÇÁ Àû¿ë
+        //ëª¨ë“  íƒ€ì›Œ ìˆœíšŒ
+        //ëª¨ë“  íƒ€ì›Œì— ë²„í”„ ì ìš©
         foreach (var tower in towers) {
             tower.BuffManager.AddBuff(
                 new AttackDamageBuff(skillValue, skilltime),tower);

@@ -4,34 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Å¸¿ö Á¤º¸ ÆÇ³Ú
+/// íƒ€ì›Œ ì •ë³´ íŒë„¬
 /// </summary>
 public class UI_TowerInformation : MonoBehaviour {
-    //Å¸¿ö ¾ÆÀÌÄÜ ÀÌ¹ÌÁö
+    //íƒ€ì›Œ ì•„ì´ì½˜ ì´ë¯¸ì§€
     [SerializeField] private Image towerIcon;
-    //Å¸¿ö Å¸ÀÔ ¾ÆÀÌÄÜ ÀÌ¹ÌÁö
+    //íƒ€ì›Œ íƒ€ì… ì•„ì´ì½˜ ì´ë¯¸ì§€
     [SerializeField] private Image towerType;
-    //Å¸¿ö ÀÌ¸§ tmp
+    //íƒ€ì›Œ ì´ë¦„ tmp
     [SerializeField] private TextMeshProUGUI towerName;
-    //Å¸¿ö µ¥¹ÌÁö tmp
+    //íƒ€ì›Œ ë°ë¯¸ì§€ tmp
     [SerializeField] private TextMeshProUGUI towerDamage;
-    //Å¸¿ö °ø°İ¼Óµµ tmp
+    //íƒ€ì›Œ ê³µê²©ì†ë„ tmp
     [SerializeField] private TextMeshProUGUI towerDelay;
-    //Å¸¿ö »ç°Å¸® tmp
+    //íƒ€ì›Œ ì‚¬ê±°ë¦¬ tmp
     [SerializeField] private TextMeshProUGUI towerRange;
-    //Å¸¿ö ·¹º§ tmp
+    //íƒ€ì›Œ ë ˆë²¨ tmp
     [SerializeField] private TextMeshProUGUI towerLevel;
-    //Å¸¿ö Å³ tmp
+    //íƒ€ì›Œ í‚¬ tmp
     [SerializeField] private TextMeshProUGUI towerKill;
-    //Å¸¿ö Á¤º¸ tmp
+    //íƒ€ì›Œ ì •ë³´ tmp
     [SerializeField] private TextMeshProUGUI towerDescription;
-    //¸ğµç Å¸¿ö ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    //ëª¨ë“  íƒ€ì›Œ ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     private Sprite[] towerIconSprites;
-    //Å¸¿ö Å¸ÀÔ ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    //íƒ€ì›Œ íƒ€ì… ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     [SerializeField]private Sprite[] towerTypeSprites;
-    //ÇöÀç ¼±ÅÃÇÑ Å¸¿ö
+    //í˜„ì¬ ì„ íƒí•œ íƒ€ì›Œ
     private TowerBase currentTower;
-    //Å¸¿ö ÀÌµ¿ Å¬·¡½º
+    //íƒ€ì›Œ ì´ë™ í´ë˜ìŠ¤
     private UI_Movement movement;
     private void Awake() {
         movement = GetComponent<UI_Movement>();
@@ -39,10 +39,10 @@ public class UI_TowerInformation : MonoBehaviour {
     }
 
     /// <summary>
-    /// È°¼ºÈ­
-    /// ¼¿ ¼±ÅÃ½Ã È£Ãâ
+    /// í™œì„±í™”
+    /// ì…€ ì„ íƒì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="cell">¼±ÅÃÇÑ ¼¿</param>
+    /// <param name="cell">ì„ íƒí•œ ì…€</param>
     public void Activation(Cell cell) {
         if(!cell.IsUse()) {
             gameObject.SetActive(false);
@@ -69,8 +69,8 @@ public class UI_TowerInformation : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­
-    /// Å¸¿ö ¼±ÅÃ ÇØÁ¦½Ã È£Ãâ
+    /// ë¹„í™œì„±í™”
+    /// íƒ€ì›Œ ì„ íƒ í•´ì œì‹œ í˜¸ì¶œ
     /// </summary>
     public void DeActivation() {
         StopAllCoroutines();
@@ -79,7 +79,7 @@ public class UI_TowerInformation : MonoBehaviour {
     }
 
     /// <summary>
-    /// Å¸¿ö Á¤º¸ Ç¥±â ÄÚ·çÆ¾
+    /// íƒ€ì›Œ ì •ë³´ í‘œê¸° ì½”ë£¨í‹´
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_TowerInfomation() {

@@ -3,14 +3,14 @@ using DG.Tweening;
 using UnityEngine.Events;
 
 /// <summary>
-/// Å¸¿ö »ı¼º, ¸ÓÁö, ÆÇ¸Å ¹öÆ° °ü¸® Å¬·¡½º
+/// íƒ€ì›Œ ìƒì„±, ë¨¸ì§€, íŒë§¤ ë²„íŠ¼ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_TowerBuild : MonoBehaviour {
-    //Å¸¿ö ÀÌÆåÆ®
+    //íƒ€ì›Œ ì´í™íŠ¸
     protected GameObject buildEffect;
-    //°¢ Å¸¿ö ¹öÆ°
+    //ê° íƒ€ì›Œ ë²„íŠ¼
     private IUI_TowerButton[] buildButtons;
-    //Å¸¿ö ¼±ÅÃ ¹Ì ¼±ÅÃ ÇØÁ¦½Ã ÀÌµ¿ Å¬·¡½º
+    //íƒ€ì›Œ ì„ íƒ ë¯¸ ì„ íƒ í•´ì œì‹œ ì´ë™ í´ë˜ìŠ¤
     private UI_Movement movement;
 
     protected void Awake() {
@@ -22,8 +22,8 @@ public class UI_TowerBuild : MonoBehaviour {
     }
 
     /// <summary>
-    /// Å¸¿ö ¼±ÅÃ
-    /// UI ÀÌµ¿
+    /// íƒ€ì›Œ ì„ íƒ
+    /// UI ì´ë™
     /// </summary>
     /// <param name="cell"></param>
     public void Activation(Cell cell) {
@@ -34,8 +34,8 @@ public class UI_TowerBuild : MonoBehaviour {
     }
 
     /// <summary>
-    /// Å¸¿ö ¼±ÅÃ ÇØÁ¦
-    /// UI ÀÌµ¿
+    /// íƒ€ì›Œ ì„ íƒ í•´ì œ
+    /// UI ì´ë™
     /// </summary>
     /// <param name="action"></param>
     public void DeActivation(UnityAction action) {

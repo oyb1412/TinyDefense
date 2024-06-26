@@ -6,11 +6,11 @@ using UnityEngine.Events;
 
 public class GameScene : BaseScene
 {
-    //ÀÎ°ÔÀÓ ·Îµù ¹Ù
+    //ì¸ê²Œì„ ë¡œë”© ë°”
     private UI_LoadingSlider loadingSlider;
-    //·Îµù ÁßÀÎ°¡?
+    //ë¡œë”© ì¤‘ì¸ê°€?
     private bool isLoading;
-    //ÀÚµ¿ »ı¼º ¹öÆ° 
+    //ìë™ ìƒì„± ë²„íŠ¼ 
     public UI_AutoCreateButton UI_AutoCreateButton { get; private set; }
 
     protected override void Awake() {
@@ -26,8 +26,8 @@ public class GameScene : BaseScene
     }
 
     /// <summary>
-    /// ÃÊ±âÈ­
-    /// µ¥ÀÌÅÍ ·Îµå ¹× ÆäÀÌµå
+    /// ì´ˆê¸°í™”
+    /// ë°ì´í„° ë¡œë“œ ë° í˜ì´ë“œ
     /// </summary>
     public override void Init() {
         base.Init();
@@ -40,24 +40,24 @@ public class GameScene : BaseScene
     }
 
     /// <summary>
-    /// µ¥ÀÌÅÍ°¡ ¾øÀ»½Ã µ¥ÀÌÅÍ ·Îµå
-    /// µ¥ÀÌÅÍ°¡ Á¸ÀçÇÒ ½Ã Ç®¸µ¸¸ ÁøÇà
+    /// ë°ì´í„°ê°€ ì—†ì„ì‹œ ë°ì´í„° ë¡œë“œ
+    /// ë°ì´í„°ê°€ ì¡´ì¬í•  ì‹œ í’€ë§ë§Œ ì§„í–‰
     /// </summary>
     /// <param name="callBack"></param>
     public void LoadGameData(UnityAction callBack) {
         if (Managers.Data.GameData == null) {
             Managers.Data.GameData = new GameData();
-            DebugWrapper.Log("¸®¼Ò½º Æú´õ¿¡¼­ °ÔÀÓ µ¥ÀÌÅÍ ·Îµå ¹× Ç®¸µ");
+            DebugWrapper.Log("ë¦¬ì†ŒìŠ¤ í´ë”ì—ì„œ ê²Œì„ ë°ì´í„° ë¡œë“œ ë° í’€ë§");
             StartCoroutine(LoadGameDataAndStartPoolAsync(callBack));
         } else {
-            DebugWrapper.Log("ÀÌ¹Ì °ÔÀÓ µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏ¹Ç·Î Ç®¸µ¸¸ ÁøÇà");
+            DebugWrapper.Log("ì´ë¯¸ ê²Œì„ ë°ì´í„°ê°€ ì¡´ì¬í•˜ë¯€ë¡œ í’€ë§ë§Œ ì§„í–‰");
             StartCoroutine(StartPoolAsync(callBack));
         }
     }
 
     /// <summary>
-    /// µ¥ÀÌÅÍ ·Îµå ¹× Ç®¸µÀÌ ³¡³ª¸é 
-    /// µ¥ÀÌÅÍ·Î °´Ã¼µé ÃÊ±âÈ­ ÈÄ °ÔÀÓ ½ÃÀÛ
+    /// ë°ì´í„° ë¡œë“œ ë° í’€ë§ì´ ëë‚˜ë©´ 
+    /// ë°ì´í„°ë¡œ ê°ì²´ë“¤ ì´ˆê¸°í™” í›„ ê²Œì„ ì‹œì‘
     /// </summary>
     public void CompletedLoading() {
         loadingSlider.transform.parent.gameObject.SetActive(false);
@@ -73,33 +73,33 @@ public class GameScene : BaseScene
     }
 
     /// <summary>
-    /// ºñµ¿±â Ç®¸µ ¿ÀºêÁ§Æ® »ı¼º
+    /// ë¹„ë™ê¸° í’€ë§ ì˜¤ë¸Œì íŠ¸ ìƒì„±
     /// </summary>
     /// <param name="callback"></param>
     /// <returns></returns>
     private IEnumerator StartPoolAsync(UnityAction callback) {
         loadingSlider.SetLoading(.7f, callback);
-        // Ç®¸µ ¿ÀºêÁ§Æ® ºñµ¿±â »ı¼º
+        // í’€ë§ ì˜¤ë¸Œì íŠ¸ ë¹„ë™ê¸° ìƒì„±
         yield return StartPoolManager.Instance.StartPoolAsync();
-        DebugWrapper.Log("Ç®¸µ ¿Ï·á");
+        DebugWrapper.Log("í’€ë§ ì™„ë£Œ");
         loadingSlider.SetLoading(1f, callback);
         SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);
     }
 
     /// <summary>
-    /// °ÔÀÓ µ¥ÀÌÅÍ ºñµ¿±â ·Îµå
-    /// ºñµ¿±â Ç®¸µ ¿ÀºêÁ§Æ® »ı¼º
+    /// ê²Œì„ ë°ì´í„° ë¹„ë™ê¸° ë¡œë“œ
+    /// ë¹„ë™ê¸° í’€ë§ ì˜¤ë¸Œì íŠ¸ ìƒì„±
     /// </summary>
     /// <param name="callback"></param>
     /// <returns></returns>
     private IEnumerator LoadGameDataAndStartPoolAsync(UnityAction callback) {
-        // JSON ÆÄÀÏ ºñµ¿±â·Î ·Îµå
+        // JSON íŒŒì¼ ë¹„ë™ê¸°ë¡œ ë¡œë“œ
         Task<GameData> loadJsonTask = Managers.Data.DecryptionLoadJsonAsync<GameData>(Managers.Data.DefineData.TAG_GAME_DATA);
         loadingSlider.SetLoading(.6f, callback);
 
-        // Ç®¸µ ¿ÀºêÁ§Æ® ºñµ¿±â »ı¼º
+        // í’€ë§ ì˜¤ë¸Œì íŠ¸ ë¹„ë™ê¸° ìƒì„±
         yield return StartPoolManager.Instance.StartPoolAsync();
-        DebugWrapper.Log("Ç®¸µ ¿Ï·á");
+        DebugWrapper.Log("í’€ë§ ì™„ë£Œ");
 
         loadingSlider.SetLoading(.7f, callback);
 
@@ -109,11 +109,11 @@ public class GameScene : BaseScene
 
 
         if (loadJsonTask.IsFaulted) {
-            DebugWrapper.Log($"µ¥ÀÌÅÍ ·Îµå ½ÇÆĞ{loadJsonTask.IsFaulted.ToString()}");
+            DebugWrapper.Log($"ë°ì´í„° ë¡œë“œ ì‹¤íŒ¨{loadJsonTask.IsFaulted.ToString()}");
 
             string path = Path.Combine(Application.persistentDataPath, Managers.Data.DefineData.TAG_GAME_DATA_JSON);
             if (File.Exists(path)) {
-                DebugWrapper.Log($"{path}µ¥ÀÌÅÍ »èÁ¦ ¼º°ø");
+                DebugWrapper.Log($"{path}ë°ì´í„° ì‚­ì œ ì„±ê³µ");
                 File.Delete(path);
             }
 #if UNITY_EDITOR
@@ -124,11 +124,11 @@ public class GameScene : BaseScene
             yield break;
         }
 
-        DebugWrapper.Log($"µ¥ÀÌÅÍ ·Îµå ¿Ï·á{loadJsonTask.Result.ToString()}");
+        DebugWrapper.Log($"ë°ì´í„° ë¡œë“œ ì™„ë£Œ{loadJsonTask.Result.ToString()}");
 
         Managers.Data.GameData = loadJsonTask.Result;
 
-        DebugWrapper.Log($"°ÔÀÓ µ¥ÀÌÅÍ¿¡ µ¥ÀÌÅÍ ÀúÀå. ¾Ö³Ê¹Ì Ã¼·Â {Managers.Data.GameData.EnemyDatas.Enemys.MaxHp}");
+        DebugWrapper.Log($"ê²Œì„ ë°ì´í„°ì— ë°ì´í„° ì €ì¥. ì• ë„ˆë¯¸ ì²´ë ¥ {Managers.Data.GameData.EnemyDatas.Enemys.MaxHp}");
 
         loadingSlider.SetLoading(1f, callback);
         SoundManager.Instance.SetBgm(true, Define.BGMType.Ingame);

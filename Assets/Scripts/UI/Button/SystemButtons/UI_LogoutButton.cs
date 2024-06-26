@@ -1,13 +1,13 @@
 using UnityEngine;
 public class UI_LogoutButton : UI_Button {
-    //yes,no ¹öÆ° ÆÇ³Ú
+    //yes,no ë²„íŠ¼ íŒë„¬
     [SerializeField] private UI_CheckPanel checkPanel;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     public override void Select() {
-        checkPanel.Activation("Á¤¸»·Î ·Î±×¾Æ¿ô ÇÏ½Ã°Ú½À´Ï±î?", Logout);
+        checkPanel.Activation("ì •ë§ë¡œ ë¡œê·¸ì•„ì›ƒ í•˜ì‹œê² ìŠµë‹ˆê¹Œ?", Logout);
     }
 
     private void Logout() {

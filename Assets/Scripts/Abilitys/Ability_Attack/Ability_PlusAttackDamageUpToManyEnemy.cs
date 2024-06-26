@@ -1,36 +1,36 @@
 
 /// <summary>
-/// °ø°İ ¾îºô¸®Æ¼ °ü¸® Å¬·¡½º
-/// Àû ¼ıÀÚ¿¡ ºñ·ÊÇØ °ø°İ·Â Áõ°¡
+/// ê³µê²© ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ í´ë˜ìŠ¤
+/// ì  ìˆ«ìì— ë¹„ë¡€í•´ ê³µê²©ë ¥ ì¦ê°€
 /// </summary>
 [Ability(Define.AbilityType.PlusAttackDamageUpToManyEnemy)]
 public class Ability_PlusAttackDamageUpToManyEnemy : IAttackAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue {get;private set;}
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_PlusAttackDamageUpToManyEnemy() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusAttackDamageUpToManyEnemy, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Ãß°¡ ½Ã Áï½Ã È¿°ú Àû¿ëÀÌ ÇÊ¿äÇÑ °æ¿ì »ç¿ë
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€ ì‹œ ì¦‰ì‹œ íš¨ê³¼ ì ìš©ì´ í•„ìš”í•œ ê²½ìš° ì‚¬ìš©
     /// </summary>
     public void SetAbility() {
         
     }
 
     /// <summary>
-    /// °ø°İ ½Ã ÇöÀç ¾îºô¸®Æ¼¸¦ º¸À¯ ½Ã,
-    /// ÇöÀç ¾îºô¸®Æ¼ Àû¿ë
+    /// ê³µê²© ì‹œ í˜„ì¬ ì–´ë¹Œë¦¬í‹°ë¥¼ ë³´ìœ  ì‹œ,
+    /// í˜„ì¬ ì–´ë¹Œë¦¬í‹° ì ìš©
     /// </summary>
-    /// <param name="towerBase">°ø°İÇÑ Å¸¿ö</param>
-    /// <param name="attackData">°ø°İ µ¥ÀÌÅÍ</param>
+    /// <param name="towerBase">ê³µê²©í•œ íƒ€ì›Œ</param>
+    /// <param name="attackData">ê³µê²© ë°ì´í„°</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
-        //Àû ¼ıÀÚ¿¡ ºñ·ÊÇØ °ø°İ·Â Áõ°¡
+        //ì  ìˆ«ìì— ë¹„ë¡€í•´ ê³µê²©ë ¥ ì¦ê°€
         attackData.Damage *= (1 + Managers.Data.DefineData.ABILITY_MANYENEMY_DAMAGE_UP * Managers.Enemy.EnemyList.Count);
     }
 }

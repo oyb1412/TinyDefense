@@ -3,32 +3,32 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö »ı¼º ¹öÆ°
+/// íƒ€ì›Œ ìƒì„± ë²„íŠ¼
 /// </summary>
 public class UI_CreateButton : UI_Button, IUI_TowerButton {
-    //Å¸¿ö »ı¼º ºñ¿ë
+    //íƒ€ì›Œ ìƒì„± ë¹„ìš©
     public int CreateCost { get; private set; }
-    //ÇöÀç ¼±ÅÃÇÑ ¼¿
+    //í˜„ì¬ ì„ íƒí•œ ì…€
     private Cell currentCell;
-    //¸ğµç ÀÚ½Ä tmp ¹× button°ü¸® ÄÄÆ÷³ÍÆ®
+    //ëª¨ë“  ìì‹ tmp ë° buttonê´€ë¦¬ ì»´í¬ë„ŒíŠ¸
     private TMPandButton tmpAndButton;
-    //»ı¼º Å¸¿ö ÀúÀå ¿ÀºêÁ§Æ®
+    //ìƒì„± íƒ€ì›Œ ì €ì¥ ì˜¤ë¸Œì íŠ¸
     public TowerBase TowerObj { get; private set; }
-    //Å¸¿ö »ı¼º °¡ÁßÄ¡
+    //íƒ€ì›Œ ìƒì„± ê°€ì¤‘ì¹˜
     private int[] weights = new int[(int)Define.TowerType.Count];
-    //Å¸¿ö »ı¼º ÀÌÆåÆ®
+    //íƒ€ì›Œ ìƒì„± ì´í™íŠ¸
     private GameObject buildEffect;
-    //Å¸¿ö »ı¼º ºñ¿ë ÅØ½ºÆ®
+    //íƒ€ì›Œ ìƒì„± ë¹„ìš© í…ìŠ¤íŠ¸
     [SerializeField]private TextMeshProUGUI costTMP;
-    //Å¸¿ö »ı¼º½Ã »ı¼ºÇÒ °ñµå ¿ÀºêÁ§Æ®
+    //íƒ€ì›Œ ìƒì„±ì‹œ ìƒì„±í•  ê³¨ë“œ ì˜¤ë¸Œì íŠ¸
     private GameObject goldObject;
-    //»ı¼ºÇÒ Å¸¿ö ÇÁ¸®Æé ÀúÀå¿ë º¯¼ö
+    //ìƒì„±í•  íƒ€ì›Œ í”„ë¦¬í© ì €ì¥ìš© ë³€ìˆ˜
     private GameObject[] towerList;
 
     /// <summary>
-    /// ÃÊ±âÈ­
-    /// ±âº» °¡ÁßÄ¡ Àû¿ë
-    /// ±âº» »ı¼ººñ¿ë Àû¿ë
+    /// ì´ˆê¸°í™”
+    /// ê¸°ë³¸ ê°€ì¤‘ì¹˜ ì ìš©
+    /// ê¸°ë³¸ ìƒì„±ë¹„ìš© ì ìš©
     /// </summary>
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectTowerUIButton;
@@ -59,26 +59,26 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// À¯´Ö ±×·ìÀÇ °¡ÁßÄ¡ Á¶Á¤
+    /// ìœ ë‹› ê·¸ë£¹ì˜ ê°€ì¤‘ì¹˜ ì¡°ì •
     /// </summary>
-    /// <param name="activeGroup">°¡ÁßÄ¡¸¦ ³ôÀÏ ±×·ì</param>
+    /// <param name="activeGroup">ê°€ì¤‘ì¹˜ë¥¼ ë†’ì¼ ê·¸ë£¹</param>
     public void AdjustWeights(Define.TowerType? activeGroup) {
         int groupIndex = activeGroup.HasValue ? (int)activeGroup.Value / 3 : -1;
 
         for (int i = 0; i < weights.Length; i++) {
             if (i / 3 == groupIndex) {
                 weights[i] = 2;
-                print($"{i}¹ø Å¸¿ö »ı¼ºÈ®·ü 50%");
+                print($"{i}ë²ˆ íƒ€ì›Œ ìƒì„±í™•ë¥  50%");
             } else {
                 weights[i] = 1;
-                print($"{i}¹ø Å¸¿ö »ı¼ºÈ®·ü 25%");
+                print($"{i}ë²ˆ íƒ€ì›Œ ìƒì„±í™•ë¥  25%");
             }
         }
 
     }
 
     /// <summary>
-    /// Å¸¿ö »ı¼º ºñ¿ë Á¶Á¤
+    /// íƒ€ì›Œ ìƒì„± ë¹„ìš© ì¡°ì •
     /// </summary>
     /// <param name="value"></param>
     public void SetCreateCost(int value = 0) {
@@ -87,10 +87,10 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° È°¼ºÈ­
-    /// ¼¿ ¼±ÅÃ½Ã È£Ãâ
+    /// ë²„íŠ¼ í™œì„±í™”
+    /// ì…€ ì„ íƒì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="cell">¼±ÅÃÇÒ ¼¿</param>
+    /// <param name="cell">ì„ íƒí•  ì…€</param>
     public void Activation(Cell cell) {
         currentCell = cell;
         if (cell.IsUse()) {
@@ -103,7 +103,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         currentCell = null;
@@ -112,7 +112,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// °¡ÁßÄ¡¸¦ °è»êÇØ ·£´ıÇÑ À¯´Ö ¹İÈ¯
+    /// ê°€ì¤‘ì¹˜ë¥¼ ê³„ì‚°í•´ ëœë¤í•œ ìœ ë‹› ë°˜í™˜
     /// </summary>
     Define.TowerType SummonUnit() {
         int totalWeight = weights.Sum();
@@ -130,10 +130,10 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// º¸À¯ °ñµå¸¦ °è»êÇØ »ı¼º¹öÆ° È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
-    /// ÀÌº¥Æ®·Î ÁÖ±âÀûÀ¸·Î È®ÀÎ
+    /// ë³´ìœ  ê³¨ë“œë¥¼ ê³„ì‚°í•´ ìƒì„±ë²„íŠ¼ í™œì„±í™” ë° ë¹„í™œì„±í™”
+    /// ì´ë²¤íŠ¸ë¡œ ì£¼ê¸°ì ìœ¼ë¡œ í™•ì¸
     /// </summary>
-    /// <param name="gold">ÇöÀç °ñµå</param>
+    /// <param name="gold">í˜„ì¬ ê³¨ë“œ</param>
     private void CaculationGold(int gold) {
         if(currentCell != null &&  currentCell.IsUse()) {
             tmpAndButton.DeActivation();
@@ -150,7 +150,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// Å¸¿ö ÀÚµ¿»ı¼º½Ã, È£Ãâ
+    /// íƒ€ì›Œ ìë™ìƒì„±ì‹œ, í˜¸ì¶œ
     /// </summary>
     /// <param name="cell"></param>
     public void CellCreate(Cell cell) {
@@ -159,7 +159,7 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     private void CreateTower() {
-        //°ÔÀÓ ÃÊ¹İ ¼ö³à µîÀå ¾ïÁ¦
+        //ê²Œì„ ì´ˆë°˜ ìˆ˜ë…€ ë“±ì¥ ì–µì œ
         if (Managers.Game.CurrentGameLevel < 3) {
             var type = SummonUnit();
             if (type == Define.TowerType.Sister) {
@@ -177,8 +177,8 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// Å¸¿ö »ı¼º ¾îºô¸®Æ¼ ¼±ÅÃ½Ã È£Ãâ
-    /// Å¸¿ö ÀÚµ¿»ı¼º ¹× ·£´ı ¾÷±×·¹ÀÌµå
+    /// íƒ€ì›Œ ìƒì„± ì–´ë¹Œë¦¬í‹° ì„ íƒì‹œ í˜¸ì¶œ
+    /// íƒ€ì›Œ ìë™ìƒì„± ë° ëœë¤ ì—…ê·¸ë ˆì´ë“œ
     /// </summary>
     /// <param name="cell"></param>
     public void CreateAndRandomUpgrade(Cell cell) {
@@ -209,12 +209,12 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã ·£´ı Å¸¿ö »ı¼º
-    /// Å¸¿ö ½ºÅ³ º¸À¯½Ã, ´ÙÀ½ Å¸¿ö 2·¹º§ ¾÷
+    /// ë²„íŠ¼ ì„ íƒì‹œ ëœë¤ íƒ€ì›Œ ìƒì„±
+    /// íƒ€ì›Œ ìŠ¤í‚¬ ë³´ìœ ì‹œ, ë‹¤ìŒ íƒ€ì›Œ 2ë ˆë²¨ ì—…
     /// </summary>
     public override void Select() {
-        //Å¸¿ö »ı¼º Àü °¡ÁßÄ¡ Á¶Àı ½ºÅ³ÀÇ Á¸Àç¿©ºÎ È®ÀÎ
-        //Á¸Àç ½Ã °¡ÁßÄ¡ Á¶Àı
+        //íƒ€ì›Œ ìƒì„± ì „ ê°€ì¤‘ì¹˜ ì¡°ì ˆ ìŠ¤í‚¬ì˜ ì¡´ì¬ì—¬ë¶€ í™•ì¸
+        //ì¡´ì¬ ì‹œ ê°€ì¤‘ì¹˜ ì¡°ì ˆ
         foreach (var item in Managers.Ability.TowerAbilityList) {
             if (item is ITowerPreAbility)
                 item.ExecuteSystemAbility(this);
@@ -222,8 +222,8 @@ public class UI_CreateButton : UI_Button, IUI_TowerButton {
 
         CreateTower();
 
-        //Å¸¿ö »ı¼º ÈÄ ¹«·á ¾÷±×·¹ÀÌµå ½ºÅ³ÀÇ Á¸Àç¿©ºÎ È®ÀÎ
-        //Á¸Àç ½Ã ¹«·á ¾÷±×·¹ÀÌµå
+        //íƒ€ì›Œ ìƒì„± í›„ ë¬´ë£Œ ì—…ê·¸ë ˆì´ë“œ ìŠ¤í‚¬ì˜ ì¡´ì¬ì—¬ë¶€ í™•ì¸
+        //ì¡´ì¬ ì‹œ ë¬´ë£Œ ì—…ê·¸ë ˆì´ë“œ
         foreach (var item in Managers.Ability.TowerAbilityList) {
             if (item is ITowerPostAbility)
                 item.ExecuteSystemAbility(this);

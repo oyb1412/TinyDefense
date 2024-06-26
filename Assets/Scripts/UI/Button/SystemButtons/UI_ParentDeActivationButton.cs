@@ -1,5 +1,5 @@
 /// <summary>
-/// ·©Å· ÆÇ³Ú ºñÈ°¼ºÈ­ ¹öÆ°
+/// ë­í‚¹ íŒë„¬ ë¹„í™œì„±í™” ë²„íŠ¼
 /// </summary>
 public class UI_ParentDeActivationButton : UI_Button {
     public override void Init() {
@@ -7,7 +7,7 @@ public class UI_ParentDeActivationButton : UI_Button {
     }
 
     /// <summary>
-    /// ·©Å· ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// ë­í‚¹ íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     public override void Select() {
         

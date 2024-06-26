@@ -3,43 +3,43 @@ using System.Collections;
 using System.Linq;
 
 /// <summary>
-/// ¸ğµç ¾Ö³Ê¹Ì °ü¸® Å¬·¡½º
+/// ëª¨ë“  ì• ë„ˆë¯¸ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class EnemyBase : MonoBehaviour {
 
-    //¾Ö³Ê¹Ì ·¹º§
+    //ì• ë„ˆë¯¸ ë ˆë²¨
     protected int enemyLevel;
-    //¾Ö³Ê¹Ì ´É·ÂÄ¡
+    //ì• ë„ˆë¯¸ ëŠ¥ë ¥ì¹˜
     public EnemyStatus EnemyStatus { get; private set; }
-    //ÀÌµ¿ °æ·Î(ºÎ¸ğ)
+    //ì´ë™ ê²½ë¡œ(ë¶€ëª¨)
     private Transform movePath;
-    //¾Ö³Ê¹Ì ¾Ö´Ï¸ŞÀÌÅÍ
+    //ì• ë„ˆë¯¸ ì• ë‹ˆë©”ì´í„°
     private Animator animator;
-    //¾Ö³Ê¹Ì »óÅÂ¸Ó½Å
+    //ì• ë„ˆë¯¸ ìƒíƒœë¨¸ì‹ 
     public EnemyStateMachine StateMachine { get; private set; }
-    //µ¥¹ÌÁö Æ½ wfs
+    //ë°ë¯¸ì§€ í‹± wfs
     private WaitForSeconds debuffTick;   
-    //ÀÌµ¿ index
+    //ì´ë™ index
     private int moveIndex;
-    //µğ¹öÇÁ ÄÚ·çÆ¾
+    //ë””ë²„í”„ ì½”ë£¨í‹´
     private Coroutine debuffCoroutine;
     public Coroutine MoveCoroutine { get; private set; }
-    //ÀÚ½Ä¿ÀºêÁ§Æ® ½ºÄÉÀÏ ºñµ¿±â
+    //ìì‹ì˜¤ë¸Œì íŠ¸ ìŠ¤ì¼€ì¼ ë¹„ë™ê¸°
     private ParentScaleEventHandler parentScale;
-    //¾Ö³Ê¹Ì µğ¹öÇÁ °ü¸®
+    //ì• ë„ˆë¯¸ ë””ë²„í”„ ê´€ë¦¬
     public DebuffManager DebuffManager { get; private set; }
-    //Æ®·£½ºÆû Ä³½Ì
+    //íŠ¸ëœìŠ¤í¼ ìºì‹±
     private Transform myTransform;
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ı¼º½Ã ÃÊ±âÈ­
+    /// ì• ë„ˆë¯¸ ìƒì„±ì‹œ ì´ˆê¸°í™”
     /// </summary>
     private void OnEnable() {
         Init();
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì ºñÈ°¼ºÈ­½Ã ÃÊ±âÈ­
+    /// ì• ë„ˆë¯¸ ë¹„í™œì„±í™”ì‹œ ì´ˆê¸°í™”
     /// </summary>
     private void OnDisable() {
         StopAllCoroutines();
@@ -49,7 +49,7 @@ public class EnemyBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì Ã¹ »ı¼º½Ã ÃÊ±âÈ­
+    /// ì• ë„ˆë¯¸ ì²« ìƒì„±ì‹œ ì´ˆê¸°í™”
     /// </summary>
     protected virtual void Awake() {
         myTransform = transform;
@@ -64,8 +64,8 @@ public class EnemyBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// µ¥¹ÌÁö µğ¹öÇÁ°¡ Á¸ÀçÇÏ¸é
-    /// Æ½ µ¥¹ÌÁö °è»ê
+    /// ë°ë¯¸ì§€ ë””ë²„í”„ê°€ ì¡´ì¬í•˜ë©´
+    /// í‹± ë°ë¯¸ì§€ ê³„ì‚°
     /// </summary>
     /// <returns></returns>
     private IEnumerator Co_DamageDebuff() {
@@ -81,28 +81,28 @@ public class EnemyBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾Ö´Ï¸ŞÀÌ¼Ç Àû¿ë(Æ®¸®°Å)
+    /// ì• ë‹ˆë©”ì´ì…˜ ì ìš©(íŠ¸ë¦¬ê±°)
     /// </summary>
     public void SetAnimation(string paremeter) {
         animator.SetTrigger(paremeter);
     }
 
     /// <summary>
-    /// ¾Ö´Ï¸ŞÀÌ¼Ç Àû¿ë(ºÒ)
+    /// ì• ë‹ˆë©”ì´ì…˜ ì ìš©(ë¶ˆ)
     /// </summary>
     public void SetAnimation(string paremeterm, bool trigger) {
         animator.SetBool(paremeterm, trigger);
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ç¸Á ½Ã ¾Ö´Ï¸ŞÀÌ¼Ç ¹ßµ¿(Äİ¹éÀ¸·Î È£Ãâ)
+    /// ì• ë„ˆë¯¸ ì‚¬ë§ ì‹œ ì• ë‹ˆë©”ì´ì…˜ ë°œë™(ì½œë°±ìœ¼ë¡œ í˜¸ì¶œ)
     /// </summary>
     public void EnemyDeadEvent() {
         Managers.Resources.Release(gameObject);
     }
 
     /// <summary>
-    /// »ı¼º ¹× Àç»ç¿ë ÃÊ±âÈ­
+    /// ìƒì„± ë° ì¬ì‚¬ìš© ì´ˆê¸°í™”
     /// </summary>
     private void Init() {
         debuffCoroutine = null;
@@ -114,7 +114,7 @@ public class EnemyBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÌµ¿ ½ÃÀÛ
+    /// ì´ë™ ì‹œì‘
     /// </summary>
     public void StartMove() {
         if (Util.IsEnemyNull(this))
@@ -136,7 +136,7 @@ public class EnemyBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// °æ·Î¿¡ ¸ÂÃç ÀÚµ¿ ÀÌµ¿
+    /// ê²½ë¡œì— ë§ì¶° ìë™ ì´ë™
     /// </summary>
     private IEnumerator Co_Move() {
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;

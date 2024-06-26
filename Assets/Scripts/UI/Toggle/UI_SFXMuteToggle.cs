@@ -1,9 +1,9 @@
 /// <summary>
-/// È¿°úÀ½ ¹ÂÆ® Åä±Û
+/// íš¨ê³¼ìŒ ë®¤íŠ¸ í† ê¸€
 /// </summary>
 public class UI_SFXMuteToggle : UI_MuteToggle {
     /// <summary>
-    /// È¿°úÀ½ ¹ÂÆ®
+    /// íš¨ê³¼ìŒ ë®¤íŠ¸
     /// </summary>
     /// <param name="trigger"></param>
     protected override void SetToggle(bool trigger) {

@@ -2,15 +2,15 @@ using UnityEngine;
 using System.Collections.Generic;
 
 /// <summary>
-/// »ç¿îµå °ü¸®
+/// ì‚¬ìš´ë“œ ê´€ë¦¬
 /// </summary>
 public class SoundManager : MonoBehaviour {
     public static SoundManager Instance;
 
-    private AudioSource bgmPlayer;  //bgmÀº ÇÑ ¹ø¿¡ ÇÏ³ª¸¸ Ãâ·Â °¡´É
-    private AudioSource[] sfxPlayers;  //¿©·¯ sfx¸¦ µ¿½Ã¿¡ Ãâ·ÂÇÏ±â À§ÇÑ ¹è¿­
-    private Dictionary<Define.BGMType, AudioClip> bgmClips;  // °ÔÀÓ¿¡ Á¸ÀçÇÏ´Â ¸ğµç bgm ¸ñ·Ï
-    private Dictionary<Define.SFXType, AudioClip> sfxClips;  // °ÔÀÓ¿¡ Á¸ÀçÇÏ´Â ¸ğµç sfx ¸ñ·Ï
+    private AudioSource bgmPlayer;  //bgmì€ í•œ ë²ˆì— í•˜ë‚˜ë§Œ ì¶œë ¥ ê°€ëŠ¥
+    private AudioSource[] sfxPlayers;  //ì—¬ëŸ¬ sfxë¥¼ ë™ì‹œì— ì¶œë ¥í•˜ê¸° ìœ„í•œ ë°°ì—´
+    private Dictionary<Define.BGMType, AudioClip> bgmClips;  // ê²Œì„ì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  bgm ëª©ë¡
+    private Dictionary<Define.SFXType, AudioClip> sfxClips;  // ê²Œì„ì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  sfx ëª©ë¡
 
     private void Awake() {
         if(Instance == null) {
@@ -23,8 +23,8 @@ public class SoundManager : MonoBehaviour {
     }
 
     private void Start() {
-        InitBgm();  //bgm ÃÊ±âÈ­
-        InitSfx();  //sfx ÃÊ±âÈ­
+        InitBgm();  //bgm ì´ˆê¸°í™”
+        InitSfx();  //sfx ì´ˆê¸°í™”
     }
 
     private void Update() {
@@ -33,15 +33,15 @@ public class SoundManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// bgm ÃÊ±âÈ­
+    /// bgm ì´ˆê¸°í™”
     /// </summary>
     private void InitBgm() {
-        GameObject bgmObject = new GameObject("BgmPlayer");  //bgm player »ı¼º
-        bgmObject.transform.parent = transform;  //ºÎ¸ğ¸¦ manager·Î ÁöÁ¤
-        bgmPlayer = bgmObject.AddComponent<AudioSource>();  //¿Àµğ¿À ¼Ò½º Ãß°¡
-        bgmPlayer.playOnAwake = false;  //Áï½Ã Àç»ı ÇØÁ¦
-        bgmPlayer.loop = true;  //loop ¼³Á¤
-        bgmPlayer.volume = Managers.Data.DefineData.BGM_DEFAULT_VOLUME;  //±âº» º¼·ı ¼³Á¤
+        GameObject bgmObject = new GameObject("BgmPlayer");  //bgm player ìƒì„±
+        bgmObject.transform.parent = transform;  //ë¶€ëª¨ë¥¼ managerë¡œ ì§€ì •
+        bgmPlayer = bgmObject.AddComponent<AudioSource>();  //ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì¶”ê°€
+        bgmPlayer.playOnAwake = false;  //ì¦‰ì‹œ ì¬ìƒ í•´ì œ
+        bgmPlayer.loop = true;  //loop ì„¤ì •
+        bgmPlayer.volume = Managers.Data.DefineData.BGM_DEFAULT_VOLUME;  //ê¸°ë³¸ ë³¼ë¥¨ ì„¤ì •
         bgmPlayer.dopplerLevel = 0f;
         bgmPlayer.reverbZoneMix = 0f;
         bgmClips = new Dictionary<Define.BGMType, AudioClip>();
@@ -56,17 +56,17 @@ public class SoundManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// sfx ÃÊ±âÈ­
+    /// sfx ì´ˆê¸°í™”
     /// </summary>
     private void InitSfx() {
-        GameObject sfxObject = new GameObject("SfxPlayer");  //sfx player »ı¼º
-        sfxObject.transform.parent = transform; //ºÎ¸ğ¸¦ manager·Î ÁöÁ¤
-        sfxPlayers = new AudioSource[Managers.Data.DefineData.SFX_DEFAULT_CHANNELS];  //Ã¤³Î ¼ö ¸¸Å­ player »ı¼º
+        GameObject sfxObject = new GameObject("SfxPlayer");  //sfx player ìƒì„±
+        sfxObject.transform.parent = transform; //ë¶€ëª¨ë¥¼ managerë¡œ ì§€ì •
+        sfxPlayers = new AudioSource[Managers.Data.DefineData.SFX_DEFAULT_CHANNELS];  //ì±„ë„ ìˆ˜ ë§Œí¼ player ìƒì„±
 
         for (int i = 0; i < sfxPlayers.Length; i++) {
-            sfxPlayers[i] = sfxObject.AddComponent<AudioSource>();  //°¢ player¿¡ ¿Àµğ¿À ¼Ò½º Ãß°¡
-            sfxPlayers[i].playOnAwake = false;  //Áï½Ã Àç»ı ÇØÁ¦
-            sfxPlayers[i].volume = Managers.Data.DefineData.SFX_DEFAULT_VOLUME;  //±âº» º¼·ı ¼³Á¤
+            sfxPlayers[i] = sfxObject.AddComponent<AudioSource>();  //ê° playerì— ì˜¤ë””ì˜¤ ì†ŒìŠ¤ ì¶”ê°€
+            sfxPlayers[i].playOnAwake = false;  //ì¦‰ì‹œ ì¬ìƒ í•´ì œ
+            sfxPlayers[i].volume = Managers.Data.DefineData.SFX_DEFAULT_VOLUME;  //ê¸°ë³¸ ë³¼ë¥¨ ì„¤ì •
             sfxPlayers[i].dopplerLevel = 0f;
             sfxPlayers[i].reverbZoneMix = 0f;
         }
@@ -100,47 +100,47 @@ public class SoundManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// bgm º¼·ı ¼³Á¤
+    /// bgm ë³¼ë¥¨ ì„¤ì •
     /// </summary>
-    /// <param name="volume">º¼·ı</param>
+    /// <param name="volume">ë³¼ë¥¨</param>
     public void SetBgmVolume(float volume) => bgmPlayer.volume = volume;
 
     /// <summary>
-    /// sfx º¼·ı ¼³Á¤
+    /// sfx ë³¼ë¥¨ ì„¤ì •
     /// </summary>
-    /// <param name="volume">º¼·ı</param>
+    /// <param name="volume">ë³¼ë¥¨</param>
     public void SetSfxVolume(float volume) {
         for (int i = 0; i < sfxPlayers.Length; i++)
             sfxPlayers[i].volume = volume;
     }
 
     /// <summary>
-    /// bgm Àç»ı ¹× Á¤Áö
+    /// bgm ì¬ìƒ ë° ì •ì§€
     /// </summary>
-    /// <param name="play">Àç»ı or Á¤Áö</param>
-    /// <param name="bgm">Àç»ıÇÒ bgm Å¸ÀÔ</param>
+    /// <param name="play">ì¬ìƒ or ì •ì§€</param>
+    /// <param name="bgm">ì¬ìƒí•  bgm íƒ€ì…</param>
     public void SetBgm(bool play, Define.BGMType bgm) {
         if(bgmPlayer.clip != null)
-            bgmPlayer.Stop();  //¾î¶² »óÈ²¿¡¼­µçÁö ÇöÀçÀÇ bgm Á¤Áö
+            bgmPlayer.Stop();  //ì–´ë–¤ ìƒí™©ì—ì„œë“ ì§€ í˜„ì¬ì˜ bgm ì •ì§€
 
         if (bgmClips.TryGetValue(bgm, out AudioClip clip)) {
-            bgmPlayer.clip = clip;  //Å¬¸³ ±³Ã¼
+            bgmPlayer.clip = clip;  //í´ë¦½ êµì²´
             if (play)
-                bgmPlayer.Play();  //Àç»ı
+                bgmPlayer.Play();  //ì¬ìƒ
         }
     }
 
     /// <summary>
-    /// sfx Àç»ı
+    /// sfx ì¬ìƒ
     /// </summary>
-    /// <param name="sfx">Àç»ıÇÒ sfx Å¸ÀÔ</param>
+    /// <param name="sfx">ì¬ìƒí•  sfx íƒ€ì…</param>
     public void PlaySfx(Define.SFXType sfx) {
         if (sfxClips.TryGetValue(sfx, out AudioClip clip)) {
             for (int i = 0; i < sfxPlayers.Length; i++) {
-                if (sfxPlayers[i].isPlaying)  //ÇÃ·¹ÀÌ¾îÁß »ç¿ë °¡´ÉÇÑ ÇÃ·¹ÀÌ¾î¸¦ ¼­Ä¡
+                if (sfxPlayers[i].isPlaying)  //í”Œë ˆì´ì–´ì¤‘ ì‚¬ìš© ê°€ëŠ¥í•œ í”Œë ˆì´ì–´ë¥¼ ì„œì¹˜
                     continue;
 
-                sfxPlayers[i].clip = clip;  //»ç¿ë°¡´ÉÇÑ ÇÃ·¹ÀÌ¾î¸¦ ¼­Ä¡ÇÏ¸é, Å¬¸³ ¼³Á¤ ÈÄ ÇÃ·¹ÀÌ
+                sfxPlayers[i].clip = clip;  //ì‚¬ìš©ê°€ëŠ¥í•œ í”Œë ˆì´ì–´ë¥¼ ì„œì¹˜í•˜ë©´, í´ë¦½ ì„¤ì • í›„ í”Œë ˆì´
                 sfxPlayers[i].Play();
                 return;
             }

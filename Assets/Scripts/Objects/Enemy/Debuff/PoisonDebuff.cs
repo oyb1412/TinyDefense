@@ -1,13 +1,13 @@
 using UnityEngine;
 /// <summary>
-/// µ¶ Áö¼Óµ¥¹ÌÁö µğ¹öÇÁ
+/// ë… ì§€ì†ë°ë¯¸ì§€ ë””ë²„í”„
 /// </summary>
 public class PoisonDebuff : DamageDebuff {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="damage">µğ¹öÇÁ µ¥¹ÌÁö</param>
-    /// <param name="time">µğ¹öÇÁ Áö¼Ó½Ã°£</param>
+    /// <param name="damage">ë””ë²„í”„ ë°ë¯¸ì§€</param>
+    /// <param name="time">ë””ë²„í”„ ì§€ì†ì‹œê°„</param>
     public PoisonDebuff(float damage, float time) {
         Type = Define.DebuffType.Poison;
         DebuffValue = damage;

@@ -5,14 +5,14 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// ¸ğµç ¹öÇÁ °ü¸® ¸Å´ÏÀú
-/// °¢ Å¸¿ö°¡ ÄÄÆ÷³ÍÆ®·Î º¸À¯
+/// ëª¨ë“  ë²„í”„ ê´€ë¦¬ ë§¤ë‹ˆì €
+/// ê° íƒ€ì›Œê°€ ì»´í¬ë„ŒíŠ¸ë¡œ ë³´ìœ 
 /// </summary>
 public class BuffManager {
-    //¹öÇÁ ¸®½ºÆ®
+    //ë²„í”„ ë¦¬ìŠ¤íŠ¸
     public HashSet<IBuff> Buffs { get; private set; }
 
-    //¹öÇÁ Àû¿ë Å¸ÀÔ, Àû¿ë À¯¹« ¾×¼Ç
+    //ë²„í”„ ì ìš© íƒ€ì…, ì ìš© ìœ ë¬´ ì•¡ì…˜
     public Action<Define.BuffType, bool> BuffAction;
 
     public BuffManager() {
@@ -23,11 +23,11 @@ public class BuffManager {
     }
 
     /// <summary>
-    /// ¹öÇÁ Àû¿ë ¹×
-    /// ¹öÇÁ ÇØÁ¦ ¿¹¾à
+    /// ë²„í”„ ì ìš© ë°
+    /// ë²„í”„ í•´ì œ ì˜ˆì•½
     /// </summary>
-    /// <param name="buff">Àû¿ëÇÒ ¹öÇÁ</param>
-    /// <param name="tower">Àû¿ë½ÃÅ³ Å¸¿ö</param>
+    /// <param name="buff">ì ìš©í•  ë²„í”„</param>
+    /// <param name="tower">ì ìš©ì‹œí‚¬ íƒ€ì›Œ</param>
     public void AddBuff(IBuff buff, TowerBase tower) {
         foreach (var b in Buffs) {
             if(b.Type == buff.Type) {
@@ -43,10 +43,10 @@ public class BuffManager {
     }
 
     /// <summary>
-    /// ¹öÇÁ ÇØÁ¦
+    /// ë²„í”„ í•´ì œ
     /// </summary>
-    /// <param name="buff">ÇØÁ¦ÇÒ ¹öÇÁ</param>
-    /// <param name="tower">ÇØÁ¦ÇÒ Å¸¿ö</param>
+    /// <param name="buff">í•´ì œí•  ë²„í”„</param>
+    /// <param name="tower">í•´ì œí•  íƒ€ì›Œ</param>
     public void RemoveBuff(IBuff buff, TowerBase tower) {
         buff.RemoveBuff(tower);
         Buffs.Remove(buff);
@@ -54,11 +54,11 @@ public class BuffManager {
     }
 
     /// <summary>
-    /// ¹öÇÁ ÇØÁ¦ ¿¹¾à ÄÚ·çÆ¾
+    /// ë²„í”„ í•´ì œ ì˜ˆì•½ ì½”ë£¨í‹´
     /// </summary>
-    /// <param name="time">¹öÇÁ ÇØÁ¦±îÁöÀÇ µô·¹ÀÌ ½Ã°£</param>
-    /// <param name="buff">ÇØÁ¦ÇÒ ¹öÇÁ</param>
-    /// <param name="tower">ÇØÁ¦ÇÒ Å¸¿ö</param>
+    /// <param name="time">ë²„í”„ í•´ì œê¹Œì§€ì˜ ë”œë ˆì´ ì‹œê°„</param>
+    /// <param name="buff">í•´ì œí•  ë²„í”„</param>
+    /// <param name="tower">í•´ì œí•  íƒ€ì›Œ</param>
     private IEnumerator Co_RemoveBuff(float time, IBuff buff, TowerBase tower) {
         float endTime = Time.time + time;
         while (Time.time < endTime) {
@@ -68,10 +68,10 @@ public class BuffManager {
     }
 
     /// <summary>
-    /// º¸À¯ ¹öÇÁ¸¦ °è»êÇØ °ø°İ µ¥¹ÌÁö °è»ê
+    /// ë³´ìœ  ë²„í”„ë¥¼ ê³„ì‚°í•´ ê³µê²© ë°ë¯¸ì§€ ê³„ì‚°
     /// </summary>
-    /// <param name="baseDamage">¿øº» °ø°İ µ¥¹ÌÁö</param>
-    /// <returns>°è»ê ¿Ï·áµÈ µ¥¹ÌÁö</returns>
+    /// <param name="baseDamage">ì›ë³¸ ê³µê²© ë°ë¯¸ì§€</param>
+    /// <returns>ê³„ì‚° ì™„ë£Œëœ ë°ë¯¸ì§€</returns>
     public float CalculateAttackDamage(float baseDamage) {
         float finalDamage = baseDamage;
         foreach (var b in Buffs) {
@@ -82,10 +82,10 @@ public class BuffManager {
     }
 
     /// <summary>
-    /// º¸À¯ ¹öÇÁ¸¦ °è»êÇØ °ø°İ µô·¹ÀÌ °è»ê
+    /// ë³´ìœ  ë²„í”„ë¥¼ ê³„ì‚°í•´ ê³µê²© ë”œë ˆì´ ê³„ì‚°
     /// </summary>
-    /// <param name="baseDelay">¿øº» °ø°İ µô·¹ÀÌ</param>
-    /// <returns>°è»ê ¿Ï·áµÈ µô·¹ÀÌ</returns>
+    /// <param name="baseDelay">ì›ë³¸ ê³µê²© ë”œë ˆì´</param>
+    /// <returns>ê³„ì‚° ì™„ë£Œëœ ë”œë ˆì´</returns>
     public float CalculateAttackDelay(float baseDelay) {
         float finalDelay = baseDelay;
         foreach (var buff in Buffs) {

@@ -1,12 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// ¸ğµç ¹ß»çÃ¼ Ãæµ¹ ÀÌÆåÆ® °ü¸®
+/// ëª¨ë“  ë°œì‚¬ì²´ ì¶©ëŒ ì´í™íŠ¸ ê´€ë¦¬
 /// </summary>
 public class ProjectileEffectBase : MonoBehaviour {
-    //°ø°İ µ¥ÀÌÅÍ
+    //ê³µê²© ë°ì´í„°
     protected TowerBase.AttackData attackData;
-    //ÀÌÆåÆ® ½ºÇÁ¶óÀÌÆ® ·»ÅÍ·¯
+    //ì´í™íŠ¸ ìŠ¤í”„ë¼ì´íŠ¸ ë Œí„°ëŸ¬
     private SpriteRenderer spriteRenderer;
 
     private void Awake() {
@@ -15,20 +15,20 @@ public class ProjectileEffectBase : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÌÆåÆ® Á¦°Å(¾Ö´Ï¸ŞÀÌ¼Ç ÀÌº¥Æ® Äİ¹éÀ¸·Î È£Ãâ)
+    /// ì´í™íŠ¸ ì œê±°(ì• ë‹ˆë©”ì´ì…˜ ì´ë²¤íŠ¸ ì½œë°±ìœ¼ë¡œ í˜¸ì¶œ)
     /// </summary>
     public virtual void DestroyEvent() {
         Managers.Resources.Release(gameObject);
     }
 
     /// <summary>
-    /// »ı¼º ½Ã ÃÊ±âÈ­
-    /// °ø°İ Á¤º¸¸¦ ¹ÙÅÁÀ¸·Î
-    /// ÀÌÆåÆ® »ö º¯°æ
+    /// ìƒì„± ì‹œ ì´ˆê¸°í™”
+    /// ê³µê²© ì •ë³´ë¥¼ ë°”íƒ•ìœ¼ë¡œ
+    /// ì´í™íŠ¸ ìƒ‰ ë³€ê²½
     /// </summary>
-    /// <param name="towerBase">¹ß»çÇÑ Å¸¿ö</param>
-    /// <param name="attackData">°ø°İ µ¥ÀÌÅÍ</param>
-    /// <param name="pos">ÀÌÆåÆ® »ı¼º À§Ä¡</param>
+    /// <param name="towerBase">ë°œì‚¬í•œ íƒ€ì›Œ</param>
+    /// <param name="attackData">ê³µê²© ë°ì´í„°</param>
+    /// <param name="pos">ì´í™íŠ¸ ìƒì„± ìœ„ì¹˜</param>
     public virtual void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
         this.attackData = attackData;
         transform.position = pos;

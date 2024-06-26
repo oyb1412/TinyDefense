@@ -1,6 +1,6 @@
 /// <summary>
-/// Å¸¿ö¿¡ Àû¿ëµÇ´Â ¾îºô¸®Æ¼ Áß
-/// ÃÊ±âÈ­ ½Ã ¹ßµ¿µÇ´Â ¾îºô¸®Æ¼ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// íƒ€ì›Œì— ì ìš©ë˜ëŠ” ì–´ë¹Œë¦¬í‹° ì¤‘
+/// ì´ˆê¸°í™” ì‹œ ë°œë™ë˜ëŠ” ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ ì¸í„°íŽ˜ì´ìŠ¤
 /// </summary>
 public interface ITowerInitAbility : ITowerAbility {
     

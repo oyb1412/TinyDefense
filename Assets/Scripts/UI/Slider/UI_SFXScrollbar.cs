@@ -1,5 +1,5 @@
 /// <summary>
-/// È¿°úÀ½ º¼·ı Á¶Àı ½ºÅ©·Ñ¹Ù
+/// íš¨ê³¼ìŒ ë³¼ë¥¨ ì¡°ì ˆ ìŠ¤í¬ë¡¤ë°”
 /// </summary>
 public class UI_SFXScrollbar : UI_VolumeScrollbar {
     protected override void Awake() {
@@ -7,7 +7,7 @@ public class UI_SFXScrollbar : UI_VolumeScrollbar {
         scrollBar.value = SoundManager.Instance.GetSFXVolume();
     }
     /// <summary>
-    /// È¿°úÀ½ º¼·ı Á¶Àı
+    /// íš¨ê³¼ìŒ ë³¼ë¥¨ ì¡°ì ˆ
     /// </summary>
     /// <param name="value"></param>
     protected override void SetScrollBar(float value) {

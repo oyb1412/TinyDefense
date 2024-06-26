@@ -1,13 +1,13 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö ´É·ÂÄ¡
+/// íƒ€ì›Œ ëŠ¥ë ¥ì¹˜
 /// </summary>
 public class TowerStatus : StatusBase {
     /// <summary>
-    /// Å¸¿ö »ı¼º ¹× Àç»ı¼º½Ã ÃÊ±âÈ­
+    /// íƒ€ì›Œ ìƒì„± ë° ì¬ìƒì„±ì‹œ ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="tower">´ë»ó Å¸¿ö</param>
+    /// <param name="tower">ëŒ€ìƒ íƒ€ì›Œ</param>
     public void Init(TowerBase tower) {
         if (Managers.Tower == null)
             return;
@@ -36,7 +36,7 @@ public class TowerStatus : StatusBase {
     }
 
     /// <summary>
-    /// º¸À¯ ¹öÇÁ ¹× °­È­¼öÄ¡¸¦ °è»êÇØ °ø°İ µ¥¹ÌÁö ¹İÈ¯
+    /// ë³´ìœ  ë²„í”„ ë° ê°•í™”ìˆ˜ì¹˜ë¥¼ ê³„ì‚°í•´ ê³µê²© ë°ë¯¸ì§€ ë°˜í™˜
     /// </summary>
     public float AttackDamage {
         get {
@@ -58,7 +58,7 @@ public class TowerStatus : StatusBase {
     }
 
     /// <summary>
-    /// º¸À¯ ¹öÇÁ ¹× °­È­¼öÄ¡¸¦ °è»êÇØ °ø°İ µô·¹ÀÌ ¹İÈ¯
+    /// ë³´ìœ  ë²„í”„ ë° ê°•í™”ìˆ˜ì¹˜ë¥¼ ê³„ì‚°í•´ ê³µê²© ë”œë ˆì´ ë°˜í™˜
     /// </summary>
     public float AttackDelay {
         get {
@@ -83,32 +83,32 @@ public class TowerStatus : StatusBase {
             attackDelay = value;
         }
     }
-    //µ¥ÀÌÅÍ ÄÁÅ×ÀÌ³Ê
+    //ë°ì´í„° ì»¨í…Œì´ë„ˆ
     public TowerData.TowerLevelData TowerData { get; private set; }
 
-    //°­È­ Å¬·¡½º
+    //ê°•í™” í´ë˜ìŠ¤
     private EnhanceManager enhance;
-    //°ø°İ »ç°Å¸®
+    //ê³µê²© ì‚¬ê±°ë¦¬
     public float AttackRange { get; private set; }
-    //ÆÇ¸Å ºñ¿ë
+    //íŒë§¤ ë¹„ìš©
     public int SellReward { get; private set; }
-    //¹ß»çÃ¼ °æ·Î
+    //ë°œì‚¬ì²´ ê²½ë¡œ
     public GameObject Projectile { get; private set; }
-    //Å¸¿ö Å¸ÀÔ
+    //íƒ€ì›Œ íƒ€ì…
     public Define.TowerType TowerType { get; private set; }
-    //Å¸¿ö ¹øµé
+    //íƒ€ì›Œ ë²ˆë“¤
     public Define.TowerBundle TowerBundle { get; private set; }
-    //°ø°İ µô·¹ÀÌ
+    //ê³µê²© ë”œë ˆì´
     private float attackDelay;
-    //°ø°İ µ¥¹ÌÁö
+    //ê³µê²© ë°ë¯¸ì§€
     private float attackDamage;
-    //´ë»ó Å¸¿ö
+    //ëŒ€ìƒ íƒ€ì›Œ
     private TowerBase towerBase;
-    //Àû Ã³Ä¡ ¼ö
+    //ì  ì²˜ì¹˜ ìˆ˜
     public int TowerKills { get; private set; }
 
     /// <summary>
-    /// ÆÇ¸Åºñ¿ë Á¶Á¤
+    /// íŒë§¤ë¹„ìš© ì¡°ì •
     /// </summary>
     /// <param name="value"></param>
     public void SetReward(float value = 0) {
@@ -117,9 +117,9 @@ public class TowerStatus : StatusBase {
     }
 
     /// <summary>
-    /// ·¹º§¾÷ ½Ã ´É·ÂÄ¡ ÀçÀû¿ë
+    /// ë ˆë²¨ì—… ì‹œ ëŠ¥ë ¥ì¹˜ ì¬ì ìš©
     /// </summary>
-    /// <param name="bundleType">¾÷±×·¹ÀÌµå ÇÒ Å¸¿ö Àå¸£</param>
+    /// <param name="bundleType">ì—…ê·¸ë ˆì´ë“œ í•  íƒ€ì›Œ ì¥ë¥´</param>
     public void SetStatus() {
         SetReward();
         AttackDamage = TowerData.AttackDamage;
@@ -139,7 +139,7 @@ public class TowerStatus : StatusBase {
 
 
     /// <summary>
-    /// Àû Ã³Ä¡ ½Ã Å³ Áõ°¡ ¹× ¾×¼Ç È£Ãâ
+    /// ì  ì²˜ì¹˜ ì‹œ í‚¬ ì¦ê°€ ë° ì•¡ì…˜ í˜¸ì¶œ
     /// </summary>
     public void SetKill() {
         TowerKills++;

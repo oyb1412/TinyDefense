@@ -1,7 +1,7 @@
 using System;
 
 /// <summary>
-/// ¾îºô¸®Æ¼ ¼Ó¼º
+/// ì–´ë¹Œë¦¬í‹° ì†ì„±
 /// </summary>
 [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 public class AbilityAttribute : Attribute {

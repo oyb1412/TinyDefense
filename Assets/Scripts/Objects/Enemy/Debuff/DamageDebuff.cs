@@ -1,37 +1,37 @@
 /// <summary>
-/// Àû ¸ğµç Áö¼Óµ¥¹ÌÁö µğ¹öÇÁ °ü¸® Å¬·¡½º
-/// Å¸¿ö°¡ ÄÄÆ÷³ÍÆ®·Î º¸À¯
+/// ì  ëª¨ë“  ì§€ì†ë°ë¯¸ì§€ ë””ë²„í”„ ê´€ë¦¬ í´ë˜ìŠ¤
+/// íƒ€ì›Œê°€ ì»´í¬ë„ŒíŠ¸ë¡œ ë³´ìœ 
 /// </summary>
 public class DamageDebuff : IDebuff {
-    //µğ¹öÇÁ Å¸ÀÔ
+    //ë””ë²„í”„ íƒ€ì…
     public Define.DebuffType Type { get; protected set; }
-    //µğ¹öÇÁ ¹øµé(Áö¼Óµ¥¹ÌÁö)
+    //ë””ë²„í”„ ë²ˆë“¤(ì§€ì†ë°ë¯¸ì§€)
     public Define.DebuffBundle Bundle => Define.DebuffBundle.Damage;
-    //µğ¹öÇÁ ¹ë·ù
+    //ë””ë²„í”„ ë°¸ë¥˜
     public float DebuffValue { get; protected set; }
-    //µğ¹öÇÁ Àû¿ë ¿©ºÎ
+    //ë””ë²„í”„ ì ìš© ì—¬ë¶€
     public bool IsActive { get; private set; }
-    //µğ¹öÇÁ Áö¼Ó½Ã°£
+    //ë””ë²„í”„ ì§€ì†ì‹œê°„
     public float DebuffTime { get; protected set; }
 
     /// <summary>
-    /// µğ¹öÇÁ Àû¿ë
+    /// ë””ë²„í”„ ì ìš©
     /// </summary>
     public void ApplyDebuff(EnemyBase enemy) {
         IsActive = true;
     }
 
     /// <summary>
-    /// µğ¹öÇÁ ÇØÁ¦
+    /// ë””ë²„í”„ í•´ì œ
     /// </summary>
     public void RemoveDebuff(EnemyBase enemy) {
         IsActive = false;
     }
 
     /// <summary>
-    /// µğ¹öÇÁ¸¦ ÅëÇÑ ÀÌµ¿¼Óµµ °¨¼Ò 
+    /// ë””ë²„í”„ë¥¼ í†µí•œ ì´ë™ì†ë„ ê°ì†Œ 
     /// </summary>
-    /// <param name="baseSpeed">¿øº» ¼Óµµ</param>
+    /// <param name="baseSpeed">ì›ë³¸ ì†ë„</param>
     public float ModifyMoveSpeed(float baseSpeed) {
         return baseSpeed;
     }

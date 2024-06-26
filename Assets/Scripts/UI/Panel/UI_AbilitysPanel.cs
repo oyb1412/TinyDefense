@@ -1,13 +1,13 @@
 using UnityEngine;
 
 /// <summary>
-/// ¸ğµç ¾îºô¸®Æ¼ Ç¥±â ÆÇ³Ú
+/// ëª¨ë“  ì–´ë¹Œë¦¬í‹° í‘œê¸° íŒë„¬
 /// </summary>
 public class UI_AbilitysPanel : MonoBehaviour {
     public static UI_AbilitysPanel Instance;
-    //ÇÏÀ§ÀÇ °¢ ¾îºô¸®Æ¼ ¾ÆÀÌÄÜ
+    //í•˜ìœ„ì˜ ê° ì–´ë¹Œë¦¬í‹° ì•„ì´ì½˜
     private UI_AbilityIcon[] abilityIcons;
-    //º¸À¯ÇÑ ¾îºô¸®Æ¼°¡ ¾øÀ» ½Ã Ç¥½ÃÇÒ ÆÇ³Ú
+    //ë³´ìœ í•œ ì–´ë¹Œë¦¬í‹°ê°€ ì—†ì„ ì‹œ í‘œì‹œí•  íŒë„¬
     [SerializeField] private GameObject emptyPanel;
 
     private void Awake() {
@@ -26,10 +26,10 @@ public class UI_AbilitysPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¾ÆÀÌÄÜ ¼¼ÆÃ
-    /// ¾îºô¸®Æ¼ Ãß°¡½Ã È£Ãâ
+    /// ì–´ë¹Œë¦¬í‹° ì•„ì´ì½˜ ì„¸íŒ…
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€ì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="ability">Ãß°¡ÇÒ ¾îºô¸®Æ¼</param>
+    /// <param name="ability">ì¶”ê°€í•  ì–´ë¹Œë¦¬í‹°</param>
     public void AddAbilityIcon(IAbility ability) {
         emptyPanel.SetActive(false);
         

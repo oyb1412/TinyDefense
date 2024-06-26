@@ -1,34 +1,34 @@
 
 /// <summary>
-/// ±âº»ÀûÀÎ ½ºÅ³ µ¥ÀÌÅÍ
+/// ê¸°ë³¸ì ì¸ ìŠ¤í‚¬ ë°ì´í„°
 /// </summary>
 [System.Serializable]
 public class SkillData {
     
     [System.Serializable]
     public class Skill {
-        //·¹º§
+        //ë ˆë²¨
         public int Level;
 
-        //½ºÅ³ µ¥¹ÌÁö
+        //ìŠ¤í‚¬ ë°ë¯¸ì§€
         public float SkillDamage;
 
-        //½ºÅ³ÀÇ ¹ë·ù(ÀÌµ¿¼Óµµ ÀúÇÏ, °ø¼Ó Áõ°¡ µî)
+        //ìŠ¤í‚¬ì˜ ë°¸ë¥˜(ì´ë™ì†ë„ ì €í•˜, ê³µì† ì¦ê°€ ë“±)
         public float SkillValue;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ¹ë·ù
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë°¸ë¥˜
         public float SkillValueUpValue;
 
-        //½ºÅ³ Áö¼Ó½Ã°£
+        //ìŠ¤í‚¬ ì§€ì†ì‹œê°„
         public float SkillTime;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ½ºÅ³ Áö¼Ó½Ã°£
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ìŠ¤í‚¬ ì§€ì†ì‹œê°„
         public float SkillTimeUpValue;
-        //½ºÅ³ ÄğÅ¸ÀÓ
+        //ìŠ¤í‚¬ ì¿¨íƒ€ì„
         public float SkillCoolTime;
-        //·¹º§¾÷½Ã °¨¼ÒÇÏ´Â ½ºÅ³ Áö¼Ó½Ã°£
+        //ë ˆë²¨ì—…ì‹œ ê°ì†Œí•˜ëŠ” ìŠ¤í‚¬ ì§€ì†ì‹œê°„
         public float SkillCoolTimeDownValue;
-        //½ºÅ³ ·¹º§¾÷ ºñ¿ë
+        //ìŠ¤í‚¬ ë ˆë²¨ì—… ë¹„ìš©
         public int SkillCost;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ½ºÅ³ ·¹º§¾÷ ºñ¿ë
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ìŠ¤í‚¬ ë ˆë²¨ì—… ë¹„ìš©
         public int SkillCostUpValue;
 
     }

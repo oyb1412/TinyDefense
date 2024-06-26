@@ -2,11 +2,11 @@ using DG.Tweening;
 using UnityEngine;
 
 public class SelectArrow : MonoBehaviour {
-    //Å¸¿ö ¼±ÅÃ È­»ìÇ¥ ½ºÇÁ¶óÀÌÆ®
+    //íƒ€ì›Œ ì„ íƒ í™”ì‚´í‘œ ìŠ¤í”„ë¼ì´íŠ¸
     private SpriteRenderer arrowSprite;
-    //È­»ìÇ¥ ½ºÇÁ¶óÀÌÆ® Æ®À§´×
+    //í™”ì‚´í‘œ ìŠ¤í”„ë¼ì´íŠ¸ íŠ¸ìœ„ë‹
     private Tween moveTween;
-    //È­»ìÇ¥ ±âº» À§Ä¡
+    //í™”ì‚´í‘œ ê¸°ë³¸ ìœ„ì¹˜
     private Vector3 arrowOriginalPosition;
 
     private void Awake() {
@@ -16,8 +16,8 @@ public class SelectArrow : MonoBehaviour {
     }
 
     /// <summary>
-    /// È­»ìÇ¥ È°¼ºÈ­
-    /// Æ®À© ÃÊ±âÈ­ ¹× ½ÇÇà
+    /// í™”ì‚´í‘œ í™œì„±í™”
+    /// íŠ¸ìœˆ ì´ˆê¸°í™” ë° ì‹¤í–‰
     /// </summary>
     public void Activation() {
         arrowSprite.enabled = true;
@@ -29,8 +29,8 @@ public class SelectArrow : MonoBehaviour {
     }
 
     /// <summary>
-    /// È­»ìÇ¥ ºñÈ°¼ºÈ­
-    /// Æ®À© ÃÊ±âÈ­
+    /// í™”ì‚´í‘œ ë¹„í™œì„±í™”
+    /// íŠ¸ìœˆ ì´ˆê¸°í™”
     /// </summary>
     public void DeActivation() {
         Util.ResetTween(moveTween);

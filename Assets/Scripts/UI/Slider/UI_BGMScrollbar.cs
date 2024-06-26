@@ -1,5 +1,5 @@
 /// <summary>
-/// BGMº¼·ı º¯°æ ½ºÅ©·Ñ ¹Ù
+/// BGMë³¼ë¥¨ ë³€ê²½ ìŠ¤í¬ë¡¤ ë°”
 /// </summary>
 public class UI_BGMScrollbar : UI_VolumeScrollbar {
     protected override void Awake() {
@@ -7,7 +7,7 @@ public class UI_BGMScrollbar : UI_VolumeScrollbar {
         scrollBar.value = SoundManager.Instance.GetBgmVolume();
     }
     /// <summary>
-    /// »ç¿îµå ¸Å´ÏÀú º¼·ı º¯°æ
+    /// ì‚¬ìš´ë“œ ë§¤ë‹ˆì € ë³¼ë¥¨ ë³€ê²½
     /// </summary>
     /// <param name="value"></param>
     protected override void SetScrollBar(float value) {

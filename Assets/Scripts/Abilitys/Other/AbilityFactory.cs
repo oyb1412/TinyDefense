@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Linq;
 
 /// <summary>
-/// ¾îºô¸®Æ¼ ÆÑÅä¸®
+/// ì–´ë¹Œë¦¬í‹° íŒ©í† ë¦¬
 /// </summary>
 
 public static class AbilityFactory {

@@ -2,20 +2,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ¾Ö³Ê¹Ì HP ½½¶óÀÌ´õ °ü¸®
+/// ì• ë„ˆë¯¸ HP ìŠ¬ë¼ì´ë” ê´€ë¦¬
 /// </summary>
 public class UI_EnemyHpSlider : MonoBehaviour {
-    //ºÎ¸ğ ¾Ö³Ê¹Ì
+    //ë¶€ëª¨ ì• ë„ˆë¯¸
     private EnemyBase enemyBase;
-    //hp½½¶óÀÌ´õ
+    //hpìŠ¬ë¼ì´ë”
     private Slider hpSlider;
-    //hp½½¶óÀÌ´õ ÀÌ¹ÌÁö
+    //hpìŠ¬ë¼ì´ë” ì´ë¯¸ì§€
     private Image fillImage;
-    //ºÎ¸ğ ¾Ö³Ê¹Ì ÃÖ´ë hp
+    //ë¶€ëª¨ ì• ë„ˆë¯¸ ìµœëŒ€ hp
     private float maxHp;
 
     /// <summary>
-    /// Ã¹ »ı¼º ½Ã ÃÊ±âÈ­
+    /// ì²« ìƒì„± ì‹œ ì´ˆê¸°í™”
     /// </summary>
     private void Awake() {
         enemyBase = GetComponentInParent<EnemyBase>();
@@ -24,14 +24,14 @@ public class UI_EnemyHpSlider : MonoBehaviour {
     }
 
     /// <summary>
-    /// Àç»ı¼º ½Ã ÃÊ±âÈ­
+    /// ì¬ìƒì„± ì‹œ ì´ˆê¸°í™”
     /// </summary>
     private void OnEnable() {
         Init();
     }
 
     /// <summary>
-    /// ½½¶óÀÌ´õ ÃÊ±âÈ­
+    /// ìŠ¬ë¼ì´ë” ì´ˆê¸°í™”
     /// </summary>
     private void Init() {
         maxHp = enemyBase.EnemyStatus.MaxHp;
@@ -54,10 +54,10 @@ public class UI_EnemyHpSlider : MonoBehaviour {
     }
 
     /// <summary>
-    /// Ã¼·Â º¯È­ ½Ã ¸¶´Ù È£Ãâ
-    /// ½½¶óÀÌ´õ fill º¯°æ ¹× »ö º¯°æ
+    /// ì²´ë ¥ ë³€í™” ì‹œ ë§ˆë‹¤ í˜¸ì¶œ
+    /// ìŠ¬ë¼ì´ë” fill ë³€ê²½ ë° ìƒ‰ ë³€ê²½
     /// </summary>
-    /// <param name="hp">ÇöÀç Ã¼·Â</param>
+    /// <param name="hp">í˜„ì¬ ì²´ë ¥</param>
     private void HpSliderEvent(float hp) {
         if (hp <= 0)
             hp = 0;

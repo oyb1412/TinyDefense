@@ -1,16 +1,16 @@
 
 /// <summary>
-/// ½Ã½ºÅÛÀû ¾îºô¸®Æ¼
-/// Å¸¿ö »ı¼º ÄÚ½ºÆ® ¿µ±¸ °¨¼Ò
+/// ì‹œìŠ¤í…œì  ì–´ë¹Œë¦¬í‹°
+/// íƒ€ì›Œ ìƒì„± ì½”ìŠ¤íŠ¸ ì˜êµ¬ ê°ì†Œ
 /// </summary>
 [Ability(Define.AbilityType.MinusCost)]
 public class Ability_MinusCost : ITowerInitAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_MinusCost()
     {
@@ -18,7 +18,7 @@ public class Ability_MinusCost : ITowerInitAbility {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Ãß°¡ ½Ã Áï½Ã È¿°ú Àû¿ëÀÌ ÇÊ¿äÇÑ °æ¿ì »ç¿ë
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€ ì‹œ ì¦‰ì‹œ íš¨ê³¼ ì ìš©ì´ í•„ìš”í•œ ê²½ìš° ì‚¬ìš©
     /// </summary>
     public void SetAbility() {
         UI_TowerDescription.Instance.CreateButton.SetCreateCost(
@@ -26,7 +26,7 @@ public class Ability_MinusCost : ITowerInitAbility {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ÀÇ Áö¼ÓÀûÀÎ Àû¿ëÀÌ ÇÊ¿äÇÑ °æ¿ì »ç¿ë
+    /// ì–´ë¹Œë¦¬í‹°ì˜ ì§€ì†ì ì¸ ì ìš©ì´ í•„ìš”í•œ ê²½ìš° ì‚¬ìš©
     /// </summary>
     /// <param name="button"></param>
     public void ExecuteSystemAbility(UI_Button button) {

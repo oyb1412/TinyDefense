@@ -2,16 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö ¾÷±×·¹ÀÌµå ¹öÆ° Å¬·¡½º
+/// íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_MergeButton : UI_Button, IUI_TowerButton {
-    //¼±ÅÃ Å¸¿ö
+    //ì„ íƒ íƒ€ì›Œ
     private TowerBase tower;
-    //¾÷±×·¹ÀÌµå Àç·á Å¸¿ö
+    //ì—…ê·¸ë ˆì´ë“œ ì¬ë£Œ íƒ€ì›Œ
     public TowerBase TargetTower { get; private set; }
-    //¸ğµç ÀÚ½Ä TMP¹× ¹öÆ° ¿ÀºêÁ§Æ® °ü¸® ÄÄÆ÷³ÍÆ®
+    //ëª¨ë“  ìì‹ TMPë° ë²„íŠ¼ ì˜¤ë¸Œì íŠ¸ ê´€ë¦¬ ì»´í¬ë„ŒíŠ¸
     private TMPandButton tmpAndButton;
-    //Å¸¿ö ¾÷±×·¹ÀÌµå ½Ã ÀÌÆåÆ®
+    //íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ ì‹œ ì´í™íŠ¸
     private GameObject buildEffect;
 
     public override void Init() {
@@ -27,11 +27,11 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¸ÓÁö °¡´É ¿©ºÎ °è»ê
-    /// ¼¿ ¼±ÅÃ½Ã È£Ãâ
+    /// ë¨¸ì§€ ê°€ëŠ¥ ì—¬ë¶€ ê³„ì‚°
+    /// ì…€ ì„ íƒì‹œ í˜¸ì¶œ
     /// </summary>
     public void CheckMerge() {
-        //¸ÓÁö °¡´ÉÇÑ Å¸¿ö À¯¹« ÆÇ´Ü ÈÄ, ¹öÆ° È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
+        //ë¨¸ì§€ ê°€ëŠ¥í•œ íƒ€ì›Œ ìœ ë¬´ íŒë‹¨ í›„, ë²„íŠ¼ í™œì„±í™” ë° ë¹„í™œì„±í™”
         var towers = Managers.Tower.TowerList;
         foreach (var tower in towers) {
             if (this.tower == tower)
@@ -57,12 +57,12 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// Å¸¿ö ÀÚµ¿ ¾÷±×·¹ÀÌµå½Ã È£Ãâ
-    /// ¸ğµç Å¸¿ö¸¦ ¼øÈ¸ÇÏ¸ç ¾÷±×·¹ÀÌµå °¡´É ¿©ºÎ ÆÇ´Ü
-    /// °¡´É ½Ã ¾÷±×·¹ÀÌµå
+    /// íƒ€ì›Œ ìë™ ì—…ê·¸ë ˆì´ë“œì‹œ í˜¸ì¶œ
+    /// ëª¨ë“  íƒ€ì›Œë¥¼ ìˆœíšŒí•˜ë©° ì—…ê·¸ë ˆì´ë“œ ê°€ëŠ¥ ì—¬ë¶€ íŒë‹¨
+    /// ê°€ëŠ¥ ì‹œ ì—…ê·¸ë ˆì´ë“œ
     /// </summary>
     public void CheckAndMerge() {
-        //¸ÓÁö °¡´ÉÇÑ Å¸¿ö À¯¹« ÆÇ´Ü ÈÄ, ¹öÆ° È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
+        //ë¨¸ì§€ ê°€ëŠ¥í•œ íƒ€ì›Œ ìœ ë¬´ íŒë‹¨ í›„, ë²„íŠ¼ í™œì„±í™” ë° ë¹„í™œì„±í™”
         List<TowerBase> towers = new List<TowerBase>(Managers.Tower.TowerList);
 
         for (int i = 0; i < towers.Count; i++) {
@@ -88,10 +88,10 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// Å¸¿ö ¾÷±×·¹ÀÌµå
+    /// íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ
     /// </summary>
-    /// <param name="baseTower">¾÷±×·¹ÀÌµåÇÒ Å¸¿ö</param>
-    /// <param name="materialTower">Àç·á</param>
+    /// <param name="baseTower">ì—…ê·¸ë ˆì´ë“œí•  íƒ€ì›Œ</param>
+    /// <param name="materialTower">ì¬ë£Œ</param>
     public void Select(TowerBase baseTower, TowerBase materialTower) {
         GameObject go = Managers.Resources.Activation(buildEffect);
         go.transform.position = baseTower.TowerCell.transform.position;
@@ -101,10 +101,10 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
 
         baseTower.DeSelect();
 
-        //ÇöÀç Å¸¿ö ·¹º§¾÷
+        //í˜„ì¬ íƒ€ì›Œ ë ˆë²¨ì—…
         baseTower.TowerLevelup(materialTower.TowerStatus.TowerKills);
 
-        //Å¸°Ù Å¸¿ö ÆÄ±« 
+        //íƒ€ê²Ÿ íƒ€ì›Œ íŒŒê´´ 
         materialTower.DestroyTower();
 
         UI_TowerDescription.Instance.DeActivation();
@@ -112,7 +112,7 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
 
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã Å¸¿ö ¸ÓÁö
+    /// ë²„íŠ¼ ì„ íƒì‹œ íƒ€ì›Œ ë¨¸ì§€
     /// </summary>
     public override void Select() {
         GameObject go = Managers.Resources.Activation(buildEffect);
@@ -123,17 +123,17 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
 
         tower.DeSelect();
 
-        //ÇöÀç Å¸¿ö ·¹º§¾÷
+        //í˜„ì¬ íƒ€ì›Œ ë ˆë²¨ì—…
         tower.TowerLevelup();
 
-        //Å¸°Ù Å¸¿ö ÆÄ±« 
+        //íƒ€ê²Ÿ íƒ€ì›Œ íŒŒê´´ 
         TargetTower.DestroyTower();
 
         UI_TowerDescription.Instance.DeActivation();
     }
 
     /// <summary>
-    /// ¹öÆ° ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         tower = null;
@@ -141,9 +141,9 @@ public class UI_MergeButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° È°¼ºÈ­
+    /// ë²„íŠ¼ í™œì„±í™”
     /// </summary>
-    /// <param name="cell">¼±ÅÃÇÑ ¼¿</param>
+    /// <param name="cell">ì„ íƒí•œ ì…€</param>
     public void Activation(Cell cell) {
         if(!cell.IsUse()) {
             tmpAndButton.DeActivation();

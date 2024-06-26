@@ -1,14 +1,14 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö ÀÚµ¿»ı¼º ¹öÆ°
+/// íƒ€ì›Œ ìë™ìƒì„± ë²„íŠ¼
 /// </summary>
 public class UI_AutoCreateButton : UI_Button {
-    //¾À¿¡ Á¸ÀçÇÏ´Â ¸ğµç ¼¿
+    //ì”¬ì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  ì…€
     private Cell[] cells;
-    //Å¸¿ö »ı¼º ¾îºô¸®Æ¼ ¼±ÅÃ ½Ã, Å¸¿ö »ı¼º À¯¹«
+    //íƒ€ì›Œ ìƒì„± ì–´ë¹Œë¦¬í‹° ì„ íƒ ì‹œ, íƒ€ì›Œ ìƒì„± ìœ ë¬´
     private bool isGetTower;
-    //Å¸¿ö »ı¼º ¹öÆ°
+    //íƒ€ì›Œ ìƒì„± ë²„íŠ¼
     [SerializeField]private UI_CreateButton createButton;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectTowerUIButton;
@@ -16,33 +16,33 @@ public class UI_AutoCreateButton : UI_Button {
     }
 
     /// <summary>
-    /// Å¸¿ö ÀÚµ¿»ı¼º ¹öÆ° ¼±ÅÃ½Ã
+    /// íƒ€ì›Œ ìë™ìƒì„± ë²„íŠ¼ ì„ íƒì‹œ
     /// </summary>
     public override void Select() {
         foreach (Cell cell in cells) {
             if(!cell.IsUse()) {
-                //°ñµå°¡ ºÎÁ·ÇÏ¸é Ãë¼Ò
+                //ê³¨ë“œê°€ ë¶€ì¡±í•˜ë©´ ì·¨ì†Œ
                 if (createButton.CreateCost > Managers.Game.CurrentGold)
                     return;
 
-                //Å¸¿ö ÀÚµ¿»ı¼º
+                //íƒ€ì›Œ ìë™ìƒì„±
                 createButton.CellCreate(cell);
             }
         }
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼(Å¸¿ö È¹µæ)¼±ÅÃ½Ã È£Ãâ
+    /// ì–´ë¹Œë¦¬í‹°(íƒ€ì›Œ íšë“)ì„ íƒì‹œ í˜¸ì¶œ
     /// </summary>
     public void GetOneTower() {
-        //¸¸¾à °´Ã¼°¡ ºñÈ°¼ºÈ­ »óÅÂÀÏ½Ã ÀÏ½ÃÀû È°¼ºÈ­
+        //ë§Œì•½ ê°ì²´ê°€ ë¹„í™œì„±í™” ìƒíƒœì¼ì‹œ ì¼ì‹œì  í™œì„±í™”
         if (!transform.parent.gameObject.activeInHierarchy) {
             transform.parent.gameObject.SetActive(true);
             isGetTower = true;
         }
 
-        //»ç¿ëÁßÀÌÁö ¾Ê´Â ¼¿À» Ã£°í
-        //Ã£À¸¸é ±× ¼¿¿¡ Å¸¿ö »ı¼º ¹× ¾÷±×·¹ÀÌµå
+        //ì‚¬ìš©ì¤‘ì´ì§€ ì•ŠëŠ” ì…€ì„ ì°¾ê³ 
+        //ì°¾ìœ¼ë©´ ê·¸ ì…€ì— íƒ€ì›Œ ìƒì„± ë° ì—…ê·¸ë ˆì´ë“œ
         foreach (Cell cell in cells) {
             if (!cell.IsUse()) {
                 createButton.CreateAndRandomUpgrade(cell);
@@ -50,7 +50,7 @@ public class UI_AutoCreateButton : UI_Button {
             }
         }
 
-        //°´Ã¼¸¦ ´Ù½Ã ºñÈ°¼ºÈ­
+        //ê°ì²´ë¥¼ ë‹¤ì‹œ ë¹„í™œì„±í™”
         if(isGetTower) {
             transform.parent.gameObject.SetActive(false);
             isGetTower = false;

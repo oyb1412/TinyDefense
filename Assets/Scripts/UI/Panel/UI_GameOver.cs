@@ -2,13 +2,13 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// °ÔÀÓ ¿À¹ö ÆÇ³Ú
+/// ê²Œì„ ì˜¤ë²„ íŒë„¬
 /// </summary>
 public class UI_GameOver : MonoBehaviour {
     public static UI_GameOver Instance;
-    //Á¡¼ö Ç¥±â ÅØ½ºÆ®
+    //ì ìˆ˜ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField]private TextMeshProUGUI scoreText;
-    //ÆÇ³Ú
+    //íŒë„¬
     [SerializeField]private GameObject panelObject;
 
     private void Awake() {
@@ -21,8 +21,8 @@ public class UI_GameOver : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÆÇ³Ú È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
-    /// ½ºÄÚ¾î Ç¥±â
+    /// íŒë„¬ í™œì„±í™” ë° ë¹„í™œì„±í™”
+    /// ìŠ¤ì½”ì–´ í‘œê¸°
     /// </summary>
     /// <param name="trigger"></param>
     public void SetGameOverUI(bool trigger) {

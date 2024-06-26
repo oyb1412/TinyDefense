@@ -3,12 +3,12 @@ using System.Linq;
 using UnityEngine;
 
 /// <summary>
-/// ½Ã½ºÅÍ Å¸¿ö Å¬·¡½º
+/// ì‹œìŠ¤í„° íƒ€ì›Œ í´ë˜ìŠ¤
 /// </summary>
 public class Sister : TowerBase {
     private List<TowerBase> towerList;
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
     protected override void Init() {
         TowerType = Define.TowerType.Sister;
@@ -21,7 +21,7 @@ public class Sister : TowerBase {
     }
 
     /// <summary>
-    /// Åõ»çÃ¼ ¹ß»ç ¹× ¹öÇÁ Àû¿ë
+    /// íˆ¬ì‚¬ì²´ ë°œì‚¬ ë° ë²„í”„ ì ìš©
     /// </summary>
     public override void FireProjectile() {
         TowerBuff();
@@ -35,7 +35,7 @@ public class Sister : TowerBase {
     }
 
     /// <summary>
-    /// ·£´ıÇÑ ÁÖº¯ Å¸¿ö¿¡°Ô ·£´ıÇÑ ¹öÇÁ Àû¿ë
+    /// ëœë¤í•œ ì£¼ë³€ íƒ€ì›Œì—ê²Œ ëœë¤í•œ ë²„í”„ ì ìš©
     /// </summary>
     private void TowerBuff() {
         int ran = Random.Range(0, 2);

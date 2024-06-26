@@ -1,5 +1,5 @@
 /// <summary>
-/// ¾îºô¸®Æ¼ ÃÊ±âÈ­ ¹öÆ° Å¬·¡½º
+/// ì–´ë¹Œë¦¬í‹° ì´ˆê¸°í™” ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_AbilityResetButton : UI_Button {
     private UI_SelectAbility selectAbility;
@@ -9,8 +9,8 @@ public class UI_AbilityResetButton : UI_Button {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ÃÊ±âÈ­
-    /// ±¤°í ·Îµå
+    /// ì–´ë¹Œë¦¬í‹° ì´ˆê¸°í™”
+    /// ê´‘ê³  ë¡œë“œ
     /// </summary>
     public override void Select() {
         Managers.ADMob.ShowRewardedAd(selectAbility.ReActivation);

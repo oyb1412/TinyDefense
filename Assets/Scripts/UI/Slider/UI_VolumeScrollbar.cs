@@ -3,16 +3,16 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ¸ğµç º¼·ı Á¶Àı ½ºÅ©·Ñ¹Ù ºÎ¸ğ Å¬·¡½º
+/// ëª¨ë“  ë³¼ë¥¨ ì¡°ì ˆ ìŠ¤í¬ë¡¤ë°” ë¶€ëª¨ í´ë˜ìŠ¤
 /// </summary>
 public class UI_VolumeScrollbar : MonoBehaviour {
-    //½ºÅ©·Ñ ¹Ù
+    //ìŠ¤í¬ë¡¤ ë°”
     protected Scrollbar scrollBar;
-    //º¼·ı Ç¥½Ã ÅØ½ºÆ®
+    //ë³¼ë¥¨ í‘œì‹œ í…ìŠ¤íŠ¸
     [SerializeField]protected TextMeshProUGUI valueTMP;
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× º¼·ı Á¶Àı Äİ¹é µî·Ï
+    /// ì´ˆê¸°í™” ë° ë³¼ë¥¨ ì¡°ì ˆ ì½œë°± ë“±ë¡
     /// </summary>
     protected virtual void Awake() {
         scrollBar = GetComponent<Scrollbar>();
@@ -20,7 +20,7 @@ public class UI_VolumeScrollbar : MonoBehaviour {
     }
 
     /// <summary>
-    /// º¼·ı Á¶Àı
+    /// ë³¼ë¥¨ ì¡°ì ˆ
     /// </summary>
     /// <param name="value"></param>
     protected virtual void SetScrollBar(float value) {

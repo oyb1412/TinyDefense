@@ -2,30 +2,29 @@ using DG.Tweening;
 using System;
 using UnityEngine;
 
-/// <summary>
-/// ���� �Ŵ���
-/// �ý����� ������ ����
-/// </summary>
+
 public class GameManager {
-    //���� ���� ����
-    private bool _isPlaying;
-    //���� �������� ����� ���� Ÿ�̸�
-    public float GameLevelTimer { get; private set; }
-    //���� ���� ���
-    private int currentGold;
-    //���� ���� ����
-    private int _currentGameLevel;
-    //�� ų ��
-    private int currentKillNumber;
-    //��� ���� �׼�
-    public Action<int> CurrentGoldAction;
-    //���ӷ��� ���� �׼�
     public Action<int> CurrentGameLevelAction;
-    //ų �� ���� �׼�
+
+    public Action<int> CurrentGoldAction;
+
+
     public Action<int> CurrentKillNumberAction;
-    //���� ���� �ӵ�
+
+    private bool _isPlaying;
+    
+    public float GameLevelTimer { get; private set; }
+    
+    private int currentGold;
+    
+    private int _currentGameLevel;
+    
+    private int currentKillNumber;
+    
+
+    
     private Define.GameSpeed gameSpeed;
-    //��Ż �ִϸ�����
+   
     public Animator PortalAnimator { get; private set; }
 
     public Define.GameSpeed GameSpeed {
@@ -42,7 +41,7 @@ public class GameManager {
         }
     }
 
-    //���� ���� ����
+   
     public bool IsPlaying {
         get { return _isPlaying; }
         set {
@@ -58,9 +57,7 @@ public class GameManager {
         }
     }
 
-    /// <summary>
-    /// ���� ������ ������ ����� �ڵ����� �̺�Ʈ ȣ��
-    /// </summary>
+    
     public int CurrentGameLevel {
         get { return _currentGameLevel; }
         set {
@@ -69,9 +66,7 @@ public class GameManager {
         }
     }
 
-    /// <summary>
-    /// ų���� ������ ����� �ڵ����� �̺�Ʈ ȣ��
-    /// </summary>
+   
     public int CurrentKillNumber {
         get { return currentKillNumber; }
         set {
@@ -80,9 +75,7 @@ public class GameManager {
         }
     }
 
-    /// <summary>
-    /// ���� ��忡 ������ ����� �ڵ����� �̺�Ʈ ȣ��
-    /// </summary>
+    
     public int CurrentGold {
         get { return currentGold; }
         set {
@@ -96,9 +89,7 @@ public class GameManager {
         CurrentKillNumberAction = null;
     }
 
-    /// <summary>
-    /// �ʱ�ȭ �� ���� ����
-    /// </summary>
+    
     public void Init() {
         Managers.Enemy.EnemyNumberAction += CheckEnemyNumber;
         IsPlaying = true;
@@ -112,9 +103,7 @@ public class GameManager {
             PortalAnimator = GameObject.Find(Managers.Data.DefineData.TAG_PORTAL).GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// �����Ƽ ȹ�� ������ �������� üũ
-    /// </summary>
+   
     public bool CanGetAbility() {
         if(_currentGameLevel == 1) {
             IsPlaying = false;
@@ -130,10 +119,7 @@ public class GameManager {
     }
 
 
-    /// <summary>
-    /// �ʿ� �����ϴ� �� �� üũ
-    /// </summary>
-    /// <param name="count">���� ��</param>
+    
     private void CheckEnemyNumber(int count) {
         if (Managers.Data.DefineData.ENEMY_MAX_COUNT > count)
             return;
@@ -146,10 +132,7 @@ public class GameManager {
         }
     }
 
-    /// <summary>
-    /// ���� ������, ��ŷ �����͸� Load
-    /// ���� ������ ��ŷ �����Ͱ� �� ������ Save
-    /// </summary>
+    
     private async void GetRankingData() {
         var saveData = await Managers.FireStore.LoadDataToFireStore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Auth.User.Email,
                 Managers.Data.DefineData.TAG_SCORE);
@@ -172,9 +155,7 @@ public class GameManager {
         UI_GameOver.Instance.SetGameOverUI(true);
     }
 
-    /// <summary>
-    /// Ÿ�̸Ӹ� �������� ���� ���� ����
-    /// </summary>
+    
     public void OnUpdate() {
         if (!IsPlaying)
             return;

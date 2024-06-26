@@ -38,6 +38,10 @@ public class AdmobManager {
             });
     }
 
+    /// <summary>
+    /// 광고 출력
+    /// </summary>
+    /// <param name="callBack"></param>
     public void ShowRewardedAd(UnityAction callBack) {
         _currentTimeScale = Time.timeScale;
 

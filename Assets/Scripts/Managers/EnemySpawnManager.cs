@@ -2,16 +2,16 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Àû »ı¼º ¸Å´ÏÀú
+/// ì  ìƒì„± ë§¤ë‹ˆì €
 /// </summary>
 public class EnemySpawnManager {
-    //»ı¼º µô·¹ÀÌ
+    //ìƒì„± ë”œë ˆì´
     private WaitForSeconds spawnDelay;
     private GameObject[] enemyList;
 
     /// <summary>
-    /// »ı¼º µô·¹ÀÌ ÃÊ±âÈ­ ¹×
-    /// »ı¼º ÄÚ·çÆ¾ ½ÃÀÛ
+    /// ìƒì„± ë”œë ˆì´ ì´ˆê¸°í™” ë°
+    /// ìƒì„± ì½”ë£¨í‹´ ì‹œì‘
     /// </summary>
     public void SpawnStart() {
         spawnDelay = new WaitForSeconds(Managers.Data.DefineData.ENEMY_SPAWN_DELAY);
@@ -23,14 +23,14 @@ public class EnemySpawnManager {
                 enemyList[i] = Resources.Load<GameObject>(path);
             }
         }
-
+        //ê²Œì„ ë ˆë²¨ì´ ë³€ê²½ ë  ë•Œë§ˆë‹¤ ìë™ìœ¼ë¡œ ì  ìŠ¤í° ì½”ë£¨í‹´ì„ ì‹¤í–‰
         Managers.Game.CurrentGameLevelAction += ((level) => Managers.Instance.StartCoroutine(Co_Spawn()));
     }
 
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ı¼º ÄÚ·çÆ¾
-    /// »ı¼º µô·¹ÀÌ, °ÔÀÓ ·¹º§¿¡ µû¶ó ¾Ö³Ê¹Ì »ı¼º
+    /// ì• ë„ˆë¯¸ ìƒì„± ì½”ë£¨í‹´
+    /// ìƒì„± ë”œë ˆì´, ê²Œì„ ë ˆë²¨ì— ë”°ë¼ ì• ë„ˆë¯¸ ìƒì„±
     /// </summary>
     private IEnumerator Co_Spawn() {
         int spawnCount = 0;

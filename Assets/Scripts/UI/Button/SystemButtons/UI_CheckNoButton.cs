@@ -1,12 +1,12 @@
 /// <summary>
-/// '¾Æ´Ï¿À'¹öÆ° Å¬·¡½º
+/// 'ì•„ë‹ˆì˜¤'ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_CheckNoButton : UI_Button {
     private UI_CheckPanel checkPanel;
 
     /// <summary>
-    /// È°¼ºÈ­
-    /// ¼±ÅÃ½Ã È°¼ºÈ­ÇÒ ÆÇ³Ú ÀúÀå
+    /// í™œì„±í™”
+    /// ì„ íƒì‹œ í™œì„±í™”í•  íŒë„¬ ì €ì¥
     /// </summary>
     /// <param name="checkPanel"></param>
     public void Activation(UI_CheckPanel checkPanel) {
@@ -17,7 +17,7 @@ public class UI_CheckNoButton : UI_Button {
     }
 
     /// <summary>
-    /// '¾Æ´Ï¿À' ¼±ÅÃ½Ã, ÀúÀåÇØµĞ ÆÇ³Ú È°¼ºÈ­
+    /// 'ì•„ë‹ˆì˜¤' ì„ íƒì‹œ, ì €ì¥í•´ë‘” íŒë„¬ í™œì„±í™”
     /// </summary>
     public override void Select() {
         checkPanel.DeActivation();

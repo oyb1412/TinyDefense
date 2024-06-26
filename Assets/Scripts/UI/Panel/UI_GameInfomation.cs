@@ -1,23 +1,23 @@
 using TMPro;
 using UnityEngine;
 /// <summary>
-/// °ÔÀÓ Á¤º¸ Ç¥±â UI
+/// ê²Œì„ ì •ë³´ í‘œê¸° UI
 /// </summary>
 public class UI_GameInfomation : MonoBehaviour {
-    //º¸À¯ °ñµå Ç¥±â tmp
+    //ë³´ìœ  ê³¨ë“œ í‘œê¸° tmp
     [SerializeField] private TextMeshProUGUI _currentGoldTMP;
-    //ÇöÀç °ÔÀÓ·¹º§ Ç¥±â tmp
+    //í˜„ì¬ ê²Œì„ë ˆë²¨ í‘œê¸° tmp
     [SerializeField] private TextMeshProUGUI _gameLevelTMP;
-    //Ã³Ä¡ ¼ö Ç¥±â tmp
+    //ì²˜ì¹˜ ìˆ˜ í‘œê¸° tmp
     [SerializeField] private TextMeshProUGUI _killNumberTMP;
-    //ÇÊµå¿¡ Á¸ÀçÇÏ´Â Àû ¼ö Ç¥±â tmp
+    //í•„ë“œì— ì¡´ì¬í•˜ëŠ” ì  ìˆ˜ í‘œê¸° tmp
     [SerializeField] private TextMeshProUGUI _enemyNumberTMP;
-    //´ÙÀ½ ¶ó¿îµå±îÁö ½Ã°£ Ç¥±â
+    //ë‹¤ìŒ ë¼ìš´ë“œê¹Œì§€ ì‹œê°„ í‘œê¸°
     [SerializeField] private TextMeshProUGUI _nextRoundtimeTMP;
 
     /// <summary>
-    /// tmp¿¡ ±âº» ¼öÄ¡ ´ëÀÔ
-    /// °¢ ¼öÄ¡ ¾×¼Ç¿¡ tmp ±¸µ¶
+    /// tmpì— ê¸°ë³¸ ìˆ˜ì¹˜ ëŒ€ì…
+    /// ê° ìˆ˜ì¹˜ ì•¡ì…˜ì— tmp êµ¬ë…
     /// </summary>
     private void Start() {
         _currentGoldTMP.text = Managers.Game.CurrentGold.ToString();

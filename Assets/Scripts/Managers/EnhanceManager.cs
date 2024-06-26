@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// ¸ğµç ÀÎÇÚ½º °ü¸® ¸Å´ÏÀú
+/// ëª¨ë“  ì¸í•¸ìŠ¤ ê´€ë¦¬ ë§¤ë‹ˆì €
 /// </summary>
 public class EnhanceManager {
-    //ÇöÀç ÀÎÇÚ½º
+    //í˜„ì¬ ì¸í•¸ìŠ¤
     public EnhanceData.EnhanceLevelData[] EnhanceData { get; private set; }
     /// <summary>
-    /// ÀÎÇÚ½º ÃÊ±âÈ­
+    /// ì¸í•¸ìŠ¤ ì´ˆê¸°í™”
     /// </summary>
     public void Init() {
         EnhanceData = new EnhanceData.EnhanceLevelData[(int)Define.TowerBundle.Count * (int)Define.EnhanceType.Count];
@@ -22,10 +22,10 @@ public class EnhanceManager {
     }
 
     /// <summary>
-    /// ÀÎÇÚ½º ·¹º§¾÷
+    /// ì¸í•¸ìŠ¤ ë ˆë²¨ì—…
     /// </summary>
-    /// <param name="bundle">·¹º§¾÷ÇÒ ÀÎÇÚ½ºÀÇ Å¸¿ö ¹øµé Å¸ÀÔ</param>
-    /// <param name="enhance">·¹º§¾÷ÇÒ ÀÎÇÚ½º Å¸ÀÔ</param>
+    /// <param name="bundle">ë ˆë²¨ì—…í•  ì¸í•¸ìŠ¤ì˜ íƒ€ì›Œ ë²ˆë“¤ íƒ€ì…</param>
+    /// <param name="enhance">ë ˆë²¨ì—…í•  ì¸í•¸ìŠ¤ íƒ€ì…</param>
     public void SetEnhanceValue(Define.TowerBundle bundle, Define.EnhanceType enhance) {
         int index = (int)bundle * 2 + (int)enhance;
         EnhanceData[index].Level++;
@@ -34,10 +34,10 @@ public class EnhanceManager {
     }
 
     /// <summary>
-    /// ÀÎÇÚ½º ¹İÈ¯
+    /// ì¸í•¸ìŠ¤ ë°˜í™˜
     /// </summary>
-    /// <param name="bundle">¹İÈ¯ÇÒ ÀÎÇÚ½ºÀÇ Å¸¿ö ¹øµé Å¸ÀÔ</param>
-    /// <param name="enhance">¹İÈ¯ÇÒ ÀÎÇÚ½º Å¸ÀÔ</param>
+    /// <param name="bundle">ë°˜í™˜í•  ì¸í•¸ìŠ¤ì˜ íƒ€ì›Œ ë²ˆë“¤ íƒ€ì…</param>
+    /// <param name="enhance">ë°˜í™˜í•  ì¸í•¸ìŠ¤ íƒ€ì…</param>
     /// <returns></returns>
     public EnhanceData.EnhanceLevelData GetEnhanceValue(Define.TowerBundle bundle, Define.EnhanceType enhance) {
         int index = (int)bundle * 2 + (int)enhance;

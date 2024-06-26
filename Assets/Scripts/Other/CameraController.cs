@@ -5,7 +5,7 @@ public class CameraController : MonoBehaviour {
 
     void Start() {
         mainCamera = GetComponent<Camera>();
-        float targetAspect = 9.0f / 16.0f; // ±âº» ÇØ»óµµ ºñÀ² (¿¹: 1920x1080)
+        float targetAspect = 9.0f / 16.0f; // ê¸°ë³¸ í•´ìƒë„ ë¹„ìœ¨ (ì˜ˆ: 1920x1080)
         float windowAspect = (float)Screen.width / (float)Screen.height;
         float scaleHeight = windowAspect / targetAspect;
 

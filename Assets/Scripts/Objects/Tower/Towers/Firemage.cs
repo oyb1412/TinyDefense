@@ -1,11 +1,11 @@
 using Unity.VisualScripting;
 
 /// <summary>
-/// È­¿°¸¶¹ı»ç Å¬·¡½º
+/// í™”ì—¼ë§ˆë²•ì‚¬ í´ë˜ìŠ¤
 /// </summary>
 public class Firemage : TowerBase {
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× È­¿° µğ¹öÇÁ Ãß°¡
+    /// ì´ˆê¸°í™” ë° í™”ì—¼ ë””ë²„í”„ ì¶”ê°€
     /// </summary>
     protected override void Init() {
         TowerType = Define.TowerType.Firemage;

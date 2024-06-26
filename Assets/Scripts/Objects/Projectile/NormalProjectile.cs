@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// 2Â÷ Ãæµ¹ÀÌ ¾ø´Â ±âº» ¹ß»çÃ¼
+/// 2ì°¨ ì¶©ëŒì´ ì—†ëŠ” ê¸°ë³¸ ë°œì‚¬ì²´
 /// </summary>
 public class NormalProjectile : ProjectileBase {
     /// <summary>
-    /// Àû°ú Ãæµ¹ ½Ã
-    /// 1.µ¥¹ÌÁö °¡ÇÔ
-    /// 2.µğ¹öÇÁ Àû¿ë
-    /// 3.¹ß»çÃ¼ »èÁ¦
+    /// ì ê³¼ ì¶©ëŒ ì‹œ
+    /// 1.ë°ë¯¸ì§€ ê°€í•¨
+    /// 2.ë””ë²„í”„ ì ìš©
+    /// 3.ë°œì‚¬ì²´ ì‚­ì œ
     /// </summary>
-    /// <param name="enemy">Ãæµ¹ÇÑ Àû</param>
+    /// <param name="enemy">ì¶©ëŒí•œ ì </param>
     protected override void Collison(EnemyBase enemy) {
         enemy.EnemyStatus.SetHp(attackData.Damage, towerBase);
         foreach (var item in towerBase.Debuffs) {
@@ -20,7 +20,7 @@ public class NormalProjectile : ProjectileBase {
     }
 
     /// <summary>
-    /// Åõ»çÃ¼ ÀûÁß½Ã Æø¹ß ÀÌÆåÆ® »ı¼º
+    /// íˆ¬ì‚¬ì²´ ì ì¤‘ì‹œ í­ë°œ ì´í™íŠ¸ ìƒì„±
     /// </summary>
     protected override void CreateExplosion() {
         NormalProjectileEffect go = Managers.Resources.Activation(explosionEffect).GetComponent<NormalProjectileEffect>();

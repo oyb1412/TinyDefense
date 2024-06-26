@@ -15,11 +15,8 @@ public class AbilityManager : Attribute {
     //보유중인 타워 적용 어빌리티 리스트
     public HashSet<ITowerAbility> TowerAbilityList { get; private set; }
 
-    private HashSet<Define.AbilityType> freeAbilityList;
 
     public void Init() {
-        freeAbilityList = new HashSet<Define.AbilityType>() { Define.AbilityType.GetGold, 
-        Define.AbilityType.GetTower, Define.AbilityType.NextThreeTowerLevelThree};
 
         AbilityList = new Dictionary<Define.AbilityType, IAbility>((int)Define.AbilityType.Count);
         AttackAbilityList = new HashSet<IAttackAbility>(Managers.Data.DefineData.ABILITY_ATTACK_COUNT);
@@ -33,9 +30,10 @@ public class AbilityManager : Attribute {
     public void AddAbility(IAbility ability) {
         Managers.Game.IsPlaying = true;
 
-        if (AbilityList.ContainsKey(ability.AbilityValue.Type) &&
-            !freeAbilityList.Contains(ability.AbilityValue.Type))
+        if (AbilityList.ContainsKey(ability.AbilityValue.Type)) {
+            ability.SetAbility();
             return;
+        }
 
         AbilityList.Add(ability.AbilityValue.Type, ability);
         ApplyAbility(ability);

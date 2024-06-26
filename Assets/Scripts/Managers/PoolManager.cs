@@ -5,35 +5,35 @@ using UnityEngine;
 
 public class PoolManager
 {
-    //Ç®¸µ °´Ã¼ Á¾·ù¸¸Å­ »ý¼ºµÇ´Â Å¬·¡½º
+    //í’€ë§ ê°ì²´ ì¢…ë¥˜ë§Œí¼ ìƒì„±ë˜ëŠ” í´ëž˜ìŠ¤
     class Pool
     {
-        //Ç®¸µ °´Ã¼
+        //í’€ë§ ê°ì²´
         public GameObject Original { get; private set; }
-        //Ç®¸µ °´Ã¼µéÀ» ¸ð¾ÆµÑ ºÎ¸ð °´Ã¼
+        //í’€ë§ ê°ì²´ë“¤ì„ ëª¨ì•„ë‘˜ ë¶€ëª¨ ê°ì²´
         public Transform Root { get; private set; }
-        //Ç®¸µ °´Ã¼µéÀ» º¸°üÇØµÑ ½ºÅÃ
-        //½ºÅÃÀÌ´ø Å¥´ø Å©°Ô »ó°ü¾ø´Ù.
+        //í’€ë§ ê°ì²´ë“¤ì„ ë³´ê´€í•´ë‘˜ ìŠ¤íƒ
+        //ìŠ¤íƒì´ë˜ íë˜ í¬ê²Œ ìƒê´€ì—†ë‹¤.
         private Stack<Poolable> _poolStack = new Stack<Poolable>();
 
-        //¾î¶² °´Ã¼°¡ Ã³À½À¸·Î »ý¼ºµÇ¸é, ±× °´Ã¼ÀÇ Ç® Å¬·¡½º¸¦ »ý¼º
+        //ì–´ë–¤ ê°ì²´ê°€ ì²˜ìŒìœ¼ë¡œ ìƒì„±ë˜ë©´, ê·¸ ê°ì²´ì˜ í’€ í´ëž˜ìŠ¤ë¥¼ ìƒì„±
         public void Init(GameObject original, int count = 5)
         {
-            //°´Ã¼¸¦ ÀúÀå
+            //ê°ì²´ë¥¼ ì €ìž¥
             Original = original;
-            //°´Ã¼µéÀ» ¸ð¾ÆµÑ ºÎ¸ð °´Ã¼¸¦ »ý¼º & ÀÌ¸§ ÁöÁ¤
+            //ê°ì²´ë“¤ì„ ëª¨ì•„ë‘˜ ë¶€ëª¨ ê°ì²´ë¥¼ ìƒì„± & ì´ë¦„ ì§€ì •
             Root = new GameObject().transform;
             Root.name = original.name + "_root";
 
-            //ÀÚ½ÅÀÌ ÁöÁ¤ÇÑ Ä«¿îÆ® ¼ö ¸¸Å­ °´Ã¼¸¦ »ý¼º
-            //°´Ã¼ »ý¼º ÈÄ, °´Ã¼µéÀ» ½ºÅÃ¿¡ ÀúÀå
+            //ìžì‹ ì´ ì§€ì •í•œ ì¹´ìš´íŠ¸ ìˆ˜ ë§Œí¼ ê°ì²´ë¥¼ ìƒì„±
+            //ê°ì²´ ìƒì„± í›„, ê°ì²´ë“¤ì„ ìŠ¤íƒì— ì €ìž¥
             for (int i = 0; i < count; i++)
             {
                 Release(Create());
             }
         }
 
-        //°´Ã¼ »ý¼º
+        //ê°ì²´ ìƒì„±
         private Poolable Create()
         {
             GameObject go = Object.Instantiate(Original);
@@ -41,7 +41,7 @@ public class PoolManager
             return go.GetOrAddComponent<Poolable>();
         }
 
-        //°´Ã¼ ºÎ¸ð»ý¼º ¹× ½ºÅÃ¿¡ ÀúÀå
+        //ê°ì²´ ë¶€ëª¨ìƒì„± ë° ìŠ¤íƒì— ì €ìž¥
         public void Release(Poolable poolable)
         {
             if (poolable == null)
@@ -52,7 +52,7 @@ public class PoolManager
             _poolStack.Push(poolable);
         }
 
-        //Ç®¿¡ ´ã°ÜÀÖ´Â °´Ã¼¸¦ Àç»ç¿ëÇÏ±âÀ§ÇØ ½ºÅÃ¿¡¼­ ÃßÃâ
+        //í’€ì— ë‹´ê²¨ìžˆëŠ” ê°ì²´ë¥¼ ìž¬ì‚¬ìš©í•˜ê¸°ìœ„í•´ ìŠ¤íƒì—ì„œ ì¶”ì¶œ
         public Poolable Activation()
         {
             Poolable poolable;
@@ -82,7 +82,7 @@ public class PoolManager
     }
 
     /// <summary>
-    /// »ç¿ëÀÌ ³¡³­ Ç®¸µ °´Ã¼¸¦ ºñÈ°¼ºÈ­ ¹× ´Ù½Ã ½ºÅÃ¿¡ ÀúÀå 
+    /// ì‚¬ìš©ì´ ëë‚œ í’€ë§ ê°ì²´ë¥¼ ë¹„í™œì„±í™” ë° ë‹¤ì‹œ ìŠ¤íƒì— ì €ìž¥ 
     /// </summary>
     /// <param name="poolable"></param>
     public void Release(Poolable poolable)
@@ -99,7 +99,7 @@ public class PoolManager
     }
 
     /// <summary>
-    /// Ç®¸µ °´Ã¼¸¦ »ç¿ëÇÏ±â À§ÇØ ½ºÅÃ¿¡¼­ ÃßÃâ
+    /// í’€ë§ ê°ì²´ë¥¼ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ìŠ¤íƒì—ì„œ ì¶”ì¶œ
     /// </summary>
     /// <param name="original"></param>
     /// <param name="count"></param>
@@ -113,7 +113,7 @@ public class PoolManager
     }
 
     /// <summary>
-    /// Ç®¸µ °´Ã¼°¡ Ã³À½À¸·Î »ý¼ºµÇ¾úÀ»¶§, ±× °´Ã¼ÀÇ Ç® Å¬·¡½º¸¦ »ý¼º
+    /// í’€ë§ ê°ì²´ê°€ ì²˜ìŒìœ¼ë¡œ ìƒì„±ë˜ì—ˆì„ë•Œ, ê·¸ ê°ì²´ì˜ í’€ í´ëž˜ìŠ¤ë¥¼ ìƒì„±
     /// </summary>
     /// <param name="original"></param>
     /// <param name="count"></param>

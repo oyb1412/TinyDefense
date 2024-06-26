@@ -1,10 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// ÀÚµ¿ ¹öÆ°À» °ü¸®ÇÏ´Â ÆÇ³Ú
+/// ìë™ ë²„íŠ¼ì„ ê´€ë¦¬í•˜ëŠ” íŒë„¬
 /// </summary>
 public class UI_AutoPanel : MonoBehaviour {
-    //UIÀÌµ¿ Å¬·¡½º
+    //UIì´ë™ í´ë˜ìŠ¤
     private UI_Movement movement;
 
     private void Awake() {
@@ -12,7 +12,7 @@ public class UI_AutoPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// È°¼ºÈ­ ½Ã UI ÀÌµ¿
+    /// í™œì„±í™” ì‹œ UI ì´ë™
     /// </summary>
     public void Activation() {
         gameObject.SetActive(true);
@@ -20,7 +20,7 @@ public class UI_AutoPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­½Ã ÀÌµ¿ ¹× ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// ë¹„í™œì„±í™”ì‹œ ì´ë™ ë° íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         movement.DeActivation(() => gameObject.SetActive(false));

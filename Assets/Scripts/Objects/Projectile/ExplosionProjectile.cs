@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// 2Â÷ Ãæµ¹ÀÌ ÀÖ´Â ¹ß»çÃ¼ °ü¸® Å¬·¡½º
+/// 2ì°¨ ì¶©ëŒì´ ìˆëŠ” ë°œì‚¬ì²´ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class ExplosionProjectile : ProjectileBase {
     /// <summary>
-    /// Åõ»çÃ¼ ÀûÁß½Ã Æø¹ß ÀÌÆåÆ® »ı¼º
+    /// íˆ¬ì‚¬ì²´ ì ì¤‘ì‹œ í­ë°œ ì´í™íŠ¸ ìƒì„±
     /// </summary>
     protected override void CreateExplosion() {
         ExplosionProjectileEffect go = Managers.Resources.Activation(explosionEffect).GetComponent<ExplosionProjectileEffect>();

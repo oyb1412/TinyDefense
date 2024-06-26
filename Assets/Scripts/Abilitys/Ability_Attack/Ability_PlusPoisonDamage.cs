@@ -1,23 +1,23 @@
 
 /// <summary>
-/// °ø°İ ¾îºô¸®Æ¼ °ü¸® Å¬·¡½º
-/// °ø°İ¿¡ µ¶ µğ¹öÇÁ Ãß°¡
+/// ê³µê²© ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ í´ë˜ìŠ¤
+/// ê³µê²©ì— ë… ë””ë²„í”„ ì¶”ê°€
 /// </summary>
 [Ability(Define.AbilityType.PlusPoisonDamage)]
 public class Ability_PlusPoisonDamage : IAttackAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_PlusPoisonDamage() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusPoisonDamage, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// ½ºÅ³ Ãß°¡½Ã, »ı¼ºµÇ¾îÀÖ´Â ¸ğµç Å¸¿ö¿¡ ½ºÅ³ Ãß°¡
+    /// ìŠ¤í‚¬ ì¶”ê°€ì‹œ, ìƒì„±ë˜ì–´ìˆëŠ” ëª¨ë“  íƒ€ì›Œì— ìŠ¤í‚¬ ì¶”ê°€
     /// </summary>
     public void SetAbility() {
         foreach(var item in Managers.Tower.TowerList) {
@@ -27,11 +27,11 @@ public class Ability_PlusPoisonDamage : IAttackAbility {
     }
 
     /// <summary>
-    /// °ø°İ ½Ã ÇöÀç ¾îºô¸®Æ¼¸¦ º¸À¯ ½Ã,
-    /// ÇöÀç ¾îºô¸®Æ¼ Àû¿ë
+    /// ê³µê²© ì‹œ í˜„ì¬ ì–´ë¹Œë¦¬í‹°ë¥¼ ë³´ìœ  ì‹œ,
+    /// í˜„ì¬ ì–´ë¹Œë¦¬í‹° ì ìš©
     /// </summary>
-    /// <param name="towerBase">°ø°İÇÑ Å¸¿ö</param>
-    /// <param name="attackData">°ø°İ µ¥ÀÌÅÍ</param>
+    /// <param name="towerBase">ê³µê²©í•œ íƒ€ì›Œ</param>
+    /// <param name="attackData">ê³µê²© ë°ì´í„°</param>
     public void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData) {
         towerBase.SetDebuff(new PoisonDebuff(Managers.Data.DefineData.ABILITY_POISON_DEFAULT_DAMAGE * towerBase.TowerStatus.AttackDamage,
             Managers.Data.DefineData.ABILITY_POISON_DEFAULT_TIME));

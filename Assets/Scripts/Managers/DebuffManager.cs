@@ -5,13 +5,13 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// ¸ğµç µğ¹öÇÁ °ü¸® ¸Å´ÏÀú
-/// ¸ğµç ÀûÀÌ ÄÄÆ÷³ÍÆ®·Î º¸À¯
+/// ëª¨ë“  ë””ë²„í”„ ê´€ë¦¬ ë§¤ë‹ˆì €
+/// ëª¨ë“  ì ì´ ì»´í¬ë„ŒíŠ¸ë¡œ ë³´ìœ 
 /// </summary>
 public class DebuffManager {
-    //µğ¹öÇÁ ¸ñ·Ï
+    //ë””ë²„í”„ ëª©ë¡
     public HashSet<IDebuff> Debuffs { get; private set; }
-    //µğ¹öÇÁ Àû¿ë Å¸ÀÔ, Àû¿ë À¯¹« ¾×¼Ç
+    //ë””ë²„í”„ ì ìš© íƒ€ì…, ì ìš© ìœ ë¬´ ì•¡ì…˜
     public Action<Define.DebuffType, bool> DebuffAction;
 
     public DebuffManager() {
@@ -22,11 +22,11 @@ public class DebuffManager {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ Ãß°¡ ¹×
-    /// ÇØÁ¦ ¿¹¾à
+    /// ë””ë²„í”„ ì¶”ê°€ ë°
+    /// í•´ì œ ì˜ˆì•½
     /// </summary>
-    /// <param name="debuff">Ãß°¡ÇÒ µğ¹öÇÁ</param>
-    /// <param name="enemy">Ãß°¡ÇÒ Àû</param>
+    /// <param name="debuff">ì¶”ê°€í•  ë””ë²„í”„</param>
+    /// <param name="enemy">ì¶”ê°€í•  ì </param>
     public void AddDebuff(IDebuff debuff, EnemyBase enemy) {
 
         if (debuff.Bundle == Define.DebuffBundle.Movement)
@@ -46,10 +46,10 @@ public class DebuffManager {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ ÇØÁ¦
+    /// ë””ë²„í”„ í•´ì œ
     /// </summary>
-    /// <param name="debuff">ÇØÁ¦ÇÒ µğ¹öÇÁ</param>
-    /// <param name="enemy">ÇØÁ¦ÇÒ Àû</param>
+    /// <param name="debuff">í•´ì œí•  ë””ë²„í”„</param>
+    /// <param name="enemy">í•´ì œí•  ì </param>
     public void RemoveDebuff(IDebuff debuff, EnemyBase enemy) {
         debuff.RemoveDebuff(enemy);
         Debuffs.Remove(debuff);
@@ -57,11 +57,11 @@ public class DebuffManager {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ ÇØÁ¦ ¿¹¾à ÄÚ·çÆ¾
+    /// ë””ë²„í”„ í•´ì œ ì˜ˆì•½ ì½”ë£¨í‹´
     /// </summary>
-    /// <param name="time">ÇØÁ¦±îÁöÀÇ µô·¹ÀÌ</param>
-    /// <param name="debuff">ÇØÁ¦ÇÒ µğ¹öÇÁ</param>
-    /// <param name="enemy">ÇØÁ¦ÇÒ Àû</param>
+    /// <param name="time">í•´ì œê¹Œì§€ì˜ ë”œë ˆì´</param>
+    /// <param name="debuff">í•´ì œí•  ë””ë²„í”„</param>
+    /// <param name="enemy">í•´ì œí•  ì </param>
     private IEnumerator Co_RemoveDebuff(float time, IDebuff debuff, EnemyBase enemy) {
         float endTime = Time.time + time;
         while (Time.time < endTime) {
@@ -71,10 +71,10 @@ public class DebuffManager {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ·Î ÀÎÇÑ ÀÌµ¿¼Óµµ °è»ê
+    /// ë””ë²„í”„ë¡œ ì¸í•œ ì´ë™ì†ë„ ê³„ì‚°
     /// </summary>
-    /// <param name="baseSpeed">¿øº» ÀÌµ¿¼Óµµ</param>
-    /// <returns>°è»ê ÈÄ ÀÌµ¿¼Óµµ</returns>
+    /// <param name="baseSpeed">ì›ë³¸ ì´ë™ì†ë„</param>
+    /// <returns>ê³„ì‚° í›„ ì´ë™ì†ë„</returns>
     public float CalculateMoveSpeed(float baseSpeed) {
         float finalSpeed = baseSpeed;
         foreach (var debuff in Debuffs) {

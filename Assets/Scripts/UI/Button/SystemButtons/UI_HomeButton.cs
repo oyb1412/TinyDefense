@@ -1,25 +1,25 @@
 using UnityEngine;
 
 /// <summary>
-/// °ÔÀÓ Á¾·á ¹öÆ°
+/// ê²Œì„ ì¢…ë£Œ ë²„íŠ¼
 /// </summary>
 public class UI_HomeButton : UI_Button {
-    //yes,no ¹öÆ° ÆÇ³Ú
+    //yes,no ë²„íŠ¼ íŒë„¬
     [SerializeField] private UI_CheckPanel checkPanel;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã
-    /// yes, no ¹öÆ° ÆÇ³Ú È°¼ºÈ­
+    /// ë²„íŠ¼ ì„ íƒì‹œ
+    /// yes, no ë²„íŠ¼ íŒë„¬ í™œì„±í™”
     /// </summary>
     public override void Select() {
         checkPanel.Activation(Managers.Data.DefineData.MENT_BUTTON_HOME, GoHome);
     }
 
     /// <summary>
-    /// °ÔÀÓ Á¾·á
+    /// ê²Œì„ ì¢…ë£Œ
     /// </summary>
     private void GoHome() {
 #if UNITY_EDITOR

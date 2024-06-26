@@ -1,22 +1,22 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö Á¤º¸ ¹× ¼³¸í,
-/// Å¸¿ö »ı¼º, ÆÇ¸Å, ¾÷±×·¹ÀÌµå °ü¸® Äµ¹ö½º
+/// íƒ€ì›Œ ì •ë³´ ë° ì„¤ëª…,
+/// íƒ€ì›Œ ìƒì„±, íŒë§¤, ì—…ê·¸ë ˆì´ë“œ ê´€ë¦¬ ìº”ë²„ìŠ¤
 /// </summary>
 public class UI_TowerDescription : MonoBehaviour 
 {
     public static UI_TowerDescription Instance;
 
-    //¿ÀºêÁ§Æ® ÆÇ³Ú
+    //ì˜¤ë¸Œì íŠ¸ íŒë„¬
     [SerializeField] private GameObject DescriptionPanel;
-    //ÀÚµ¿ ÆÇ³Ú
+    //ìë™ íŒë„¬
     [SerializeField] private UI_AutoPanel autoPanel;
-    //Å¸¿ö »ı¼º ¹öÆ°
+    //íƒ€ì›Œ ìƒì„± ë²„íŠ¼
     public UI_CreateButton CreateButton { get; private set; }
-    //Å¸¿ö »ı¼º,ÆÇ¸Å,¾÷±×·¹ÀÌµå ¹öÆ°
+    //íƒ€ì›Œ ìƒì„±,íŒë§¤,ì—…ê·¸ë ˆì´ë“œ ë²„íŠ¼
     private UI_TowerBuild towerBuild;
-    //Å¸¿ö Á¤º¸ ÆÇ³Ú
+    //íƒ€ì›Œ ì •ë³´ íŒë„¬
     private UI_TowerInformation towerInformation;
 
 
@@ -36,9 +36,9 @@ public class UI_TowerDescription : MonoBehaviour
     }
 
     /// <summary>
-    /// ÆÇ³Ú È°¼ºÈ­
+    /// íŒë„¬ í™œì„±í™”
     /// </summary>
-    /// <param name="cell">¼±ÅÃÇÑ ¼¿</param>
+    /// <param name="cell">ì„ íƒí•œ ì…€</param>
     public void Activation(Cell cell) {
         DescriptionPanel.SetActive(true);
         autoPanel.DeActivation();
@@ -47,7 +47,7 @@ public class UI_TowerDescription : MonoBehaviour
     }
 
     /// <summary>
-    /// ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         towerBuild.DeActivation(() => DescriptionPanel.SetActive(false));

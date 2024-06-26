@@ -1,13 +1,13 @@
 using UnityEngine;
 /// <summary>
-/// ½½·Î¿ì µğ¹öÇÁ
+/// ìŠ¬ë¡œìš° ë””ë²„í”„
 /// </summary>
 public class SlowDebuff : MovementDebuff {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="debuffValue">µğ¹öÇÁ ¹ë·ù</param>
-    /// <param name="debuffTime">µğ¹öÇÁ Áö¼Ó½Ã°£</param>
+    /// <param name="debuffValue">ë””ë²„í”„ ë°¸ë¥˜</param>
+    /// <param name="debuffTime">ë””ë²„í”„ ì§€ì†ì‹œê°„</param>
     public SlowDebuff(float debuffValue, float debuffTime) {
         Type = Define.DebuffType.Slow;
         DebuffValue = debuffValue;
@@ -15,10 +15,10 @@ public class SlowDebuff : MovementDebuff {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ¸¦ Àû¿ëÇÑ ÀÌµ¿¼Óµµ °è»ê ¹× ¹İÈ¯
+    /// ë””ë²„í”„ë¥¼ ì ìš©í•œ ì´ë™ì†ë„ ê³„ì‚° ë° ë°˜í™˜
     /// </summary>
-    /// <param name="baseSpeed">¿øº» ÀÌµ¿¼Óµµ</param>
-    /// <returns>°è»êµÈ ÀÌµ¿¼Óµµ</returns>
+    /// <param name="baseSpeed">ì›ë³¸ ì´ë™ì†ë„</param>
+    /// <returns>ê³„ì‚°ëœ ì´ë™ì†ë„</returns>
     public override float ModifyMoveSpeed(float baseSpeed) {
         return baseSpeed * (1 - DebuffValue);
     }

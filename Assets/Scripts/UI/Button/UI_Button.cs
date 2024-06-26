@@ -4,12 +4,12 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// °Ç¼³, ÆÇ¸Å, ÇÕ¼º, °­È­ µî ¸ğµç ¹öÆ° °ü¸®
+/// ê±´ì„¤, íŒë§¤, í•©ì„±, ê°•í™” ë“± ëª¨ë“  ë²„íŠ¼ ê´€ë¦¬
 /// </summary>
 public abstract class UI_Button : MonoBehaviour {
     protected Button button;
     private EventTrigger eventTrigger;
-    //¹öÆ° È°¼ºÈ­ ¿©ºÎ
+    //ë²„íŠ¼ í™œì„±í™” ì—¬ë¶€
     protected bool seletable = true;
     protected Define.SFXType buttonSfxType;
 
@@ -19,7 +19,7 @@ public abstract class UI_Button : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÌº¥Æ® Æ®¸®°Å¿¡ ÇÔ¼ö ¿¬µ¿
+    /// ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°ì— í•¨ìˆ˜ ì—°ë™
     /// </summary>
     private void Start() {
         Init();
@@ -29,8 +29,8 @@ public abstract class UI_Button : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã È£Ãâ
-    /// ½ºÄÉÀÏ Á¶Àı
+    /// ë²„íŠ¼ ì„ íƒì‹œ í˜¸ì¶œ
+    /// ìŠ¤ì¼€ì¼ ì¡°ì ˆ
     /// </summary>
     /// <param name="eventData"></param>
     private void OnPointerDown(BaseEventData eventData) {
@@ -38,8 +38,8 @@ public abstract class UI_Button : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¹öÆ° MouseUp½Ã È£Ãâ
-    /// ½ºÄÉÀÏ Á¶Àı ¹× SelectÇÔ¼ö È£Ãâ
+    /// ë²„íŠ¼ MouseUpì‹œ í˜¸ì¶œ
+    /// ìŠ¤ì¼€ì¼ ì¡°ì ˆ ë° Selectí•¨ìˆ˜ í˜¸ì¶œ
     /// </summary>
     /// <param name="eventData"></param>
     private void OnPointerUp(BaseEventData eventData) {
@@ -52,10 +52,10 @@ public abstract class UI_Button : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÌº¥Æ® Æ®¸®°Å¿¡ ÀÌº¥Æ® Ãß°¡
+    /// ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°ì— ì´ë²¤íŠ¸ ì¶”ê°€
     /// </summary>
-    /// <param name="action">Ãß°¡ÇÒ ÀÌº¥Æ®</param>
-    /// <param name="triggerType">Ãß°¡ÇÒ ÀÌº¥Æ® Å¸ÀÔ</param>
+    /// <param name="action">ì¶”ê°€í•  ì´ë²¤íŠ¸</param>
+    /// <param name="triggerType">ì¶”ê°€í•  ì´ë²¤íŠ¸ íƒ€ì…</param>
     private void AddEventTrigger(UnityAction<BaseEventData> action, EventTriggerType triggerType) {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = triggerType;

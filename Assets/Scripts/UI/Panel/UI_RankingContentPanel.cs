@@ -3,20 +3,20 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ·©Å· °¢ ÄÜÅÙÃ÷ °ü¸® Å¬·¡½º
+/// ë­í‚¹ ê° ì½˜í…ì¸  ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_RankingContentPanel : MonoBehaviour {
-    //·©Å· Ç¥±â ÅØ½ºÆ®
+    //ë­í‚¹ í‘œê¸° í…ìŠ¤íŠ¸
     private TextMeshProUGUI rankingTMP;
-    //ÀÌ¸§ Ç¥±â ÅØ½ºÆ®
+    //ì´ë¦„ í‘œê¸° í…ìŠ¤íŠ¸
     private TextMeshProUGUI nameTMP;
-    //Á¡¼ö Ç¥±â ÅØ½ºÆ®
+    //ì ìˆ˜ í‘œê¸° í…ìŠ¤íŠ¸
     private TextMeshProUGUI scoreTMP;
-    //·©Å· Ç¥±â ÀÌ¹ÌÁö ÄÄÆ÷³ÍÆ®
+    //ë­í‚¹ í‘œê¸° ì´ë¯¸ì§€ ì»´í¬ë„ŒíŠ¸
     private Image rankingIcon;
-    //3À§±îÁöÀÇ ½ºÇÁ¶óÀÌÆ®
+    //3ìœ„ê¹Œì§€ì˜ ìŠ¤í”„ë¼ì´íŠ¸
     private Sprite[] topIcon;
-    //±× ¿Ü ½ºÇÁ¶óÀÌÆ®
+    //ê·¸ ì™¸ ìŠ¤í”„ë¼ì´íŠ¸
     private Sprite otherIcon;
 
     private void Awake() {
@@ -32,7 +32,7 @@ public class UI_RankingContentPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// È°¼ºÈ­ ½Ã °¢ ÅØ½ºÆ®, ÀÌ¹ÌÁö¿¡ µ¥ÀÌÅÍ ÇÒ´ç
+    /// í™œì„±í™” ì‹œ ê° í…ìŠ¤íŠ¸, ì´ë¯¸ì§€ì— ë°ì´í„° í• ë‹¹
     /// </summary>
     /// <param name="name"></param>
     /// <param name="score"></param>

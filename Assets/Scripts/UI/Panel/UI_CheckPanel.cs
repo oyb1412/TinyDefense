@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 
 /// <summary>
-/// 'yes' 'no' ¹öÆ° °ü¸® ÆÇ³Ú
+/// 'yes' 'no' ë²„íŠ¼ ê´€ë¦¬ íŒë„¬
 /// </summary>
 public class UI_CheckPanel : MonoBehaviour {
     private TextMeshProUGUI questionTMP;
@@ -17,7 +17,7 @@ public class UI_CheckPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// È°¼ºÈ­½Ã °¢ ¹öÆ°¿¡ µ¥ÀÌÅÍ ÇÒ´ç
+    /// í™œì„±í™”ì‹œ ê° ë²„íŠ¼ì— ë°ì´í„° í• ë‹¹
     /// </summary>
     public void Activation(string ment, UnityAction action) {
         gameObject.SetActive(true);
@@ -28,7 +28,7 @@ public class UI_CheckPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// ºñÈ°¼ºÈ­
+    /// ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         gameObject.SetActive(false);

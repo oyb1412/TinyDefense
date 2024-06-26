@@ -2,23 +2,23 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// °¢ °­È­ ¼±ÅÃ ¹öÆ° Å¬·¡½º
+/// ê° ê°•í™” ì„ íƒ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_EnhanceButton : UI_Button
 {
-    //¿ÀºêÁ§Æ®ÀÇ Å¸¿ö ¹øµé Å¸ÀÔ
+    //ì˜¤ë¸Œì íŠ¸ì˜ íƒ€ì›Œ ë²ˆë“¤ íƒ€ì…
     [SerializeField] private Define.TowerBundle bundleType;
-    //¿ÀºêÁ§Æ®ÀÇ °­È­ Å¸ÀÔ
+    //ì˜¤ë¸Œì íŠ¸ì˜ ê°•í™” íƒ€ì…
     [SerializeField] private Define.EnhanceType enhanceType;
-    //°­È­ ·¹º§ Ç¥±â ÅØ½ºÆ®
+    //ê°•í™” ë ˆë²¨ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI levelText;
-    //°­È­¿¡ ÇÊ¿äÇÑ ÄÚ½ºÆ® Ç¥±â ÅØ½ºÆ®
+    //ê°•í™”ì— í•„ìš”í•œ ì½”ìŠ¤íŠ¸ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI costText;
 
     /// <summary>
-    /// ÃÊ±âÈ­
-    /// ¹öÆ° È°¼ºÈ­ ¿©ºÎ ÆÇ´Ü
-    /// °¢ ÅØ½ºÆ®¿¡ ±âº»°ª ´ëÀÔ
+    /// ì´ˆê¸°í™”
+    /// ë²„íŠ¼ í™œì„±í™” ì—¬ë¶€ íŒë‹¨
+    /// ê° í…ìŠ¤íŠ¸ì— ê¸°ë³¸ê°’ ëŒ€ì…
     /// </summary>
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
@@ -29,9 +29,9 @@ public class UI_EnhanceButton : UI_Button
     }
 
     /// <summary>
-    /// ÀÎÇÚ½º °ñµå ºÎÁ·½Ã ¹öÆ° ºñÈ°¼ºÈ­
+    /// ì¸í•¸ìŠ¤ ê³¨ë“œ ë¶€ì¡±ì‹œ ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
-    /// <param name="gold">ÇöÀç °ñµå</param>
+    /// <param name="gold">í˜„ì¬ ê³¨ë“œ</param>
     private void ButtonActive(int gold) {
         if (Managers.Enhance == null)
             return;
@@ -54,17 +54,17 @@ public class UI_EnhanceButton : UI_Button
     }
 
     /// <summary>
-    /// ÀÎÇÚ½º ¼³¸í + ·¹º§ ÅØ½ºÆ® ÃßÃâ
+    /// ì¸í•¸ìŠ¤ ì„¤ëª… + ë ˆë²¨ í…ìŠ¤íŠ¸ ì¶”ì¶œ
     /// </summary>
-    /// <param name="level">·¹º§</param>
+    /// <param name="level">ë ˆë²¨</param>
     private string GetLevelText(int level) {
         return string.Format(Managers.Data.DefineData.MENT_TOWER_ENHANCE_LEVEL[(int)enhanceType], level);
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ(ÀÎÇÚ½º)
-    /// ÀÎÇÚ½º ·¹º§ Áõ°¡ ¹× ÅØ½ºÆ® º¯°æ
-    /// ºñ¿ë ÁöºÒ
+    /// ë²„íŠ¼ ì„ íƒ(ì¸í•¸ìŠ¤)
+    /// ì¸í•¸ìŠ¤ ë ˆë²¨ ì¦ê°€ ë° í…ìŠ¤íŠ¸ ë³€ê²½
+    /// ë¹„ìš© ì§€ë¶ˆ
     /// </summary>
     public override void Select() {
         var enhance = Managers.Enhance.GetEnhanceValue(bundleType, enhanceType);

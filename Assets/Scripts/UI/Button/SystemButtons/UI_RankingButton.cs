@@ -1,17 +1,17 @@
 using UnityEngine;
 
 /// <summary>
-/// ·©Å· ÆÇ³Ú È°¼ºÈ­ ¹öÆ°
+/// ë­í‚¹ íŒë„¬ í™œì„±í™” ë²„íŠ¼
 /// </summary>
 public class UI_RankingButton : UI_Button {
-    //·©Å· ÆÇ³Ú
+    //ë­í‚¹ íŒë„¬
     [SerializeField] private UI_RankingPanel rankingPanel;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
     }
 
     /// <summary>
-    /// ·©Å· ÆÇ³Ú È°¼ºÈ­
+    /// ë­í‚¹ íŒë„¬ í™œì„±í™”
     /// </summary>
     public override void Select() {
         rankingPanel.Activation();

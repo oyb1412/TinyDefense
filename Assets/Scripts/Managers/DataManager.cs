@@ -8,16 +8,16 @@ using System;
 using Newtonsoft.Json.Linq;
 
 /// <summary>
-/// °ÔÀÓ ³» ¸ğµç µ¥ÀÌÅÍ ¹­À½ Å¬·¡½º
+/// ê²Œì„ ë‚´ ëª¨ë“  ë°ì´í„° ë¬¶ìŒ í´ë˜ìŠ¤
 /// </summary>
 public class GameData {
-    //¾Ö³Ê¹Ì µ¥ÀÌÅÍ
+    //ì• ë„ˆë¯¸ ë°ì´í„°
     public EnemyData EnemyDatas { get; private set; }
-    //½ºÅ³ µ¥ÀÌÅÍ
+    //ìŠ¤í‚¬ ë°ì´í„°
     public SkillData SkillDatas { get; private set; }
-    //Å¸¿ö µ¥ÀÌÅÍ
+    //íƒ€ì›Œ ë°ì´í„°
     public TowerData TowerDatas { get; private set; }
-    //ÀÎÇÚ½º µ¥ÀÌÅÍ
+    //ì¸í•¸ìŠ¤ ë°ì´í„°
     public EnhanceData EnhanceDatas { get; private set; }
 
     public GameData() 
@@ -30,12 +30,12 @@ public class GameData {
 }
 
 /// <summary>
-/// ·Î±×ÀÎ Á¤º¸ °ü¸® Å¬·¡½º
+/// ë¡œê·¸ì¸ ì •ë³´ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class LoginData {
-    //ÀÌ¸ŞÀÏ
+    //ì´ë©”ì¼
     public string Email { get; private set; }
-    //ºñ¹Ğ¹øÈ£
+    //ë¹„ë°€ë²ˆí˜¸
     public string Password { get; private set; }
 
     public LoginData(string email, string password) {
@@ -45,19 +45,19 @@ public class LoginData {
 }
 
 /// <summary>
-/// °¢Á¾ µ¥ÀÌÅÍ °ü¸® Å¬·¡½º
+/// ê°ì¢… ë°ì´í„° ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class DataManager {
-    //¸ğµç °ÔÀÓ µ¥ÀÌÅÍ
+    //ëª¨ë“  ê²Œì„ ë°ì´í„°
     public GameData GameData { get; set; }
-    //¸ğµç °ÔÀÓ µ¥ÀÌÅÍ(Defind)
+    //ëª¨ë“  ê²Œì„ ë°ì´í„°(Defind)
     public Define DefineData { get; set; }
-    //µ¥ÀÌÅÍ ¾ÏÈ£È­¸¦ À§ÇÑ Å°
+    //ë°ì´í„° ì•”í˜¸í™”ë¥¼ ìœ„í•œ í‚¤
     public string Key { get; set; }
 
     /// <summary>
-    /// ·ÎÄÃ¿¡ °ÔÀÓ µ¥ÀÌÅÍ ÀúÀå.
-    /// Ã¹ °ÔÀÓ ½ÃÀÛ½Ã È£Ãâ
+    /// ë¡œì»¬ì— ê²Œì„ ë°ì´í„° ì €ì¥.
+    /// ì²« ê²Œì„ ì‹œì‘ì‹œ í˜¸ì¶œ
     /// </summary>
     public void SaveData(object data) {
         string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented, new JsonSerializerSettings {
@@ -69,7 +69,7 @@ public class DataManager {
     }
 
     /// <summary>
-    /// ·Î±×ÀÎ µ¥ÀÌÅÍ ·Îµå
+    /// ë¡œê·¸ì¸ ë°ì´í„° ë¡œë“œ
     /// </summary>
     /// <returns></returns>
     public LoginData LoadLoginData() {
@@ -78,8 +78,8 @@ public class DataManager {
     }
 
     /// <summary>
-    /// ·ÎÄÃ¿¡ ·Î±×ÀÎ µ¥ÀÌÅÍ ÀúÀå
-    /// Ã¹ ·Î±×ÀÎ½Ã È£Ãâ
+    /// ë¡œì»¬ì— ë¡œê·¸ì¸ ë°ì´í„° ì €ì¥
+    /// ì²« ë¡œê·¸ì¸ì‹œ í˜¸ì¶œ
     /// </summary>
     /// <param name="email"></param>
     /// <param name="password"></param>
@@ -92,13 +92,13 @@ public class DataManager {
     
 
     /// <summary>
-    /// Æ¯Á¤ µ¥ÀÌÅÍ »èÁ¦
+    /// íŠ¹ì • ë°ì´í„° ì‚­ì œ
     /// </summary>
     /// <param name="name"></param>
     public bool DeleteData(string name) {
         string path = Path.Combine(Application.persistentDataPath, name);
         if(!File.Exists(path)) {
-            DebugWrapper.Log("»èÁ¦ÇÏ·Á´Â µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù");
+            DebugWrapper.Log("ì‚­ì œí•˜ë ¤ëŠ” ë°ì´í„°ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤");
             return false;
         }
 
@@ -107,11 +107,11 @@ public class DataManager {
     }
 
     /// <summary>
-    /// JsonÆÄÀÏ ÀúÀå(º¹È£È­)
-    /// Application.persistentDataPath¿¡ ÀúÀå
+    /// JsoníŒŒì¼ ì €ì¥(ë³µí˜¸í™”)
+    /// Application.persistentDataPathì— ì €ì¥
     /// </summary>
-    /// <param name="name">ÆÄÀÏ ÀÌ¸§</param>
-    /// <param name="jsonData">µ¥ÀÌÅÍ</param>
+    /// <param name="name">íŒŒì¼ ì´ë¦„</param>
+    /// <param name="jsonData">ë°ì´í„°</param>
     public void DecryptionSaveJson(string name, string jsonData) {
         string towerData = AesEncryption.Encrypt(jsonData, Key);
 
@@ -120,90 +120,90 @@ public class DataManager {
         byte[] data = Encoding.UTF8.GetBytes(towerData);
         stream.Write(data, 0, data.Length);
         stream.Close();
-        DebugWrapper.Log($"{Path}¿¡ {name}ÀÌ¸§ÀÇ JsonÆÄÀÏ ¼¼ÀÌºê");
+        DebugWrapper.Log($"{Path}ì— {name}ì´ë¦„ì˜ JsoníŒŒì¼ ì„¸ì´ë¸Œ");
     }
 
     /// <summary>
-    /// JSONÆÄÀÏ ·Îµå(º¹È£È­)
+    /// JSONíŒŒì¼ ë¡œë“œ(ë³µí˜¸í™”)
     /// </summary>
-    /// <typeparam name="T">Å¸ÀÔ</typeparam>
-    /// <param name="name">ÆÄÀÏ ÀÌ¸§</param>
-    /// Application.persistentDataPathÆĞ½º¿¡¼­ ·Îµå
+    /// <typeparam name="T">íƒ€ì…</typeparam>
+    /// <param name="name">íŒŒì¼ ì´ë¦„</param>
+    /// Application.persistentDataPathíŒ¨ìŠ¤ì—ì„œ ë¡œë“œ
     /// <returns></returns>
     public T DecryptionLoadJson<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
-            Debug.LogError($"Load ½ÇÆĞ. {Application.persistentDataPath}¿¡ {name} ÀÌ¸§ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"Load ì‹¤íŒ¨. {Application.persistentDataPath}ì— {name} ì´ë¦„ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
             return default;
         }
 
         string jsonData = File.ReadAllText(path);
         string json = AesEncryption.Decrypt(jsonData, Key);
 
-        DebugWrapper.Log($"{Application.persistentDataPath}¿¡¼­ {name} ÀÌ¸§ÀÇ Json ÆÄÀÏ ·Îµå");
+        DebugWrapper.Log($"{Application.persistentDataPath}ì—ì„œ {name} ì´ë¦„ì˜ Json íŒŒì¼ ë¡œë“œ");
         return JsonConvert.DeserializeObject<T>(json);
     }
 
     /// <summary>
-    /// JsonÆÄÀÏ ÀúÀå
-    /// Application.persistentDataPath¿¡ ÀúÀå
+    /// JsoníŒŒì¼ ì €ì¥
+    /// Application.persistentDataPathì— ì €ì¥
     /// </summary>
-    /// <param name="name">ÆÄÀÏ ÀÌ¸§</param>
-    /// <param name="jsonData">µ¥ÀÌÅÍ</param>
+    /// <param name="name">íŒŒì¼ ì´ë¦„</param>
+    /// <param name="jsonData">ë°ì´í„°</param>
     public void SaveJson(string name, string jsonData) {
         string Path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         FileStream stream = new FileStream(Path, FileMode.Create);
         byte[] data = Encoding.UTF8.GetBytes(jsonData);
         stream.Write(data, 0, data.Length);
         stream.Close();
-        DebugWrapper.Log($"{Path}¿¡ {name}ÀÌ¸§ÀÇ JsonÆÄÀÏ ¼¼ÀÌºê");
+        DebugWrapper.Log($"{Path}ì— {name}ì´ë¦„ì˜ JsoníŒŒì¼ ì„¸ì´ë¸Œ");
     }
 
     /// <summary>
-    /// JSONÆÄÀÏ ·Îµå
+    /// JSONíŒŒì¼ ë¡œë“œ
     /// </summary>
-    /// <typeparam name="T">Å¸ÀÔ</typeparam>
-    /// <param name="name">ÆÄÀÏ ÀÌ¸§</param>
-    /// Application.persistentDataPathÆĞ½º¿¡¼­ ·Îµå
+    /// <typeparam name="T">íƒ€ì…</typeparam>
+    /// <param name="name">íŒŒì¼ ì´ë¦„</param>
+    /// Application.persistentDataPathíŒ¨ìŠ¤ì—ì„œ ë¡œë“œ
     /// <returns></returns>
     public T LoadJson<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
-            Debug.LogError($"Load ½ÇÆĞ. {Application.persistentDataPath}¿¡ {name} ÀÌ¸§ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"Load ì‹¤íŒ¨. {Application.persistentDataPath}ì— {name} ì´ë¦„ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
             return default;
         }
 
         string jsonData = File.ReadAllText(path);
 
-        DebugWrapper.Log($"{Application.persistentDataPath}¿¡¼­ {name} ÀÌ¸§ÀÇ Json ÆÄÀÏ ·Îµå");
+        DebugWrapper.Log($"{Application.persistentDataPath}ì—ì„œ {name} ì´ë¦„ì˜ Json íŒŒì¼ ë¡œë“œ");
         return JsonConvert.DeserializeObject<T>(jsonData);
     }
 
     /// <summary>
-    /// JSONÆÄÀÏ ºñµ¿±â ·Îµå(º¹È£È­)
+    /// JSONíŒŒì¼ ë¹„ë™ê¸° ë¡œë“œ(ë³µí˜¸í™”)
     /// </summary>
-    /// <typeparam name="T">Å¸ÀÔ</typeparam>
-    /// <param name="name">ÆÄÀÏ ÀÌ¸§</param>
-    /// Application.persistentDataPathÆĞ½º¿¡¼­ ºñµ¿±â ·Îµå
+    /// <typeparam name="T">íƒ€ì…</typeparam>
+    /// <param name="name">íŒŒì¼ ì´ë¦„</param>
+    /// Application.persistentDataPathíŒ¨ìŠ¤ì—ì„œ ë¹„ë™ê¸° ë¡œë“œ
     /// <returns></returns>
     public async Task<T> DecryptionLoadJsonAsync<T>(string name) {
         string path = string.Format("{0}/{1}.json", Application.persistentDataPath, name);
         if (!File.Exists(path)) {
-            Debug.LogError($"Load ½ÇÆĞ. {Application.persistentDataPath}¿¡ {name} ÀÌ¸§ ÆÄÀÏÀÌ ¾ø½À´Ï´Ù.");
+            Debug.LogError($"Load ì‹¤íŒ¨. {Application.persistentDataPath}ì— {name} ì´ë¦„ íŒŒì¼ì´ ì—†ìŠµë‹ˆë‹¤.");
             return default;
         }
 
         string jsonData = await Task.Run(() => File.ReadAllText(path));
         string json = AesEncryption.Decrypt(jsonData, Key);
 
-        DebugWrapper.Log($"{Application.persistentDataPath}¿¡¼­ {name} ÀÌ¸§ÀÇ Json ÆÄÀÏ ·Îµå");
+        DebugWrapper.Log($"{Application.persistentDataPath}ì—ì„œ {name} ì´ë¦„ì˜ Json íŒŒì¼ ë¡œë“œ");
         return JsonConvert.DeserializeObject<T>(json);
     }
 
     /// <summary>
-    /// Æ¯Á¤ ÆĞ½º¿¡ ÇØ´ç ÆÄÀÏÀÌ Á¸ÀçÇÏ´ÂÁö È®ÀÎ
+    /// íŠ¹ì • íŒ¨ìŠ¤ì— í•´ë‹¹ íŒŒì¼ì´ ì¡´ì¬í•˜ëŠ”ì§€ í™•ì¸
     /// </summary>
-    /// <param name="path">È®ÀÎÇÒ ÆĞ½º</param>
+    /// <param name="path">í™•ì¸í•  íŒ¨ìŠ¤</param>
     /// <returns></returns>
     public bool CheckPathFile(string path) {
         if (File.Exists(Path.Combine(Application.persistentDataPath, path))) {
@@ -214,7 +214,7 @@ public class DataManager {
 }
 
 /// <summary>
-/// Vector3Å¸ÀÔÀ» Á÷·ÄÈ­/¿ªÁ÷·ÄÈ­ ÇÏ±â À§ÇÑ ÄÁ¹öÅÍ
+/// Vector3íƒ€ì…ì„ ì§ë ¬í™”/ì—­ì§ë ¬í™” í•˜ê¸° ìœ„í•œ ì»¨ë²„í„°
 /// </summary>
 public class Vector3Converter : JsonConverter {
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {
@@ -244,7 +244,7 @@ public class Vector3Converter : JsonConverter {
 }
 
 /// <summary>
-/// COLORÅ¸ÀÔÀ» Á÷·ÄÈ­/¿ªÁ÷·ÄÈ­ ÇÏ±â À§ÇÑ ÄÁ¹öÅÍ
+/// COLORíƒ€ì…ì„ ì§ë ¬í™”/ì—­ì§ë ¬í™” í•˜ê¸° ìœ„í•œ ì»¨ë²„í„°
 /// </summary>
 public class ColorConverter : JsonConverter {
     public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer) {

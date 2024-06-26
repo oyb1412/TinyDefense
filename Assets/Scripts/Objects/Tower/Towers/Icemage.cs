@@ -1,9 +1,9 @@
 /// <summary>
-/// ¾óÀ½ ¸¶¹ı»ç Å¬·¡½º
+/// ì–¼ìŒ ë§ˆë²•ì‚¬ í´ë˜ìŠ¤
 /// </summary>
 public class Icemage : TowerBase {
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× ½½·Î¿ì µğ¹öÇÁ Ãß°¡
+    /// ì´ˆê¸°í™” ë° ìŠ¬ë¡œìš° ë””ë²„í”„ ì¶”ê°€
     /// </summary>
     protected override void Init() {
         TowerType = Define.TowerType.Icemage;

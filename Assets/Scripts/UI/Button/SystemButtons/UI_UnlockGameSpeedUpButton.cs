@@ -1,6 +1,6 @@
 using UnityEngine;
 /// <summary>
-/// °ÔÀÓ ¹è¼Ó ¾ğ¶ô ¹öÆ°(±¤°í)
+/// ê²Œì„ ë°°ì† ì–¸ë½ ë²„íŠ¼(ê´‘ê³ )
 /// </summary>
 public class UI_UnlockGameSpeedUpButton : UI_Button {
     [SerializeField]private UI_GameSpeedUpButton uI_GameSpeedUp;
@@ -9,14 +9,14 @@ public class UI_UnlockGameSpeedUpButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ ½Ã, ±¤°í È£Ãâ
+    /// ë²„íŠ¼ ì„ íƒ ì‹œ, ê´‘ê³  í˜¸ì¶œ
     /// </summary>
     public override void Select() {
         Managers.ADMob.ShowRewardedAd(SetButton);
     }
 
     /// <summary>
-    /// ±¤°í ½ÃÃ» ¿Ï·á ½Ã, È£ÃâÇÒ Äİ¹éÇÔ¼ö
+    /// ê´‘ê³  ì‹œì²­ ì™„ë£Œ ì‹œ, í˜¸ì¶œí•  ì½œë°±í•¨ìˆ˜
     /// </summary>
     private void SetButton() {
         uI_GameSpeedUp.SetButton();

@@ -4,22 +4,22 @@ using DG.Tweening;
 using TMPro;
 
 /// <summary>
-/// ·Îµù »óÅÂ Ç¥±â ÅØ½ºÆ® Å¬·¡½º
+/// ë¡œë”© ìƒíƒœ í‘œê¸° í…ìŠ¤íŠ¸ í´ë˜ìŠ¤
 /// </summary>
 public class UI_LoadingText : MonoBehaviour {
-    //·Îµù Áß Ç¥±â ÅØ½ºÆ®
+    //ë¡œë”© ì¤‘ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private string mainText;
-    //·Îµù ¿Ï·á½Ã Ç¥±â ÅØ½ºÆ®
+    //ë¡œë”© ì™„ë£Œì‹œ í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private string clearText;
-    //ÅØ½ºÆ® ÄÄÆ÷³ÍÆ®
+    //í…ìŠ¤íŠ¸ ì»´í¬ë„ŒíŠ¸
     private Text text;
-    //·Îµù % Ç¥±â ÅØ½ºÆ®
+    //ë¡œë”© % í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField]private TextMeshProUGUI loadingText;
-    //ÅØ½ºÆ® Æ®À§´×
+    //í…ìŠ¤íŠ¸ íŠ¸ìœ„ë‹
     private Tween textTween;
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× ·Îµù Áß... ÅØ½ºÆ® Æ®À§´× ½ÇÇà
+    /// ì´ˆê¸°í™” ë° ë¡œë”© ì¤‘... í…ìŠ¤íŠ¸ íŠ¸ìœ„ë‹ ì‹¤í–‰
     /// </summary>
     private void Awake() {
         text = GetComponent<Text>();
@@ -27,7 +27,7 @@ public class UI_LoadingText : MonoBehaviour {
     }
 
     /// <summary>
-    /// ·Îµù % ÅØ½ºÆ® Ç¥±â
+    /// ë¡œë”© % í…ìŠ¤íŠ¸ í‘œê¸°
     /// </summary>
     /// <param name="value"></param>
     public void SetLoadingText(float value) {
@@ -36,9 +36,9 @@ public class UI_LoadingText : MonoBehaviour {
     }
 
     /// <summary>
-    /// ·Îµù ¿Ï·á
-    /// ¸ğµç Æ®À§´× Á¾·á
-    /// ·Îµù ¿Ï·á ÅØ½ºÆ® Ç¥±â
+    /// ë¡œë”© ì™„ë£Œ
+    /// ëª¨ë“  íŠ¸ìœ„ë‹ ì¢…ë£Œ
+    /// ë¡œë”© ì™„ë£Œ í…ìŠ¤íŠ¸ í‘œê¸°
     /// </summary>
     public void CompleteLoading() {
         textTween.Kill();

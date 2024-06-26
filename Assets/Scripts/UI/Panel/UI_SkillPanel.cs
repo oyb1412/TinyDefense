@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// <summary>
-/// ½ºÅ³ ÅÇ ÆÇ³Ú
+/// ìŠ¤í‚¬ íƒ­ íŒë„¬
 /// </summary>
 public class UI_SkillPanel : MonoBehaviour {
     private void Start() {

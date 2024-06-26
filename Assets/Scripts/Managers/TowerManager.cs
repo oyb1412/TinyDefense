@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 
 /// <summary>
-/// ¸ğµç Å¸¿ö °ü¸® ¸Å´ÏÀú
+/// ëª¨ë“  íƒ€ì›Œ ê´€ë¦¬ ë§¤ë‹ˆì €
 /// </summary>
 public class TowerManager {
-    //»ı¼ºµÈ Å¸¿ö ¸®½ºÆ®
+    //ìƒì„±ëœ íƒ€ì›Œ ë¦¬ìŠ¤íŠ¸
     public HashSet<TowerBase> TowerList { get; private set; } 
     public TowerData.TowerLevelData[] TowerData { get; private set; }
 
@@ -13,7 +13,7 @@ public class TowerManager {
     }
 
     /// <summary>
-    /// Å¸¿ö ÃÊ±âÈ­
+    /// íƒ€ì›Œ ì´ˆê¸°í™”
     /// </summary>
     public void Init() {
         TowerData = new TowerData.TowerLevelData[(int)Define.TowerBundle.Count];
@@ -21,10 +21,10 @@ public class TowerManager {
     }
 
     /// <summary>
-    /// ¸®½ºÆ®¿¡ Å¸¿ö Ãß°¡
-    /// Å¸¿ö »ı¼º½Ã È£Ãâ
+    /// ë¦¬ìŠ¤íŠ¸ì— íƒ€ì›Œ ì¶”ê°€
+    /// íƒ€ì›Œ ìƒì„±ì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="go">Ãß°¡ÇÒ Å¸¿ö</param>
+    /// <param name="go">ì¶”ê°€í•  íƒ€ì›Œ</param>
     public void AddTower(TowerBase go) {
         if (TowerList.Contains(go))
             return;
@@ -33,10 +33,10 @@ public class TowerManager {
     }
 
     /// <summary>
-    /// ¸®½ºÆ®¿¡¼­ Å¸¿ö Á¦°Å
-    /// Å¸¿ö Á¦°Å½Ã È£Ãâ
+    /// ë¦¬ìŠ¤íŠ¸ì—ì„œ íƒ€ì›Œ ì œê±°
+    /// íƒ€ì›Œ ì œê±°ì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="go">Á¦°ÅÇÒ Å¸¿ö</param>
+    /// <param name="go">ì œê±°í•  íƒ€ì›Œ</param>
     public void RemoveTower(TowerBase go) {
         if (!TowerList.Contains(go))
             return;

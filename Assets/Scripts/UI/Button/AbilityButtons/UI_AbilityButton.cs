@@ -1,12 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// °¢ ¾îºô¸®Æ¼ ¼±ÅÃ ¹öÆ° Å¬·¡½º
+/// ê° ì–´ë¹Œë¦¬í‹° ì„ íƒ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_AbilityButton : UI_Button {
-    //Çö ¿ÀºêÁ§Æ®ÀÇ ¾îºô¸®Æ¼ Å¸ÀÔ
+    //í˜„ ì˜¤ë¸Œì íŠ¸ì˜ ì–´ë¹Œë¦¬í‹° íƒ€ì…
     [SerializeField] private Define.AbilityType AbilityType;
-    //¾îºô¸®Æ¼ ¸ñ·Ï ÆÇ³Ú
+    //ì–´ë¹Œë¦¬í‹° ëª©ë¡ íŒë„¬
     private UI_SelectAbility selectAbilityUI;
 
     public override void Init() {
@@ -16,8 +16,8 @@ public class UI_AbilityButton : UI_Button {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¼±ÅÃ ¹×
-    /// º¸À¯ ¾îºô¸®Æ¼ ¸ñ·Ï¿¡ ¾îºô¸®Æ¼ Ãß°¡
+    /// ì–´ë¹Œë¦¬í‹° ì„ íƒ ë°
+    /// ë³´ìœ  ì–´ë¹Œë¦¬í‹° ëª©ë¡ì— ì–´ë¹Œë¦¬í‹° ì¶”ê°€
     /// </summary>
     public override void Select() {
         IAbility ability = AbilityFactory.CreateAbility(AbilityType);

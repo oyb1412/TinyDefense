@@ -2,15 +2,12 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-/// <summary>
-/// ����̵� ��ų ��ü Ŭ����
-/// </summary>
 public class Skill_Tornado : MonoBehaviour {
-    //�̵� ���(�θ�)
+    
     private Transform movePath;
-    //��ų ������
+   
     private SkillData.Skill skillData;
-    //�̵� �ڷ�ƾ
+   
     private Coroutine moveCoroutine;
     private Coroutine attackCoroutine;
     private WaitForSeconds attackDelay;
@@ -43,19 +40,17 @@ public class Skill_Tornado : MonoBehaviour {
         Invoke("Ivk_DestroyTornado", skillData.SkillTime);
     }
 
-    /// <summary>
-    /// ��ų ���ӽð� �� �ڵ� ����(�κ�ũ�� ȣ��)
-    /// </summary>
+  
     private void Ivk_DestroyTornado() {
         StopAllCoroutines();
         containsEnemy.Clear();
         Managers.Resources.Release(gameObject);
     }
 
-    /// <summary>
-    /// �ֺ� ���� ����
-    /// </summary>
-    /// <returns></returns>
+   /// <summary>
+   /// 주변 적 공격 코루틴
+   /// </summary>
+   /// <returns></returns>
     private IEnumerator Co_Attack() {
         while (true) {
             if (Managers.Enemy.EnemyList.Count > 0) {
@@ -86,9 +81,7 @@ public class Skill_Tornado : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// ��ο� ���� �ڵ� �̵�
-    /// </summary>
+   
     private IEnumerator Co_Move() {
         int moveIndex = movePath.childCount - 1;
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;

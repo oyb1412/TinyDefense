@@ -5,11 +5,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Events;
 
 /// <summary>
-/// ¸ğµç ÆäÀÌµå °ü¸® Å¬·¡½º
+/// ëª¨ë“  í˜ì´ë“œ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_Fade : MonoBehaviour {
     public static UI_Fade Instance;
-    //ÆäÀÌµå ÀÌ¹ÌÁö
+    //í˜ì´ë“œ ì´ë¯¸ì§€
     private Image fadeImage;
     private void Awake() {
         if(Instance == null) {
@@ -23,24 +23,24 @@ public class UI_Fade : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÆäÀÌµå ÀÎ
-    /// ÆäÀÌµå Á¾·á ½Ã ¾À ÀÌµ¿
+    /// í˜ì´ë“œ ì¸
+    /// í˜ì´ë“œ ì¢…ë£Œ ì‹œ ì”¬ ì´ë™
     /// </summary>
-    /// <param name="type">ÀÌµ¿ÇÒ ¾À</param>
+    /// <param name="type">ì´ë™í•  ì”¬</param>
     public void ActivationFade(Define.SceneType type) {
         fadeImage.DOFade(1f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true).OnComplete(() => SceneManager.LoadScene(type.ToString()));
     }
 
     /// <summary>
-    /// ÆäÀÌµå ¾Æ¿ô
+    /// í˜ì´ë“œ ì•„ì›ƒ
     /// </summary>
     public void DeActivationFade() {
         fadeImage.DOFade(0f, Managers.Data.DefineData.FADE_TIME).SetUpdate(true);
     }
 
     /// <summary>
-    /// ÆäÀÌµå ÀÎ
-    /// ÆäÀÌµå Á¾·á ½Ã Äİ¹éÇÔ¼ö È£Ãâ
+    /// í˜ì´ë“œ ì¸
+    /// í˜ì´ë“œ ì¢…ë£Œ ì‹œ ì½œë°±í•¨ìˆ˜ í˜¸ì¶œ
     /// </summary>
     /// <param name="fadeInCallBack"></param>
     public void ActivationAndDeActivationFade(UnityAction fadeInCallBack) {

@@ -2,7 +2,7 @@ using UnityEngine;
 using System;
 
 /// <summary>
-/// ½ºÄÉÀÏ º¯°æÀÌ ÀÏ¾î³ª´Â ºÎ¸ğ Å¬·¡½º
+/// ìŠ¤ì¼€ì¼ ë³€ê²½ì´ ì¼ì–´ë‚˜ëŠ” ë¶€ëª¨ í´ë˜ìŠ¤
 /// </summary>
 public class ParentScaleEventHandler : MonoBehaviour {
     public Action<Define.Direction> OnScaleChanged;
@@ -12,10 +12,10 @@ public class ParentScaleEventHandler : MonoBehaviour {
     }
 
     /// <summary>
-    /// ½ºÄÉÀÏ º¯°æ ¹× ÀÌº¥Æ® È£Ãâ
+    /// ìŠ¤ì¼€ì¼ ë³€ê²½ ë° ì´ë²¤íŠ¸ í˜¸ì¶œ
     /// </summary>
-    /// <param name="right">º¯°æ À§Ä¡</param>
-    /// <param name="trans">º¯°æÇÒ Æ®·£½ºÆû</param>
+    /// <param name="right">ë³€ê²½ ìœ„ì¹˜</param>
+    /// <param name="trans">ë³€ê²½í•  íŠ¸ëœìŠ¤í¼</param>
     public void ChangeScale(Define.Direction dir, Transform trans) {
         Util.ChangeFlip(trans, dir);
         OnScaleChanged?.Invoke(dir);

@@ -4,12 +4,12 @@ using System.Collections;
 using UnityEngine.Events;
 
 /// <summary>
-/// ·Îµù ½½¶óÀÌ´õ
+/// ë¡œë”© ìŠ¬ë¼ì´ë”
 /// </summary>
 public class UI_LoadingSlider : MonoBehaviour {
-    //·Îµù ¹Ù
+    //ë¡œë”© ë°”
     private Slider loadingSlider;
-    //·Îµù ÅØ½ºÆ®
+    //ë¡œë”© í…ìŠ¤íŠ¸
     [SerializeField]private UI_LoadingText loadingText;
 
     private void Awake() {
@@ -17,20 +17,20 @@ public class UI_LoadingSlider : MonoBehaviour {
     }
 
     /// <summary>
-    /// ·Îµù ½ÃÀÛ
-    /// ·ÎµùÁßÀÎ °æ¿ì ·Îµù Á¤Áö ÈÄ Àç·Îµù
+    /// ë¡œë”© ì‹œì‘
+    /// ë¡œë”©ì¤‘ì¸ ê²½ìš° ë¡œë”© ì •ì§€ í›„ ì¬ë¡œë”©
     /// </summary>
-    /// <param name="value">¸ñÇ¥ ·Îµù value</param>
-    /// <param name="callBack">·Îµù ¿Ï·á ÈÄ ½ÇÇàÇÒ Äİ¹é</param>
+    /// <param name="value">ëª©í‘œ ë¡œë”© value</param>
+    /// <param name="callBack">ë¡œë”© ì™„ë£Œ í›„ ì‹¤í–‰í•  ì½œë°±</param>
     public void SetLoading(float value, UnityAction callBack) {
         StopAllCoroutines();
         StartCoroutine(Co_Loading(value, callBack));
     }
 
     /// <summary>
-    /// ·Îµù ÄÚ·çÆ¾
-    /// ¸ñÇ¥ ·Îµù value±îÁö ·Îµù ÁøÇà
-    /// ·Îµù ¿Ï·á ½Ã Äİ¹éÇÔ¼ö ½ÇÇà
+    /// ë¡œë”© ì½”ë£¨í‹´
+    /// ëª©í‘œ ë¡œë”© valueê¹Œì§€ ë¡œë”© ì§„í–‰
+    /// ë¡œë”© ì™„ë£Œ ì‹œ ì½œë°±í•¨ìˆ˜ ì‹¤í–‰
     /// </summary>
     /// <param name="value"></param>
     /// <param name="callBack"></param>

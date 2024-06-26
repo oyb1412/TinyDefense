@@ -1,10 +1,10 @@
 using UnityEngine;
 
 /// <summary>
-/// Åä³×ÀÌµµ ½ºÅ³ ¹öÆ° Å¬·¡½º
+/// í† ë„¤ì´ë„ ìŠ¤í‚¬ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
-    //Åä³×ÀÌµµ °´Ã¼ ÇÁ¸®Æé
+    //í† ë„¤ì´ë„ ê°ì²´ í”„ë¦¬í©
     private GameObject tornadoPrefab;
     public override void Init() {
         buttonSfxType = Define.SFXType.TornadoSkill;
@@ -21,18 +21,18 @@ public class UI_ActivationTornadoSkillButton : UI_ActivationSkillButton {
     }
 
     /// <summary>
-    /// Åä³×ÀÌµµ ½ºÅ³ ½ÇÇà
+    /// í† ë„¤ì´ë„ ìŠ¤í‚¬ ì‹¤í–‰
     /// </summary>
     protected override void OnSelect() {
         base.OnSelect();
 
-        //½ºÅÏÀº Áï½Ã ¹ßµ¿
-        //½ºÅ³ »ç¿ë ÈÄ ÄğÅ¸ÀÓ ½ÃÀÛ
+        //ìŠ¤í„´ì€ ì¦‰ì‹œ ë°œë™
+        //ìŠ¤í‚¬ ì‚¬ìš© í›„ ì¿¨íƒ€ì„ ì‹œì‘
         base.OnSelect();
         var skill = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
         UseSkill(skill.SkillCoolTime);
 
-        //Åä³×ÀÌµµ »ı¼º
+        //í† ë„¤ì´ë„ ìƒì„±
         Managers.Resources.Activation(tornadoPrefab);
     }
 }

@@ -1,12 +1,12 @@
 using UnityEngine;
 public class LoginScene : BaseScene {
-    //·Î±×ÀÎ ÆÇ³Ú
+    //ë¡œê·¸ì¸ íŒë„¬
     [SerializeField] private GameObject _loginPanel;
-    //°ÔÀÓ ½ÃÀÛ ¸ŞÀÎ ÆÇ³Ú
+    //ê²Œì„ ì‹œì‘ ë©”ì¸ íŒë„¬
     [SerializeField] private GameObject _mainPanel;
     
     /// <summary>
-    /// ·Î±×ÀÎ ¾À ÃÊ±âÈ­
+    /// ë¡œê·¸ì¸ ì”¬ ì´ˆê¸°í™”
     /// </summary>
     public override void Init() {
         base.Init();
@@ -16,13 +16,13 @@ public class LoginScene : BaseScene {
         if(Time.timeScale == 0) {
             Time.timeScale = 1f;
         }
-        //ÀÌ¹Ì ·Î±×ÀÎÇÑ »óÅÂ¸é ÀÚµ¿ ·Î±×ÀÎ
+        //ì´ë¯¸ ë¡œê·¸ì¸í•œ ìƒíƒœë©´ ìë™ ë¡œê·¸ì¸
         if (Managers.Auth.User != null) {
             AutoLogin(true);
         } 
         else {
             var loginData = Managers.Data.LoadLoginData();
-            //·Î±×ÀÎ Á¤º¸°¡ ³²¾ÆÀÖÀ»½Ã ÀÚµ¿ ·Î±×ÀÎ
+            //ë¡œê·¸ì¸ ì •ë³´ê°€ ë‚¨ì•„ìˆì„ì‹œ ìë™ ë¡œê·¸ì¸
             if (loginData != null) {
                 Managers.Auth.Login(loginData.Email, loginData.Password, AutoLogin);
             } else {
@@ -33,7 +33,7 @@ public class LoginScene : BaseScene {
     }
 
     /// <summary>
-    /// ÀÚµ¿ ·Î±×ÀÎ
+    /// ìë™ ë¡œê·¸ì¸
     /// </summary>
     /// <param name="trigger"></param>
     private void AutoLogin(bool trigger) {

@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö¿Í °ü·ÃµÈ ¹öÆ°UI °ü¸® ÀÎÅÍÆäÀÌ½º
+/// íƒ€ì›Œì™€ ê´€ë ¨ëœ ë²„íŠ¼UI ê´€ë¦¬ ì¸í„°í˜ì´ìŠ¤
 /// </summary>
 public interface IUI_TowerButton {
-    //È°¼ºÈ­
+    //í™œì„±í™”
     void Activation(Cell cellt);
-    //ºñÈ°¼ºÈ­
+    //ë¹„í™œì„±í™”
     void DeActivation();
 }

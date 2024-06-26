@@ -1,57 +1,57 @@
 
 /// <summary>
-/// ±âº»ÀûÀÎ Å¸¿ö µ¥ÀÌÅÍ
+/// ê¸°ë³¸ì ì¸ íƒ€ì›Œ ë°ì´í„°
 /// </summary>
 [System.Serializable]
 public class TowerData  {
     
     [System.Serializable]
     public class TowerLevelData {
-        //Å¸¿ö ·¹º§
+        //íƒ€ì›Œ ë ˆë²¨
         public int Level;
-        //Å¸¿ö ÆÇ¸Å ºñ¿ë
+        //íƒ€ì›Œ íŒë§¤ ë¹„ìš©
         public int SellReward;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â Å¸¿ö ÆÇ¸Å ºñ¿ë
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” íƒ€ì›Œ íŒë§¤ ë¹„ìš©
         public int SellRewardUpValue;
-        //Å¸¿ö °ø°İ·Â
+        //íƒ€ì›Œ ê³µê²©ë ¥
         public float AttackDamage;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â Å¸¿ö °ø°İ·Â
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” íƒ€ì›Œ ê³µê²©ë ¥
         public float AttackDamageUpValue;
-        //Å¸¿ö °ø°İ °£°İ
+        //íƒ€ì›Œ ê³µê²© ê°„ê²©
         public float AttackDelay;
-        //·¹º§¾÷½Ã °¨¼ÒÇÏ´Â Å¸¿ö °ø°İ °£°İ
+        //ë ˆë²¨ì—…ì‹œ ê°ì†Œí•˜ëŠ” íƒ€ì›Œ ê³µê²© ê°„ê²©
         public float AttackDelayDownValue;
-        //Å¸¿ö »ç°Å¸®
+        //íƒ€ì›Œ ì‚¬ê±°ë¦¬
         public float AttackRange;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â Å¸¿ö »ç°Å¸®
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” íƒ€ì›Œ ì‚¬ê±°ë¦¬
         public float AttackRangeUpValue;
-        //Å¸¿ö ¹öÇÁ·®(¹öÇÁ¸¦ ½ÃÀüÇÏ´Â Å¸¿ö Àü¿ë)
+        //íƒ€ì›Œ ë²„í”„ëŸ‰(ë²„í”„ë¥¼ ì‹œì „í•˜ëŠ” íƒ€ì›Œ ì „ìš©)
         public float BuffValue;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ¹öÇÁ·®
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë²„í”„ëŸ‰
         public float BuffValueUpValue;
-        //Å¸¿ö ¹öÇÁ ½Ã°£
+        //íƒ€ì›Œ ë²„í”„ ì‹œê°„
         public float BuffTime;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ¹öÇÁ ½Ã°£
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë²„í”„ ì‹œê°„
         public float BuffTimeUpValue;
-        //Å¸¿ö ½½·Î¿ì ¹ë·ù(½½·Î¿ì¸¦ °Å´Â Å¸¿ö Àü¿ë)
+        //íƒ€ì›Œ ìŠ¬ë¡œìš° ë°¸ë¥˜(ìŠ¬ë¡œìš°ë¥¼ ê±°ëŠ” íƒ€ì›Œ ì „ìš©)
         public float SlowValue;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ½½·Î¿ì ¹ë·ù
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ìŠ¬ë¡œìš° ë°¸ë¥˜
         public float SlowValueUpValue;
-        //Å¸¿ö ½½·Î¿ì ½Ã°£
+        //íƒ€ì›Œ ìŠ¬ë¡œìš° ì‹œê°„
         public float SlowTime;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ½½·Î¿ì ½Ã°£
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ìŠ¬ë¡œìš° ì‹œê°„
         public float SlowTimeUpValue;
-        //Å¸¿ö µ¥¹ÌÁö µğ¹öÇÁ ¹ë·ù(µ¥¹ÌÁö µğ¹öÇÁ¸¦ °Å´Â Å¸¿ö Àü¿ë)
+        //íƒ€ì›Œ ë°ë¯¸ì§€ ë””ë²„í”„ ë°¸ë¥˜(ë°ë¯¸ì§€ ë””ë²„í”„ë¥¼ ê±°ëŠ” íƒ€ì›Œ ì „ìš©)
         public float FireValue;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â µ¥¹ÌÁö µğ¹öÇÁ ¹ë·ù
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë°ë¯¸ì§€ ë””ë²„í”„ ë°¸ë¥˜
         public float FireValueUpValue;
-        //µ¥¹ÌÁö µğ¹öÇÁ ½Ã°£
+        //ë°ë¯¸ì§€ ë””ë²„í”„ ì‹œê°„
         public float FireTime;
-        //·¹º§¾÷½Ã Áõ°¡ÇÏ´Â µ¥¹ÌÁö µğ¹öÇÁ ½Ã°£
+        //ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë°ë¯¸ì§€ ë””ë²„í”„ ì‹œê°„
         public float FireTimeUpValue;
     }
 
-    //Å¸¿ö Å¸ÀÔÀ¸·Î ºĞ·ù
+    //íƒ€ì›Œ íƒ€ì…ìœ¼ë¡œ ë¶„ë¥˜
     public TowerLevelData[] Towers;
 
     public TowerData() {

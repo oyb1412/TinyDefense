@@ -1,6 +1,6 @@
 using UnityEngine;
 /// <summary>
-/// ¼ÂÆÃÆÇ³Ú ºñÈ°¼ºÈ­ ¹öÆ°
+/// ì…‹íŒ…íŒë„¬ ë¹„í™œì„±í™” ë²„íŠ¼
 /// </summary>
 public class UI_ReturnButton : UI_Button {
     [SerializeField] private GameObject settingPanel;
@@ -9,9 +9,9 @@ public class UI_ReturnButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ ½Ã
-    /// ¼ÂÆÃ ÆÇ³Ú ºñÈ°¼ºÈ­
-    /// °ÔÀÓ Àç½ÃÀÛ
+    /// ë²„íŠ¼ ì„ íƒ ì‹œ
+    /// ì…‹íŒ… íŒë„¬ ë¹„í™œì„±í™”
+    /// ê²Œì„ ì¬ì‹œì‘
     /// </summary>
     public override void Select() {
         settingPanel.SetActive(false);

@@ -1,31 +1,31 @@
 using UnityEngine.Events;
 
 /// <summary>
-/// ½Ã½ºÅÛÀû ¾îºô¸®Æ¼
-/// ¸¶¹ı»çÅ¸ÀÔ Å¸¿ö ÃâÇöÈ®·ü Áõ°¡
+/// ì‹œìŠ¤í…œì  ì–´ë¹Œë¦¬í‹°
+/// ë§ˆë²•ì‚¬íƒ€ì… íƒ€ì›Œ ì¶œí˜„í™•ë¥  ì¦ê°€
 /// </summary>
 [Ability(Define.AbilityType.PlusMageTowerPercentage)]
 public class Ability_PlusMageTowerPercentage : ITowerPreAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_PlusMageTowerPercentage() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusMageTowerPercentage, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Ãß°¡ ½Ã Áï½Ã È¿°ú Àû¿ëÀÌ ÇÊ¿äÇÑ °æ¿ì »ç¿ë
+    /// ì–´ë¹Œë¦¬í‹° ì¶”ê°€ ì‹œ ì¦‰ì‹œ íš¨ê³¼ ì ìš©ì´ í•„ìš”í•œ ê²½ìš° ì‚¬ìš©
     /// </summary>
     public void SetAbility() {
 
     }
 
     /// <summary>
-    /// ÇöÀç ½ºÅ³ º¸À¯ ½Ã, Å¸¿ö »ı¼º½Ã °¡ÁßÄ¡ ºÎ¿©
+    /// í˜„ì¬ ìŠ¤í‚¬ ë³´ìœ  ì‹œ, íƒ€ì›Œ ìƒì„±ì‹œ ê°€ì¤‘ì¹˜ ë¶€ì—¬
     /// </summary>
     public void ExecuteSystemAbility(UI_Button button) {
         if (button is UI_CreateButton createButton) {

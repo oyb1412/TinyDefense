@@ -1,16 +1,16 @@
 using UnityEngine;
 
 /// <summary>
-/// °¢ ÅÇ ¹öÆ° °ü¸® Å¬·¡½º
+/// ê° íƒ­ ë²„íŠ¼ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_TapButton : UI_Button {
-    //°¢ ÅÇ ¹öÆ°
+    //ê° íƒ­ ë²„íŠ¼
     private UI_Button[] tapButtons;
-    //ÅÇ ¹öÆ°¿¡ ¿¬µ¿µÈ ÄÁÅÙÃ÷ ÆÇ³Ú
+    //íƒ­ ë²„íŠ¼ì— ì—°ë™ëœ ì»¨í…ì¸  íŒë„¬
     [SerializeField] private GameObject contentPanel;
 
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
@@ -19,9 +19,9 @@ public class UI_TapButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ
-    /// ÀÌ¹Ì ¼±ÅÃµÇÀÖ´Â ÅÇÀ» ¼±ÅÃ½Ã return
-    /// ¸ğµç ÅÇÀ» ºñÈ°¼ºÈ­ ÈÄ, ¼±ÅÃÇÑ ÅÇÀ» È°¼ºÈ­
+    /// ë²„íŠ¼ ì„ íƒ
+    /// ì´ë¯¸ ì„ íƒë˜ìˆëŠ” íƒ­ì„ ì„ íƒì‹œ return
+    /// ëª¨ë“  íƒ­ì„ ë¹„í™œì„±í™” í›„, ì„ íƒí•œ íƒ­ì„ í™œì„±í™”
     /// </summary>
     public override void Select() {
         if (contentPanel.activeInHierarchy)
@@ -37,9 +37,9 @@ public class UI_TapButton : UI_Button {
     }
 
     /// <summary>
-    /// È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­ ¹öÆ° »ö º¯°æ
+    /// í™œì„±í™” ë° ë¹„í™œì„±í™” ë²„íŠ¼ ìƒ‰ ë³€ê²½
     /// </summary>
-    /// <param name="color">º¯°æÇÒ »ö</param>
+    /// <param name="color">ë³€ê²½í•  ìƒ‰</param>
     public void SetButtonColor(Color color) {
         button.image.color = color;
     }

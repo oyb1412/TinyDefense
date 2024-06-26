@@ -1,12 +1,12 @@
 using UnityEngine;
 
 /// <summary>
-/// Àû µğ¹öÇÁ ¾Ö´Ï¸ŞÀÌ¼Ç Ç¥±â Å¬·¡½º
+/// ì  ë””ë²„í”„ ì• ë‹ˆë©”ì´ì…˜ í‘œê¸° í´ë˜ìŠ¤
 /// </summary>
 public class DebuffAdjustment : MonoBehaviour {
-    //Ç¥±âÇÒ Àû Å¬·¡½º
+    //í‘œê¸°í•  ì  í´ë˜ìŠ¤
     private EnemyBase enemyBase;
-    //µğ¹öÇÁ Ç¥±â ¾Ö´Ï¸ŞÀÌÅÍ
+    //ë””ë²„í”„ í‘œê¸° ì• ë‹ˆë©”ì´í„°
     private SpriteRenderer[] debuffs;
 
     private void Awake() {
@@ -15,7 +15,7 @@ public class DebuffAdjustment : MonoBehaviour {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ È°¼ºÈ­½Ã ¾×¼Ç ¿¬µ¿
+    /// ë””ë²„í”„ í™œì„±í™”ì‹œ ì•¡ì…˜ ì—°ë™
     /// </summary>
     private void OnEnable() {
         foreach (SpriteRenderer debuff in debuffs)
@@ -26,10 +26,10 @@ public class DebuffAdjustment : MonoBehaviour {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ È°¼ºÈ­ ¹× ºñÈ°¼ºÈ­
+    /// ë””ë²„í”„ í™œì„±í™” ë° ë¹„í™œì„±í™”
     /// </summary>
-    /// <param name="debuffType">µğ¹öÇÁ Å¸ÀÔ</param>
-    /// <param name="trigger">È°¼ºÈ­ À¯¹«</param>
+    /// <param name="debuffType">ë””ë²„í”„ íƒ€ì…</param>
+    /// <param name="trigger">í™œì„±í™” ìœ ë¬´</param>
     public void SetDebuff(Define.DebuffType debuffType, bool trigger) {
         debuffs[(int)debuffType].enabled = trigger;
     }

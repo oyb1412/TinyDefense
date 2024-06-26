@@ -1,19 +1,19 @@
 /// <summary>
-/// ±âº»ÀûÀÎ ¾Ö³Ê¹Ì µ¥ÀÌÅÍ
+/// ê¸°ë³¸ì ì¸ ì• ë„ˆë¯¸ ë°ì´í„°
 /// </summary>
 [System.Serializable]
 public class EnemyData {
     [System.Serializable]
     public class EnemyStatusData {
-        //·¹º§
+        //ë ˆë²¨
         public int Level; 
-        //º¸»ó
+        //ë³´ìƒ
         public int Reward;
-        //ÃÖ´ë Ã¼·Â
+        //ìµœëŒ€ ì²´ë ¥
         public float MaxHp;
-        //ÀÌµ¿ ¼Óµµ
+        //ì´ë™ ì†ë„
         public float MoveSpeed;
-        //·¹º§¾÷¿¡ µû¸¥ ÃÖ´ëÃ¼·Â Áõ°¡·®
+        //ë ˆë²¨ì—…ì— ë”°ë¥¸ ìµœëŒ€ì²´ë ¥ ì¦ê°€ëŸ‰
         public float MaxHpUpVolume;
     }
 
@@ -22,4 +22,4 @@ public class EnemyData {
     public EnemyData() {
         Enemys = new EnemyStatusData();
     }
-}
+} 

@@ -2,16 +2,16 @@ using System;
 using UnityEngine;
 
 /// <summary>
-/// ¾Ö³Ê¹Ì ´É·ÂÄ¡
+/// ì• ë„ˆë¯¸ ëŠ¥ë ¥ì¹˜
 /// </summary>
 public class EnemyStatus : StatusBase {
-    //Àû¿ë ¾Ö³Ê¹Ì
+    //ì ìš© ì• ë„ˆë¯¸
     private EnemyBase enemyBase;
-    //»ıÁ¸ ¿©ºÎ
+    //ìƒì¡´ ì—¬ë¶€
     private bool isLive;
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì ÀÌµ¿¼Óµµ¿¡ µğ¹öÇÁ Àû¿ë
+    /// ì• ë„ˆë¯¸ ì´ë™ì†ë„ì— ë””ë²„í”„ ì ìš©
     /// </summary>
     public float MoveSpeed {
         get {
@@ -29,30 +29,30 @@ public class EnemyStatus : StatusBase {
             moveSpeed = value;
         }
     }
-    //µ¥ÀÌÅÍ ÄÁÅ×ÀÌ³Ê
+    //ë°ì´í„° ì»¨í…Œì´ë„ˆ
     public EnemyData EnemyData { get; private set; }
-    //ÀÌµ¿ ¼Óµµ
+    //ì´ë™ ì†ë„
     private float moveSpeed;
-    //ÇöÀç Ã¼·Â
+    //í˜„ì¬ ì²´ë ¥
     public float CurrentHp { get; private set; }
-    //ÃÖ´ë Ã¼·Â
+    //ìµœëŒ€ ì²´ë ¥
     public float MaxHp { get; private set; }
-    //º¸»ó °ñµå
+    //ë³´ìƒ ê³¨ë“œ
     public int Reward { get; private set; }
-    //Ã¼·Â º¯È­°¡ »ı±æ½Ã È£Ãâ
+    //ì²´ë ¥ ë³€í™”ê°€ ìƒê¸¸ì‹œ í˜¸ì¶œ
     public Action<float> SetHpAction;
-    //¾Ö³Ê¹Ì »ç¸Á½Ã È£ÃâÇÒ °ñµå ¿ÀºêÁ§Æ®
+    //ì• ë„ˆë¯¸ ì‚¬ë§ì‹œ í˜¸ì¶œí•  ê³¨ë“œ ì˜¤ë¸Œì íŠ¸
     private GameObject goldObject;
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ç¸Á ½Ã ÃÊ±âÈ­
+    /// ì• ë„ˆë¯¸ ì‚¬ë§ ì‹œ ì´ˆê¸°í™”
     /// </summary>
     public void Clear() {
         SetHpAction = null;
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì ÃÊ±âÈ­ ¹× Àç»ı¼º½Ã ¼öÄ¡ ÃÊ±âÈ­
+    /// ì• ë„ˆë¯¸ ì´ˆê¸°í™” ë° ì¬ìƒì„±ì‹œ ìˆ˜ì¹˜ ì´ˆê¸°í™”
     /// </summary>
     public void Init(EnemyBase enemyBase, int level) {
         if (Managers.Data.GameData == null)
@@ -79,24 +79,24 @@ public class EnemyStatus : StatusBase {
         if (goldObject == null)
             goldObject = Resources.Load<GameObject>(Managers.Data.DefineData.OBJECT_REWARD_PATH);
 
-        //¾Ö³Ê¹Ì¿¡°Ô Àû¿ëµÇ´Â ½ºÅ³ÀÇ À¯¹«¸¦ ÆÇ´ÜÇØ,
-        //Á¸ÀçÇÑ´Ù¸é ½ºÅ³ Àû¿ë
+        //ì• ë„ˆë¯¸ì—ê²Œ ì ìš©ë˜ëŠ” ìŠ¤í‚¬ì˜ ìœ ë¬´ë¥¼ íŒë‹¨í•´,
+        //ì¡´ì¬í•œë‹¤ë©´ ìŠ¤í‚¬ ì ìš©
         foreach(var item in Managers.Ability.EnemyAbilityList) {
             item.ExecuteEnemyAbility(enemyBase);
         }
 
-        DebugWrapper.Log($"Àû Ã¼·Â {MaxHp}");
+        DebugWrapper.Log($"ì  ì²´ë ¥ {MaxHp}");
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì ¸®¿öµå º¯°æ
+    /// ì• ë„ˆë¯¸ ë¦¬ì›Œë“œ ë³€ê²½
     /// </summary>
     public void SetReward(Ability_PlusGetGold ability) {
         Reward += Mathf.RoundToInt(Reward * ability.PlusGold);
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì ÀÌ¼Ó Á¶Àı
+    /// ì• ë„ˆë¯¸ ì´ì† ì¡°ì ˆ
     /// </summary>
     /// <param name="ability"></param>
     public void SetMoveSpeed(Ability_MinusEnemyMoveSpeed ability) {
@@ -104,10 +104,10 @@ public class EnemyStatus : StatusBase {
     }
 
     /// <summary>
-    /// ¾Ö³Ê¹Ì »ıÁ¸ ¿©ºÎ 
-    /// islive = true½Ã, Àç»ç¿ëÀ» À§ÇÑ Ã¼·Â ÃÊ±âÈ­
-    /// islive = false½Ã, ¾Ö³Ê¹Ì ¸®¿öµå È¹µæ ¹× Å³ ¼ö Ãß°¡, ¾Ö³Ê¹Ì »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç
-    /// ¾Ö³Ê¹Ì »ç¸Á ¾Ö´Ï¸ŞÀÌ¼Ç¿¡¼­ Äİ¹éÀ¸·Î DestroyÇÒ ¿¹Á¤
+    /// ì• ë„ˆë¯¸ ìƒì¡´ ì—¬ë¶€ 
+    /// islive = trueì‹œ, ì¬ì‚¬ìš©ì„ ìœ„í•œ ì²´ë ¥ ì´ˆê¸°í™”
+    /// islive = falseì‹œ, ì• ë„ˆë¯¸ ë¦¬ì›Œë“œ íšë“ ë° í‚¬ ìˆ˜ ì¶”ê°€, ì• ë„ˆë¯¸ ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜
+    /// ì• ë„ˆë¯¸ ì‚¬ë§ ì• ë‹ˆë©”ì´ì…˜ì—ì„œ ì½œë°±ìœ¼ë¡œ Destroyí•  ì˜ˆì •
     /// </summary>
     public bool IsLive {
         get { return isLive; }
@@ -135,9 +135,9 @@ public class EnemyStatus : StatusBase {
 
 
     /// <summary>
-    /// Ã¼·Â Á¶Àı ¹× Ã¼·ÂÀÌ 0 ÀÌÇÏ°¡ µÉ½Ã »ç¸Á
+    /// ì²´ë ¥ ì¡°ì ˆ ë° ì²´ë ¥ì´ 0 ì´í•˜ê°€ ë ì‹œ ì‚¬ë§
     /// </summary>
-    /// <param name="value">Ã¼·Â º¯°æ·®</param>
+    /// <param name="value">ì²´ë ¥ ë³€ê²½ëŸ‰</param>
     public void SetHp(float value, TowerBase tower = null) {
         CurrentHp -= value;
         SetHpAction?.Invoke(CurrentHp);

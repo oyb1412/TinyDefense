@@ -1,5 +1,5 @@
 /// <summary>
-/// ·Î±×ÀÎ ¾ÀÀ¸·Î ÀÌµ¿ ¹öÆ°
+/// ë¡œê·¸ì¸ ì”¬ìœ¼ë¡œ ì´ë™ ë²„íŠ¼
 /// </summary>
 public class UI_ContinueButton : UI_Button {
     public override void Init() {
@@ -7,7 +7,7 @@ public class UI_ContinueButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã ·Î±×ÀÎ ¾ÀÀ¸·Î ÀÌµ¿
+    /// ë²„íŠ¼ ì„ íƒì‹œ ë¡œê·¸ì¸ ì”¬ìœ¼ë¡œ ì´ë™
     /// </summary>
     public override void Select() {
         UI_Fade.Instance.ActivationFade(Define.SceneType.Login);

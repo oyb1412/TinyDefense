@@ -4,15 +4,15 @@ using System.Security.Cryptography;
 using System.Text;
 
 /// <summary>
-/// ¹®ÀÚ¿­ AES ¾ÏÈ£È­ Å¬·¡½º
+/// ë¬¸ìì—´ AES ì•”í˜¸í™” í´ë˜ìŠ¤
 /// </summary>
 public static class AesEncryption {
 
     /// <summary>
-    /// Å°¸¦ ¹ÙÅÁÀ¸·Î ¾ÏÈ£È­
+    /// í‚¤ë¥¼ ë°”íƒ•ìœ¼ë¡œ ë³µí˜¸í™”
     /// </summary>
-    /// <param name="plainText">¾ÏÈ£È­ ´ë»ó ¹®ÀÚ¿­</param>
-    /// <param name="key">¾ÏÈ£È­ Å°</param>
+    /// <param name="plainText">ë³µí˜¸í™” ëŒ€ìƒ ë¬¸ìì—´</param>
+    /// <param name="key">ë³µí˜¸í™” í‚¤</param>
     /// <returns></returns>
     public static string Encrypt(string plainText, string key) {
         byte[] iv = new byte[16];
@@ -39,10 +39,10 @@ public static class AesEncryption {
     }
 
     /// <summary>
-    /// ¾ÏÈ£ ÇØµ¶
+    /// ì•”í˜¸ í•´ë…
     /// </summary>
-    /// <param name="cipherText">ÇØµ¶ÇÒ ¹®ÀÚ¿­</param>
-    /// <param name="key">¾ÏÈ£È­ Å°</param>
+    /// <param name="cipherText">í•´ë…í•  ë¬¸ìì—´</param>
+    /// <param name="key">ë³µí˜¸í™” í‚¤</param>
     /// <returns></returns>
     public static string Decrypt(string cipherText, string key) {
         byte[] iv = new byte[16];
@@ -64,9 +64,9 @@ public static class AesEncryption {
     }
 
     /// <summary>
-    /// Å°¸¦ ¹ÙÅÁÀ¸·Î ¾ÏÈ£ »ı¼º
+    /// í‚¤ë¥¼ ë°”íƒ•ìœ¼ë¡œ ì•”í˜¸ ìƒì„±
     /// </summary>
-    /// <param name="key">Å°</param>
+    /// <param name="key">í‚¤</param>
     /// <returns></returns>
     private static byte[] GetAesKey(string key) {
         using (SHA256 sha256 = SHA256.Create()) {

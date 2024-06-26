@@ -1,12 +1,12 @@
 /// <summary>
-/// µ¥¹ÌÁö Áõ°¡ ¹öÇÁ
+/// ë°ë¯¸ì§€ ì¦ê°€ ë²„í”„
 /// </summary>
 public class AttackDamageBuff : Buff {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="buffValue">¹öÇÁ ¹ë·ù</param>
-    /// <param name="buffTime">¹öÇÁ Áö¼Ó½Ã°£</param>
+    /// <param name="buffValue">ë²„í”„ ë°¸ë¥˜</param>
+    /// <param name="buffTime">ë²„í”„ ì§€ì†ì‹œê°„</param>
     public AttackDamageBuff(float buffValue, float buffTime) {
         BuffValue = buffValue;
         BuffTime = buffTime;

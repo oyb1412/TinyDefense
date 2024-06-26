@@ -3,10 +3,10 @@ using UnityEngine.UI;
 using System.Collections;
 
 /// <summary>
-/// ½ºÅ³ »ç¿ë ¹öÆ° ºÎ¸ğ Å¬·¡½º
+/// ìŠ¤í‚¬ ì‚¬ìš© ë²„íŠ¼ ë¶€ëª¨ í´ë˜ìŠ¤
 /// </summary>
 public abstract class UI_ActivationSkillButton : UI_Button {
-    //½ºÅ³ ¾ÆÀÌÄÜ
+    //ìŠ¤í‚¬ ì•„ì´ì½˜
     private Image iconImage;
     public override void Init() {
         iconImage = GetComponent<Image>();
@@ -15,7 +15,7 @@ public abstract class UI_ActivationSkillButton : UI_Button {
     }
 
     /// <summary>
-    /// ½ºÅ³ ÄğÅ¸ÀÓ Ç¥±â¿ë ÄÚ·çÆ¾
+    /// ìŠ¤í‚¬ ì¿¨íƒ€ì„ í‘œê¸°ìš© ì½”ë£¨í‹´
     /// </summary>
     /// <param name="coolTime"></param>
     /// <returns></returns>
@@ -35,7 +35,7 @@ public abstract class UI_ActivationSkillButton : UI_Button {
     }
 
     /// <summary>
-    /// ½ºÅ³ »ç¿ë
+    /// ìŠ¤í‚¬ ì‚¬ìš©
     /// </summary>
     /// <param name="coolTime"></param>
     protected void UseSkill(float coolTime) {
@@ -43,7 +43,7 @@ public abstract class UI_ActivationSkillButton : UI_Button {
     }
 
     /// <summary>
-    /// ½ºÅ³ ÄğÅ¸ÀÓ È¸º¹ ½Ã ÃÊ±âÈ­
+    /// ìŠ¤í‚¬ ì¿¨íƒ€ì„ íšŒë³µ ì‹œ ì´ˆê¸°í™”
     /// </summary>
     protected void IconActivation() {
         iconImage.fillAmount = 1f;

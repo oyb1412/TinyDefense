@@ -1,11 +1,11 @@
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö »ı¼º, ÆÇ¸Å, ¾÷±×·¹ÀÌµå ÀÌÆåÆ®
+/// íƒ€ì›Œ ìƒì„±, íŒë§¤, ì—…ê·¸ë ˆì´ë“œ ì´í™íŠ¸
 /// </summary>
 public class BuildEffect : MonoBehaviour {
     /// <summary>
-    /// ÀÌº¥Æ®¿¡¼­ Äİ¹éÀ¸·Î È£Ãâ
+    /// ì´ë²¤íŠ¸ì—ì„œ ì½œë°±ìœ¼ë¡œ í˜¸ì¶œ
     /// </summary>
     public void DestroyEvent() {
         Managers.Resources.Release(gameObject);

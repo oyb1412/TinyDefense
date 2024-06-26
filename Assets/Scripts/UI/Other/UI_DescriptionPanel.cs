@@ -2,14 +2,14 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// ¾îºô¸®Æ¼ Á¤º¸ Ç¥±â ÆÇ³Ú Å¬·¡½º
+/// ì–´ë¹Œë¦¬í‹° ì •ë³´ í‘œê¸° íŒë„¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_DescriptionPanel : MonoBehaviour {
-    //¾îºô¸®Æ¼ ÀÌ¸§ Ç¥±â tmp
+    //ì–´ë¹Œë¦¬í‹° ì´ë¦„ í‘œê¸° tmp
     private TextMeshProUGUI nameTMP;
-    //¾îºô¸®Æ¼ ¼³¸í Ç¥±â tmp
+    //ì–´ë¹Œë¦¬í‹° ì„¤ëª… í‘œê¸° tmp
     private TextMeshProUGUI descriptionTMP;
-    //ÇÇ¹ş Á¶Á¤À» À§ÇÑ ·ºÆ®
+    //í”¼ë²— ì¡°ì •ì„ ìœ„í•œ ë ‰íŠ¸
     private RectTransform rect;
 
     private void Awake() {
@@ -20,10 +20,10 @@ public class UI_DescriptionPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÆÇ³Ú È°¼ºÈ­
+    /// íŒë„¬ í™œì„±í™”
     /// </summary>
-    /// <param name="abilityIcon">Ç¥±âÇÒ ¾îºô¸®Æ¼ Á¤º¸</param>
-    /// <param name="pos">Ç¥±âÇÒ À§Ä¡</param>
+    /// <param name="abilityIcon">í‘œê¸°í•  ì–´ë¹Œë¦¬í‹° ì •ë³´</param>
+    /// <param name="pos">í‘œê¸°í•  ìœ„ì¹˜</param>
     public void ActivationDescription(string name, string description, Vector3 pos) 
     {
         if(!gameObject.activeInHierarchy) {
@@ -44,7 +44,7 @@ public class UI_DescriptionPanel : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivationDescription() {
         gameObject.SetActive(false);

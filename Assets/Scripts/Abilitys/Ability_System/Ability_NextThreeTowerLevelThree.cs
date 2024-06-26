@@ -1,32 +1,32 @@
 
 /// <summary>
-/// ½Ã½ºÅÛÀû ¾îºô¸®Æ¼
-/// ´ÙÀ½ »ı¼ºÇÏ´Â 3±âÀÇ Å¸¿ö ·¹º§ Áõ°¡
+/// ì‹œìŠ¤í…œì  ì–´ë¹Œë¦¬í‹°
+/// ë‹¤ìŒ ìƒì„±í•˜ëŠ” 3ê¸°ì˜ íƒ€ì›Œ ë ˆë²¨ ì¦ê°€
 /// </summary>
 [Ability(Define.AbilityType.NextThreeTowerLevelThree)]
 public class Ability_NextThreeTowerLevelThree : ITowerPostAbility {
     public int NextTowerUpgrade { get; private set; }
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue {get; private set;}
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_NextThreeTowerLevelThree() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.NextThreeTowerLevelThree, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// ½ºÅ³ÀÌ µî·ÏµÇ¸é °­È­ È½¼ö ÃÊ±âÈ­
+    /// ìŠ¤í‚¬ì´ ë“±ë¡ë˜ë©´ ê°•í™” íšŸìˆ˜ ì´ˆê¸°í™”
     /// </summary>
     public void SetAbility() {
         NextTowerUpgrade += 3;
     }
 
     /// <summary>
-    /// Å¸¿ö ¾÷±×·¹ÀÌµå ¹×
-    /// °­È­ È½¼ö Á¾·á½Ã ¾îºô¸®Æ¼ Á¦°Å
+    /// íƒ€ì›Œ ì—…ê·¸ë ˆì´ë“œ ë°
+    /// ê°•í™” íšŸìˆ˜ ì¢…ë£Œì‹œ ì–´ë¹Œë¦¬í‹° ì œê±°
     /// </summary>
     /// <param name="tower"></param>
     public void UpgradeTower(TowerBase tower) {
@@ -38,8 +38,8 @@ public class Ability_NextThreeTowerLevelThree : ITowerPostAbility {
     }
 
     /// <summary>
-    /// Å¸¿ö °­È­ È½¼ö°¡ ÃæºĞÇÏ¸é Å¸¿ö °­È­
-    /// È½¼ö°¡ ¸ğµÎ ´ÙÇÏ¸é ½ºÅ³ Á¦°Å
+    /// íƒ€ì›Œ ê°•í™” íšŸìˆ˜ê°€ ì¶©ë¶„í•˜ë©´ íƒ€ì›Œ ê°•í™”
+    /// íšŸìˆ˜ê°€ ëª¨ë‘ ë‹¤í•˜ë©´ ìŠ¤í‚¬ ì œê±°
     /// </summary>
     public void ExecuteSystemAbility(UI_Button button) {
         if(button is UI_CreateButton createButton) {

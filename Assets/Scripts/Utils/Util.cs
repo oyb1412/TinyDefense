@@ -7,18 +7,18 @@ using UnityEngine;
 public static class Util
 {
     /// <summary>
-    /// ¾Ö³Ê¹Ì ³Î »óÅÂ Ã¼Å©
+    /// ì• ë„ˆë¯¸ ë„ ìƒíƒœ ì²´í¬
     /// </summary>
-    /// <param name="enemy">Ã¼Å©ÇÒ ¾Ö³Ê¹Ì</param>
+    /// <param name="enemy">ì²´í¬í•  ì• ë„ˆë¯¸</param>
     /// <returns></returns>
     public static bool IsEnemyNull(EnemyBase enemy) {
         return enemy == null || !enemy.EnemyStatus.IsLive || !enemy.gameObject.activeInHierarchy || enemy.EnemyStatus.CurrentHp <= 0;
     }
 
     /// <summary>
-    /// ÀÌµ¿ ¹æÇâÀ» ±âÁØÀ¸·Î ½ºÇÁ¶óÀÌÆ® µÚÁı±â
+    /// ì´ë™ ë°©í–¥ì„ ê¸°ì¤€ìœ¼ë¡œ ìŠ¤í”„ë¼ì´íŠ¸ ë’¤ì§‘ê¸°
     /// </summary>
-    /// <param name="right">¿À¸¥ÂÊÀ» º¸°íÀÖ´Â°¡?</param>
+    /// <param name="right">ì˜¤ë¥¸ìª½ì„ ë³´ê³ ìˆëŠ”ê°€?</param>
     public static void ChangeFlip(Transform trans, Define.Direction dir) {
         if (dir == Define.Direction.Right)
             trans.localScale = new Vector2(-Managers.Data.DefineData.ENEMY_DEFAULT_SCALE, Managers.Data.DefineData.ENEMY_DEFAULT_SCALE);
@@ -27,9 +27,9 @@ public static class Util
     }
 
     /// <summary>
-    /// Æ®À§´× ¸®¼Â
+    /// íŠ¸ìœ„ë‹ ë¦¬ì…‹
     /// </summary>
-    /// <param name="tween">¸®¼ÂÇÒ Æ®À§´×</param>
+    /// <param name="tween">ë¦¬ì…‹í•  íŠ¸ìœ„ë‹</param>
     public static void ResetTween(Tween tween) {
         if (tween == null)
             return;

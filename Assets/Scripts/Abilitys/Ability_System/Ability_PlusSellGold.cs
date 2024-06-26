@@ -1,22 +1,22 @@
 [Ability(Define.AbilityType.PlusSellGold)]
 /// <summary>
-/// ½Ã½ºÅÛÀû ¾îºô¸®Æ¼
-/// Å¸¿ö ÆÇ¸Å ºñ¿ë ¿µ±¸ Áõ°¡
+/// ì‹œìŠ¤í…œì  ì–´ë¹Œë¦¬í‹°
+/// íƒ€ì›Œ íŒë§¤ ë¹„ìš© ì˜êµ¬ ì¦ê°€
 /// </summary>
 public class Ability_PlusSellGold : ITowerPostAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     public Define.AbilityValue AbilityValue { get; private set; }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Å¸ÀÔÀ» ¹ÙÅÁÀ¸·Î ÃÊ±âÈ­
-    /// Å¸ÀÔ, ÀÌ¸§, ¼³¸í, ¾ÆÀÌÄÜ ½ºÇÁ¶óÀÌÆ®
+    /// ì–´ë¹Œë¦¬í‹° íƒ€ì…ì„ ë°”íƒ•ìœ¼ë¡œ ì´ˆê¸°í™”
+    /// íƒ€ì…, ì´ë¦„, ì„¤ëª…, ì•„ì´ì½˜ ìŠ¤í”„ë¼ì´íŠ¸
     /// </summary>
     public Ability_PlusSellGold() {
         AbilityValue = new Define.AbilityValue(Define.AbilityType.PlusSellGold, Managers.Data.DefineData);
     }
 
     /// <summary>
-    /// Á¸ÀçÁßÀÎ ¸ğµç Å¸¿öÀÇ ÆÇ¸Åºñ¿ë Á¶Á¤
+    /// ì¡´ì¬ì¤‘ì¸ ëª¨ë“  íƒ€ì›Œì˜ íŒë§¤ë¹„ìš© ì¡°ì •
     /// </summary>
     public void SetAbility() {
         var towerList = Managers.Tower.TowerList;
@@ -29,7 +29,7 @@ public class Ability_PlusSellGold : ITowerPostAbility {
     }
 
     /// <summary>
-    /// »õ·Ó°Ô Åº»ıÇÏ´Â Å¸¿öÀÇ ÆÇ¸Åºñ¿ë Á¶Á¤
+    /// ìƒˆë¡­ê²Œ íƒ„ìƒí•˜ëŠ” íƒ€ì›Œì˜ íŒë§¤ë¹„ìš© ì¡°ì •
     /// </summary>
     /// <param name="button"></param>
     public void ExecuteSystemAbility(UI_Button button) {

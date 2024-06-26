@@ -1,7 +1,7 @@
 /// <summary>
-/// ¸ğµç °ø°İ ¾îºô¸®Æ¼ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// ëª¨ë“  ê³µê²© ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ ì¸í„°í˜ì´ìŠ¤
 /// </summary>
 public interface IAttackAbility : IAbility {
-    //Áö¼ÓÀûÀÎ ¾îºô¸®Æ¼ Àû¿ë
+    //ì§€ì†ì ì¸ ì–´ë¹Œë¦¬í‹° ì ìš©
     void ExecuteAtteckAbility(TowerBase towerBase, ref TowerBase.AttackData attackData);
 }

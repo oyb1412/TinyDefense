@@ -4,7 +4,7 @@ using UnityEngine;
 public class ResourcesManager 
 {
     /// <summary>
-    /// ´Ù¼öÀÇ °´Ã¼ÀÇ Ç®À» ¹Ì¸® »ı¼º
+    /// ë‹¤ìˆ˜ì˜ ê°ì²´ì˜ í’€ì„ ë¯¸ë¦¬ ìƒì„±
     /// </summary>
     public void SetPooling(GameObject go, int count) {
          Release(Managers.Pool.Activation(go, count).gameObject);

@@ -5,21 +5,21 @@ using System.Collections.Generic;
 using System;
 
 /// <summary>
-/// ·©Å· ÆÇ³Ú °ü¸® Å¬·¡½º
+/// ë­í‚¹ íŒë„¬ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_RankingPanel : MonoBehaviour {
-    //ÇÏÀ§ÀÇ °¢ ·©Å· ÄÁÅÙÃ÷µé
+    //í•˜ìœ„ì˜ ê° ë­í‚¹ ì»¨í…ì¸ ë“¤
     private UI_RankingContentPanel[] contentPanels;
-    //·©Å· µ¥ÀÌÅÍ
+    //ë­í‚¹ ë°ì´í„°
     private Dictionary<string, object> rankingData = new Dictionary<string, object>();
 
     /// <summary>
-    /// ·©Å·ÆÇ³Ú È°¼ºÈ­ ½Ã
-    /// °¢ ÄÁÅÙÃ÷µé¿¡ µ¥ÀÌÅÍ ´ëÀÔ
+    /// ë­í‚¹íŒë„¬ í™œì„±í™” ì‹œ
+    /// ê° ì»¨í…ì¸ ë“¤ì— ë°ì´í„° ëŒ€ì…
     /// </summary>
     public void Activation() {
-        //¿©±â¼­ ÄÚ·çÆ¾À¸·Î ·©Å· ºÒ·¯¿À±â
-        //ºÒ·¯¿À±â ¿Ï·áµÇ¸é ÆÇ³Ú Activation
+        //ì—¬ê¸°ì„œ ì½”ë£¨í‹´ìœ¼ë¡œ ë­í‚¹ ë¶ˆëŸ¬ì˜¤ê¸°
+        //ë¶ˆëŸ¬ì˜¤ê¸° ì™„ë£Œë˜ë©´ íŒë„¬ Activation
 
         if (contentPanels == null) {
             contentPanels = GetComponentsInChildren<UI_RankingContentPanel>();
@@ -33,8 +33,8 @@ public class UI_RankingPanel : MonoBehaviour {
 
 
     /// <summary>
-    /// ÆÄÀÌ¾îº£ÀÌ½º¿¡¼­ ¸ğµç ·©Å· Á¤º¸ ·Îµå
-    /// ¿À¸§Â÷¼øÀ¸·Î Á¤·Ä
+    /// íŒŒì´ì–´ë² ì´ìŠ¤ì—ì„œ ëª¨ë“  ë­í‚¹ ì •ë³´ ë¡œë“œ
+    /// ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬
     /// </summary>
     private IEnumerator Co_LoadRankingData() {
         var task =  Managers.FireStore.LoadAllDataFromDocument(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA);
@@ -50,7 +50,7 @@ public class UI_RankingPanel : MonoBehaviour {
         if (rankingData == null || rankingData.Count == 0) {
             StopAllCoroutines();
             gameObject.SetActive(false);
-            DebugWrapper.Log("·©Å· ¸ñ·ÏÀÌ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+            DebugWrapper.Log("ë­í‚¹ ëª©ë¡ì´ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
         } 
         else {
             Dictionary<string, int> score = new Dictionary<string, int>();
@@ -62,18 +62,18 @@ public class UI_RankingPanel : MonoBehaviour {
 
             score = score.OrderByDescending(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
 
-            DebugWrapper.Log("·©Å· Á¤·Ä ¿Ï·á.");
+            DebugWrapper.Log("ë­í‚¹ ì •ë ¬ ì™„ë£Œ.");
 
             List<string> nameData = new List<string>(score.Keys);
             List<int> scoreData = new List<int>(score.Values);
 
-            //¸ğµç ÄÜÅÙÃ÷ ÆÇ³Ú ºñÈ°¼ºÈ­
+            //ëª¨ë“  ì½˜í…ì¸  íŒë„¬ ë¹„í™œì„±í™”
             foreach(var item in contentPanels)
             {
                 item.gameObject.SetActive(false);
             }
 
-            //Á¸ÀçÇÏ´Â ·©Å· ¼ö ¸¸Å­ ÄÜÅÙÃ÷ ÆÇ³Ú È°¼ºÈ­ ¹× Á¤º¸ Ç¥±â
+            //ì¡´ì¬í•˜ëŠ” ë­í‚¹ ìˆ˜ ë§Œí¼ ì½˜í…ì¸  íŒë„¬ í™œì„±í™” ë° ì •ë³´ í‘œê¸°
             for (int i = 0; i< rankingData.Count; i++) {
                 contentPanels[i].Activation(nameData[i], Convert.ToInt32(scoreData[i]), i);
             }

@@ -2,21 +2,21 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// °¢ ½ºÅ³ ·¹º§¾÷ ¹öÆ° °ü¸® Å¬·¡½º
+/// ê° ìŠ¤í‚¬ ë ˆë²¨ì—… ë²„íŠ¼ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_SkillButton : UI_Button
 {
-    //½ºÅ³ Å¸ÀÔ
+    //ìŠ¤í‚¬ íƒ€ì…
     [SerializeField] private Define.SkillType skillType;
-    //½ºÅ³ ·¹º§¾÷ ºñ¿ë Ç¥±â ÅØ½ºÆ®
+    //ìŠ¤í‚¬ ë ˆë²¨ì—… ë¹„ìš© í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI costText;
-    //½ºÅ³ ¼³¸í Ç¥±â ÅØ½ºÆ®
+    //ìŠ¤í‚¬ ì„¤ëª… í‘œê¸° í…ìŠ¤íŠ¸
     [SerializeField] private TextMeshProUGUI descriptionText;
 
     /// <summary>
-    /// ÃÊ±âÈ­
-    /// ±âº» ÅØ½ºÆ® ´ëÀÔ
-    /// ¹öÆ° È°¼ºÈ­ ¿©ºÎ °è»ê
+    /// ì´ˆê¸°í™”
+    /// ê¸°ë³¸ í…ìŠ¤íŠ¸ ëŒ€ì…
+    /// ë²„íŠ¼ í™œì„±í™” ì—¬ë¶€ ê³„ì‚°
     /// </summary>
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
@@ -27,9 +27,9 @@ public class UI_SkillButton : UI_Button
     }
 
     /// <summary>
-    /// ÀÎÇÚ½º °ñµå ºÎÁ·½Ã ¹öÆ° ºñÈ°¼ºÈ­
+    /// ì¸í•¸ìŠ¤ ê³¨ë“œ ë¶€ì¡±ì‹œ ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
-    /// <param name="gold">ÇöÀç °ñµå</param>
+    /// <param name="gold">í˜„ì¬ ê³¨ë“œ</param>
     private void ButtonActive(int gold) {
         if (Managers.Skill == null)
             return;
@@ -52,15 +52,15 @@ public class UI_SkillButton : UI_Button
     }
 
     /// <summary>
-    /// ½ºÅ³ ¼³¸í ÅØ½ºÆ® °è»ê
+    /// ìŠ¤í‚¬ ì„¤ëª… í…ìŠ¤íŠ¸ ê³„ì‚°
     /// </summary>
-    /// <param name="level">·¹º§</param>
+    /// <param name="level">ë ˆë²¨</param>
     private string GetDescriptionText(int level) {
         return string.Format(Managers.Data.DefineData.MENT_SKILL_DESCRIPTION[(int)skillType], level);
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ(ÀÎÇÚ½º)
+    /// ë²„íŠ¼ ì„ íƒ(ì¸í•¸ìŠ¤)
     /// </summary>
     public override void Select() {
         var skill = Managers.Skill.GetSkillValue(skillType);

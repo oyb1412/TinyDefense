@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// ¸ğµç ¹ÂÆ® Åä±Û °ü¸® ºÎ¸ğ Å¬·¡½º
+/// ëª¨ë“  ë®¤íŠ¸ í† ê¸€ ê´€ë¦¬ ë¶€ëª¨ í´ë˜ìŠ¤
 /// </summary>
 public class UI_MuteToggle : MonoBehaviour {
-    //Åä±Û
+    //í† ê¸€
     private Toggle muteToggle;
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× Äİ¹éÇÔ¼ö ¿¬µ¿
+    /// ì´ˆê¸°í™” ë° ì½œë°±í•¨ìˆ˜ ì—°ë™
     /// </summary>
     private void Awake() {
         muteToggle = GetComponent<Toggle>();
@@ -17,7 +17,7 @@ public class UI_MuteToggle : MonoBehaviour {
     }
 
     /// <summary>
-    /// º¼·ı ¹ÂÆ®
+    /// ë³¼ë¥¨ ë®¤íŠ¸
     /// </summary>
     /// <param name="trigger"></param>
     protected virtual void SetToggle(bool trigger) {

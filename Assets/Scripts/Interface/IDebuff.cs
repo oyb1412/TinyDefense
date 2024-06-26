@@ -1,21 +1,21 @@
 /// <summary>
-/// ¸ğµç µğ¹öÇÁ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// ëª¨ë“  ë””ë²„í”„ ê´€ë¦¬ ì¸í„°í˜ì´ìŠ¤
 /// </summary>
 public interface IDebuff {
-    //µğ¹öÇÁ ¹ë·ù
+    //ë””ë²„í”„ ë°¸ë¥˜
     float DebuffValue { get; }
-    //µğ¹öÇÁ Áö¼Ó½Ã°£
+    //ë””ë²„í”„ ì§€ì†ì‹œê°„
     float DebuffTime { get; }
-    //µğ¹öÇÁ Å¸ÀÔ
+    //ë””ë²„í”„ íƒ€ì…
     Define.DebuffType Type { get; }
-    //µğ¹öÇÁ ¹øµé Å¸ÀÔ
+    //ë””ë²„í”„ ë²ˆë“¤ íƒ€ì…
     Define.DebuffBundle Bundle { get; }
-    //µğ¹öÇÁ Àû¿ë
+    //ë””ë²„í”„ ì ìš©
     void ApplyDebuff(EnemyBase enemy);
-    //µğ¹öÇÁ Á¦°Å
+    //ë””ë²„í”„ ì œê±°
     void RemoveDebuff(EnemyBase enemy);
-    //µğ¹öÇÁ·Î ÀÎÇÑ ÀÌµ¿¼Óµµ °è»ê
+    //ë””ë²„í”„ë¡œ ì¸í•œ ì´ë™ì†ë„ ê³„ì‚°
     float ModifyMoveSpeed(float baseSpeed); 
-    //µğ¹öÇÁ Àû¿ë À¯¹«
+    //ë””ë²„í”„ ì ìš© ìœ ë¬´
     bool IsActive { get; }
 }

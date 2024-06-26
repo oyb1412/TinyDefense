@@ -48,11 +48,11 @@ public class Managers : MonoBehaviour
         Init();
 
 #if UNITY_EDITOR
-        Application.targetFrameRate = -1; // ¿¡µğÅÍ¿¡¼­´Â ÇÁ·¹ÀÓ ·¹ÀÌÆ® Á¦ÇÑÀ» ÇØÁ¦
+        Application.targetFrameRate = -1; // ì—ë””í„°ì—ì„œëŠ” í”„ë ˆì„ ë ˆì´íŠ¸ ì œí•œì„ í•´ì œ
 #elif UNITY_ANDROID
-        Application.targetFrameRate = 60; // ¾Èµå·ÎÀÌµå ±â±â¿¡¼­ ÇÁ·¹ÀÓ ·¹ÀÌÆ®¸¦ 60À¸·Î ¼³Á¤
+        Application.targetFrameRate = 60; // ì•ˆë“œë¡œì´ë“œ ê¸°ê¸°ì—ì„œ í”„ë ˆì„ ë ˆì´íŠ¸ë¥¼ 60ìœ¼ë¡œ ì„¤ì •
 #else
-        Application.targetFrameRate = -1; // ´Ù¸¥ ÇÃ·§Æû¿¡¼­´Â ±âº» ¼³Á¤
+        Application.targetFrameRate = -1; // ë‹¤ë¥¸ í”Œë«í¼ì—ì„œëŠ” ê¸°ë³¸ ì„¤ì •
 #endif
     }
     private void Init()

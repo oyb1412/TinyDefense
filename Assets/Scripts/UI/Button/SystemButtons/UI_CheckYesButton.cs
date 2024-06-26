@@ -1,16 +1,16 @@
 using UnityEngine.Events;
 
 /// <summary>
-/// '¿¹'¹öÆ° Å¬·¡½º
+/// 'ì˜ˆ'ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_CheckYesButton : UI_Button {
-    //¹öÆ° ¼±ÅÃ½Ã ½ÇÇàÇÒ µ¨¸®°ÔÀÌÆ®
+    //ë²„íŠ¼ ì„ íƒì‹œ ì‹¤í–‰í•  ë¸ë¦¬ê²Œì´íŠ¸
     private UnityAction action;
-    //¼±ÅÃ½Ã ºñÈ°¼ºÈ­ÇÒ ÆÇ³Ú ÀúÀå
+    //ì„ íƒì‹œ ë¹„í™œì„±í™”í•  íŒë„¬ ì €ì¥
     private UI_CheckPanel checkPanel;
 
     /// <summary>
-    /// ¹öÆ° È°¼ºÈ­
+    /// ë²„íŠ¼ í™œì„±í™”
     /// </summary>
     public void Activation(UnityAction action, UI_CheckPanel checkPanel) {
         this.checkPanel = checkPanel;
@@ -21,8 +21,8 @@ public class UI_CheckYesButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ
-    /// µ¨¸®°ÔÀÌÆ® ½ÇÇà ¹× ÀúÀåÇÑ ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ ì„ íƒ
+    /// ë¸ë¦¬ê²Œì´íŠ¸ ì‹¤í–‰ ë° ì €ì¥í•œ íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     public override void Select() {
         action?.Invoke();

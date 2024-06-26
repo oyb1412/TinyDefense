@@ -3,23 +3,23 @@ using System.Collections;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// Å¸¿ö ÀÌµ¿ °æ·Î Ç¥½Ã Å¬·¡½º
+/// íƒ€ì›Œ ì´ë™ ê²½ë¡œ í‘œì‹œ í´ë˜ìŠ¤
 /// </summary>
 public class MovementArrow : MonoBehaviour {
     public static MovementArrow Instance;
-    //ÀÌµ¿ °æ·Î Ç¥±â ¶óÀÎ ·»´õ·¯
+    //ì´ë™ ê²½ë¡œ í‘œê¸° ë¼ì¸ ë Œë”ëŸ¬
     private LineRenderer lineRenderer;
-    //ÀÌµ¿ °æ·Î Çìµå È­»ìÇ¥ ¿ÀºêÁ§Æ®
+    //ì´ë™ ê²½ë¡œ í—¤ë“œ í™”ì‚´í‘œ ì˜¤ë¸Œì íŠ¸
     private GameObject arrowHeadPrefab;
-    //ÇöÀç ¼±ÅÃÁßÀÎ ¼¿
+    //í˜„ì¬ ì„ íƒì¤‘ì¸ ì…€
     private Cell currentSelect;
-    //pressÁßÀÎ°¡?
+    //pressì¤‘ì¸ê°€?
     private bool isPress;
-    //pressÇÑ ½Ã°£
+    //pressí•œ ì‹œê°„
     private float pressTimer;
-    //ÀÌµ¿ °æ·Î µå·Î¿ì ÄÚ·çÆ¾
+    //ì´ë™ ê²½ë¡œ ë“œë¡œìš° ì½”ë£¨í‹´
     private Coroutine drawCoroutine;
-    //Ä«¸Ş¶ó Ä³½Ì
+    //ì¹´ë©”ë¼ ìºì‹±
     private Camera mainCamera;
 
     private void Awake() {
@@ -42,9 +42,9 @@ public class MovementArrow : MonoBehaviour {
     }
 
     /// <summary>
-    /// Å¸¿ö ¼±ÅÃ½Ã °æ·Î µå·Î¿ì ½ÃÀÛ
+    /// íƒ€ì›Œ ì„ íƒì‹œ ê²½ë¡œ ë“œë¡œìš° ì‹œì‘
     /// </summary>
-    /// <param name="startPos">½ÃÀÛ Æ÷Áö¼Ç</param>
+    /// <param name="startPos">ì‹œì‘ í¬ì§€ì…˜</param>
     public void DrawArrow(Vector3 startPos, TowerBase tower) {
         if (EventSystem.current.IsPointerOverGameObject())
             return;
@@ -56,7 +56,7 @@ public class MovementArrow : MonoBehaviour {
     }
 
     /// <summary>
-    /// Å¸¿ö °æ·Î µå·Î¿ì ÄÚ·çÆ¾
+    /// íƒ€ì›Œ ê²½ë¡œ ë“œë¡œìš° ì½”ë£¨í‹´
     /// </summary>
     /// <returns></returns>
     public IEnumerator Co_DrawArrow(Vector3 startPos, TowerBase tower) {
@@ -67,7 +67,7 @@ public class MovementArrow : MonoBehaviour {
             Vector2 currentTouchPosition = Vector2.zero;
 
 #if UNITY_EDITOR || UNITY_STANDALONE
-            // ¸¶¿ì½º ÀÔ·Â Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬
             if (Input.GetMouseButton(0)) {
                 isTouching = true;
                 currentTouchPosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
@@ -90,7 +90,7 @@ public class MovementArrow : MonoBehaviour {
                 break;
             }
 #elif UNITY_ANDROID
-        // ÅÍÄ¡ ÀÔ·Â Ã³¸®
+        // í„°ì¹˜ ì…ë ¥ ì²˜ë¦¬
         if (Input.touchCount > 0)
         {
             Touch touch = Input.GetTouch(0);
@@ -132,7 +132,7 @@ public class MovementArrow : MonoBehaviour {
                 else
                     isPress = false;
 
-                //ÅÍÄ¡¸¦ ±æ°Ô ÇØ¼­ press»óÅÂ°¡ µÇ¸é µå·Î¿ì ½ÃÀÛ
+                //í„°ì¹˜ë¥¼ ê¸¸ê²Œ í•´ì„œ pressìƒíƒœê°€ ë˜ë©´ ë“œë¡œìš° ì‹œì‘
                 if (isPress) {
                     lineRenderer.SetPosition(0, startPos);
                     lineRenderer.enabled = true;

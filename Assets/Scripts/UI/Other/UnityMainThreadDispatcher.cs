@@ -3,11 +3,11 @@ using System.Threading;
 using UnityEngine;
 
 /// <summary>
-/// ºñµ¿±â ÀÛ¾÷ Áß ¸ŞÀÎ¾²·¹µå¿¡¼­ ÁøÇàÇØ¾ßÇÏ´Â ÀÛ¾÷À»
-/// º¸Á¶ÇØÁÖ´Â Å¬·¡½º
+/// ë¹„ë™ê¸° ì‘ì—… ì¤‘ ë©”ì¸ì“°ë ˆë“œì—ì„œ ì§„í–‰í•´ì•¼í•˜ëŠ” ì‘ì—…ì„
+/// ë³´ì¡°í•´ì£¼ëŠ” í´ë˜ìŠ¤
 /// </summary>
 public class UnityMainThreadDispatcher : MonoBehaviour {
-    //¸ğµç ÀÛ¾÷µéÀ» ÀúÀåÇÏ´Â Å¥
+    //ëª¨ë“  ì‘ì—…ë“¤ì„ ì €ì¥í•˜ëŠ” í
     private static readonly Queue<System.Action> _executionQueue = new Queue<System.Action>();
     public static UnityMainThreadDispatcher Instance;
 
@@ -22,7 +22,7 @@ public class UnityMainThreadDispatcher : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾÷µ¥ÀÌÆ® ÇÔ¼ö¿¡¼­ ¸ğµç ÀÛ¾÷À» Áö¼ÓÀûÀ¸·Î ÁøÇà
+    /// ì—…ë°ì´íŠ¸ í•¨ìˆ˜ì—ì„œ ëª¨ë“  ì‘ì—…ì„ ì§€ì†ì ìœ¼ë¡œ ì§„í–‰
     /// </summary>
     public void Update() {
         lock (_executionQueue) {
@@ -33,7 +33,7 @@ public class UnityMainThreadDispatcher : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÛ¾÷À» Å¥¿¡ ÀúÀå
+    /// ì‘ì—…ì„ íì— ì €ì¥
     /// </summary>
     /// <param name="action"></param>
     public void Enqueue(System.Action action) {
@@ -43,7 +43,7 @@ public class UnityMainThreadDispatcher : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¸ŞÀÎ¾²·¹µå ÀÛ¾÷À» ÀúÀå
+    /// ë©”ì¸ì“°ë ˆë“œ ì‘ì—…ì„ ì €ì¥
     /// </summary>
     /// <param name="action"></param>
     public void RunOnMainThread(System.Action action) {

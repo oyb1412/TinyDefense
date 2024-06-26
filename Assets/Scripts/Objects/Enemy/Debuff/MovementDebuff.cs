@@ -1,38 +1,38 @@
 using UnityEngine;
 /// <summary>
-/// Àû ¸ğµç ÀÌµ¿¼Óµµ °ü·Ã µğ¹öÇÁ °ü¸®
-/// Å¸¿ö°¡ ÄÄÆ÷³ÍÆ®·Î º¸À¯
+/// ì  ëª¨ë“  ì´ë™ì†ë„ ê´€ë ¨ ë””ë²„í”„ ê´€ë¦¬
+/// íƒ€ì›Œê°€ ì»´í¬ë„ŒíŠ¸ë¡œ ë³´ìœ 
 /// </summary>
 public abstract class MovementDebuff : IDebuff {
-    //µğ¹öÇÁ Å¸ÀÔ
+    //ë””ë²„í”„ íƒ€ì…
     public Define.DebuffType Type { get; protected set; }
-    //µğ¹öÇÁ ¹øµé(ÀÌµ¿)
+    //ë””ë²„í”„ ë²ˆë“¤(ì´ë™)
     public Define.DebuffBundle Bundle => Define.DebuffBundle.Movement;
-    //µğ¹öÇÁ ¹ë·ù
+    //ë””ë²„í”„ ë°¸ë¥˜
     public float DebuffValue { get; protected set; }
-    //µğ¹öÇÁ Àû¿ë ¿©ºÎ
+    //ë””ë²„í”„ ì ìš© ì—¬ë¶€
     public bool IsActive { get; private set; }
-    //µğ¹öÇÁ Àû¿ë ½Ã°£
+    //ë””ë²„í”„ ì ìš© ì‹œê°„
     public float DebuffTime { get; protected set; }
 
     /// <summary>
-    /// µğ¹öÇÁ Àû¿ë
+    /// ë””ë²„í”„ ì ìš©
     /// </summary>
     public virtual void ApplyDebuff(EnemyBase enemy) {
         IsActive = true;
     }
 
     /// <summary>
-    /// µğ¹öÇÁ ÇØÁ¦
+    /// ë””ë²„í”„ í•´ì œ
     /// </summary>
     public virtual void RemoveDebuff(EnemyBase enemy) {
         IsActive = false;
     }
 
     /// <summary>
-    /// µğ¹öÇÁ·Î ÀÎÇÑ ÀÌµ¿¼Óµµ °è»ê ¹× ¹İÈ¯
+    /// ë””ë²„í”„ë¡œ ì¸í•œ ì´ë™ì†ë„ ê³„ì‚° ë° ë°˜í™˜
     /// </summary>
-    /// <param name="baseSpeed">¿øº» ÀÌµ¿¼Óµµ</param>
-    /// <returns>°è»êµÈ ÀÌµ¿¼Óµµ</returns>
+    /// <param name="baseSpeed">ì›ë³¸ ì´ë™ì†ë„</param>
+    /// <returns>ê³„ì‚°ëœ ì´ë™ì†ë„</returns>
     public abstract float ModifyMoveSpeed(float baseSpeed);
 }

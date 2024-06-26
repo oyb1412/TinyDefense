@@ -1,5 +1,5 @@
 /// <summary>
-/// °ÔÀÓ Àç½ÃÀÛ ¹öÆ°
+/// ê²Œì„ ì¬ì‹œì‘ ë²„íŠ¼
 /// </summary>
 public class UI_RestartButton : UI_Button {
     public override void Init() {
@@ -7,7 +7,7 @@ public class UI_RestartButton : UI_Button {
     }
 
     /// <summary>
-    /// ÇöÀç ¾ÀÀ¸·Î ÀçÀÌµ¿
+    /// í˜„ì¬ ì”¬ìœ¼ë¡œ ì¬ì´ë™
     /// </summary>
     public override void Select() {
         UI_Fade.Instance.ActivationFade(Define.SceneType.Ingame);

@@ -2,19 +2,19 @@ using UnityEngine;
 using System.Collections;
 
 /// <summary>
-/// °ÔÀÓ ½ÃÀÛ½Ã, Ç®¸µ °´Ã¼ »ı¼º
+/// ê²Œì„ ì‹œì‘ì‹œ, í’€ë§ ê°ì²´ ìƒì„±
 /// </summary>
 public class StartPoolManager : MonoBehaviour {
     public static StartPoolManager Instance;
 
     /// <summary>
-    /// »ı¼ºÇÒ Ç®¸µ °´Ã¼ Å¬·¡½º
+    /// ìƒì„±í•  í’€ë§ ê°ì²´ í´ë˜ìŠ¤
     /// </summary>
     [System.Serializable]
     public class Pool {
-        //»ı¼ºÇÒ °ÔÀÓ¿ÀºêÁ§Æ®
+        //ìƒì„±í•  ê²Œì„ì˜¤ë¸Œì íŠ¸
         public GameObject obj;
-        //»ı¼ºÇÒ °¹¼ö
+        //ìƒì„±í•  ê°¯ìˆ˜
         public int poolCount;
     }
 
@@ -28,7 +28,7 @@ public class StartPoolManager : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¿¡µğÅÍ»ó¿¡¼­ ÁöÁ¤ÇÑ ¸ğµç °´Ã¼ ¹Ì¸® »ı¼º
+    /// ì—ë””í„°ìƒì—ì„œ ì§€ì •í•œ ëª¨ë“  ê°ì²´ ë¯¸ë¦¬ ìƒì„±
     /// </summary>
     /// <returns></returns>
     public IEnumerator StartPoolAsync() {

@@ -1,9 +1,9 @@
 /// <summary>
-/// ¹è°æÀ½ ¹ÂÆ® Åä±Û
+/// ë°°ê²½ìŒ ë®¤íŠ¸ í† ê¸€
 /// </summary>
 public class UI_BGMMuteToggle : UI_MuteToggle {
     /// <summary>
-    /// ¹è°æÀ½ ¹ÂÆ®
+    /// ë°°ê²½ìŒ ë®¤íŠ¸
     /// </summary>
     /// <param name="trigger"></param>
     protected override void SetToggle(bool trigger) {

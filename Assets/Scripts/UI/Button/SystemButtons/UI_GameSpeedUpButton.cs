@@ -2,14 +2,14 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// °ÔÀÓ ½ºÇÇµå Áõ°¡ ¹öÆ°
+/// ê²Œì„ ìŠ¤í”¼ë“œ ì¦ê°€ ë²„íŠ¼
 /// </summary>
 public class UI_GameSpeedUpButton : UI_Button {
-    //±âº» ½ºÇÁ¶óÀÌÆ®
+    //ê¸°ë³¸ ìŠ¤í”„ë¼ì´íŠ¸
     private Sprite defaultSpeedSprite;
-    //¼Óµµ 2¹è½Ã ½ºÇÁ¶óÀÌÆ®
+    //ì†ë„ 2ë°°ì‹œ ìŠ¤í”„ë¼ì´íŠ¸
     private Sprite fastSpeedSprite;
-    //½ºÇÁ¶óÀÌÆ® ÀúÀå¿ë ÀÌ¹ÌÁö
+    //ìŠ¤í”„ë¼ì´íŠ¸ ì €ì¥ìš© ì´ë¯¸ì§€
     private Image iconImage;
     public override void Init() {
         buttonSfxType = Define.SFXType.SelectUIButton;
@@ -26,8 +26,8 @@ public class UI_GameSpeedUpButton : UI_Button {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã
-    /// °ÔÀÓ ¼Óµµ Á¶Àı
+    /// ë²„íŠ¼ ì„ íƒì‹œ
+    /// ê²Œì„ ì†ë„ ì¡°ì ˆ
     /// </summary>
     public override void Select() {
         var speed = Managers.Game.GameSpeed;
@@ -43,7 +43,7 @@ public class UI_GameSpeedUpButton : UI_Button {
     }
 
     /// <summary>
-    /// ±¤°í ½ÃÃ»À¸·Î ¹öÆ° ¾ğ¶ô
+    /// ê´‘ê³  ì‹œì²­ìœ¼ë¡œ ë²„íŠ¼ ì–¸ë½
     /// </summary>
     public void SetButton() {
         button.interactable = true;

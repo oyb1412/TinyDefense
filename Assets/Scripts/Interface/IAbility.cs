@@ -1,9 +1,9 @@
 /// <summary>
-/// ¸ğµç ¾îºô¸®Æ¼ °ü¸® ÀÎÅÍÆäÀÌ½º
+/// ëª¨ë“  ì–´ë¹Œë¦¬í‹° ê´€ë¦¬ ì¸í„°í˜ì´ìŠ¤
 /// </summary>
 public interface IAbility {
-    //¾îºô¸®Æ¼ Á¤º¸
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´
     Define.AbilityValue AbilityValue { get; }
-    //¾îºô¸®Æ¼ Àû¿ë
+    //ì–´ë¹Œë¦¬í‹° ì ìš©
     void SetAbility();
 }

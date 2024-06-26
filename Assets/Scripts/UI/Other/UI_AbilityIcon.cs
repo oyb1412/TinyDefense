@@ -4,19 +4,19 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 /// <summary>
-/// ¾îºô¸®Æ¼ ¾ÆÀÌÄÜ °ü¸® Å¬·¡½º
+/// ì–´ë¹Œë¦¬í‹° ì•„ì´ì½˜ ê´€ë¦¬ í´ë˜ìŠ¤
 /// </summary>
 public class UI_AbilityIcon : MonoBehaviour {
     private EventTrigger eventTrigger;
-    //¿ÀºêÁ§Æ® ¾îºô¸®Æ¼ Á¤º¸
+    //ì˜¤ë¸Œì íŠ¸ ì–´ë¹Œë¦¬í‹° ì •ë³´
     private Define.AbilityValue abilityIcon;
-    //Ç¥±âÇÒ ÀÌ¹ÌÁö ÄÄÆ÷³ÍÆ®
+    //í‘œê¸°í•  ì´ë¯¸ì§€ ì»´í¬ë„ŒíŠ¸
     public Image IconImage {  get; private set; }
-    //¾îºô¸®Æ¼ Á¤º¸ Ç¥±â ÆÇ³Ú
+    //ì–´ë¹Œë¦¬í‹° ì •ë³´ í‘œê¸° íŒë„¬
     [SerializeField] private UI_DescriptionPanel abilityDescription;
 
     /// <summary>
-    /// ÃÊ±âÈ­ ¹× ÀÌº¥Æ® Æ®¸®°Å¿¡ ÇÔ¼ö ¿¬µ¿
+    /// ì´ˆê¸°í™” ë° ì´ë²¤íŠ¸ íŠ¸ë¦¬ê±°ì— í•¨ìˆ˜ ì—°ë™
     /// </summary>
     private void Awake() {
         IconImage = GetComponent<Image>();  
@@ -30,10 +30,10 @@ public class UI_AbilityIcon : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ Á¤º¸ ÀúÀå
-    /// ¾îºô¸®Æ¼ ½Àµæ½Ã È£Ãâ
+    /// ì–´ë¹Œë¦¬í‹° ì •ë³´ ì €ì¥
+    /// ì–´ë¹Œë¦¬í‹° ìŠµë“ì‹œ í˜¸ì¶œ
     /// </summary>
-    /// <param name="abilityIcon">ÀúÀåÇÒ ¾îºô¸®Æ¼ Á¤º¸</param>
+    /// <param name="abilityIcon">ì €ì¥í•  ì–´ë¹Œë¦¬í‹° ì •ë³´</param>
     public void SetAbilityIcon(Define.AbilityValue abilityIcon) {
         this.abilityIcon = abilityIcon;
         IconImage.color = Color.white;
@@ -41,7 +41,7 @@ public class UI_AbilityIcon : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¾ÆÀÌÄÜ ¼±ÅÃ½Ã Á¤º¸ Ç¥±â ÆÇ³Ú È£Ãâ
+    /// ì–´ë¹Œë¦¬í‹° ì•„ì´ì½˜ ì„ íƒì‹œ ì •ë³´ í‘œê¸° íŒë„¬ í˜¸ì¶œ
     /// </summary>
     private void OnPointerDown(BaseEventData eventData) {
         if (abilityIcon == null)
@@ -51,7 +51,7 @@ public class UI_AbilityIcon : MonoBehaviour {
     }
 
     /// <summary>
-    /// ¾îºô¸®Æ¼ ¾ÆÀÌÄÜ pressUp½Ã Á¤º¸ Ç¥±â ÆÇ³Ú ºñÈ°¼ºÈ­
+    /// ì–´ë¹Œë¦¬í‹° ì•„ì´ì½˜ pressUpì‹œ ì •ë³´ í‘œê¸° íŒë„¬ ë¹„í™œì„±í™”
     /// </summary>
     private void OnPointerUp(BaseEventData eventData) {
         if (abilityIcon == null)
@@ -61,10 +61,10 @@ public class UI_AbilityIcon : MonoBehaviour {
     }
 
     /// <summary>
-    /// ÀÌº¥Æ®Æ®¸®°Å¿¡ ÀÌº¥Æ®ÇÔ¼ö Ãß°¡
+    /// ì´ë²¤íŠ¸íŠ¸ë¦¬ê±°ì— ì´ë²¤íŠ¸í•¨ìˆ˜ ì¶”ê°€
     /// </summary>
-    /// <param name="action">Ãß°¡ÇÒ ÇÔ¼ö</param>
-    /// <param name="triggerType">ÀÌº¥Æ® Å¸ÀÔ</param>
+    /// <param name="action">ì¶”ê°€í•  í•¨ìˆ˜</param>
+    /// <param name="triggerType">ì´ë²¤íŠ¸ íƒ€ì…</param>
     private void AddEventTrigger(UnityAction<BaseEventData> action, EventTriggerType triggerType) {
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = triggerType;

@@ -2,18 +2,18 @@ using TMPro;
 using UnityEngine;
 
 /// <summary>
-/// Å¸¿ö ÆÇ¸Å ¹öÆ° Å¬·¡½º
+/// íƒ€ì›Œ íŒë§¤ ë²„íŠ¼ í´ë˜ìŠ¤
 /// </summary>
 public class UI_SellButton : UI_Button, IUI_TowerButton {
-    //ÆÇ¸ÅÇÒ Å¸¿ö ÀúÀå
+    //íŒë§¤í•  íƒ€ì›Œ ì €ì¥
     public TowerBase Tower { get; private set; }
-    //Å¸¿ö ÆÇ¸Å ºñ¿ë Ç¥±â tmp
+    //íƒ€ì›Œ íŒë§¤ ë¹„ìš© í‘œê¸° tmp
     [SerializeField]private TextMeshProUGUI sellRewardTMP;
-    //¸ğµç ÀÚ½Ä tmp¹× ¹öÆ° °ü¸® ÄÄÆ÷³ÍÆ®
+    //ëª¨ë“  ìì‹ tmpë° ë²„íŠ¼ ê´€ë¦¬ ì»´í¬ë„ŒíŠ¸
     private TMPandButton tmpAndButton;
-    //Å¸¿ö ÆÇ¸Å ÀÌÆåÆ®
+    //íƒ€ì›Œ íŒë§¤ ì´í™íŠ¸
     private GameObject buildEffect;
-    //Å¸¿ö ÆÇ¸Å½Ã °ñµå ÇÁ¸®Æé
+    //íƒ€ì›Œ íŒë§¤ì‹œ ê³¨ë“œ í”„ë¦¬í©
     private GameObject goldObject;
 
     public override void Init() {
@@ -31,7 +31,7 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° ¼±ÅÃ½Ã Å¸¿ö ÆÇ¸Å
+    /// ë²„íŠ¼ ì„ íƒì‹œ íƒ€ì›Œ íŒë§¤
     /// </summary>
     public override void Select() {
         UI_GoldObject gold = Managers.Resources.Activation(goldObject).GetComponent<UI_GoldObject>();
@@ -48,7 +48,7 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° ºñÈ°¼ºÈ­
+    /// ë²„íŠ¼ ë¹„í™œì„±í™”
     /// </summary>
     public void DeActivation() {
         Tower = null;
@@ -56,9 +56,9 @@ public class UI_SellButton : UI_Button, IUI_TowerButton {
     }
 
     /// <summary>
-    /// ¹öÆ° È°¼ºÈ­
+    /// ë²„íŠ¼ í™œì„±í™”
     /// </summary>
-    /// <param name="cell">¼±ÅÃÇÑ ¼¿</param>
+    /// <param name="cell">ì„ íƒí•œ ì…€</param>
     public void Activation(Cell cell) {
         if (!cell.IsUse()) {
             sellRewardTMP.text = string.Format(Managers.Data.DefineData.MENT_SELL_REWARD, 0);

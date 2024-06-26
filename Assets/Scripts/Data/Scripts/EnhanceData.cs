@@ -1,5 +1,5 @@
 /// <summary>
-/// ±âº»ÀûÀÎ ÀÎÇÚ½º µ¥ÀÌÅÍ
+/// ê¸°ë³¸ì ì¸ ì¸í•¸ìŠ¤ ë°ì´í„°
 /// </summary>
 [System.Serializable]
 public class EnhanceData  {
@@ -7,15 +7,15 @@ public class EnhanceData  {
 
     [System.Serializable]
     public class EnhanceLevelData {
-        //·¹º§
+        //ë ˆë²¨
         public int Level;
-        //ÀÎÇÚ½º ¹ë·ù
+        //ì¸í•¸ìŠ¤ ë°¸ë¥˜
         public float EnhanceValue;
-        //ÀÎÇÚ½º ·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ¹ë·ù
+        //ì¸í•¸ìŠ¤ ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë°¸ë¥˜
         public float EnhanceUpValue;
-        //ÀÎÇÚ½º ·¹º§¾÷ ºñ¿ë
+        //ì¸í•¸ìŠ¤ ë ˆë²¨ì—… ë¹„ìš©
         public int EnhanceCost;
-        //ÀÎÇÚ½º ·¹º§¾÷½Ã Áõ°¡ÇÏ´Â ·¹º§¾÷ ºñ¿ë
+        //ì¸í•¸ìŠ¤ ë ˆë²¨ì—…ì‹œ ì¦ê°€í•˜ëŠ” ë ˆë²¨ì—… ë¹„ìš©
         public int EnhanceCostUpValue;
     }
 

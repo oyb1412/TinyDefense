@@ -4,14 +4,14 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 /// <summary>
-/// ¸¶¿ì½º Å¬¸¯À¸·Î ¿ÀºêÁ§Æ® ¼±ÅÃ
+/// ë§ˆìš°ìŠ¤ í´ë¦­ìœ¼ë¡œ ì˜¤ë¸Œì íŠ¸ ì„ íƒ
 /// </summary>
 public class SelectManager
 {
-    //ÇöÀç ¼±ÅÃÇÑ ¿ÀºêÁ§Æ®
+    //í˜„ì¬ ì„ íƒí•œ ì˜¤ë¸Œì íŠ¸
     private Cell currentSelect;
     private HashSet<Cell> selects;
-    //Ä«¸Ş¶ó Ä³½Ì
+    //ì¹´ë©”ë¼ ìºì‹±
     private Camera mainCamera;
     public void Init() {
         selects = new HashSet<Cell>(Managers.Data.DefineData.CELL_COUNT);
@@ -20,7 +20,7 @@ public class SelectManager
     }
 
     /// <summary>
-    /// Áö¼ÓÀûÀ¸·Î ¸¶¿ì½º Å¬¸¯ Ã¼Å©
+    /// ì§€ì†ì ìœ¼ë¡œ ë§ˆìš°ìŠ¤ í´ë¦­ ì²´í¬
     /// </summary>
     public void OnUpdate() {
 #if UNITY_EDITOR || UNITY_STANDALONE
@@ -39,8 +39,8 @@ public class SelectManager
     }
 
     /// <summary>
-    /// ¼¿ ¼±ÅÃ
-    /// ÅÍÄ¡ÇÑ °÷°ú °¡Àå °¡±î¿î ¼¿À» ¼±ÅÃ
+    /// ì…€ ì„ íƒ
+    /// í„°ì¹˜í•œ ê³³ê³¼ ê°€ì¥ ê°€ê¹Œìš´ ì…€ì„ ì„ íƒ
     /// </summary>
     /// <returns></returns>
     public Cell SelectCell() {
@@ -64,10 +64,10 @@ public class SelectManager
     }
 
     /// <summary>
-    /// ¿ÀºêÁ§Æ® ¼±ÅÃ
+    /// ì˜¤ë¸Œì íŠ¸ ì„ íƒ
     /// </summary>
     private void Select() {
-        //ÀÌ¹Ì ¼±ÅÃÇÑ ¿ÀºêÁ§Æ®°¡ ÀÖ´Ù¸é ÇØÁ¦
+        //ì´ë¯¸ ì„ íƒí•œ ì˜¤ë¸Œì íŠ¸ê°€ ìˆë‹¤ë©´ í•´ì œ
         
         if (currentSelect != null) {
             if (currentSelect != SelectCell()) {
@@ -78,7 +78,7 @@ public class SelectManager
 
         currentSelect = SelectCell();
 
-        //¿ÀºêÁ§Æ®°¡ ¼±ÅÃµÇ¸é ¼±ÅÃ
+        //ì˜¤ë¸Œì íŠ¸ê°€ ì„ íƒë˜ë©´ ì„ íƒ
         if (currentSelect != null) {
             SoundManager.Instance.PlaySfx(Define.SFXType.SelectTowerAndCell);
             currentSelect.Select();

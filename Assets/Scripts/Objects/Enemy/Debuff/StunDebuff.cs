@@ -1,19 +1,19 @@
 using UnityEngine;
 /// <summary>
-/// ½ºÅÏ µğ¹öÇÁ
+/// ìŠ¤í„´ ë””ë²„í”„
 /// </summary>
 public class StunDebuff : MovementDebuff {
     /// <summary>
-    /// ÃÊ±âÈ­
+    /// ì´ˆê¸°í™”
     /// </summary>
-    /// <param name="debuffTime">µğ¹öÇÁ Áö¼Ó½Ã°£</param>
+    /// <param name="debuffTime">ë””ë²„í”„ ì§€ì†ì‹œê°„</param>
     public StunDebuff(float debuffTime) {
         DebuffTime = debuffTime;
         Type = Define.DebuffType.Stun;
     }
 
     /// <summary>
-    /// µğ¹öÇÁ Àû¿ë
+    /// ë””ë²„í”„ ì ìš©
     /// </summary>
     public override void ApplyDebuff(EnemyBase enemy) {
         base.ApplyDebuff(enemy);
@@ -21,7 +21,7 @@ public class StunDebuff : MovementDebuff {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ ÇØÁ¦
+    /// ë””ë²„í”„ í•´ì œ
     /// </summary>
     public override void RemoveDebuff(EnemyBase enemy) {
         base.RemoveDebuff(enemy);
@@ -29,10 +29,10 @@ public class StunDebuff : MovementDebuff {
     }
 
     /// <summary>
-    /// µğ¹öÇÁ¸¦ Àû¿ëÇÑ ÀÌµ¿¼Óµµ °è»ê ¹× ¹İÈ¯
+    /// ë””ë²„í”„ë¥¼ ì ìš©í•œ ì´ë™ì†ë„ ê³„ì‚° ë° ë°˜í™˜
     /// </summary>
-    /// <param name="baseSpeed">¿øº» ÀÌµ¿¼Óµµ</param>
-    /// <returns>°è»êµÈ ÀÌµ¿¼Óµµ</returns>
+    /// <param name="baseSpeed">ì›ë³¸ ì´ë™ì†ë„</param>
+    /// <returns>ê³„ì‚°ëœ ì´ë™ì†ë„</returns>
     public override float ModifyMoveSpeed(float baseSpeed) {
         return 0;
     }
