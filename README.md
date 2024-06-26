@@ -87,11 +87,11 @@
 
   -각종 서드파티 SDK를 추가한 상태에서 안드로이드 빌드를 시도했지만 실패했습니다.
 
-  todo(버전 이슈 스샷, 그레이들 스샷, 매니패스트 스샷 등등…)
+  ![10](https://github.com/oyb1412/TinyDefense/assets/154235801/b1e5acce-ad50-46d1-80c2-c2db9fce9da3)
 
-  -구글링을 통해 나온 여러 방법을 동원해 그레이들 파일과 매니패스트 파일을 수정 후 빌드를 시      도했지만 실패했습니다.
+  -구글링을 통해 나온 여러 방법을 동원해 그레이들 파일과 매니패스트 파일을 수정 후 빌드를 시도했지만 실패했습니다.
 
-  todo(그레이들 파일 및 매니패스트 파일 수정, 커스텀 그레이들 설정)
+  ![그림1](https://github.com/oyb1412/TinyDefense/assets/154235801/5cbc1c65-410d-4049-b1d2-2aa8f9facb19)
 
 - (해결)새로운 프로젝트로 이전 및 중복 SDK 미다운로드로 안드로이드 빌드 성공
 
@@ -99,19 +99,19 @@
 
   -천천히 SDK를 하나씩 설치하며, 공식 홈페이지의 설치 방법을 충실히 이행했습니다.
 
-  todo(공홈 스크린샷)
+  ![13](https://github.com/oyb1412/TinyDefense/assets/154235801/c5c86073-effb-4916-afb9-fa7730e04b9a)
 
   -Firebase와 Google Admob SDK중 중복되는 부분을 임포트 하면 문제가 생긴다는 강사님의 충고를 듣고, 새롭게 임포트를 할 때 중복되는 부분은 제외했습니다.
 
-  todo(임포트 스크린샷)
+  ![14](https://github.com/oyb1412/TinyDefense/assets/154235801/e131509b-f46a-4885-bc4a-c66bd74bc0f4)
 
   -또한 Minimun API및 Target API를 조정해 버전 이슈 문제를 해결했습니다.
 
-  todo(스샷)
+  ![15](https://github.com/oyb1412/TinyDefense/assets/154235801/acd54713-4681-4a05-8876-ddfb08e22b67)
 
   -그 결과, 성공적으로 빌드 및 안드로이드 기기에서 실행에 성공했습니다.
 
-  todo(빌드 성공 스샷)
+  ![16](https://github.com/oyb1412/TinyDefense/assets/154235801/15900dfc-7853-4bc6-b329-9685654715a3)
 
 
 ### 핵심 로직
