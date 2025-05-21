@@ -10,6 +10,9 @@ public class EnemyStatus : StatusBase {
     //생존 여부
     private bool isLive;
 
+    //이동 여부
+    public bool IsMove;
+
     /// <summary>
     /// 애너미 이동속도에 디버프 적용
     /// </summary>
@@ -49,6 +52,7 @@ public class EnemyStatus : StatusBase {
     /// </summary>
     public void Clear() {
         SetHpAction = null;
+        IsMove = false;
     }
 
     /// <summary>

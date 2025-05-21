@@ -24,6 +24,16 @@ public class EnemyManager {
         Managers.Game.CurrentGameLevelAction += SetCurrentLevelEnemyHp;
     }
 
+    public void OnUpdate() {
+        for (int i = EnemyList.Count - 1; i >= 0; i--) {
+            var enemy = EnemyList[i];
+            if (Util.IsEnemyNull(enemy)) continue;
+
+            enemy.UpdateMove();
+            enemy.UpdateDebuff();
+        }
+    }
+
 
     private void SetCurrentLevelEnemyHp(int level) {
         if (level == 0) {

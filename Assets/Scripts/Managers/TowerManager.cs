@@ -20,6 +20,12 @@ public class TowerManager {
         TowerData = Managers.Data.GameData.TowerDatas.Towers;
     }
 
+    public void OnUpdate() {
+        foreach (var tower in TowerList) {
+            tower.UpdateAttack();
+        }
+    }
+
     /// <summary>
     /// 리스트에 타워 추가
     /// 타워 생성시 호출

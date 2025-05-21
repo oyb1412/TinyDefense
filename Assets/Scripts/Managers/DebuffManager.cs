@@ -14,6 +14,8 @@ public class DebuffManager {
     //디버프 적용 타입, 적용 유무 액션
     public Action<Define.DebuffType, bool> DebuffAction;
 
+    //디버프 타이머
+    public float debuffTimer = 0f;
     public DebuffManager() {
         DebuffAction = null;
 

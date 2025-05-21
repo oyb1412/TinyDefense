@@ -21,9 +21,6 @@ public class EnemyBase : MonoBehaviour {
     private WaitForSeconds debuffTick;   
     //이동 index
     private int moveIndex;
-    //디버프 코루틴
-    private Coroutine debuffCoroutine;
-    public Coroutine MoveCoroutine { get; private set; }
     //자식오브젝트 스케일 비동기
     private ParentScaleEventHandler parentScale;
     //애너미 디버프 관리
@@ -42,8 +39,8 @@ public class EnemyBase : MonoBehaviour {
     /// 애너미 비활성화시 초기화
     /// </summary>
     private void OnDisable() {
-        StopAllCoroutines();
         DebuffManager.Debuffs.Clear();
+        DebuffManager.debuffTimer = 0;
         moveIndex = 0;
         EnemyStatus.Clear();
     }
@@ -61,23 +58,6 @@ public class EnemyBase : MonoBehaviour {
         animator = GetComponent<Animator>();
         debuffTick = new WaitForSeconds(Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK);
         StateMachine = new EnemyStateMachine(this);
-    }
-
-    /// <summary>
-    /// 데미지 디버프가 존재하면
-    /// 틱 데미지 계산
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator Co_DamageDebuff() {
-        while(true) {
-            if (DebuffManager != null && DebuffManager.Debuffs.Count > 0) {
-                foreach(var item in DebuffManager.Debuffs) {
-                    if(item.Bundle == Define.DebuffBundle.Damage && item.IsActive)
-                        EnemyStatus.SetHp(item.DebuffValue * Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK);
-                }
-            }
-            yield return debuffTick;
-        }
     }
 
     /// <summary>
@@ -105,7 +85,6 @@ public class EnemyBase : MonoBehaviour {
     /// 생성 및 재사용 초기화
     /// </summary>
     private void Init() {
-        debuffCoroutine = null;
         parentScale.ChangeScale(Define.Direction.Right, myTransform);
         enemyLevel = Managers.Game.CurrentGameLevel - 1;
         myTransform.position = Managers.Data.DefineData.DEFAULT_CREATE_POSITION;
@@ -113,58 +92,62 @@ public class EnemyBase : MonoBehaviour {
         EnemyStatus.IsLive = true;
     }
 
-    /// <summary>
-    /// 이동 시작
-    /// </summary>
-    public void StartMove() {
+    public void UpdateDebuff() {
         if (Util.IsEnemyNull(this))
             return;
 
-        if (MoveCoroutine != null) {
-            StopCoroutine(MoveCoroutine);
-            MoveCoroutine = null;
-        }
+        if (DebuffManager == null || DebuffManager.Debuffs.Count == 0)
+            return;
 
-        MoveCoroutine = StartCoroutine(Co_Move());
+        DebuffManager.debuffTimer += Time.deltaTime;
 
-        if (debuffCoroutine != null) {
-            StopCoroutine(debuffCoroutine);
-            debuffCoroutine = null;
-        }
+        if (DebuffManager.debuffTimer >= Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK) {
+            DebuffManager.debuffTimer = 0f;
 
-        debuffCoroutine = StartCoroutine(Co_DamageDebuff());
-    }
-
-    /// <summary>
-    /// 경로에 맞춰 자동 이동
-    /// </summary>
-    private IEnumerator Co_Move() {
-        Vector3 targetPosition = movePath.GetChild(moveIndex).position;
-        while (true) {
-            myTransform.position = Vector3.MoveTowards(myTransform.position, targetPosition, EnemyStatus.MoveSpeed * Time.deltaTime);
-
-            float distance = Vector3.Distance(myTransform.position, movePath.GetChild(moveIndex).position);
-
-            if (distance <= Managers.Data.DefineData.PERMISSION_RANGE) {
-                moveIndex++;
-
-                if (moveIndex >= movePath.childCount)
-                    moveIndex = 0;
-
-                targetPosition = movePath.GetChild(moveIndex).position;
-
-                Define.Direction dir;
-
-                if (myTransform.position.x < targetPosition.x)
-                    dir = Define.Direction.Right;
-                else if (myTransform.position.x > targetPosition.x)
-                    dir = Define.Direction.Left;
-                else
-                    dir = Define.Direction.None;
-
-                parentScale.ChangeScale(dir, myTransform);
+            foreach (var item in DebuffManager.Debuffs) {
+                if (item.Bundle == Define.DebuffBundle.Damage && item.IsActive) {
+                    EnemyStatus.SetHp(item.DebuffValue * Managers.Data.DefineData.DEBUFF_DAMAGE_DEFAULT_TICK);
+                }
             }
-            yield return null;
         }
     }
+
+    public void UpdateMove() {
+        if (Util.IsEnemyNull(this))
+            return;
+
+        if (!EnemyStatus.IsMove)
+            return;
+
+        Vector3 targetPosition = movePath.GetChild(moveIndex).position;
+
+        myTransform.position = Vector3.MoveTowards(
+            myTransform.position,
+            targetPosition,
+            EnemyStatus.MoveSpeed * Time.deltaTime
+        );
+
+        float distance = Vector3.Distance(myTransform.position, targetPosition);
+
+        if (distance <= Managers.Data.DefineData.PERMISSION_RANGE) {
+            moveIndex++;
+
+            if (moveIndex >= movePath.childCount)
+                moveIndex = 0;
+
+            targetPosition = movePath.GetChild(moveIndex).position;
+
+            Define.Direction dir;
+
+            if (myTransform.position.x < targetPosition.x)
+                dir = Define.Direction.Right;
+            else if (myTransform.position.x > targetPosition.x)
+                dir = Define.Direction.Left;
+            else
+                dir = Define.Direction.None;
+
+            parentScale.ChangeScale(dir, myTransform);
+        }
+    }
+   
 }

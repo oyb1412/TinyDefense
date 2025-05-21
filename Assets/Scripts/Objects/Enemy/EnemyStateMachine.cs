@@ -22,19 +22,19 @@ public class EnemyStateMachine {
     /// <param name="state">변경할 상태</param>
     public void ChangeState(Define.EnemyState state) {
         enemyState = state;
+
+        enemyBase.EnemyStatus.IsMove = false;
         switch(enemyState) {
             case Define.EnemyState.Run:
                 enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, false);
-                enemyBase.StartMove();
+                enemyBase.EnemyStatus.IsMove = true;
                 break;
             case Define.EnemyState.Dead:
                 enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, false);
-                enemyBase.StopAllCoroutines();
                 enemyBase.SetAnimation(Managers.Data.DefineData.TAG_DEAD);
                 break;
             case Define.EnemyState.Stun:
                 enemyBase.SetAnimation(Managers.Data.DefineData.TAG_STUN, true);
-                enemyBase.StopCoroutine(enemyBase.MoveCoroutine);
                 break;
         }
     }

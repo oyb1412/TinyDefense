@@ -30,8 +30,6 @@ public abstract class TowerBase : MonoBehaviour {
     private SpriteRenderer runeWard;
     //적 서치 클래스
     private EnemySearchSystem enemySearchSystem;
-    //공격 코루틴
-    private Coroutine attackCoroutine;
     //보유중인 모든  디버프 저장
     public List<IDebuff> Debuffs { get; private set; }
     //자식오브젝트 스케일
@@ -39,6 +37,7 @@ public abstract class TowerBase : MonoBehaviour {
     //타워 버프 매니저
     public BuffManager BuffManager { get; private set; }
 
+    public float attackTimer = 0f;
     /// <summary>
     /// 공격 시 적용 데이터
     /// </summary>
@@ -54,14 +53,6 @@ public abstract class TowerBase : MonoBehaviour {
     /// </summary>
     private void OnEnable() {
         Init();
-    }
-
-    /// <summary>
-    /// 타워 파괴시 초기화
-    /// </summary>
-    private void OnDisable() {
-        StopAllCoroutines();
-        attackCoroutine = null;
     }
 
     /// <summary>
@@ -90,13 +81,8 @@ public abstract class TowerBase : MonoBehaviour {
         if (!Util.IsEnemyNull(TargetEnemy))
             TargetEnemy = null;
 
-        if (attackCoroutine == null)
-            attackCoroutine = StartCoroutine(Co_Attack());
-
         if (animator.enabled == false)
             animator.enabled = true;
-
-
     }
 
     /// <summary>
@@ -118,42 +104,37 @@ public abstract class TowerBase : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// 공격 속도에 맞춰 공격
-    /// 공격할 대상이 없다면 한 프레임 휴식
-    /// 적의 위치를 판단해 flip
-    /// </summary>
-    private IEnumerator Co_Attack() {
-        while(true) {
-            TargetEnemy = enemySearchSystem.TargetEnemyCheck(TargetEnemy);
+    public void UpdateAttack() {
+        if (StateMachine.GetState() == Define.TowerState.Movement)
+            return;
 
-            if (Util.IsEnemyNull(TargetEnemy))
-                TargetEnemy = enemySearchSystem.SearchEnemy();
+        TargetEnemy = enemySearchSystem.TargetEnemyCheck(TargetEnemy);
 
-            if (Util.IsEnemyNull(TargetEnemy) || StateMachine.GetState() == Define.TowerState.Movement) {
-                yield return null;
-                continue;
-            }
+        if (Util.IsEnemyNull(TargetEnemy))
+            TargetEnemy = enemySearchSystem.SearchEnemy();
 
-            Define.Direction dir;
+        if (Util.IsEnemyNull(TargetEnemy))
+            return;
 
-            if (transform.position.x < TargetEnemy.transform.position.x)
-                dir = Define.Direction.Right;
-            else if (transform.position.x > TargetEnemy.transform.position.x)
-                dir = Define.Direction.Left;
-            else
-                dir = Define.Direction.None;
+        // 방향 조절
+        Define.Direction dir;
+        if (transform.position.x < TargetEnemy.transform.position.x)
+            dir = Define.Direction.Right;
+        else if (transform.position.x > TargetEnemy.transform.position.x)
+            dir = Define.Direction.Left;
+        else
+            dir = Define.Direction.None;
 
-            parentScale.ChangeScale(dir, transform);
+        parentScale.ChangeScale(dir, transform);
 
+        // 공격 대기 시간 계산
+        attackTimer += Time.deltaTime;
+        if (attackTimer >= TowerStatus.AttackDelay) {
+            attackTimer = 0f;
             StateMachine.ChangeState(Define.TowerState.Attack);
-
-            float limit = Time.time + TowerStatus.AttackDelay;
-            while (limit > Time.time) {
-                yield return null;
-            }
         }
     }
+
 
     /// <summary>
     /// 공격 애니메이션 이벤트 콜백으로 호출

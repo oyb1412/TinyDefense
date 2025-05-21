@@ -21,8 +21,6 @@ public abstract class ProjectileBase : MonoBehaviour
     private Transform myTransform;
     //적 트랜스폼 캐싱
     private Transform targetTransform;
-    //이동 코루틴
-    private Coroutine velocityCoroutine;
 
     private void Awake() {
         if (myTransform == null)
@@ -38,6 +36,8 @@ public abstract class ProjectileBase : MonoBehaviour
     /// 발사체 생성 및 초기화
     /// </summary>
     public void Init(TowerBase towerBase, TowerBase.AttackData attackData) {
+        Managers.Projectile.AddProjectile(this);
+
         SoundManager.Instance.PlaySfx(Define.SFXType.FireProjectile);
         this.attackData = attackData;
         this.towerBase = towerBase;
@@ -57,39 +57,28 @@ public abstract class ProjectileBase : MonoBehaviour
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        if (velocityCoroutine != null)
-            StopCoroutine(velocityCoroutine);
-
-        velocityCoroutine = StartCoroutine(Co_Velocity());
-
         Invoke("Ivk_Destroy", Managers.Data.DefineData.PROJECTILE_DESTROY_TIME);
     }
 
     private void Ivk_Destroy() {
+        Managers.Projectile.RemoveProjectile(this);
         Managers.Resources.Release(gameObject);
     }
 
-    /// <summary>
-    /// 적 추적 코루틴
-    /// </summary>
-    /// <returns></returns>
-    private IEnumerator Co_Velocity() {
-        while (true) {
-            if (!Util.IsEnemyNull(targetEnemy)) {
-                Vector3 targetPosition = targetTransform.position;
-                Vector3 direction = targetPosition - myTransform.position;
+    public void UpdateProjectile() {
+        if (!Util.IsEnemyNull(targetEnemy)) {
+            Vector3 targetPosition = targetTransform.position;
+            Vector3 direction = targetPosition - myTransform.position;
 
-                saveDir = direction.normalized;
+            saveDir = direction.normalized;
 
-                if (Vector2.Distance(myTransform.position, targetPosition) < Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE) {
-                    Collison(targetEnemy);
-                    yield break;
-                }
+            if (Vector2.Distance(myTransform.position, targetPosition) < Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE) {
+                Collison(targetEnemy);
+                return; // 종료
             }
-
-            myTransform.position += saveDir * Managers.Data.DefineData.PROJECTILE_VELOCITY * Time.deltaTime;
-            yield return null;
         }
+
+        myTransform.position += saveDir * Managers.Data.DefineData.PROJECTILE_VELOCITY * Time.deltaTime;
     }
 
     /// <summary>

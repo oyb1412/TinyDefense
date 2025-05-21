@@ -26,6 +26,7 @@ public class Managers : MonoBehaviour
     private PoolManager _pool = new PoolManager();
     private ResourcesManager _resources = new ResourcesManager();
     private SceneManagerEX _scene = new SceneManagerEX();
+    private ProjectileManager _projectile = new ProjectileManager();
 
     public static FireStoreManager FireStore => _instance._fireStore; 
     public static DataManager Data => _instance._data; 
@@ -35,6 +36,7 @@ public class Managers : MonoBehaviour
     public static AbilityManager Ability => _instance._ability;
     public static EnemyManager Enemy => _instance._enemy;
     public static TowerManager Tower => _instance._tower;
+    public static ProjectileManager Projectile => _instance._projectile;
     public static EnhanceManager Enhance => _instance._enhance;
     public static GameManager Game => _instance._game;
     public static EnemySpawnManager Spawn => _instance._spawn;

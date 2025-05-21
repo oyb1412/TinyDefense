@@ -23,7 +23,9 @@ public class GameScene : BaseScene
         Managers.Game.Clear();
         Managers.Enemy.Clear();
         Managers.Tower.Clear();
+        Managers.Projectile.Clear();
     }
+
 
     /// <summary>
     /// 초기화
@@ -138,6 +140,9 @@ public class GameScene : BaseScene
         if (isLoading) {
             Managers.Select.OnUpdate();
             Managers.Game.OnUpdate();
+            Managers.Enemy.OnUpdate();
+            Managers.Tower.OnUpdate();
+            Managers.Projectile.OnUpdate();
         }
     }
 }
