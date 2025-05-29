@@ -115,6 +115,20 @@
 
 ---
 ![Line_1_(1)](https://github.com/oyb1412/TinyDefense/assets/154235801/f664c47e-d52b-4980-95ec-9859dea11aab)
+### ・Spatial Partitioning을 이용한 적 서치 최적화
+
+맵을 일종의 격자 형태로 관리해, 적 서치등 시간복잡도가 높은 로직의 최적화.
+
+![Image](https://github.com/user-attachments/assets/2ab4e83f-d963-4116-b500-34e3b8e6a457)
+![Image](https://github.com/user-attachments/assets/203b581c-aa69-467b-89ec-b27637f5362f)
+![image](https://github.com/user-attachments/assets/cc93c551-b6fe-4e4b-a0ca-a0c30cc16d86)
+
+실 사용 예(타워 사거리 내 적 서치)
+
+![image](https://github.com/user-attachments/assets/ba94541c-5bc5-4f2e-9f86-56da55708c50)
+
+![Line_1_(1)](https://github.com/oyb1412/TinyDefense/assets/154235801/f664c47e-d52b-4980-95ec-9859dea11aab)
+
 ### ・Firebase를 이용한 데이터 관리
 
 모든 데이터를 클라우드 서버에 저장 후 로컬 폴더에 로드. 초기 로딩 후 로그인 정보 저장으로 편의성 제공.
