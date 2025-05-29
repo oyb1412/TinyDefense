@@ -37,4 +37,10 @@ public static class Util
         tween.Kill();
         tween = null;
     }
+
+    public static bool SqrDistanceCheck(Vector2 a, Vector2 b, float range) {
+        float sqrDistance = (a - b).sqrMagnitude;
+        float sqrRange = range * range;
+        return sqrDistance >= sqrRange;
+    }
 }

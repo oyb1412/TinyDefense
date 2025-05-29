@@ -3854,7 +3854,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a0324c31505b04f49a8c08f64c56ea92, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -3900,6 +3900,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 29f9ca9b04118874586600abb645a59f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myTransform: {fileID: 0}
+  PrevGridPos: {x: 0, y: 0}
 --- !u!1 &6680256291141922295
 GameObject:
   m_ObjectHideFlags: 0

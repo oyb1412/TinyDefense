@@ -27,7 +27,9 @@ public class Managers : MonoBehaviour
     private ResourcesManager _resources = new ResourcesManager();
     private SceneManagerEX _scene = new SceneManagerEX();
     private ProjectileManager _projectile = new ProjectileManager();
+    private GridManager _grid = new GridManager();
 
+    public static GridManager Grid => _instance._grid;
     public static FireStoreManager FireStore => _instance._fireStore; 
     public static DataManager Data => _instance._data; 
     public static AdmobManager ADMob => _instance._admob;

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public class Skill_Tornado : MonoBehaviour {
+public class Skill_Tornado : AutoCachedMono {
     
     private Transform movePath;
    
@@ -13,6 +13,10 @@ public class Skill_Tornado : MonoBehaviour {
     private WaitForSeconds attackDelay;
 
     private HashSet<EnemyBase> containsEnemy;
+
+    protected override void Awake() {
+        base.Awake();
+    }
     private void Start() {
         if(containsEnemy == null)
             containsEnemy = new HashSet<EnemyBase>(Managers.Data.DefineData.ENEMY_MAX_COUNT);
@@ -23,7 +27,7 @@ public class Skill_Tornado : MonoBehaviour {
         if(attackDelay == null)
             attackDelay = new WaitForSeconds(0.1f);
 
-        transform.position = Managers.Data.DefineData.SKILL_TORNADO_DEFAULT_POSITION;
+        myTransform.position = Managers.Data.DefineData.SKILL_TORNADO_DEFAULT_POSITION;
 
         skillData = Managers.Skill.GetSkillValue(Define.SkillType.Tornado);
 
@@ -54,18 +58,21 @@ public class Skill_Tornado : MonoBehaviour {
     private IEnumerator Co_Attack() {
         while (true) {
             if (Managers.Enemy.EnemyList.Count > 0) {
-                var enemyList = Managers.Enemy.EnemyList;
+
+                var enemyList = Managers.Grid.GetEnemiesInRange(myTransform.position, Managers.Data.DefineData.SKILL_TORNADO_RANGE) ;
+
                 for (int i = enemyList.Count - 1; i >= 0; i--) {
                     if (Util.IsEnemyNull(enemyList[i]))
                         continue;
 
-                    if (Vector2.Distance(transform.position, enemyList[i].transform.position) > Managers.Data.DefineData.SKILL_TORNADO_RANGE) {
+                    if (Util.SqrDistanceCheck(myTransform.position, enemyList[i].myTransform.position,
+                            Managers.Data.DefineData.SKILL_TORNADO_RANGE)) {
                         if (containsEnemy.Contains(enemyList[i]))
                             containsEnemy.Remove(enemyList[i]);
 
                         continue;
                     }
-
+                   
                     if (containsEnemy.Contains(enemyList[i]))
                         continue;
 
@@ -86,12 +93,10 @@ public class Skill_Tornado : MonoBehaviour {
         int moveIndex = movePath.childCount - 1;
         Vector3 targetPosition = movePath.GetChild(moveIndex).position;
         while (true) {
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition,
+            myTransform.position = Vector3.MoveTowards(myTransform.position, targetPosition,
                 Managers.Data.DefineData.SKILL_TORNADO_MOVESPEED * Time.deltaTime);
 
-            float distance = Vector3.Distance(transform.position, movePath.GetChild(moveIndex).position);
-
-            if (distance <= Managers.Data.DefineData.PERMISSION_RANGE) {
+            if(!Util.SqrDistanceCheck(myTransform.position, movePath.GetChild(moveIndex).position, Managers.Data.DefineData.PERMISSION_RANGE)) {
                 moveIndex--;
 
                 if (moveIndex < 0)
@@ -99,6 +104,7 @@ public class Skill_Tornado : MonoBehaviour {
 
                 targetPosition = movePath.GetChild(moveIndex).position;
             }
+            
             yield return null;
         }
     }

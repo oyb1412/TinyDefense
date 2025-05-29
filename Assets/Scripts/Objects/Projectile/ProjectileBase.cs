@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 /// <summary>
 /// 모든 프로젝타일 관리 클래스
 /// </summary>
-public abstract class ProjectileBase : MonoBehaviour
+public abstract class ProjectileBase : AutoCachedMono
 {
     //이 발사체를 생성한 타워
     protected TowerBase towerBase;
@@ -17,14 +17,13 @@ public abstract class ProjectileBase : MonoBehaviour
     private EnemyBase targetEnemy;
     //투사체 정보
     protected TowerBase.AttackData attackData;
-    //트랜스폼 캐싱
-    private Transform myTransform;
     //적 트랜스폼 캐싱
     private Transform targetTransform;
 
-    private void Awake() {
-        if (myTransform == null)
-            myTransform = transform;
+    private bool hasHit;
+
+    protected override void Awake() {
+        base.Awake();
     }
 
     private void Start() {
@@ -36,6 +35,7 @@ public abstract class ProjectileBase : MonoBehaviour
     /// 발사체 생성 및 초기화
     /// </summary>
     public void Init(TowerBase towerBase, TowerBase.AttackData attackData) {
+        hasHit = false;
         Managers.Projectile.AddProjectile(this);
 
         SoundManager.Instance.PlaySfx(Define.SFXType.FireProjectile);
@@ -48,8 +48,8 @@ public abstract class ProjectileBase : MonoBehaviour
             return;
         }
 
-        targetTransform = targetEnemy.transform;
-        myTransform.position = this.towerBase.transform.position;
+        targetTransform = targetEnemy.myTransform;
+        myTransform.position = this.towerBase.myTransform.position;
 
         Vector3 targetPosition = targetTransform.position;
         Vector3 direction = targetPosition - myTransform.position;
@@ -66,14 +66,19 @@ public abstract class ProjectileBase : MonoBehaviour
     }
 
     public void UpdateProjectile() {
+        if (hasHit)
+            return;
+
         if (!Util.IsEnemyNull(targetEnemy)) {
             Vector3 targetPosition = targetTransform.position;
             Vector3 direction = targetPosition - myTransform.position;
 
             saveDir = direction.normalized;
 
-            if (Vector2.Distance(myTransform.position, targetPosition) < Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE) {
+            if (!Util.SqrDistanceCheck(myTransform.position, targetPosition,
+                Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE)) {
                 Collison(targetEnemy);
+                hasHit = true;
                 return; // 종료
             }
         }

@@ -24,6 +24,6 @@ public class NormalProjectile : ProjectileBase {
     /// </summary>
     protected override void CreateExplosion() {
         NormalProjectileEffect go = Managers.Resources.Activation(explosionEffect).GetComponent<NormalProjectileEffect>();
-        go.Init(towerBase, attackData, transform.position);
+        go.Init(towerBase, attackData, myTransform.position);
     }
 }

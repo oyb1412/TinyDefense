@@ -1,11 +1,9 @@
 using UnityEngine;
-using System.Collections;
-using System.Linq;
 
 /// <summary>
 /// 모든 애너미 관리 클래스
 /// </summary>
-public class EnemyBase : MonoBehaviour {
+public class EnemyBase : AutoCachedMono {
 
     //애너미 레벨
     protected int enemyLevel;
@@ -25,8 +23,8 @@ public class EnemyBase : MonoBehaviour {
     private ParentScaleEventHandler parentScale;
     //애너미 디버프 관리
     public DebuffManager DebuffManager { get; private set; }
-    //트랜스폼 캐싱
-    private Transform myTransform;
+
+    public Vector2Int PrevGridPos;
 
     /// <summary>
     /// 애너미 생성시 초기화
@@ -48,8 +46,8 @@ public class EnemyBase : MonoBehaviour {
     /// <summary>
     /// 애너미 첫 생성시 초기화
     /// </summary>
-    protected virtual void Awake() {
-        myTransform = transform;
+    protected override void Awake() {
+        base.Awake();
         movePath = GameObject.Find(Managers.Data.DefineData.ENEMY_MOVE_PATH).transform;
         EnemyStatus = new EnemyStatus();
         DebuffManager = new DebuffManager();
@@ -90,6 +88,8 @@ public class EnemyBase : MonoBehaviour {
         myTransform.position = Managers.Data.DefineData.DEFAULT_CREATE_POSITION;
         EnemyStatus.Init(this, enemyLevel);
         EnemyStatus.IsLive = true;
+        PrevGridPos = Managers.Grid.GetGridPos(myTransform.position);
+        Managers.Grid.Register(this);
     }
 
     public void UpdateDebuff() {
@@ -126,6 +126,13 @@ public class EnemyBase : MonoBehaviour {
             targetPosition,
             EnemyStatus.MoveSpeed * Time.deltaTime
         );
+
+        Vector2Int nowGridPos = Managers.Grid.GetGridPos(myTransform.position);
+
+        if (nowGridPos != PrevGridPos) {
+            Managers.Grid.UpdateGridPos(this, PrevGridPos, nowGridPos);
+            PrevGridPos = nowGridPos;
+        }
 
         float distance = Vector3.Distance(myTransform.position, targetPosition);
 

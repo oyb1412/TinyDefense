@@ -1,6 +1,7 @@
 using UnityEngine;
 using DG.Tweening;
 using System.Collections;
+using TMPro;
 
 public class EnemySearchSystem : MonoBehaviour
 {
@@ -38,15 +39,15 @@ public class EnemySearchSystem : MonoBehaviour
         if (towerBase == null)
             return null;
 
-        //필드에 존재하는 적 리스트를 받아온다.
-        var enemyList = Managers.Enemy.EnemyList;
+        //타워 사거리 계산
+        float range = towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE;
+
+        //모든 적 리스트가 아닌, 타워 사거리 내 적 리스트만 순회
+        var enemyList = Managers.Grid.GetEnemiesInRange(transform.position, range);
 
         //적 리스트를 순회하며, 공격 사거리 내의 적을 서치
         for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
-                continue;
-
-            if (Vector2.Distance(transform.position, enemyList[i].transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)
                 continue;
 
             //성공시 서치한 적 리턴
@@ -67,7 +68,8 @@ public class EnemySearchSystem : MonoBehaviour
             return null;
 
         //적이 공격 범위를 벗어났으면, null 리턴
-        if(Vector2.Distance(transform.position, target.transform.position) >= towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE) {
+        if (Util.SqrDistanceCheck(transform.position, target.transform.position,
+                towerBase.TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)) {
             return null;
         }
 

@@ -149,6 +149,7 @@ public class EnemyStatus : StatusBase {
             if(tower)
                 tower.TowerStatus.SetKill();
 
+            Managers.Grid.Unregister(enemyBase, enemyBase.PrevGridPos);
             IsLive = false;
         }
     }   

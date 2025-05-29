@@ -3,13 +3,14 @@ using UnityEngine;
 /// <summary>
 /// 모든 발사체 충돌 이펙트 관리
 /// </summary>
-public class ProjectileEffectBase : MonoBehaviour {
+public class ProjectileEffectBase : AutoCachedMono {
     //공격 데이터
     protected TowerBase.AttackData attackData;
     //이펙트 스프라이트 렌터러
     private SpriteRenderer spriteRenderer;
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         if(spriteRenderer == null) 
             spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -31,7 +32,7 @@ public class ProjectileEffectBase : MonoBehaviour {
     /// <param name="pos">이펙트 생성 위치</param>
     public virtual void Init(TowerBase towerBase, TowerBase.AttackData attackData, Vector3 pos) {
         this.attackData = attackData;
-        transform.position = pos;
+        myTransform.position = pos;
 
         if(this.attackData.IsCritical)
             spriteRenderer.color = Color.red;

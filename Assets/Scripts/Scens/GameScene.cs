@@ -23,6 +23,7 @@ public class GameScene : BaseScene
         Managers.Game.Clear();
         Managers.Enemy.Clear();
         Managers.Tower.Clear();
+        Managers.Grid.Clear();
         Managers.Projectile.Clear();
     }
 

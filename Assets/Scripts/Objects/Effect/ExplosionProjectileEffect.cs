@@ -16,22 +16,15 @@ public class ExplosionProjectileEffect : ProjectileEffectBase {
         this.towerBase = towerBase;
         base.Init(towerBase, attackData, pos);
 
-        var enemyList = Managers.Enemy.EnemyList;
+        float radius = Managers.Data.DefineData.TOWER_EXPLOSION_RADIUS;
+        var enemyList = Managers.Grid.GetEnemiesInRange(myTransform.position, radius);
 
         for (int i = enemyList.Count - 1; i >= 0; i--) {
             if (Util.IsEnemyNull(enemyList[i]))
                 continue;
-
-            float distance = Vector2.Distance(transform.position, enemyList[i].transform.position);
-
-            
-            if (distance > Managers.Data.DefineData.TOWER_EXPLOSION_RADIUS)
-                continue;
-
            
             if (enemyHash.Contains(enemyList[i]))
                 continue;
-
            
             enemyHash.Add(enemyList[i]);
            

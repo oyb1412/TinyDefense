@@ -9,6 +9,6 @@ public class ExplosionProjectile : ProjectileBase {
     /// </summary>
     protected override void CreateExplosion() {
         ExplosionProjectileEffect go = Managers.Resources.Activation(explosionEffect).GetComponent<ExplosionProjectileEffect>();
-        go.Init(towerBase, attackData, transform.position);
+        go.Init(towerBase, attackData, myTransform.position);
     }
 }

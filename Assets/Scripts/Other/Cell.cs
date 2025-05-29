@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// 각 셀 관리
 /// </summary>
-public class Cell : MonoBehaviour, ISelect {
+public class Cell : AutoCachedMono, ISelect {
     //셀에 건설된 타워
     public TowerBase Tower { get;  set; }
     //셀 world ui 캔버스
@@ -13,7 +13,8 @@ public class Cell : MonoBehaviour, ISelect {
     //셀이 선택중인가?
     public bool IsSelected { get; set; }
 
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         spriteRenderer = GetComponent<SpriteRenderer>();
         selectArrow = GetComponentInChildren<SelectArrow>();
     }
@@ -93,6 +94,6 @@ public class Cell : MonoBehaviour, ISelect {
             return;
 
         Tower.TowerCell = this;
-        Tower.transform.position = transform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
+        Tower.myTransform.position = myTransform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
     }
 }

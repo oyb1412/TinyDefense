@@ -3689,7 +3689,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: a52c728e1e2f01b4093a68289b68d67a, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -3723,6 +3723,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502605e5f14eaf742b4f2e33f51060db, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myTransform: {fileID: 0}
+  attackTimer: 0
 --- !u!114 &8050665056804826520
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.RuleTile.TilingRuleOutput;
 
 /// <summary>
 /// 마우스 클릭으로 오브젝트 선택
@@ -56,9 +57,9 @@ public class SelectManager
     }
 #endif
         foreach (var item in selects) {
-            if (Vector2.Distance(inputPos, item.transform.position) < Managers.Data.DefineData.MOUSE_CLICK_RANGE) {
+            if (!Util.SqrDistanceCheck(inputPos, item.transform.position,
+                Managers.Data.DefineData.MOUSE_CLICK_RANGE))
                 return item;
-            }
         }
         return null;
     }

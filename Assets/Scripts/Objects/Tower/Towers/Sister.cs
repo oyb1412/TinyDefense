@@ -51,8 +51,10 @@ public class Sister : TowerBase {
             if (item == this)
                 continue;
 
-            if(Vector2.Distance(TowerCell.transform.position, item.TowerCell.transform.position) > TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)
+            if (Util.SqrDistanceCheck(TowerCell.transform.position, item.TowerCell.transform.position,
+                TowerStatus.AttackRange * Managers.Data.DefineData.TOWER_RANGE)) {
                 continue;
+            }
             
             if(item.BuffManager.Buffs.Count > 0)
             {

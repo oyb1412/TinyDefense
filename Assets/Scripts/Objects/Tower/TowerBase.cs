@@ -1,13 +1,11 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.Events;
-using UnityEngine.Tilemaps;
 
 /// <summary>
 /// 모든 타워 관리
 /// </summary>
-public abstract class TowerBase : MonoBehaviour {
+public abstract class TowerBase : AutoCachedMono {
     //타워 종류
     public Define.TowerType TowerType { get; protected set; }
     //타워 장르
@@ -58,7 +56,8 @@ public abstract class TowerBase : MonoBehaviour {
     /// <summary>
     /// 타워 첫 생성시 초기화
     /// </summary>
-    private void Awake() {
+    protected override void Awake() {
+        base.Awake();
         animator = GetComponent<Animator>();
         parentScale = GetComponent<ParentScaleEventHandler>();
         runeWard = GetComponentsInChildren<SpriteRenderer>()[1];
@@ -118,14 +117,14 @@ public abstract class TowerBase : MonoBehaviour {
 
         // 방향 조절
         Define.Direction dir;
-        if (transform.position.x < TargetEnemy.transform.position.x)
+        if (myTransform.position.x < TargetEnemy.myTransform.position.x)
             dir = Define.Direction.Right;
-        else if (transform.position.x > TargetEnemy.transform.position.x)
+        else if (myTransform.position.x > TargetEnemy.myTransform.position.x)
             dir = Define.Direction.Left;
         else
             dir = Define.Direction.None;
 
-        parentScale.ChangeScale(dir, transform);
+        parentScale.ChangeScale(dir, myTransform);
 
         // 공격 대기 시간 계산
         attackTimer += Time.deltaTime;
@@ -199,7 +198,7 @@ public abstract class TowerBase : MonoBehaviour {
 
     //타워 선택
     public void Select() {
-        MovementArrow.Instance.DrawArrow(TowerCell.transform.position, this);
+        MovementArrow.Instance.DrawArrow(TowerCell.myTransform.position, this);
         enemySearchSystem.Activation();
     }
 
@@ -227,12 +226,12 @@ public abstract class TowerBase : MonoBehaviour {
     /// <param name="changeCell">타워 교체가 아닌 셀로의 이동인가?</param>
     /// <returns></returns>
     public IEnumerator Co_Movement(Cell cell, bool changeCell) {
-        Vector3 pos = cell.transform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
+        Vector3 pos = cell.myTransform.position + Managers.Data.DefineData.TOWER_CREATE_POSITION;
         StateMachine.ChangeState(Define.TowerState.Movement);
-        if (pos.x < transform.position.x)
-            parentScale.ChangeScale(Define.Direction.Left, transform);
-        else if(pos.x > transform.position.x)
-            parentScale.ChangeScale(Define.Direction.Right, transform);
+        if (pos.x < myTransform.position.x)
+            parentScale.ChangeScale(Define.Direction.Left, myTransform);
+        else if(pos.x > myTransform.position.x)
+            parentScale.ChangeScale(Define.Direction.Right, myTransform);
 
         DeSelect();
 
@@ -244,14 +243,15 @@ public abstract class TowerBase : MonoBehaviour {
         cell.IsSelected = true;
 
         while (true) {
-            transform.position = Vector3.MoveTowards(transform.position, pos, Managers.Data.DefineData.TOWER_MOVESPEED * Time.deltaTime);
+            myTransform.position = Vector3.MoveTowards(myTransform.position, pos, Managers.Data.DefineData.TOWER_MOVESPEED * Time.deltaTime);
 
-            if (Vector2.Distance(transform.position, pos) < Managers.Data.DefineData.PERMISSION_RANGE) {
+            if (!Util.SqrDistanceCheck(myTransform.position, pos,
+                Managers.Data.DefineData.PERMISSION_RANGE)) {
                 cell.IsSelected = false;
                 TowerCell = cell;
                 TowerCell.Tower = this;
 
-                transform.position = pos;
+                myTransform.position = pos;
                 StateMachine.ChangeState(Define.TowerState.Idle);
 
                 break;
