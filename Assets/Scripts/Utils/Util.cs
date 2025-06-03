@@ -12,7 +12,7 @@ public static class Util
     /// <param name="enemy">체크할 애너미</param>
     /// <returns></returns>
     public static bool IsEnemyNull(EnemyBase enemy) {
-        return enemy == null || !enemy.EnemyStatus.IsLive || !enemy.gameObject.activeInHierarchy || enemy.EnemyStatus.CurrentHp <= 0;
+        return enemy == null || !enemy.EnemyStatus.IsLive || !enemy.gameObject.activeInHierarchy || enemy.EnemyStatus.CurrentHp <= 0 || enemy.myTransform == null;
     }
 
     /// <summary>

@@ -4,8 +4,6 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 public class LoginScene : BaseScene {
-    //로그인 판넬
-    [SerializeField] private GameObject _loginPanel;
     //게임 시작 메인 판넬
     [SerializeField] private GameObject _mainPanel;
 
@@ -81,7 +79,6 @@ public class LoginScene : BaseScene {
     /// </summary>
     /// <param name="trigger"></param>
     private void AutoLogin(bool trigger) {
-        _loginPanel.SetActive(false);
         _mainPanel.SetActive(true);
         UI_Fade.Instance.DeActivationFade();
     }

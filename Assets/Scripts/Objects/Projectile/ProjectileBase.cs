@@ -20,6 +20,7 @@ public abstract class ProjectileBase : AutoCachedMono
     //적 트랜스폼 캐싱
     private Transform targetTransform;
 
+    private EnemyBase initialTargetEnemy;
     private bool hasHit;
 
     private float targetCheckTimer = 0f;
@@ -48,8 +49,8 @@ public abstract class ProjectileBase : AutoCachedMono
         this.attackData = attackData;
         this.towerBase = towerBase;
         targetEnemy = towerBase.TargetEnemy;
-
-        if(Util.IsEnemyNull(targetEnemy)) {
+        initialTargetEnemy = towerBase.TargetEnemy;
+        if (Util.IsEnemyNull(targetEnemy)) {
             Managers.Resources.Release(gameObject);
             return;
         }
@@ -59,7 +60,7 @@ public abstract class ProjectileBase : AutoCachedMono
 
         Vector3 targetPosition = targetTransform.position;
         Vector3 direction = targetPosition - myTransform.position;
-
+        saveDir = direction.normalized;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
@@ -90,7 +91,7 @@ public abstract class ProjectileBase : AutoCachedMono
         if (targetCheckTimer >= targetCheckInterval) {
             targetCheckTimer = 0f;
 
-            if (!Util.IsEnemyNull(targetEnemy)) {
+            if (!Util.IsEnemyNull(targetEnemy) && targetEnemy == initialTargetEnemy) {
                 Vector3 targetPosition = targetTransform.position;
                 Vector3 direction = targetPosition - myTransform.position;
 
