@@ -1,6 +1,4 @@
-using Unity.VisualScripting;
 using UnityEngine;
-using Newtonsoft.Json;
 
 public class Managers : MonoBehaviour
 {

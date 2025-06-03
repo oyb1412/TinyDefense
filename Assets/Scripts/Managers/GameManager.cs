@@ -134,22 +134,38 @@ public class GameManager {
 
     
     private async void GetRankingData() {
-        var saveData = await Managers.FireStore.LoadDataToFireStore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Auth.User.Email,
-                Managers.Data.DefineData.TAG_SCORE);
+        int localIndex = PlayerPrefs.GetInt("loginIndex");
 
-        if(saveData != null) {
+        var saveData = await Managers.FireStore.LoadDataToFireStore("UserIndex", "UserRanking",
+               localIndex.ToString());
+
+        if (saveData != null) {
             int saveScore = Convert.ToInt32(saveData);
 
-            if(saveScore < currentKillNumber) {
-                Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
-                Managers.Auth.User.Email, CurrentKillNumber);
+            if (saveScore < currentKillNumber) {
+                Managers.FireStore.SaveDataToFirestore("UserIndex", "UserRanking",
+               localIndex.ToString(), CurrentKillNumber);
             }
+        } else {
+            Managers.FireStore.SaveDataToFirestore("UserIndex", "UserRanking",
+               localIndex.ToString(), CurrentKillNumber);
         }
-        else {
-            string[] name = Managers.Auth.User.Email.Split("@");
-            Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
-                name[0], CurrentKillNumber);
-        }
+        //var saveData = await Managers.FireStore.LoadDataToFireStore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Auth.User.Email,
+        //        Managers.Data.DefineData.TAG_SCORE);
+
+        //if(saveData != null) {
+        //    int saveScore = Convert.ToInt32(saveData);
+
+        //    if(saveScore < currentKillNumber) {
+        //        Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
+        //        Managers.Auth.User.Email, CurrentKillNumber);
+        //    }
+        //}
+        //else {
+        //    string[] name = Managers.Auth.User.Email.Split("@");
+        //    Managers.FireStore.SaveDataToFirestore(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA,
+        //        name[0], CurrentKillNumber);
+        //}
 
         DOTween.KillAll();
         UI_GameOver.Instance.SetGameOverUI(true);

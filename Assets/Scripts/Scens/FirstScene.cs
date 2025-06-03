@@ -8,6 +8,7 @@ public class FirstScene : BaseScene {
     public override void Init() {
   
         base.Init();
+
         StartCoroutine(Co_Init());
         loadingSlider = GameObject.Find("LoadingSlider").GetComponent<UI_LoadingSlider>();
     }
@@ -50,7 +51,7 @@ public class FirstScene : BaseScene {
         if (Managers.Data.CheckPathFile(Managers.Data.DefineData.TAG_GAME_DATA_JSON)) {
             DebugWrapper.Log("리소스가 존재하므로 씬 이동");
             //pre패스에 게임 데이터가 있으면, 씬 이동
-            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Login));
             StopAllCoroutines();
             yield break;
         }
@@ -60,22 +61,22 @@ public class FirstScene : BaseScene {
             Managers.Data.GameData = new GameData();
             //애너미 데이터 로드
             yield return StartCoroutine(GetEnemyData(Managers.Data.GameData.EnemyDatas));
-            loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(.1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Login));
             //인핸스 데이터 로드
             yield return StartCoroutine(GetEnhanceData(Managers.Data.GameData.EnhanceDatas));
-            loadingSlider.SetLoading(.5f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(.5f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Login));
 
             //모든 스킬 데이터 로드
             for (int i = 0; i< (int)Define.SkillType.Count; i++) {
                 yield return StartCoroutine(GetSkillData(Managers.Data.GameData.SkillDatas, (Define.SkillType)i));
             }
-            loadingSlider.SetLoading(.8f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(.8f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Login));
 
             //모든 타워 데이터 로드
             for (int i = 0; i< (int)Define.TowerType.Count; i++) {
                 yield return StartCoroutine(GetTowerData(Managers.Data.GameData.TowerDatas, (Define.TowerType)i));
             }
-            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Main));
+            loadingSlider.SetLoading(1f, () => UI_Fade.Instance.ActivationFade(Define.SceneType.Login));
 
             //데이터 불러오기 완료 후, 저장
             Managers.Data.SaveData(Managers.Data.GameData);

@@ -52,8 +52,7 @@ public class UI_RankingContentPanel : MonoBehaviour {
             scoreTMP = GetComponentsInChildren<TextMeshProUGUI>()[2];
         }
 
-        nameTMP.text = name;
-        rankingTMP.text = ranking.ToString();
+        nameTMP.text = "User" + name;
         scoreTMP.text = string.Format(Managers.Data.DefineData.RANKING_SCORE, score);
 
         if (ranking < 3) {
@@ -62,6 +61,8 @@ public class UI_RankingContentPanel : MonoBehaviour {
         }
         else {
             rankingIcon.sprite = otherIcon;
+            rankingTMP.text = (ranking + 1).ToString();
+
         }
     }
 }

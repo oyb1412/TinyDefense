@@ -15,6 +15,8 @@ public class EnemySearchSystem : MonoBehaviour
        
     private Coroutine rotateCoroutine;
 
+    private float checkTimer = 0f;
+    private const float CHECK_INTERVAL = 0.2f;
     private void Awake() {
         towerBase = GetComponentInParent<TowerBase>();
         RangeSprite = GetComponentInChildren<SpriteRenderer>();
@@ -64,8 +66,15 @@ public class EnemySearchSystem : MonoBehaviour
     /// <param name="target">타겟팅한 적</param>
     /// <returns>타겟팅한 적</returns>
     public EnemyBase TargetEnemyCheck(EnemyBase target) {
-        if(target == null) 
+        checkTimer += Time.deltaTime;
+
+        if (target == null) 
             return null;
+
+        if (checkTimer < CHECK_INTERVAL)
+            return target;
+
+        checkTimer = 0f;
 
         //적이 공격 범위를 벗어났으면, null 리턴
         if (Util.SqrDistanceCheck(transform.position, target.transform.position,

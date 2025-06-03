@@ -15,6 +15,6 @@ public class UI_LogoutButton : UI_Button {
             return;
 
         Managers.Auth.Logout();
-        UI_Fade.Instance.ActivationFade(Define.SceneType.Main);
+        UI_Fade.Instance.ActivationFade(Define.SceneType.First);
     }
 }

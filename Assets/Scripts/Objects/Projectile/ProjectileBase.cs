@@ -22,6 +22,11 @@ public abstract class ProjectileBase : AutoCachedMono
 
     private bool hasHit;
 
+    private float targetCheckTimer = 0f;
+    private const float targetCheckInterval = 0.03f;
+
+    private float destroyTimer = 0f;
+
     protected override void Awake() {
         base.Awake();
     }
@@ -37,7 +42,8 @@ public abstract class ProjectileBase : AutoCachedMono
     public void Init(TowerBase towerBase, TowerBase.AttackData attackData) {
         hasHit = false;
         Managers.Projectile.AddProjectile(this);
-
+        targetCheckTimer = 0f;
+        destroyTimer = 0f;
         SoundManager.Instance.PlaySfx(Define.SFXType.FireProjectile);
         this.attackData = attackData;
         this.towerBase = towerBase;
@@ -57,29 +63,45 @@ public abstract class ProjectileBase : AutoCachedMono
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         myTransform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
 
-        Invoke("Ivk_Destroy", Managers.Data.DefineData.PROJECTILE_DESTROY_TIME);
     }
 
-    private void Ivk_Destroy() {
+    private void DestroyProjectile() {
+        if (!gameObject.activeInHierarchy)
+            return;
+
         Managers.Projectile.RemoveProjectile(this);
         Managers.Resources.Release(gameObject);
     }
 
     public void UpdateProjectile() {
+        destroyTimer += Time.deltaTime;
+
+        if(destroyTimer >= Managers.Data.DefineData.PROJECTILE_DESTROY_TIME) {
+            destroyTimer = 0;
+            DestroyProjectile();
+            return;
+        }
+
         if (hasHit)
             return;
 
-        if (!Util.IsEnemyNull(targetEnemy)) {
-            Vector3 targetPosition = targetTransform.position;
-            Vector3 direction = targetPosition - myTransform.position;
+        targetCheckTimer += Time.deltaTime;
 
-            saveDir = direction.normalized;
+        if (targetCheckTimer >= targetCheckInterval) {
+            targetCheckTimer = 0f;
 
-            if (!Util.SqrDistanceCheck(myTransform.position, targetPosition,
+            if (!Util.IsEnemyNull(targetEnemy)) {
+                Vector3 targetPosition = targetTransform.position;
+                Vector3 direction = targetPosition - myTransform.position;
+
+                saveDir = direction.normalized;
+
+                if (!Util.SqrDistanceCheck(myTransform.position, targetPosition,
                 Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE)) {
-                Collison(targetEnemy);
-                hasHit = true;
-                return; // 종료
+                    Collison(targetEnemy);
+                    hasHit = true;
+                    return; // 종료
+                }
             }
         }
 

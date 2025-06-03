@@ -63,7 +63,7 @@ public class Sister : TowerBase {
             }
             
             if(ran == 0) {
-                if(item.BuffManager.Buffs.Where(x => x.Type == Define.BuffType.AttackDamageUp) != null)
+                if(item.BuffManager.Buffs.Any(x => x.Type == Define.BuffType.AttackDamageUp))
                 {
                     item.BuffManager.AddBuff(new AttackDelayBuff(SetBuffValue(), SetBuffTime()), item);
                     return;
@@ -73,7 +73,7 @@ public class Sister : TowerBase {
                 return;
             }
             else {
-                if(item.BuffManager.Buffs.Where(x => x.Type == Define.BuffType.AttackDelayDown) != null)
+                if(item.BuffManager.Buffs.Any(x => x.Type == Define.BuffType.AttackDelayDown))
                 {
                     item.BuffManager.AddBuff(new AttackDamageBuff(SetBuffValue(), SetBuffTime()), item);
                     return;
@@ -86,7 +86,7 @@ public class Sister : TowerBase {
 
         int ranTower = Random.Range(0,towerList.Count);
         if(ran == 0) {
-                if(towerList[ranTower].BuffManager.Buffs.Where(x => x.Type == Define.BuffType.AttackDamageUp) != null)
+                if(towerList[ranTower].BuffManager.Buffs.Any(x => x.Type == Define.BuffType.AttackDamageUp))
                 {
                     towerList[ranTower].BuffManager.AddBuff(new AttackDelayBuff(SetBuffValue(), SetBuffTime()), towerList[ranTower]);
                     return;
@@ -96,7 +96,7 @@ public class Sister : TowerBase {
                 return;
             }
             else {
-                if(towerList[ranTower].BuffManager.Buffs.Where(x => x.Type == Define.BuffType.AttackDelayDown) != null)
+                if(towerList[ranTower].BuffManager.Buffs.Any(x => x.Type == Define.BuffType.AttackDelayDown))
                 {
                     towerList[ranTower].BuffManager.AddBuff(new AttackDamageBuff(SetBuffValue(), SetBuffTime()), towerList[ranTower]);
                     return;

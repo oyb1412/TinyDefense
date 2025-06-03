@@ -37,7 +37,7 @@ public class UI_RankingPanel : MonoBehaviour {
     /// 오름차순으로 정렬
     /// </summary>
     private IEnumerator Co_LoadRankingData() {
-        var task =  Managers.FireStore.LoadAllDataFromDocument(Managers.Data.DefineData.TAG_SCORE_DATA, Managers.Data.DefineData.TAG_SCORE_DATA);
+        var task =  Managers.FireStore.LoadAllDataFromDocument("UserIndex", "UserRanking");
         yield return new WaitUntil(() => task.IsCompleted);
 
         if (task.Exception != null) {

@@ -309,7 +309,7 @@ public class Define {
     }
     public enum SceneType {
         None,
-        Main,
+        First,
         Login,
         Ingame,
     }
