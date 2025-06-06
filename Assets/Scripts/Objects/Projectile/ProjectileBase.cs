@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UIElements;
+using TMPro;
 
 /// <summary>
 /// 모든 프로젝타일 관리 클래스
@@ -20,13 +21,12 @@ public abstract class ProjectileBase : AutoCachedMono
     //적 트랜스폼 캐싱
     private Transform targetTransform;
 
-    private EnemyBase initialTargetEnemy;
     private bool hasHit;
 
-    private float targetCheckTimer = 0f;
-    private const float targetCheckInterval = 0.03f;
-
     private float destroyTimer = 0f;
+
+    private float collisonTimer = 0f;
+    private float collisonCheck = 0.05f;
 
     protected override void Awake() {
         base.Awake();
@@ -43,13 +43,12 @@ public abstract class ProjectileBase : AutoCachedMono
     public void Init(TowerBase towerBase, TowerBase.AttackData attackData) {
         hasHit = false;
         Managers.Projectile.AddProjectile(this);
-        targetCheckTimer = 0f;
         destroyTimer = 0f;
+        collisonTimer = 0f;
         SoundManager.Instance.PlaySfx(Define.SFXType.FireProjectile);
         this.attackData = attackData;
         this.towerBase = towerBase;
         targetEnemy = towerBase.TargetEnemy;
-        initialTargetEnemy = towerBase.TargetEnemy;
         if (Util.IsEnemyNull(targetEnemy)) {
             Managers.Resources.Release(gameObject);
             return;
@@ -86,27 +85,21 @@ public abstract class ProjectileBase : AutoCachedMono
         if (hasHit)
             return;
 
-        targetCheckTimer += Time.deltaTime;
-
-        if (targetCheckTimer >= targetCheckInterval) {
-            targetCheckTimer = 0f;
-
-            if (!Util.IsEnemyNull(targetEnemy) && targetEnemy == initialTargetEnemy) {
-                Vector3 targetPosition = targetTransform.position;
-                Vector3 direction = targetPosition - myTransform.position;
-
-                saveDir = direction.normalized;
-
-                if (!Util.SqrDistanceCheck(myTransform.position, targetPosition,
-                Managers.Data.DefineData.PROJECTILE_PERMISSION_RANGE)) {
-                    Collison(targetEnemy);
-                    hasHit = true;
-                    return; // 종료
-                }
-            }
-        }
-
         myTransform.position += saveDir * Managers.Data.DefineData.PROJECTILE_VELOCITY * Time.deltaTime;
+
+        collisonTimer += Time.deltaTime;
+
+        if(collisonTimer >= collisonCheck) {
+            if (!Util.SqrDistanceCheck(myTransform.position, targetTransform.position,
+                0.3f)) {
+
+                Collison(targetEnemy);
+                hasHit = true;
+                return; // 종료
+            }
+            collisonTimer = 0f;
+        }
+        
     }
 
     /// <summary>
